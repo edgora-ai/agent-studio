@@ -1,0 +1,12 @@
+{
+  "model": "hroze-sp/gpt-6-sol",
+  "providerCount": 1,
+  "mcpServers": 0,
+  "secretsMode": "0o600",
+  "secretValuesLogged": false,
+  "egressSelection": "us-la",
+  "proxyEnabled": true,
+  "cliSha256": "67fd3b315c596654aa4b609ee3385f53b00a55d913d610c8a1ae34865a2e33d5",
+  "settingsReadback": true,
+  "credentialsReadback": true
+}

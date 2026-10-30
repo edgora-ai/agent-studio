@@ -1,0 +1,9 @@
+{
+  "runId": "f844a5551cbd4d7aadb7193a5e76d187",
+  "runningContainerListed": true,
+  "stopByRunId": true,
+  "cancelledStatePersisted": true,
+  "containerRemoved": true,
+  "listReflectsActualDockerState": true,
+  "stopIsIdempotent": true
+}

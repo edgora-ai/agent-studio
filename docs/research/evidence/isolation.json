@@ -1,0 +1,57 @@
+{
+  "image": "sha256:540cf94513abec6949161a8b0352942a4f8aa4b98a95546f8d4349cd25f05bfb",
+  "architecture": "arm64",
+  "isolation": {
+    "checks": {
+      "nonRoot": true,
+      "independentHome": true,
+      "explicitEnvironment": true,
+      "hostEnvironmentNotInherited": true,
+      "customSystemTemplate": true,
+      "rootFilesystemWriteBlocked": true,
+      "hostOnlyFileInvisible": true,
+      "hostClaudeConfigInvisible": true,
+      "hostOpenCodeConfigInvisible": true,
+      "dockerSocketNotMounted": true,
+      "capabilitiesDropped": true,
+      "noNewPrivileges": true,
+      "memoryLimit": true,
+      "pidsLimit": true,
+      "cpuLimit": true
+    },
+    "output": {
+      "nonce": "0566f3f53c79c019c50ca03c",
+      "uid": 1001,
+      "home": "/home/sandbox"
+    }
+  },
+  "workspaceWriteReadback": true,
+  "homeResetBetweenRuns": true,
+  "workspaceOutsideAllowlistRejected": true,
+  "inspectedContainer": {
+    "readonlyRootfs": true,
+    "user": "1001:1001",
+    "memoryBytes": 2147483648,
+    "capDrop": [
+      "ALL"
+    ],
+    "temporaryFilesystems": [
+      "/home/sandbox",
+      "/tmp"
+    ],
+    "bindMounts": [
+      {
+        "destination": "/home/ubuntu/.dsh/sandboxes/local-opencode/workspaces/isolation-test-0734611c",
+        "writable": true
+      },
+      {
+        "destination": "/run/opencode/config.json",
+        "writable": false
+      }
+    ]
+  },
+  "cancellationStopsAndRemovesContainer": true,
+  "timeoutStopsAndRemovesContainer": true,
+  "allContainersRemoved": true,
+  "persistedRunRecords": 4
+}

@@ -1,0 +1,58 @@
+{
+  "sessionId": "session-8e766c2b-8756-4dee-9635-13990bed0618",
+  "workspace": "/home/ubuntu/.dsh/sandboxes/local-opencode/workspaces/dsh-e2e-a21453ff",
+  "durationSeconds": 75.04,
+  "checks": {
+    "toolExposedInRealModelRequests": true,
+    "exactlyOneSandboxDelegation": true,
+    "noParentFilesystemOrOtherProvider": true,
+    "childCompletionBoundToCatalog": true,
+    "exactChildJsonMatches": true,
+    "resultFileWrittenAndReadBack": true,
+    "sourceFixtureUnchanged": true,
+    "parentTurnCompleted": true,
+    "exactlyOneContainerRun": true,
+    "containerCompletedAndRemoved": true
+  },
+  "actualChildOutput": [
+    {
+      "nonce": "890f3c64daaa87fba86d5d82",
+      "total": 2028,
+      "sandbox": "local-opencode",
+      "home": "/home/sandbox",
+      "uid": 1001,
+      "hostFileVisible": false,
+      "template": "local-opencode-container"
+    }
+  ],
+  "containerRuns": [
+    {
+      "runId": "299e136cb2db4e90adb15eae6fc78fd5",
+      "name": "dsh-sbox-299e136cb2db4e90",
+      "workspace": "/home/ubuntu/.dsh/sandboxes/local-opencode/workspaces/dsh-e2e-a21453ff",
+      "image": "sha256:540cf94513abec6949161a8b0352942a4f8aa4b98a95546f8d4349cd25f05bfb",
+      "status": "completed",
+      "createdAt": 1793261358.3998764,
+      "timeoutSeconds": 300,
+      "containerId": "b61ad0ec8d3423526e9b216b72437e447badb833533b9767344a79646bb0e899",
+      "startedAt": 1793261358.4662914,
+      "exitCode": 0,
+      "containerRemoved": true,
+      "finishedAt": 1793261389.9492958
+    }
+  ],
+  "toolCalls": [
+    "subagent_opencode_sandbox",
+    "job_list",
+    "list_agents",
+    "job_output"
+  ],
+  "persistence": {
+    "durableLog": "/home/ubuntu/.dsh/sessions/--home-ubuntu-.dsh-sandboxes-local-opencode-workspaces-dsh-e2e-a21453ff--/session-8e766c2b-8756-4dee-9635-13990bed0618/session.v4.jsonl.zstd",
+    "durableRecords": 42,
+    "promptToolAndNoncePersisted": true,
+    "sessionListed": true,
+    "freshApiReadback": true,
+    "fullTextSearch": "disabled-by-existing-configuration"
+  }
+}

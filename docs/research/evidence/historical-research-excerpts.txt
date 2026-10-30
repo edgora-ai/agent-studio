@@ -1,0 +1,643 @@
+HISTORICAL RESEARCH — NOT THE CURRENT SPECIFICATION
+Archived 2026-10-29 from selected conversation text, with sensitive URL filtering.
+These excerpts include superseded recommendations for full remote dsh workers (Scheme B).
+Scheme B was rejected. Agent Studio uses Scheme A: one central dsh.
+Follow the current project requirements and architecture, not historical instructions below.
+This snapshot is not a fresh source audit or a new runtime test.
+
+
+=== Transcript line 1744 ===
+## 结论
+
+**可以接，但要区分两种架构。**
+
+- **A：中央 dsh，仅将 fs/subprocess 远程化。** 源码已提供明确的扩展接口，适合把内置文件、Bash、PTY、LSP 的执行世界搬到远端；**不等于现有工作区选择器、侧边栏和全部第三方插件自动远程化**。
+- **B：每个远程 workspace 内运行完整 dsh worker，中心入口切换对应应用。** **这条路线最有利于保留“像本地项目一样”的插件兼容性**：对插件而言，远端 workspace 就是其进程的本地文件系统，Git、监听器、子进程也都在同一环境。但这是多个完整 dsh 实例，**会话、设置、插件状态和侧边栏不会因有了中心入口就自动联邦统一**。
+
+这一区别同样适用于主线程考虑的 Coder、OpenSandbox；平台提供 SSH、应用代理或生命周期 API，不会改变 dsh 内部上述边界。以下是只读静态证据，未做远程实跑。
+
+## 1. 源码能力与安装版必须分开判断
+
+安装版确认为 **0.2.1-rc.4**，不能假设所给源码较新或与之兼容。
+
+- 安装版本证据：`/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/package.json:4`。
+- **安装版 fs 比这份源码接口多出 `watch()`、`readByteRange()`**。  
+  `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-fs/lib/types/index.d.ts:63-71`、`:184-200`
+- **安装版 subprocess 普通句柄已不公开 PID**，增加 `control` 通道；服务增加 `terminalEnvironment()`，终端有 resize、activity 观察。源码仍使用普通句柄 PID 和另一套退出/终止契约。  
+  `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-subprocess/lib/types/types.d.ts:148-182`、`:238-277`  
+  `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-subprocess/lib/types/index.d.ts:75-110`
+- CLI 自带依赖及 profile 的包名检索未见 E2B 三包；自带基础组合选择的是 `dsh-subprocess-local` 和 `dsh-fs-sandbox`。**源码 E2B 是设计参考，不是安装版即装即用的实证。**  
+  `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-base/cordis.patch.yml:234-235`、`:518-519`
+
+## 2. A 要接什么接口，绑定在哪一层
+
+### 最小执行能力
+
+| 能力 | 必须兑现的语义 |
+|---|---|
+| 远程环境所有者 | 一个明确的 workspace/sandbox 身份；创建/连接、就绪、失效、释放与清理。FS 与进程必须取得同一环境，而非各自创建沙箱 |
+| `ctx.fs` | resolve、稳定不透明 target/version、stat/lstat、文本/流/字节读取、目录列表、原子 write/edit、版本守卫、错误与取消；安装版还要考虑 watch、字节范围读取 |
+| 路径坐标 | 远端 cwd、规范进程路径、`file:` URI、包含关系；不能把 targetKey 当宿主路径。宿主文件只有真正共享时才允许映射 |
+| `ctx.subprocess` | 远端 executable lookup、argv/cwd/env、原始协议管道与有界输出、spill、退出事实、取消、受管进程范围终止与等待清空 |
+| PTY | 真终端分配、输入/输出、前台进程组、信号、完整会话清理；安装版还有尺寸及活动状态接口。仅有“执行一条命令”的 API 不够 |
+
+源码定义位置：
+
+- `/home/ubuntu/code/deepseek-harness/docs/subsystems/filesystem.zh.md:11-15`、`:278-435`
+- `/home/ubuntu/code/deepseek-harness/packages/subprocess/subprocess/src/index.ts:74-139`
+
+E2B 的实现正是“**所有者 + FS 适配器 + subprocess/PTY 适配器**”；所有者构造时创建一个沙箱，所有操作等待同一个 promise，释放时 kill。它不是已有远程环境目录/选择服务。
+
+`/home/ubuntu/code/deepseek-harness/packages/e2b/e2b/src/index.ts:74-122`、`:130-157`
+
+### 是全局替换还是逐 session 选择？
+
+**准确说是 Cordis context/隔离 realm 级提供方选择，不是只能进程全局，也不是现成的逐 session 远程环境选择器。**
+
+- 同一服务解析 context 内只有一个 `subprocess` 实现；重复加载会冲突。
+- session 有 cwd 和 agentPreset；cwd 选择的是**该提供方世界中的目录**，不是机器、集群或沙箱身份。文件工具确实把 session cwd 传给 provider。  
+  `/home/ubuntu/code/deepseek-harness/packages/core/session/src/types.ts:92-129`  
+  `/home/ubuntu/code/deepseek-harness/packages/fs/tool-fs/src/session-cwd.ts:22-44`
+- preset 能隔离提供方及其消费方，但源码中同 preset 的 session 共享常驻组合；若在其中挂一个 E2B owner，自然共享的是该组合的沙箱，不会自动变成“一 session 一环境”。  
+  `/home/ubuntu/code/deepseek-harness/packages/preset/agent-presets/README.zh.md:30-32`、`:117-127`
+- 安装版也明确要求 **preset 的 provider 与 consumer 在同一 group 隔离 realm**；普通组外 Context、甚至 `agent.ctx`，仍可能选 Host realm，需显式 `serviceFor()`。因此不能只换 agent 内提供方就承诺 Host 侧边栏/API 同步切换。  
+  `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-agent-preset-registry/README.zh.md:56-60`
+
+**现有工作区注册仍是宿主目录模型。** 安装版创建 workspace 直接执行宿主 `realpath/stat`，记录也没有环境身份；不能把一个远程路径字符串填进去就获得远程工作区。
+
+`/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-workspace/lib/index.js:2`、`:397-411`
+
+## 3. 内置工具与插件的兼容边界
+
+### 能复用的部分
+
+源码有意让 Bash、PTY、LSP 使用 fs/subprocess 的共同执行世界，无需为每个平台重写这些领域工具。**前提是路径、可执行文件、PTY、权限/沙箱策略等契约真正匹配**，不是只实现文件下载和 shell exec。
+
+`/home/ubuntu/code/deepseek-harness/.agents/notes/implemented/architecture/2026-07-28-portable-execution-world-consumers.zh.md:17-33`
+
+但“内置”也不能一概承诺。例如源码 **glob/grep 虽经过 `ctx.subprocess`，却先从宿主 npm 包解析 ripgrep 绝对路径再作为 argv[0]**。远端没有该路径/对应平台二进制时不能直接工作；安装版也保留这一调用形式。
+
+`/home/ubuntu/code/deepseek-harness/packages/fs/tool-fs-search/src/search-core.ts:171-178`、`:230-244`  
+`/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-tool-fs-search/lib/index.js:172-173`
+
+### `dsh-better-sidebar` 不会随 A 自动迁移
+
+少量检索已足以确定：
+
+- 文件树直接 `node:fs/promises`；
+- 文件监听直接 `node:fs.watch`；
+- Git 直接 `node:child_process.spawn('git', …)`，在 session cwd 上执行。
+
+对应证据：
+
+- `/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/fs-tree.ts:19-21`
+- `/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/fs-watch.ts:20`
+- `/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/git.ts:14-17`、`:429`
+
+它有针对 Windows `dsh-remote` 本地镜像路径的特殊处理，但这仍是读取宿主镜像，不是通用远程 FS provider 支持。
+
+`/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/session-path.ts:8-15`、`:101-127`
+
+因此 A 下必须逐插件审计。**直接使用 Node FS、child_process、宿主 Git/路径/监听器的插件绕过 seam**；替换 `ctx.fs`/`ctx.subprocess` 不会拦截它们。
+
+## 4. ACP / Claude Code SDK 的已知限制
+
+以下属于**这份源码中的后端**，不应套用为安装版或上游 SDK 的永久限制。
+
+- **ACP 后端**通过 subprocess 管道启动子 agent，但在启动前用宿主 FS 验证 cwd；README 明说仅本地工作区、远程映射未设计。E2B 文档另外明确不支持要求同步正 PID 的 ACP 消费方。  
+  `/home/ubuntu/code/deepseek-harness/packages/subagent/subagent-acp/src/index.ts:114-138`  
+  `/home/ubuntu/code/deepseek-harness/packages/subagent/subagent-acp/README.zh.md:159-161`  
+  `/home/ubuntu/code/deepseek-harness/packages/e2b/subprocess-e2b/README.zh.md:144-145`
+- **Claude Code 后端**已使用官方 SDK 的 custom-spawn，并转到 `ctx.subprocess`，不是完全绕过该接口。但仍先通过宿主 `statSync/accessSync` 校验父 session cwd，且 SDK query 后要求立即得到正 PID；所以不能因“有 custom-spawn”就承诺兼容当前 E2B 远程提供方。  
+  `/home/ubuntu/code/deepseek-harness/packages/subagent/subagent-claude-code/src/index.ts:83-116`  
+  `/home/ubuntu/code/deepseek-harness/packages/subagent/subagent/src/out-of-process.ts:83-113`、`:147-152`  
+  `/home/ubuntu/code/deepseek-harness/packages/subagent/subagent-claude-code/src/run.ts:365-369`、`:425-438`
+- 该 Claude 后端读取原生宿主设置、依赖安装平台 SDK 载荷；并非远程载荷部署、设置同步或会话恢复层。  
+  `/home/ubuntu/code/deepseek-harness/packages/subagent/subagent-claude-code/README.zh.md:60`、`:174-178`
+
+B 让这些“宿主”都处在 workspace 内，能避免中央宿主/远端 cwd 分裂；仍须在该 worker 安装所需二进制、载荷与凭据。
+
+## 5. 两种接法的最小集合与不可承诺项
+
+### A：中央 dsh + 远程执行适配
+
+最小新增集合是：
+
+1. 平台环境身份/生命周期 owner；
+2. 与安装 runtime 对齐的 FS provider；
+3. 与同一环境绑定的 subprocess + 真 PTY provider；
+4. **若要 UI 选择远程 workspace，还须补环境目录、session 绑定、工作区/API 路由**，不能仅用 cwd；
+5. 要保留 better-sidebar，另需其远程适配或等价的数据后端。
+
+现有 tool-fs、观察策略、shell/tool-bash 等尽量保留；terminal、LSP 按需装。受限模式还须匹配同一执行世界的 sandbox 策略，不能把 cwd 当安全围栏。
+
+**不承诺**任意插件透明兼容、任意二进制可执行、现成逐 session 多环境、跨平台路径透明、断线恢复、持久远程句柄、工作区同步。E2B 明确未覆盖发现、重连、卷、快照、同步，且超时/释放会删沙箱。
+
+`/home/ubuntu/code/deepseek-harness/packages/e2b/e2b/README.zh.md:128-131`
+
+### B：完整 dsh worker 随 workspace 运行
+
+**以“尽量保留本地插件”为首要目标时，B 的兼容边界最清楚，也最宽。** 最小是正常 dsh Web/profile 组合、所需插件及系统依赖，再由中心管理 worker 生命周期与应用入口；通常不需要专门的远程 FS/subprocess provider。
+
+代价是：
+
+- 每个 worker 的会话、设置、插件、Git 身份及后台任务独立；
+- 中心切换的是 **dsh 应用实例**，不自动获得一份全局会话搜索、统一设置或跨 worker 侧边栏；
+- workspace 停止/销毁时，应用连接和活跃进程会受影响；要持久化对应 dsh home/profile 与会话数据；
+- 桌面打开器、原生选择器、端口预览、浏览器访问路径及反向代理仍需环境适配，不能保证所有桌面插件原样工作。
+
+安装版基础组合明确将配置写回 active profile、会话持久化到 `dshHomePath('sessions')`，说明这些状态跟随各自运行实例；入口代理不会自动合并它们。
+
+`/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-base/cordis.patch.yml:102-111`、`:138-141`
+
+**一句话供主线程转述：A 是“给中央 dsh 新增远程执行后端并逐层补兼容”，B 是“把完整本地体验部署到远程，再由中心选实例”；想优先保留现有侧边栏/插件，B 更稳妥，但统一控制台不等于统一 dsh 状态。**
+
+全程未修改文件、未读取密钥配置、未执行模型推理或容器任务；上述“安装版实证”指安装包/构建产物核对，不代表已完成远程端到端验证。
+
+=== Transcript line 1765 ===
+## 收束结论
+
+**若优先目标是“远程 workspace 像本地项目一样用，现有侧边栏/插件尽量不改”，B 比 A 更符合当前 dsh 的真实边界。** 这一判断与选 Coder 还是 OpenSandbox 无关；这里未评估平台产品能力。
+
+| | A：中央 dsh，远程化 fs/subprocess | B：workspace 内运行完整 dsh worker |
+|---|---|---|
+| 执行位置 | Harness、插件、会话状态仍在中央，文件/命令在远端 | Harness、插件、文件、Git、进程都在 workspace 内 |
+| 内置工具复用 | 使用 fs/subprocess 抽象的消费者可复用，但需兑现路径、PTY、取消、清理等完整契约 | 使用正常本地提供方即可 |
+| 第三方插件 | 直接 Node FS/child_process 的插件不会自动远程化 | 最大程度保留其本地假设，仍需安装系统依赖 |
+| UI“选择工作区” | 还需环境身份、发现、绑定及 Host API 路由；不只是填 cwd | 中心选择/打开对应 dsh 应用实例 |
+| 状态统一 | 中央保留主状态，但远程插件兼容工程更多 | 会话、设置、插件及侧边栏分别属于各 worker，不自动联邦统一 |
+
+### 关键实证
+
+1. **A 有源码扩展基础，但不是现成完整远程开发产品。** 源码明确以 `ctx.fs` 和 `ctx.subprocess` 定义共同执行世界；PTY 需真终端原语，而不能仅靠普通 shell exec。E2B 三包仅移动执行世界，Harness、插件和状态留在宿主；不提供工作区同步、环境目录、重连和持久句柄。  
+   `/home/ubuntu/code/deepseek-harness/.agents/notes/implemented/architecture/2026-07-28-portable-execution-world-consumers.zh.md:17-37`
+
+2. **当前不能承诺已有逐 session 远程环境选择。** 已核实 session 有 cwd/preset，但 cwd 不是 sandbox/host 身份；安装版 preset 的 provider 与 consumer 必须在同一隔离 group，组外查找仍可能选 Host 服务。尚未验证一套完整的“逐 session 选远端并覆盖全部 Host API/侧边栏”的组合。  
+   `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-agent-preset-registry/README.zh.md:56-60`  
+   安装版 workspace 创建还直接调用宿主 `realpath/stat`，所以远端路径字符串不能直接等同远程 workspace。  
+   `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-workspace/lib/index.js:397-411`
+
+3. **better-sidebar 已核实有宿主依赖，A 下不能承诺原样工作。** 文件树直接 Node FS，Git 直接启动宿主 `git`，监听器直接 `fs.watch`。未审计全部功能，但这已足以排除“替换 fs/subprocess provider 即全插件透明迁移”。  
+   `/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/fs-tree.ts:19-21`  
+   `/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/git.ts:14-17`、`:429`  
+   `/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/fs-watch.ts:20`
+
+4. **源码 E2B 不可直接作为安装版兼容承诺。** 安装版确为 **0.2.1-rc.4**；其 fs 已多出 watch/范围读取，普通 subprocess 句柄已移除公开 PID，并增加控制通道等能力。因此适配应以安装版契约为准，不假设所给源码较新。  
+   `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/package.json:4`  
+   `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-fs/lib/types/index.d.ts:63-71`、`:184-200`  
+   `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-subprocess/lib/types/types.d.ts:148-182`
+
+### 最小集合与不可承诺项
+
+- **A 最小新增**：环境身份/生命周期 owner、FS provider、同环境 subprocess/PTY provider；若要工作区选择与 sidebar，再补对应 UI/API/插件适配。**不是只有一个“远程执行插件”。**
+- **ACP/Claude Code 后端**：这份源码仍存在宿主 cwd 验证及同步 PID 假设，不能据其经过 subprocess 就承诺远程可用；这是源码实现限制，不是上游协议/SDK 永久限制。  
+  `/home/ubuntu/code/deepseek-harness/packages/subagent/subagent-acp/README.zh.md:159-161`  
+  `/home/ubuntu/code/deepseek-harness/packages/subagent/subagent-claude-code/src/run.ts:425-438`
+- **B 最小集合**：正常 dsh Web/profile、插件和系统依赖，中心负责 workspace/worker 生命周期与应用代理。**它最能保留本地插件，但不承诺全局统一会话/设置/搜索，亦不保证原生桌面打开器等功能。** 安装版配置写回各自 profile，会话写入各自 dsh home，统一入口不会自动合并这些状态。  
+  `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-base/cordis.patch.yml:102-111`、`:138-141`
+
+以上均为只读源码及安装产物核对；未读取密钥配置、修改文件、调用模型或启动容器，也未进行远程端到端实跑。
+
+=== Transcript line 1774 ===
+**有，而且你的需求已经更接近“远程开发工作区平台”，而不只是沙箱启动器。**
+
+现成平台可以解决中心控制台、环境生命周期、K8s／远程主机和访问接口；但要让 **dsh 的文件、终端、侧边栏和插件一起切换环境**，还需要选择正确的接入架构。
+
+**我的判断：优先考虑 Coder；如果更重视统一沙箱 API，再考虑 OpenSandbox。**
+
+## 一、最值得考虑的两个项目
+
+| 项目 | 和你的需求匹配的部分 | 需要注意 |
+|---|---|---|
+| **[Coder](https://github.com/coder/coder)** | 中心控制台、开发工作区、模板、生命周期管理、HTTP API、SSH、端口／Web 应用代理；可创建 Docker、K8s、VM 环境 | 更像“远程项目环境平台”。部分高级功能属于 Premium，不能把商业版能力全部算进开源版 |
+| **[OpenSandbox](https://github.com/opensandbox-group/OpenSandbox)** | Apache-2.0；统一生命周期与执行 API、SDK、文件和命令操作；支持 Docker／K8s；主分支已有基础 Console | 更像“沙箱基础设施”。Docker 后端是单主机模式，不能直接当成多个独立 Docker 主机的统一调度平台 |
+
+### Coder 为什么更贴近你的需求？
+
+它的核心对象就是一个**可启动、停止、持久化、连接的工作区**：
+
+```text
+中心控制台
+├─ 项目 A → Kubernetes 工作区
+├─ 项目 B → Linux 主机上的 Docker 容器
+└─ 项目 C → 虚拟机
+```
+
+官方文档明确支持通过 Terraform Docker provider，使用 **SSH／TCP 连接远程 Docker 主机**。但这不是“每台机器装个 Agent，就自动成为负载均衡节点”；机器选择、模板和凭据仍需配置。另外，**外部 provisioner 功能标注为 Premium**，选型时需要避开把它当成免费的必备基础。
+
+Coder 还能把工作区中运行的 Web 应用代理出来，这很适合承载远程 `dsh web`。
+
+### OpenSandbox 适合什么情况？
+
+如果你最想要的是：
+
+```text
+创建沙箱 → 执行命令 → 操作文件 → 保活／停止／删除
+```
+
+并通过一组 SDK/API 接入 dsh，OpenSandbox 更直接。
+
+但如果有多台独立 Linux：
+- 可以让它们组成 K8s／k3s 集群，交给集群调度；
+- 或者另外做多个后端的路由管理。
+
+**不能把“支持 Docker 和 K8s”理解成“已有完整的多 Docker 主机池管理”。** 它目前的 Console 也偏生命周期操作界面，不应直接等同于成熟的远程开发控制台。
+
+---
+
+## 二、关键发现：只接远程执行 API，现有侧边栏不会自动跟过去
+
+我核对了你当前安装的 `dsh-better-sidebar`：
+
+- 文件树直接调用 Node 文件系统：`profiles/web/node_modules/dsh-better-sidebar/src/fs-tree.ts:19`
+- 文件监听直接使用 `fs.watch`：`profiles/web/node_modules/dsh-better-sidebar/src/fs-watch.ts:20`
+- Git 直接启动所在机器的 `git`：`profiles/web/node_modules/dsh-better-sidebar/src/git.ts:14`
+
+因此，如果只是：
+
+```text
+中央 dsh → 插件 → 云端执行命令
+```
+
+就可能出现：
+
+```text
+编程工具在云端执行
+侧边栏却读取中央机器的文件
+Git 操作也在中央机器执行
+```
+
+**这不是加一个子代理插件就能解决的。**
+
+dsh 有 `fs`、`subprocess` 等执行能力接口，可以用于远程化；但直接使用宿主文件系统和子进程的插件绕过了这些接口，仍需要适配。当前工作区注册也包含宿主目录检查，不能仅把一个云端路径填进 `cwd` 就完成环境切换。
+
+## 三、两种架构，决定了插件兼容程度
+
+### 方案 A：一个中央 dsh，切换本地／云端执行后端
+
+```text
+中央 dsh：统一会话、主代理、界面
+         │
+    环境路由与执行适配层
+         ├─ 本地文件／进程
+         ├─ 云工作区 A：文件／进程／终端
+         └─ 云工作区 B：文件／进程／终端
+```
+
+**这是最严格意义上的“在同一个 dsh 里管理本地项目和云项目”。**
+
+但插件包至少要包含：
+
+1. **环境管理**：列表、创建、启动、停止、状态。
+2. **会话绑定**：会话属于哪个环境、哪个项目，不能只有一个路径字符串。
+3. **远程文件系统**：读取、编辑、搜索、监听、版本校验。
+4. **进程与终端**：流式输出、输入、PTY、取消、退出状态、清理。
+5. **界面与插件适配**：项目选择器、侧边栏、Git、文件预览等。
+
+可以把这些打包成一个插件包，但内部是一个完整的**远程执行环境适配层**，不是几次 HTTP 调用。
+
+**优点：**状态更容易集中。  
+**代价：**兼容工程最多，不能保证任意第三方插件不改就工作。
+
+### 方案 B：每个环境运行完整 dsh，中心入口切换环境
+
+```text
+统一环境入口
+├─ 本机项目 → 本机 dsh
+├─ 云项目 A → 工作区 A 内的完整 dsh
+└─ 云项目 B → 工作区 B 内的完整 dsh
+```
+
+**如果你优先要求侧边栏和现有插件尽量照常工作，我更推荐这条。**
+
+因为对于远程 dsh 内的插件来说：
+- 项目文件就是本地文件；
+- Git 就在同一个环境；
+- 文件监听也是本地监听；
+- 编程工具、终端、依赖都在同一台“工作机器”里。
+
+中心插件负责选择工作区、启动环境、打开对应 dsh 应用，底层平台负责环境生命周期和访问代理。
+
+但必须明确一个代价：
+
+> **统一入口，不等于统一 dsh 后端。**
+
+各环境的会话、设置、插件状态和侧边栏仍属于各自实例。若要一个全局侧边栏展示所有环境的会话、统一搜索和设置同步，需要再加一层聚合，不能假装现成就有。
+
+---
+
+## 四、按你的优先级，我建议这样选
+
+### 首选：Coder + 工作区内完整 dsh + 环境选择插件
+
+理由是你最看重：
+
+> 本地／云项目可选择，使用体验接近本地，侧边栏和插件尽量保留。
+
+这条路线改动最少，兼容边界也最清楚。可以先形成这样的入口，**这是拟实现的交互，不是 dsh 现成功能**：
+
+```text
+环境
+├─ 本机
+│  └─ 本地项目
+└─ 云端
+   ├─ Python 开发环境    运行中
+   ├─ Node 开发环境      已停止
+   └─ 新建环境…
+```
+
+每个云环境镜像安装一致版本的 dsh、插件和开发工具，持久卷保存项目及必要的 dsh 状态。
+
+如果你坚持 **所有环境必须留在同一个中央 dsh 会话与侧边栏体系中**，那么应选择方案 A，并接受要改工作区层、执行后端和部分插件的成本。OpenSandbox 可以作为这条路线的底座。
+
+### 一个选型提醒
+
+Daytona 过去很符合这个方向，但其官方公开仓库目前已停止维护，README 说明核心开发已转入私有代码库。它的社区分支 Nightona 仍处于启动阶段，因此我不把它们作为当前首选。
+
+**一句话：平台可以现成用；“任意 dsh 插件无感远程化”不能现成保证。为了优先保留你现在的体验，我会先验证 Coder + 完整远程 dsh，而不是继续扩展单纯的远程子代理。**
+
+本轮只核对了项目文档、源码和已安装插件，没有部署新平台，也没有验证远程端到端运行。
+
+### Sources
+- [Coder：架构、控制台、工作区 Agent 与 API](https://coder.com/docs/install/plan/architecture)
+- [Coder：远程 Docker 主机连接](https://coder.com/docs/admin/templates/extending-templates/provider-authentication)
+- [Coder：Provisioner 与 Premium 边界](https://coder.com/docs/install/operate/provisioners)
+- [Coder：暴露工作区内 Web 应用](https://coder.com/docs/admin/templates/extending-templates/web-ides)
+- [OpenSandbox 项目](https://github.com/opensandbox-group/OpenSandbox) · [Console](https://github.com/opensandbox-group/OpenSandbox/tree/main/console) · [Docker 单主机网络](https://open-sandbox.ai/architecture/network/single-host-network)
+- [Daytona 当前维护状态](https://github.com/daytonaio/daytona/blob/main/README.md)
+
+=== Transcript line 1932 ===
+**你提醒得对，应该先查社区实现。现在找到了很接近方案 A 的现成插件，确实不应该按“从零开发整套远程执行层”来规划。**
+
+不过需要区分：**我还没找到明确对接 Coder 控制台的一体化插件，但已经找到可作为底座的远程工作区插件。**
+
+## 1. 最值得优先评估：`CrazyShout/dsh-ssh-remote`
+
+仓库：[CrazyShout/dsh-ssh-remote](https://github.com/CrazyShout/dsh-ssh-remote)
+
+当前 GitHub 版本是 **0.13.2，MIT 许可**。它的方向基本就是我们讨论的方案：
+
+- 在中央 dsh 使用 SSH 远程工作区；
+- 接入原生文件面板、编辑、终端和文件引用；
+- 保留本地工作区行为；
+- 远端使用自动部署的 Python helper，而非安装完整 dsh；
+- 文档描述了文件、命令、PTY、会话恢复等接口。
+
+**它对接 Coder 的关键优势是使用系统 OpenSSH。**
+
+我检查了它的 `src/ssh-config.ts`：它会通过 `ssh -G` 解析有效配置，并保留原始 Host 别名、`ProxyCommand` 和 `ProxyJump` 信息。
+
+而 Coder 官方的 `coder config-ssh` 正是生成供标准 SSH 客户端使用的工作区别名。因此，值得验证这条路径：
+
+```text
+中央 dsh
+   │
+dsh-ssh-remote
+   │
+Coder 生成的 SSH 工作区别名
+   │
+Coder 工作区 + 轻量 helper
+```
+
+**这是已有实现基础，不代表这条 Coder 链路已经实测通过。** 特别是工作区自动启动、断线恢复，以及你使用的第三方侧边栏，仍需验证。
+
+### 有一个安装来源陷阱
+
+**不能直接执行 `npm install dsh-ssh-remote` 来安装上述项目。**
+
+我查到：
+- `CrazyShout/dsh-ssh-remote` 的 GitHub 发布是 **0.13.2**；
+- npm 同名包当前是 **0.1.5**，指向另一个仓库。
+
+如果后续测试，应使用该项目的 GitHub Release，并核对其发布清单和 SHA256，而不是按包名盲装。
+
+## 2. 另一款很有参考价值：`dsh-remote-vs`
+
+仓库：[xiray-xia/dsh-remote-vs](https://github.com/xiray-xia/dsh-remote-vs)
+
+当前版本 **0.11.0，MIT 许可**，已经实现或提供了：
+
+- 本地／远程工作区选择；
+- 文件系统和子进程路由；
+- 远程文件、编辑、搜索、Git、终端；
+- **针对 `dsh-better-sidebar` 的远程标签页适配**；
+- helper 部署和版本检查。
+
+这次不只是看 README：我也核对了它的文件系统路由源码。它确实区分本地和远程提供方，远程操作失败时不会直接重试成本地操作。这与我们需要的“避免误落到本机执行”一致。
+
+但它有两个重要限制：
+
+1. **当前版本要求 dsh `>=0.2.2-alpha.2`**，不符合你现在的 `0.2.1-rc.4`，不能直接装最新版。
+2. SSH 连接使用 Node 的 `ssh2`，我检查的连接代码没有读取 OpenSSH `ProxyCommand`，所以不能假定它直接兼容 Coder 生成的 SSH 配置。
+
+**它很适合参考工作区路由和侧边栏适配，但作为 Coder 接入起点，前一款更值得先验证。**
+
+## 3. 你看到的也可能是 `dsh-code-server-app`
+
+仓库：[jinsiyu/dsh-code-server-app](https://github.com/jinsiyu/dsh-code-server-app)
+
+这里容易混淆：
+
+- **Coder 平台**：管理工作区、模板、环境生命周期。
+- **`coder/code-server`**：浏览器版 VS Code。
+
+`dsh-code-server-app` 集成的是后者，主要解决 dsh 中的专业编辑器体验，**不等于已经对接 Coder 工作区管理，也不负责把 dsh 的所有执行切到远程。**
+
+## 对我们方案的实际影响
+
+现在应调整为：
+
+```text
+已有远程工作区插件
+    ├─ 复用文件／命令／终端／helper
+    └─ 补充 Coder 控制台适配
+         ├─ 认证和工作区列表
+         ├─ 启动／停止／状态
+         ├─ 工作区 → SSH 目标映射
+         └─ dsh 环境选择入口
+```
+
+**也就是说，远程执行这块已经有社区成果可以复用，新增工作更可能集中在 Coder 管理接口、工作区映射和兼容性集成，而不是重造整套文件与终端协议。**
+
+我前面按缺少现成底座来估算，工作量判断偏大了。下一步应先验证 **`CrazyShout/dsh-ssh-remote` + Coder SSH 工作区**，同时参考 `dsh-remote-vs` 的侧边栏适配；仍然保持一个中央 dsh，不走每环境安装完整 dsh 的路线。
+
+本次只查了发布信息、文档和部分源码，没有安装这些插件，也没有升级你现有的 dsh。
+
+### Sources
+- [dsh-ssh-remote：项目与发布](https://github.com/CrazyShout/dsh-ssh-remote) · [技术说明](https://github.com/CrazyShout/dsh-ssh-remote/blob/main/docs/TECHNICAL.md)
+- [dsh-remote-vs](https://github.com/xiray-xia/dsh-remote-vs)
+- [dsh-code-server-app](https://github.com/jinsiyu/dsh-code-server-app)
+- [Coder：config-ssh](https://coder.com/docs/reference/cli/config-ssh)
+
+=== Transcript line 1940 ===
+理解了。**你要的不是另一个远程 IDE，而是“以会话为中心的开发界面”**：日常通过会话指挥 Agent，必要时查看、搜索、修改代码；同时保留 code-server 的深度编辑能力，但不再依赖“打开终端 → 在终端里操作 Agent”这条移动端很难用的路径。
+
+这也解释了为什么你坚持一个中央 dsh：**会话、项目入口和操作习惯统一，本地／Coder 只是项目运行位置不同。**
+
+## 应该把三个部分分开
+
+| 部分 | 应承担的角色 |
+|---|---|
+| **dsh 会话区** | 主入口：提出任务、观察执行、回答审批、停止任务、查看结果 |
+| **文件／搜索／修改面板** | 辅助理解和干预：找代码、看文件、看 Diff、做少量手动修改 |
+| **code-server** | 深度编辑入口：复杂重构、多文件操作、调试、完整扩展生态 |
+
+**不必在 dsh 里复制完整 VS Code，也不应把完整 code-server 界面硬塞进手机侧边栏。** 更合适的是：补齐 dsh 开发过程中最常用的编辑能力，需要完整 IDE 时，再打开同一环境、同一项目的 code-server。
+
+## 桌面和手机应使用同一套能力，但不同布局
+
+### 桌面：会话为主，编辑面板可展开
+
+```text
+项目／会话列表 │        会话区        │ 文件／搜索／编辑／Diff
+              │                     │
+              │ Agent 执行与结果     │ 可调整宽度、可展开
+```
+
+文件面板不能只有文件树，还应包含：
+
+- 按文件名快速打开；
+- 项目内容搜索，支持路径范围、大小写、正则；
+- 搜索结果定位到具体文件和行；
+- 多文件标签、保存与未保存状态；
+- Git 修改列表、Diff、按修改块查看；
+- 将选中的代码或搜索结果发送到当前会话。
+
+终端保留，但降为按需打开的工具，而不是操作 Agent 的必经入口。
+
+### 手机：不要照搬窄侧边栏
+
+手机上应该在全宽视图之间切换，例如：
+
+```text
+会话 ｜ 文件 ｜ 搜索 ｜ 修改
+```
+
+默认停在会话。点击文件或 Diff 时进入全屏查看／编辑，返回后恢复原来的会话位置和输入草稿。
+
+这样既保留“会话是核心”的定位，也不会把代码挤在一个无法使用的小栏里。Agent 的运行状态、审批、取消和结果都直接在会话中操作，不需要先打开终端。
+
+## 本地、Coder 和 code-server 必须指向同一个项目
+
+底层仍然是我们确定的方案 A：
+
+```text
+一个中央 dsh
+    │
+当前项目／环境上下文
+    ├─ 会话中的 Agent 工具
+    ├─ 文件与内容搜索
+    ├─ 编辑与 Diff
+    ├─ Git 与终端
+    └─ 打开对应项目的 code-server
+```
+
+**环境切换必须影响以上所有入口，而不只是 Agent 执行命令的位置。**
+
+这里还有一个很重要的细节：你可能同时在 dsh、code-server 和 Agent 中修改同一文件。因此需要处理：
+
+- 外部文件变化及时刷新；
+- 未保存的编辑草稿不能被 Agent 修改悄悄覆盖；
+- 保存时检查文件版本，冲突时提供比较，而不是强行写入；
+- 始终明显显示当前环境和项目，远端断线时不能偷偷改成本地执行。
+
+这比单纯选择 Monaco 还是 CodeMirror 更关键。
+
+## 社区插件应该如何利用
+
+现在的方向不是选择一款插件包办所有事情，而是复用它们各自已有的部分：
+
+- **远程工作区插件**：复用文件、执行、终端、连接与 helper。
+- **`dsh-remote-vs`**：参考其远程文件、搜索、Git、编辑及侧边栏交互。
+- **你现用的 code-server 集成**：保留完整 IDE 入口，检查能否让它始终打开当前选定环境和项目。
+- **新增的 Coder 适配层**：负责环境列表、生命周期和工作区连接映射。
+
+这些部分还需要核对接口后才能确定怎样组合，不能默认装在一起就自然协同。
+
+**所以，你的需求应当定义为：一个适合移动端的、会话优先的开发工作台，统一管理本地和远程项目；编辑、搜索和 Diff 是会话的配套能力，code-server 是随时可进入的深度编辑器。**
+
+按这个目标，优先级应是 **统一项目环境 → 文件／搜索／Diff 闭环 → 移动端交互 → 深度 IDE 联动**，而不是先追求完整 IDE 功能或暴露更多终端。
+
+=== Transcript line 1951 ===
+这就把目标进一步明确了：**你需要的是“一个入口管理多个项目环境”，而不是“一个入口收藏多台服务器上的 IDE 地址”。**
+
+单纯给 code-server 加反向代理，只能解决地址切换，**解决不了环境隔离、依赖冲突和沙箱生命周期**。
+
+## 目标应当是：一个网址，按项目选择环境
+
+| 现在的方式 | 你需要的方式 |
+|---|---|
+| 先选择服务器、打开对应地址 | 在同一个界面选择项目 |
+| 每台服务器手动维护 code-server | 中央维护界面，环境由模板自动创建 |
+| 项目直接使用服务器的系统环境 | 项目拥有指定镜像、依赖、用户和文件系统 |
+| Agent 在终端里运行 | Agent 通过会话操作，终端按需使用 |
+| 多项目容易共享凭据和依赖 | 按项目／账号分配独立环境与凭据 |
+
+对应结构应该是：
+
+```text
+一个固定网址：中央 dsh
+├─ 会话、设置、编辑界面统一维护
+├─ 项目列表与环境管理
+└─ 统一文件／搜索／执行接口
+       │
+       └─ Coder 等环境控制平台
+          ├─ Host A：项目甲的隔离容器
+          ├─ Host A：项目乙的隔离容器
+          └─ Host B：项目丙的容器或 VM
+```
+
+**用户操作的是项目和环境，而不是服务器地址。** 服务器主要成为资源池，放置位置可以由模板指定，或由底层集群调度。
+
+## 编辑能力也不必依赖每台机器上的 code-server
+
+这里可以改变设计：**中央 dsh 直接提供编辑器界面，通过远程文件接口操作当前项目。**
+
+也就是：
+
+- 编辑器界面只部署、更新一份；
+- 文件树、内容搜索、保存、Diff 都走当前环境的接口；
+- 命令、Git、测试、Agent 工具在当前项目环境执行；
+- 需要补全、诊断时，在环境里启动对应语言服务；
+- 不再要求每台服务器常驻一个完整 code-server。
+
+这条路线不等于立即获得 VS Code 的全部扩展生态，但能优先补齐你真正需要的文件、搜索、编辑和修改审阅能力。完整 code-server 可以保留为可选入口，**不再是基础依赖**。
+
+## 远端仍需要基础组件，但不应由你逐台维护应用
+
+需要区分：
+
+**不需要：**
+- 每台服务器手工安装 dsh；
+- 每台服务器手工安装、升级 code-server；
+- 为每个环境管理一个用户访问地址。
+
+**仍然需要：**
+- 容器运行时／K8s 节点，或者 VM 基础设施；
+- 平台的连接组件；
+- 项目环境中的开发工具，以及必要的轻量 helper。
+
+这些应该由模板、镜像和自动部署管理。**远端有执行组件不可避免，但不应该变成你手工维护的 N 套开发平台。**
+
+## “隔离”也必须由环境本身提供
+
+code-server 是编辑器服务，不是隔离机制；Coder 也不会仅凭“创建一个工作区”就自动满足所有安全要求。
+
+项目模板还要明确：
+
+- 哪些项目文件可以挂载；
+- HOME、缓存、依赖和凭据是否独立；
+- CPU、内存、进程限制；
+- 网络和宿主访问权限；
+- 停止后保留哪些数据，销毁哪些临时状态；
+- 使用普通容器，还是需要独立内核的 VM／microVM。
+
+否则只是把原来共享服务器的问题搬进了一个控制台。
+
+## 因此，方案可以收敛了
+
+**中央 dsh + 集成编辑／搜索面板 + 社区远程执行底座 + Coder 环境管理适配。**
+
+所有功能围绕同一个“项目环境身份”工作，不能出现文件看的是 Host A、Agent 却在 Host B 执行的情况。切换项目时，文件、Git、终端、Agent 执行目标和相关会话一起切换，浏览器地址不需要改变。
+
+前面搭建的本机容器原型，只验证了其中的“隔离执行”部分；**统一项目入口、跨主机环境管理、编辑搜索和移动端体验还没有实现。** 后续应该围绕这个完整目标集成，而不是继续堆叠独立服务器上的 code-server。
