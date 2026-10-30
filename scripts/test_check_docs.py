@@ -25,6 +25,16 @@ class DocumentationChecks(unittest.TestCase):
         )
         return result.returncode, json.loads(result.stdout)
 
+    def update_task(self, identifier, **updates):
+        path = self.root / 'docs/08-execution-plan.md'
+        text = path.read_text()
+        row = next(line for line in text.splitlines() if line.startswith(f'| {identifier} |'))
+        cells = row.split('|')
+        columns = ('task', 'path', 'dependencies', 'output', 'acceptance')
+        for name, value in updates.items():
+            cells[columns.index(name) + 1] = f' {value} '
+        path.write_text(text.replace(row, '|'.join(cells)))
+
     def test_current_documents_pass(self):
         code, result = self.run_checker()
         self.assertEqual(code, 0, result)
@@ -32,6 +42,7 @@ class DocumentationChecks(unittest.TestCase):
         self.assertEqual(result['nonFunctional'], 8)
         self.assertEqual(result['scenarios'], 17)
         self.assertEqual(result['nonFunctionalMappings'], 8)
+        self.assertEqual(result['executionTasks'], 31)
 
     def test_broken_link_fails(self):
         path = self.root / 'README.md'
@@ -236,6 +247,78 @@ class DocumentationChecks(unittest.TestCase):
         path.write_text(path.read_text().replace('## 4. 非功能验证映射', '## 10. 非功能验证映射'))
         code, result = self.run_checker()
         self.assertEqual(code, 0, result)
+
+    def test_missing_execution_plan_fails(self):
+        path = self.root / 'docs/08-execution-plan.md'
+        path.rename(path.with_suffix('.missing'))
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertIn('docs/08-execution-plan.md: missing required document', result['errors'])
+
+    def test_duplicate_execution_task_fails(self):
+        path = self.root / 'docs/08-execution-plan.md'
+        text = path.read_text()
+        row = next(line for line in text.splitlines() if line.startswith('| T-101 |'))
+        path.write_text(text.replace(row, row + '\n' + row))
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertTrue(any('duplicate execution tasks' in error for error in result['errors']))
+
+    def test_undefined_execution_prerequisite_fails(self):
+        self.update_task('T-102', dependencies='T-199')
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertIn('docs/08-execution-plan.md: undefined execution task T-199', result['errors'])
+
+    def test_cyclic_execution_prerequisites_fail(self):
+        self.update_task('T-101', dependencies='T-102')
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertTrue(any('execution plan has cyclic dependencies' in error for error in result['errors']))
+
+    def test_later_milestone_prerequisite_fails(self):
+        self.update_task('T-404', dependencies='T-501')
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertIn('T-404: task depends on later milestone T-501', result['errors'])
+
+    def test_invalid_execution_path_fails(self):
+        for value, message in (
+            ('P-Z', "T-101: invalid execution path 'P-Z'"),
+            ('P-F', 'T-101: P-F is reserved for phase-two M5 tasks'),
+        ):
+            with self.subTest(path=value):
+                self.update_task('T-101', path=value)
+                code, result = self.run_checker()
+                self.assertNotEqual(code, 0)
+                self.assertIn(message, result['errors'])
+
+    def test_empty_execution_output_fails(self):
+        self.update_task('T-101', output='')
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertIn('T-101: task output must not be empty', result['errors'])
+
+    def test_execution_task_without_acceptance_fails(self):
+        for value in ('', '无验证'):
+            with self.subTest(acceptance=value):
+                self.update_task('T-101', acceptance=value)
+                code, result = self.run_checker()
+                self.assertNotEqual(code, 0)
+                self.assertIn('T-101: task needs a scenario or checkpoint', result['errors'])
+
+    def test_undefined_execution_acceptance_fails(self):
+        self.update_task('T-101', acceptance='CK-99')
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertIn('T-101: task references undefined acceptance target CK-99', result['errors'])
+
+    def test_undefined_execution_reference_fails(self):
+        path = self.root / 'README.md'
+        path.write_text(path.read_text() + '\nT-999\n')
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertIn('README.md: undefined execution task T-999', result['errors'])
 
 
 if __name__ == '__main__':

@@ -25,7 +25,7 @@ dsh 工具、Host API、文件引用、搜索、侧边栏 Git
 | 候选 | 已核对事实 | 本项目用途与限制 |
 |---|---|---|
 | `CrazyShout/dsh-ssh-remote` | GitHub 源码；MIT；系统 OpenSSH、版本化 Python helper；2026-10-30 复核：最新发布为 v0.13.3（2026-10-29），0.13.2／0.13.3 的 release-manifest 中 `dshVersions` 为 0.2.0-rc.2、0.2.1-rc.2、0.2.1-rc.3；TECHNICAL.md 亦称面向 0.2.0-rc.2 与 0.2.1-rc.2 | 优先兼容性验证候选；**rc.4 未列入 manifest 的枚举版本，运行兼容性未知**。固定 tag 的相关 peer 范围更宽，不能据枚举遗漏推断安装必然失败；允许在隔离 profile 测试当前组合，不直接改生产 |
-| `xiray-xia/dsh-remote-vs` | 0.11.1，MIT；2026-10-30 复核 `package.json` 仍要求 dsh ^0.2.2-alpha.2；`src/pool.ts` 使用 ssh2，未处理 ProxyCommand／ProxyJump | 参考路由和侧边栏实现；当前环境不能直接装最新版；ssh2 连接不等于支持 OpenSSH ProxyCommand |
+| `xiray-xia/dsh-remote-vs` | 0.11.1，MIT；2026-10-30 复核 `package.json` 仍要求 dsh ^0.2.2-alpha.2；`src/pool.ts` 使用 ssh2，未处理 ProxyCommand／ProxyJump | 参考路由和侧边栏实现；当前组合须隔离验证，不因依赖差异预告安装必然失败；ssh2 连接不等于支持 OpenSSH ProxyCommand |
 | `jinsiyu/dsh-code-server-app` | 集成 coder/code-server 编辑界面；并非 Coder 工作区控制面插件 | 第二阶段参考 IDE 入口和文件打开桥接，不作为远程执行底座 |
 | Coder | 开源核心（AGPLv3）；控制台、REST、模板、工作区 Agent／SSH／Web 应用访问；外部 provisioner 页面标注 Premium | 管环境与连接；不能假定所有 Premium 能力免费，也不是代码隔离策略的替代物 |
 | dsh | 本机安装 0.2.1-rc.4；2026-10-30 复核 npm 最新为 0.2.1-rc.5（2026-10-29 发布），alpha 通道为 0.2.2-alpha.2 | 版本升级不是本轮决定；候选插件与 dsh 的版本组合必须在 M1 明确锁定 |
@@ -173,7 +173,7 @@ CLI 的“已支持”还必须满足架构文档的会话内交互契约：运�
 
 优先顺序是：公开接口组合 → 候选插件小范围适配／上游协作 → 必要的最小 dsh 核心扩展。只有在来源、兼容和安全验证后才决定是否 fork；记录许可与升级策略，避免维护多个互相分叉的远程协议。
 
-这套方案尚未选定最终第三方版本，也未完成 Coder + SSH 插件实跑。集成工作量需在首个真实兼容性实验后拆分，不沿用“从零实现全部后端”的估算，也不承诺只装一个包就零改动完成。
+这套方案尚未选定最终第三方版本，也未完成 Coder + SSH 插件实跑。[执行路径与任务拆分](08-execution-plan.md)先按契约、依赖和验收边界分解任务；实际适配粒度及工作量在首个真实兼容性实验后再修订。不沿用“从零实现全部后端”的估算，也不承诺只装一个包就零改动完成。
 
 ## 8. 来源与核对范围
 

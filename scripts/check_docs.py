@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check local documentation structure, traceability and non-functional mapping."""
+"""Check documentation structure, traceability and execution-task dependencies."""
 
 import argparse
 import collections
@@ -18,6 +18,7 @@ REQUIRED = (
     'docs/05-delivery-and-acceptance.md',
     'docs/06-decisions-and-risks.md',
     'docs/07-design-review.md',
+    'docs/08-execution-plan.md',
 )
 LINK = re.compile(r'(?<!!)\[[^\]]+\]\(([^\s)]+)(?:\s+"[^"]*")?\)')
 PLACEHOLDER = re.compile(r'\b(?:TODO|FIXME|TBD)\b|\[待补充\]|\[To be written\]')
@@ -192,6 +193,60 @@ def check(root):
     if nf_covered != expected_nonfunctional:
         errors.append('non-functional mapping does not cover all NF requirements')
 
+    # 任务表验证依赖结构，不把已定义或无环等同于运行任务已完成。
+    plan = documents.get('docs/08-execution-plan.md', '')
+    task_rows = re.findall(r'^\|\s*(T-\d{3})\s*\|([^\n]*)$', plan, re.MULTILINE)
+    duplicates = [name for name, count in collections.Counter(row[0] for row in task_rows).items() if count > 1]
+    if duplicates:
+        errors.append(f'duplicate execution tasks: {duplicates}')
+    if not task_rows:
+        errors.append('execution plan has no task definitions')
+    tasks = {}
+    for identifier, row in task_rows:
+        cells = [cell.strip() for cell in row.split('|')]
+        if len(cells) != 5 or cells[-1]:
+            errors.append(f'{identifier}: execution task needs five table columns')
+            continue
+        path, prerequisites, output, acceptance_targets = cells[:-1]
+        if path not in {f'P-{letter}' for letter in 'ABCDEF'}:
+            errors.append(f'{identifier}: invalid execution path {path!r}')
+        phase = int(identifier[2])
+        if phase not in range(1, 6):
+            errors.append(f'{identifier}: task phase must be M1 through M5')
+        if (path == 'P-F') != (phase == 5):
+            errors.append(f'{identifier}: P-F is reserved for phase-two M5 tasks')
+        dependencies = re.findall(r'\bT-\d{3}\b', prerequisites)
+        if not dependencies and prerequisites != '无':
+            errors.append(f'{identifier}: prerequisites must name tasks or be 无')
+        if len(dependencies) != len(set(dependencies)):
+            errors.append(f'{identifier}: duplicate task prerequisites')
+        tasks[identifier] = set(dependencies)
+        if not output:
+            errors.append(f'{identifier}: task output must not be empty')
+        targets = re.findall(r'\b(?:SC|CK)-\d{2}\b', acceptance_targets)
+        if not targets:
+            errors.append(f'{identifier}: task needs a scenario or checkpoint')
+        for target in targets:
+            if target not in set(scenarios) | set(checkpoints):
+                errors.append(f'{identifier}: task references undefined acceptance target {target}')
+    for name, text in documents.items():
+        for reference in sorted(set(re.findall(r'\bT-\d{3}\b', text)) - set(tasks)):
+            errors.append(f'{name}: undefined execution task {reference}')
+    for identifier, dependencies in tasks.items():
+        for dependency in sorted(dependencies):
+            if dependency in tasks and dependency[2] > identifier[2]:
+                errors.append(f'{identifier}: task depends on later milestone {dependency}')
+    remaining = {identifier: dependencies & tasks.keys() for identifier, dependencies in tasks.items()}
+    while remaining:
+        ready = {identifier for identifier, dependencies in remaining.items() if not dependencies}
+        if not ready:
+            errors.append(f'execution plan has cyclic dependencies: {sorted(remaining)}')
+            break
+        for identifier in ready:
+            del remaining[identifier]
+        for dependencies in remaining.values():
+            dependencies.difference_update(ready)
+
     return {
         'ok': not errors,
         'documents': len(documents),
@@ -203,6 +258,7 @@ def check(root):
         'acceptanceMappings': len(matrix_pairs),
         'nonFunctionalMappings': len(nf_covered),
         'checkpoints': len(set(checkpoints)),
+        'executionTasks': len(tasks),
         'localLinks': local_links,
         'externalLinksNotFetched': external_links,
         'errors': errors,
@@ -223,6 +279,7 @@ def main():
               f"{result['acceptanceRows']} acceptance rows, {result['localLinks']} local links")
         print(f"Mappings: {result['declaredMappings']} declared, {result['acceptanceMappings']} in matrix; "
               f"{result['nonFunctionalMappings']} non-functional mappings, {result['checkpoints']} checkpoints")
+        print(f"Execution plan: {result['executionTasks']} tasks; dependencies and phase boundaries checked")
         print(f"External links counted, not re-fetched: {result['externalLinksNotFetched']}")
     else:
         for error in result['errors']:
