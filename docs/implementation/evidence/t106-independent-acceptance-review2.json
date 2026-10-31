@@ -1,0 +1,984 @@
+{
+  "task": "T-106",
+  "role": "independent-reacceptance-agent-not-implementer",
+  "recordedOn": "2026-10-30",
+  "gate": "pass",
+  "pass": true,
+  "t107Ready": true,
+  "t107Executed": false,
+  "stageM1Passed": false,
+  "productScenariosPassed": [],
+  "scope": "Limited T-106 experimental BoundProvider -> BoundWorkspace -> RemoteProcess paths only; no native spawn, product main-session integration, recovery/replay or production isolation acceptance.",
+  "summary": "Both prior findings independently closed using the real current publisher/consumer and verifier/stager, including deterministic/concurrent/failure/replacement tests. The unchanged current source then completed one fresh full default remote run with all 11 expected checks and both controller/Node exit 0. Independent disk/proc observation confirmed retained data, exact process cleanup and unchanged 4+32 containers.",
+  "priorReview": {
+    "path": "docs/implementation/evidence/t106-independent-acceptance-review1.json",
+    "sha256": "822eae16a0c0124b862d2e89bb4d4f2b49b96208716cb5c14486a11e6e142a02"
+  },
+  "priorReviewValidation": {
+    "path": "docs/implementation/evidence/t106-independent-acceptance-review1-validation.json",
+    "sha256": "e65e945591cbddd429ce3414700ea6211d7e14b103afe09d78429061f049a507"
+  },
+  "reviewedRepairSelftest": {
+    "path": "docs/implementation/evidence/t106-repair1-selftest.json",
+    "sha256": "060649e76c761dd898b182b6cc09cd09c314a04f415d8190a014f8eb690e19a7"
+  },
+  "sourceSha256": {
+    "scripts/m1/t105_connection.py": "4855f897eb1e1804d31c819cdd7303216ac9e6003cbd47d1cbe879c0f19f87e7",
+    "scripts/m1/t105_remote_gate.py": "56b0285abb0a30a1627a346cb80400bd0d5d5fb4bf2778a039b6eee013b81efe",
+    "scripts/m1/t105_candidate.mjs": "45fac62670fbd519a57bdee18f47a7d94170d02498095fd3aa19912071b66a54",
+    "scripts/m1/t105_cleanup.py": "9d218608182e746b6b4d3886b7aa737fa027a513144f7fbd62135bd24a2a1239",
+    "scripts/m1/test_t105_connection.py": "daf764aa5e35d4fd537aa79041da381b56cce523adad8e34857169b8894ccc8b",
+    "scripts/m1/record_t105.py": "16ba6d05002fcf3be350b2a750d9b3acb6bbc3f58ba4877007184057369f4607",
+    "scripts/m1/ssh_remote_entry.mjs": "089d133d31dca7df627111865655b86c9817f14b0becbcfd1251c5f311dc0d6f",
+    "scripts/m1/network_guard.mjs": "a5b1dfcd5a71fef8454a5bfb65c15330812a3cedd4833085b69db674e6750e8f",
+    "scripts/m1/coder_lab.py": "906e345fc616893b6a76a4442139f456492759cfcf75f4a56201b1285f2da3e3",
+    "scripts/m1/coder_template.py": "ade62ffd189f083eec9fa44cb9d64da3c62ddeeafea6fc5ecd3e7d0a27d1ad4e",
+    "scripts/m1/audit_coder_lab.py": "ac0a997ee7832b2d6f60f00ceca104c15e8bacbc69bb3cc6a5f008b957489a67",
+    "scripts/m1/t106_boundary_test.py": "b02054354aa3abd192be9b3848f0a99efc423cd31e5102162c6516abb6f211ae",
+    "scripts/m1/t106_candidate.mjs": "51f05ce0e17d141f489744240b74c080f2e99df023c1c207ed9a9c5876ff52e6",
+    "scripts/m1/t106_cleanup.py": "98b80e41b5a7a77f070a95b3ef670d255ed17460e6355946fef6d4f9871b82ee",
+    "scripts/m1/t106_observe.py": "37fbea6a5e1c211117518bfac7a99500121763f4f81ebf340da1a2be78f31761",
+    "scripts/m1/t106_payload.py": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0",
+    "scripts/m1/t106_provider.mjs": "ed469675ef37aae2feb3981642f4053f65faf6ddbcbcc91634684c9d1508b5c6",
+    "scripts/m1/t106_provider.test.mjs": "730093c760a276ed7229c25aa745f80fd253014bf0250f1777df31ccf4540167",
+    "scripts/m1/t106_publication.test.mjs": "af2cf766c2b60a9aa9c79fa82aaa6946e79b68b1f79f171f549afcd0ee6cac2c",
+    "scripts/m1/t106_run.py": "f63eeea7210edeb43662bd799229193183fde40a8a4b953b1f506a68ed12d0fc",
+    "scripts/m1/t106_tools.py": "2ba34fe665fa6c57d62c94f912557441bc153056901da369623b9977cd24a342"
+  },
+  "runtimeSourceChangedByReviewer": false,
+  "infrastructureChangedByReviewer": false,
+  "commitPushResetCleanPublishOrDelegation": false,
+  "trust": {
+    "baseline": {
+      "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/source-baseline.json",
+      "sha256": "e1107dc28a575067aa8c995571e1beb1f5860817894189e0e832fe52d85c391c"
+    },
+    "T105UnchangedSourceFiles": 11,
+    "candidateUnchangedFileSet": 298,
+    "candidateArchiveSha256": "cab6fa53954dc1272dfde9ec8a8fd3928fd79232c78b658cb1b434fb0644b162",
+    "priorIndependentSignatureChainEvidence": {
+      "path": "artifacts/m1/t106/acceptance-cmy_rpp4/integrity-ek9btokt/result.json",
+      "sha256": "9ed8c0b5b58a059b2af296f8ebd5bf8fa73a5cd91369ef57419386f12f0dbe02"
+    },
+    "signedPackagesIndexStillMatches": true,
+    "packagesSha256": "adb1c01115c3b11d2a5cde43b17ce3c53fa7cc48f834b930f63910d2c7dc74f5",
+    "cachedDependencyHashes": {
+      "manifest.json": "c16ca4e13afd658aa95e439e98cdc2a8c7f3c767d2a568ac832096cfba4fc8ac",
+      "InRelease": "cdb2f31d809f589719a53c6ad15f255b27569c4059542ada282aaa21b8e164b0",
+      "download/ripgrep.deb": "71fe8a5667bc87d2bca175a3426c6ec518e0679cc821d23ae7056de7096f04de",
+      "extracted/rg": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702"
+    },
+    "helperBundleSha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+    "helperBundleBytes": 217238,
+    "cachedToolReused": true,
+    "networkDownloadOrSystemInstallation": false
+  },
+  "findingOutcomes": [
+    {
+      "id": "T106-IA-01",
+      "outcome": "pass",
+      "files": [
+        {
+          "path": "scripts/m1/t106_run.py",
+          "lines": "35-56,150"
+        },
+        {
+          "path": "scripts/m1/t106_candidate.mjs",
+          "lines": "54-60",
+          "changed": false
+        }
+      ],
+      "deterministicRealPublisherConsumer": {
+        "task": "T-106",
+        "case": "real-publisher-consumer-barrier",
+        "path": "artifacts/m1/t106/publication-test-vpGljn/regression.json",
+        "sha256": "05f08360882d6d6aad7c01309c5ddc722fd1416f96bd0c4ef6b07a09556dca59",
+        "facts": {
+          "partialWriteHeld": true,
+          "consumerPolledWhileHeld": true,
+          "consumedBeforePublication": false,
+          "completeReadback": true,
+          "publisherExitCode": 0
+        }
+      },
+      "independentTests": [
+        {
+          "case": "IA-01-existing-linked-target",
+          "rejected": true,
+          "targetAndCanaryUnchanged": true,
+          "pendingCount": 0
+        },
+        {
+          "case": "IA-01-prepublication-failures",
+          "failures": [
+            {
+              "stage": "serialize",
+              "finalExists": false,
+              "pendingCount": 0
+            },
+            {
+              "stage": "file-fsync",
+              "finalExists": false,
+              "pendingCount": 0
+            },
+            {
+              "stage": "link",
+              "finalExists": false,
+              "pendingCount": 0
+            }
+          ]
+        },
+        {
+          "case": "IA-01-concurrent-real-publishers",
+          "outcomes": [
+            {
+              "publisher": 1,
+              "outcome": "published"
+            },
+            {
+              "publisher": 0,
+              "outcome": "FileExistsError"
+            }
+          ],
+          "winner": 1,
+          "completeJson": true,
+          "finalMode": "0600",
+          "pendingCount": 0
+        }
+      ],
+      "independentEvidence": {
+        "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/independent-boundaries-14vkvetk/result.json",
+        "sha256": "720d64892f94ec9f35f4a8f22644d37e487b09c7f5d73da607d50965d0e15f51"
+      },
+      "existingRegularTargetRefusalAlsoCovered": true,
+      "malformedFinalStillRejected": true,
+      "all13RuntimeObserverResponsesComplete": true,
+      "runtimePendingFilesRemaining": 0,
+      "historicalCounterexample": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/observer_race.mjs",
+        "sha256": "687e4d5c499626d31d78702f0308819fbbb9b7a04c3b9225e355fc9f6c70c887",
+        "unchanged": true,
+        "interpretation": "Direct-to-final half-write intentionally bypasses the repaired publisher. It remains historical evidence; no consumer sleep or exception-swallowing fix was introduced."
+      }
+    },
+    {
+      "id": "T106-IA-02",
+      "outcome": "pass",
+      "files": [
+        {
+          "path": "scripts/m1/t106_tools.py",
+          "lines": "49-165,196-202"
+        },
+        {
+          "path": "scripts/m1/t106_run.py",
+          "lines": "59-70,181"
+        },
+        {
+          "path": "scripts/m1/t106_candidate.mjs",
+          "lines": "185-213",
+          "changed": false
+        }
+      ],
+      "originalIndependentCheckerByteIdentical": {
+        "original": "artifacts/m1/t106/acceptance-cmy_rpp4/check_tools.py",
+        "executedCopy": "artifacts/m1/t106/acceptance-rereview-jil8o45d/check_tools_original.py",
+        "sha256": "ee284f50927e0689156953f1781ddc93c3976953a4d1971f1e5a4758d48cb47b"
+      },
+      "originalCounterexampleCases": [
+        {
+          "case": "valid-copy",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/valid-copy/manifest.json",
+          "expectedAccepted": true,
+          "actualAccepted": true,
+          "passed": true,
+          "error": null
+        },
+        {
+          "case": "tampered-source",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/tampered-source/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_PROVENANCE_MISMATCH"
+          }
+        },
+        {
+          "case": "tampered-package",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/tampered-package/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_PACKAGE_DIGEST_MISMATCH"
+          }
+        },
+        {
+          "case": "tampered-binary",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/tampered-binary/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_BINARY_DIGEST_MISMATCH"
+          }
+        },
+        {
+          "case": "leaf-package-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/leaf-package-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "leaf-binary-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/leaf-binary-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "download-directory-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/download-directory-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "extracted-directory-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/extracted-directory-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "manifest-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/manifest-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "cache-directory-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/tool-inputs-umutyd5v/linked-cache-owned/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        }
+      ],
+      "additionalIndependentTests": [
+        {
+          "case": "IA-02-cache-ancestor-link",
+          "rejected": true,
+          "error": "T106_TOOL_CACHE_SYMLINK"
+        },
+        {
+          "case": "IA-02-in-place-change-while-reading",
+          "rejected": true,
+          "error": "T106_TOOL_CACHE_OBJECT_CHANGED"
+        },
+        {
+          "case": "IA-02-leaf-swapped-between-lstat-open",
+          "rejected": true
+        },
+        {
+          "case": "IA-02-real-verify-replace-stage",
+          "verified": [
+            {
+              "sha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702",
+              "bytes": 4917680,
+              "inputs": {
+                "manifest": {
+                  "device": 2049,
+                  "inode": 9115960,
+                  "bytes": 3725,
+                  "sha256": "c16ca4e13afd658aa95e439e98cdc2a8c7f3c767d2a568ac832096cfba4fc8ac"
+                },
+                "package": {
+                  "device": 2049,
+                  "inode": 9115961,
+                  "bytes": 1455230,
+                  "sha256": "71fe8a5667bc87d2bca175a3426c6ec518e0679cc821d23ae7056de7096f04de"
+                },
+                "binary": {
+                  "device": 2049,
+                  "inode": 9115962,
+                  "bytes": 4917680,
+                  "sha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702"
+                }
+              }
+            }
+          ],
+          "originalCachePathNowUnverified": true,
+          "stagedSha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702",
+          "stagedBytes": 4917680,
+          "reopenedCacheForUpload": false
+        }
+      ],
+      "implementationRegressionsIndependentlyRerun": [
+        "all seven symlink forms including ancestor",
+        "directory swap between lstat/open",
+        "open cache anchor replacement",
+        "verified archive bytes supplied to dpkg stdin",
+        "immutable staging bytes despite later cache replacement"
+      ],
+      "liveFullRunVerifiedInputs": {
+        "manifest": {
+          "device": 2049,
+          "inode": 9114977,
+          "bytes": 3725,
+          "sha256": "c16ca4e13afd658aa95e439e98cdc2a8c7f3c767d2a568ac832096cfba4fc8ac"
+        },
+        "package": {
+          "device": 2049,
+          "inode": 9114961,
+          "bytes": 1455230,
+          "sha256": "71fe8a5667bc87d2bca175a3426c6ec518e0679cc821d23ae7056de7096f04de"
+        },
+        "binary": {
+          "device": 2049,
+          "inode": 9114968,
+          "bytes": 4917680,
+          "sha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702"
+        }
+      },
+      "stagedAndHelperUploadedAndIndependentDiskBinarySha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702",
+      "caveat": "Replacement tests are local owned fixtures with the real verifier/stager; the unmodified full run separately proves actual helper upload of that staging format. No live malicious same-UID cache replacement or production OS isolation is claimed."
+    }
+  ],
+  "fullDefaultRun": {
+    "command": [
+      "python3",
+      "-I",
+      "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_run.py",
+      "run"
+    ],
+    "controllerExitCode": 0,
+    "candidateExitCode": 0,
+    "focus": "all",
+    "caseCount": 11,
+    "runtimePassed": true,
+    "sameRunNoStitching": true,
+    "attemptsInThisReReview": 1,
+    "run": "artifacts/m1/t106/run-b26a6fc0d124d0ee4c84aa85",
+    "result": {
+      "path": "artifacts/m1/t106/run-b26a6fc0d124d0ee4c84aa85/result.json",
+      "sha256": "38da9ad2bd9d7904344ba6350becd3d25950ac23a7c0bdfd95b05ba1196f2946"
+    },
+    "candidate": {
+      "path": "artifacts/m1/t106/run-b26a6fc0d124d0ee4c84aa85/candidate.json",
+      "sha256": "9faeae9ea6ef93c098b95229ad1ed6a3fae6daec8aa6c6b4f117d6ef9762fd5d"
+    },
+    "observerResponseCount": 13,
+    "sourcesMatchedRepairAndFrozenBaseline": true,
+    "startedAtUnix": 1793371498.2380767,
+    "finishedAtUnix": 1793371540.7995763
+  },
+  "coverage": [
+    {
+      "case": "A",
+      "status": "verified-experimental",
+      "facts": {
+        "utf8AndBinaryWrites": true,
+        "providerFullReadback": [
+          {
+            "path": "binary fixture.bin",
+            "bytes": 736,
+            "sha256": "066315a81a92b727355cb9328deb358b0d8507a69ea3626f627dde0a41e4e17c"
+          },
+          {
+            "path": "probe.py",
+            "bytes": 5994,
+            "sha256": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0"
+          },
+          {
+            "path": "utf8 文件.txt",
+            "bytes": 68,
+            "sha256": "fcfff1986911cd8fd388f53ba18d3ff175817a72224d7fe5b5c383a32fe04caa"
+          }
+        ],
+        "independentDiskBytesHashes": true,
+        "listingAndFilenameRetrieval": true,
+        "negativeCodes": [
+          "E_INVALID_PATH",
+          "E_NOT_DIRECTORY",
+          "E_NOT_FOUND",
+          "E_OUTSIDE_ROOT",
+          "E_SYMLINK",
+          "T106_PATH_OUTSIDE_BINDING"
+        ],
+        "outsideRootCanaryUnchanged": true,
+        "centralCanariesAndPeerMarkerTopLevelUnchanged": true
+      }
+    },
+    {
+      "case": "B",
+      "status": "verified-experimental",
+      "facts": {
+        "structuredArgv": [
+          "space arg",
+          "single'quote",
+          "double\"quote",
+          "$(must-not-run)",
+          "; not a shell",
+          "",
+          "中文"
+        ],
+        "cwd": "/workspace/t106-b26a6fc0d124d0ee4c84aa85/project/cwd space",
+        "env": "remote env with spaces '\" 中文",
+        "remoteUid": 1000,
+        "pid": 8109,
+        "startTick": "631357144",
+        "separateStdoutStderr": true,
+        "exitCode": 17,
+        "after": [
+          {
+            "pid": 8109,
+            "startTick": "631357144",
+            "state": "gone"
+          }
+        ],
+        "nativeCtxSubprocessAccepted": false
+      }
+    },
+    {
+      "case": "C",
+      "status": "verified-experimental",
+      "facts": {
+        "isatty": [
+          true,
+          true,
+          true
+        ],
+        "initialRowsCols": [
+          27,
+          91
+        ],
+        "resizedRowsCols": [
+          41,
+          123
+        ],
+        "unicodeInputRoundtrip": true,
+        "foregroundGroup": {
+          "pgid": 8145,
+          "verified": true
+        },
+        "foregroundSignal": {
+          "delivered": true,
+          "targetPgid": 8145,
+          "verified": true
+        },
+        "childExit": 23,
+        "parentExit": 0,
+        "after": [
+          {
+            "pid": 8140,
+            "startTick": "631357355",
+            "state": "gone"
+          },
+          {
+            "pid": 8145,
+            "startTick": "631357391",
+            "state": "gone"
+          }
+        ]
+      }
+    },
+    {
+      "case": "D",
+      "status": "verified-experimental",
+      "facts": {
+        "parentChildGuardianMembers": [
+          {
+            "pid": 8186,
+            "state": "S",
+            "ppid": 8182,
+            "pgid": 8186,
+            "sid": 8182,
+            "tty": 0,
+            "tpgid": -1,
+            "startTick": "631357582",
+            "uid": 1000,
+            "cwd": "/workspace/t106-b26a6fc0d124d0ee4c84aa85/project",
+            "mode": "cancel",
+            "belongsToRun": true,
+            "kind": "workload",
+            "ownerTokenPresent": false,
+            "agentTokenPresent": false
+          },
+          {
+            "pid": 8187,
+            "state": "S",
+            "ppid": 8182,
+            "pgid": 8186,
+            "sid": 8182,
+            "tty": 0,
+            "tpgid": -1,
+            "startTick": "631357582",
+            "uid": 1000,
+            "cwd": "/workspace/t106-b26a6fc0d124d0ee4c84aa85/project",
+            "mode": null,
+            "belongsToRun": true,
+            "kind": "supervisor-or-guardian",
+            "ownerTokenPresent": false,
+            "agentTokenPresent": false
+          },
+          {
+            "pid": 8191,
+            "state": "S",
+            "ppid": 8186,
+            "pgid": 8186,
+            "sid": 8182,
+            "tty": 0,
+            "tpgid": -1,
+            "startTick": "631357612",
+            "uid": 1000,
+            "cwd": "/workspace/t106-b26a6fc0d124d0ee4c84aa85/project",
+            "mode": "cancel-child",
+            "belongsToRun": true,
+            "kind": "workload",
+            "ownerTokenPresent": false,
+            "agentTokenPresent": false
+          }
+        ],
+        "termination": {
+          "graceful": {
+            "running": true,
+            "graceMs": 1500,
+            "scope": "group"
+          },
+          "forced": null,
+          "final": {
+            "processId": "ca0ebf88-66d6-42f6-9f22-4d88ae649ec7",
+            "pid": 8186,
+            "pgid": 8186,
+            "tty": false,
+            "running": false,
+            "exitCode": 0,
+            "signal": null,
+            "latestSeq": "3"
+          }
+        },
+        "parentSignalForwarded": false,
+        "childSignal": 15,
+        "directPidStartTickAfter": [
+          {
+            "pid": 8186,
+            "startTick": "631357582",
+            "state": "gone"
+          },
+          {
+            "pid": 8187,
+            "startTick": "631357582",
+            "state": "gone"
+          },
+          {
+            "pid": 8191,
+            "startTick": "631357612",
+            "state": "gone"
+          }
+        ],
+        "boundedExactRunHomeTeardown": true,
+        "unknownCancellationNotClaimed": true
+      }
+    },
+    {
+      "case": "E",
+      "status": "verified-experimental-fail-closed-only",
+      "facts": {
+        "onlyOwnedConnectionFaulted": true,
+        "operationId": "1af713b7-ac76-4be0-838a-bfc671869df2",
+        "providerError": {
+          "type": "RemoteHelperCallInterruptedError",
+          "code": null,
+          "kind": "disconnect",
+          "mutationMayHaveStarted": true
+        },
+        "dispatchCount": 1,
+        "directSideEffectCount": 1,
+        "unknownOriginalIdentityRetained": true,
+        "newWriteError": {
+          "type": "Error",
+          "code": "T106_UNKNOWN_OUTCOME",
+          "kind": null,
+          "mutationMayHaveStarted": null
+        },
+        "newCommandError": {
+          "type": "Error",
+          "code": "T106_UNKNOWN_OUTCOME",
+          "kind": null,
+          "mutationMayHaveStarted": null
+        },
+        "centralFallback": false,
+        "backoffCounterNotConnectionCount": true,
+        "recoveryReplayOrDedupClaimed": false
+      }
+    },
+    {
+      "case": "F",
+      "status": "verified-private-tool-experiment; frozen-image-dependency-still-blocked",
+      "facts": {
+        "frozenImageNegative": {
+          "outcome": "blocked-dependency-not-search-pass",
+          "complete": false,
+          "error": {
+            "code": "E_EXECUTABLE_NOT_FOUND",
+            "message": "ripgrep is required in the remote login-shell PATH"
+          },
+          "reason": "Frozen image lacks ripgrep; no tool installed or capability spoofed."
+        },
+        "fixedPackage": "Ubuntu arm64 ripgrep 14.1.0-1",
+        "binaryBytes": 4917680,
+        "binarySha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702",
+        "completeReadback": true,
+        "remoteMode": 448,
+        "remoteUid": 1000,
+        "nonGitSource": "rg",
+        "GitSource": "git",
+        "contentSearch": "explicit bound command rg --json, not product structured search API",
+        "contentMatchExitCode": 0,
+        "contentNoMatchExitCode": 1,
+        "privateHomeAndTestProcessPathOnly": true,
+        "cacheLinkAndTamperingBoundariesPassed": true,
+        "frozenImageFixed": false
+      }
+    },
+    {
+      "case": "G",
+      "status": "verified-bounded-experimental-lifecycle",
+      "facts": {
+        "singleRawSession": true,
+        "currentIdentityHelperGateCount": 2,
+        "currentIdentityGatesPassed": true,
+        "additionalHostKeyEnrollmentProbeCount": 1,
+        "noAutomaticMutationReplay": true,
+        "disabledChannels": [
+          "stock-SSH-subprocess",
+          "product-content-search",
+          "mutation-replay",
+          "recovery"
+        ],
+        "disabledChannelRejections": {
+          "stock-SSH-subprocess": {
+            "type": "Error",
+            "code": "T106_CHANNEL_DISABLED",
+            "kind": null,
+            "mutationMayHaveStarted": null
+          },
+          "product-content-search": {
+            "type": "Error",
+            "code": "T106_CHANNEL_DISABLED",
+            "kind": null,
+            "mutationMayHaveStarted": null
+          },
+          "mutation-replay": {
+            "type": "Error",
+            "code": "T106_CHANNEL_DISABLED",
+            "kind": null,
+            "mutationMayHaveStarted": null
+          },
+          "recovery": {
+            "type": "Error",
+            "code": "T106_CHANNEL_DISABLED",
+            "kind": null,
+            "mutationMayHaveStarted": null
+          }
+        },
+        "beforeFaultHealth": {
+          "ok": true,
+          "home": "/tmp/t105-b26a6fc0d124d0ee4c84aa85/home",
+          "uptimeMs": 26266,
+          "workspaces": 1,
+          "openingWorkspaces": 0,
+          "discoveries": 0,
+          "processes": 0,
+          "pathLocks": 0,
+          "readHandles": 0,
+          "writeHandles": 0
+        },
+        "disposer": {
+          "entered": 1,
+          "completed": 1
+        },
+        "helperEntriesAfter": 0,
+        "registryAfter": 0,
+        "helperCleanup": {
+          "action": "authenticated-admin-shutdown",
+          "acknowledged": true,
+          "before": [
+            {
+              "pid": 7615,
+              "state": "S",
+              "ppid": 1,
+              "pgid": 7615,
+              "startTick": "631355426",
+              "kind": "daemon",
+              "uid": 1000
+            },
+            {
+              "pid": 8348,
+              "state": "S",
+              "ppid": 7615,
+              "pgid": 8348,
+              "startTick": "631358114",
+              "kind": "owned-supervisor-or-guardian",
+              "uid": 1000
+            },
+            {
+              "pid": 8360,
+              "state": "S",
+              "ppid": 8348,
+              "pgid": 8359,
+              "startTick": "631358211",
+              "kind": "owned-supervisor-or-guardian",
+              "uid": 1000
+            }
+          ],
+          "after": [],
+          "unreaped": [],
+          "releaseRetained": true,
+          "dataDeleted": false
+        }
+      }
+    }
+  ],
+  "commands": [
+    {
+      "case": "runner-help",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_run.py",
+        "run",
+        "--help"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/runner-help.json",
+        "sha256": "a6f233a412346590ebb4692a33ad3233c01d88c71331d166df1aa93dbf248bec"
+      }
+    },
+    {
+      "case": "repair-boundary-regressions",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_boundary_test.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/repair-boundary-regressions.json",
+        "sha256": "1e62c094dabe79f03e9fe74beb592f0944aade53dc537bca72a84b7c011d73cf"
+      }
+    },
+    {
+      "case": "publication-and-provider-regressions",
+      "command": [
+        "node",
+        "--test",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_publication.test.mjs",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_provider.test.mjs"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/publication-and-provider-regressions.json",
+        "sha256": "4c2aa85010a2768d891cbbb7986668eee845038b008e864d0ba717c77b9a5658"
+      }
+    },
+    {
+      "case": "unchanged-independent-tool-negatives",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/check_tools_original.py",
+        "negatives"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/unchanged-independent-tool-negatives.json",
+        "sha256": "42978d511256bd2814f0267f052a3dc8190c10e7661e3042ed57e9f0e8bc42bd"
+      }
+    },
+    {
+      "case": "independent-repair-boundaries",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/recheck_boundaries.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/independent-repair-boundaries.json",
+        "sha256": "b34f8f1d7b4b0f769dec9586a3b620ecc4676bfaf9763a705d60a9f03295f549"
+      }
+    },
+    {
+      "case": "independent-repair-full-default-suite",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_run.py",
+        "run"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/full-default-suite.json",
+        "sha256": "de19607e464754dc033b324971779bfe965a4c30110a8b3cd1e1f73e1f0d18d1"
+      }
+    },
+    {
+      "case": "independent-final-observation-command",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-rereview-jil8o45d/observe_rereview.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/final-observation-command.json",
+        "sha256": "22378658c7330e2e2007e6f3bca5334781aaad43a836cf14da76d82185c1f48d"
+      }
+    }
+  ],
+  "syntax": {
+    "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/syntax.json",
+    "sha256": "f6d1dcfb3808cbb40193feef3197c3dccaa1df1943b47912ca7838c31d039e0f"
+  },
+  "independentBoundaryTestCount": 7,
+  "originalIndependentToolCaseCount": 10,
+  "providedBoundaryTestCount": 8,
+  "providedPublicationAndProviderTestCount": 18,
+  "finalResources": {
+    "evidence": {
+      "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/independent-final-observation.json",
+      "sha256": "e854d8479c1cd9d30a1b0d871a55a399b4d551acda45fe8f3f1c6126e2564b94"
+    },
+    "observationWindowUnix": [
+      1793371709.2440965,
+      1793371711.1899316
+    ],
+    "trackedRemotePidStartTickCount": 10,
+    "trackedAllGoneOrReused": true,
+    "remainingRemoteOwnedProcesses": [],
+    "centralRunnerAndCandidatePids": [],
+    "transport": {
+      "hostBrokerPids": [],
+      "controlPlaneCliPids": []
+    },
+    "runningContainers": 36,
+    "originalContainersRetained": 32,
+    "labContainersRetained": 4,
+    "exactSetUnchanged": true,
+    "currentBindingsUnchanged": true,
+    "syntheticDataRetained": true,
+    "dataDeleted": false,
+    "resourcesAndLogWindow": [
+      {
+        "name": "m1-a",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/workspace"
+        ],
+        "logWindowStartedUnix": 1793371498,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      },
+      {
+        "name": "m1-b",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/workspace"
+        ],
+        "logWindowStartedUnix": 1793371498,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      },
+      {
+        "name": "coder",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/var/run/docker.sock",
+          "/home/coder",
+          "/run/lab-tls",
+          "/opt/lab-template"
+        ],
+        "logWindowStartedUnix": 1793371498,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      },
+      {
+        "name": "database",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/var/lib/postgresql/data"
+        ],
+        "logWindowStartedUnix": 1793371498,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      }
+    ]
+  },
+  "historicalEvidencePreserved": {
+    "review1TwoFullRunsExit1": true,
+    "oldImplementationFailureHistory": true,
+    "oldReviewAndRepairSelftestNotOverwritten": true,
+    "oldObserverRaceUnchanged": true,
+    "oldChecksumRowsNotRewritten": true,
+    "historicalExpectedSshEofRetained": true,
+    "nodePermissionWarningRetained": true,
+    "startupHistoryErrorFreeClaimed": false
+  },
+  "independentCheckerSha256": {
+    "observe_rereview.py": "99da63d12c33d7b7359c988568fe6c7aa7c3de3f9a3261dd0f25d074333a7c74",
+    "check_tools_original.py": "ee284f50927e0689156953f1781ddc93c3976953a4d1971f1e5a4758d48cb47b",
+    "recheck_boundaries.py": "c6c0cbb74f2f70a2e3bad62bd90dfe7dc7747f6c7eb871d45eb9e487404a4c13"
+  },
+  "remainingLimits": [
+    "T-107 has not been executed; t107Ready means only the T-106 prerequisite is met, not full M1 approval.",
+    "Frozen lab-v3 image still lacks rg and the initial helper is degraded; private per-run tools are experimental dependencies, not deployment or product search delivery.",
+    "Native ctx.subprocess.spawn manages local OpenSSH lifecycle, not validated remote cancellation; remains disabled.",
+    "Product main-session/provider integration, safe mutation replay, recovery, rebuild races and production isolation remain unproved or undelivered.",
+    "No new browser/deployment/historical SDK audit, model API, public network, third workspace or infrastructure lifecycle operations.",
+    "Only own synthetic data and exact process identities were observed; peer marker/top-level metadata unchanged does not exhaustively byte-hash all prior project data."
+  ],
+  "handoff": "Return independent pass for the declared T-106 experimental scope to the coordinator. Do not start T-107 in this agent."
+}

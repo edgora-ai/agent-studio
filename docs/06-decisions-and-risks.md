@@ -82,7 +82,7 @@
 
 | 编号 | 问题 | 核查方式／不通过时的处理 |
 |---|---|---|
-| R-01 | CrazyShout 插件与当前 dsh 的真实契约 | rc.4 未列入 manifest 枚举，peer 约束更宽；兼容性未知，不是已证实失败。先在隔离实例验证当前组合，具体错误出现后再决定升级／适配；不改生产 |
+| R-01 | CrazyShout 插件与当前 dsh 的真实契约 | rc.4 未列入 manifest 不等于安装失败。T-103 已验证显式入口的隔离文件 profile，原生注册漏清理仍禁用；生产组合与远端契约未验，不能扩大结论或改生产 |
 | R-02 | Coder SSH 别名是否贯穿插件并连接预期实例 | 实测 ProxyCommand、Host key、非交互认证及模板构建记录；错误工作区／账号／根目录和过期实例必须拒绝，同连接写读不能自证 |
 | R-03 | better-sidebar 哪些入口仍直接访问中央文件／Git／打开器 | 对指定版本审计文件树、watch、搜索、只读 Git、链接、缓存和 `open-external`；逐项改造或禁用，写操作按首期能力表分级 |
 | R-04 | 远端编程 CLI 是否能启动并回传实际交互 | 测试 cwd、载荷、stdio、控制句柄、权限／澄清事件、响应绑定、取消和凭据；不兼容时使用明确适配器，终端专用交互不算首期支持 |
@@ -112,6 +112,6 @@
 
 ## 近期实施起点
 
-按[执行路径与任务拆分](08-execution-plan.md)先做 T-101／T-102 的只读版本、来源与契约核查；实验授权齐备后，再建隔离测试实例、固定版本、可追溯插件资产和专用 Coder 测试工作区。经模板与当前通道身份核验，先证明中央 dsh 到远端文件／命令／PTY 的目标一致，通过 T-107 才推进绑定、UI 与跨主机。不把文档检查、GitHub 提交或任务清单视为安装、创建资源或生产迁移授权。
+按[执行路径与任务拆分](08-execution-plan.md)已完成 T-101／T-102 的只读核查。T-103 的指定隔离 profile 及复核发现的软链接写边界／DNS guard 修正已验证；未经包装的 Cordis 注册漏清理仍保留为失败，原始 bundle 不启用，见[实验记录](implementation/t103-isolated-load.md)。用户另行明确授权自行搭建 Coder；T-104 已部署独立 TLS 控制面与数据库，冻结 lab-v3 模板，两个工作区通过 API／数据库／容器独立身份核对及浏览器登录验证，见[Coder 记录](implementation/t104-coder-lab.md)。普通容器、同 UID marker、尚缺 PID／磁盘配额及历史启动告警均不能被包装成强隔离。T-105 当前认证通道与 helper 已独立验证；T-106 绑定 helper-RPC 文件／命令／PTY 限定实验已由[独立复验 review2](implementation/evidence/t106-independent-acceptance-review2.json)通过，冻结源码不重开。T-107 [首轮独立审核](implementation/evidence/t107-independent-review1.json)裁决 9 pass／2 fail；[review2 记录](implementation/evidence/t107-independent-review2.json)记载 IA-01／IA-03 在限定范围关闭、M1-10 仍失败，但归档被两次上游 HTTP400 中断，没有最终 validation，不是完整审核交付。已定位的本地路由规范化问题完成 [repair2 本地自测](implementation/evidence/t107-repair2-selftest.json)，待独立验证；不恢复受阻审核，不自行签署通过，完整 M1 保持 blocked、T-201 不启动。原 discovery 的 18 秒仅为 open 后循环预算，不是端到端上限；当前语义见[增量矩阵](implementation/t107-repair1-matrix.json)。非 Git 文件名发现及显式命令内容匹配仍依赖已核验的私有 rg，不代表冻结镜像或产品搜索集成已补齐；U-03 的模板／配额／存储策略仍待资源范围审议。本轮仅按[可执行清单](implementation/m1-closeout-tasks.md)执行本地普通回归后交协调器，未重跑远端恢复或完整 controller；沿用未变的真实恢复证据，不重复部署／浏览器／T-106 整套，也不提前推进绑定、UI 与跨主机。实验探针不是产品创建 API；生产组合未验，也未获生产迁移或公网部署授权。
 
 具体交付门槛见[交付与验收](05-delivery-and-acceptance.md)，来源见[集成方案](04-integration-plan.md)。

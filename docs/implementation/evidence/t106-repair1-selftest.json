@@ -1,0 +1,2610 @@
+{
+  "task": "T-106",
+  "role": "implementation-repair-self-test-only",
+  "status": "awaiting-independent-reverification",
+  "lastIndependentGate": "repair-required",
+  "independentAcceptance": false,
+  "t107Ready": false,
+  "stageM1Passed": false,
+  "productScenariosPassed": [],
+  "scope": "Only T106-IA-01 and T106-IA-02 repaired; no product capability or infrastructure expansion.",
+  "independentReview": {
+    "path": "docs/implementation/evidence/t106-independent-acceptance-review1.json",
+    "sha256": "822eae16a0c0124b862d2e89bb4d4f2b49b96208716cb5c14486a11e6e142a02"
+  },
+  "independentReviewValidation": {
+    "path": "docs/implementation/evidence/t106-independent-acceptance-review1-validation.json",
+    "sha256": "e65e945591cbddd429ce3414700ea6211d7e14b103afe09d78429061f049a507"
+  },
+  "baselineSnapshot": {
+    "path": "artifacts/m1/t106/repair1-fe66a9584b55/before-manifest.json",
+    "sha256": "57f5e2ea22f5798addba43c47897562223d779a6da0d296f74700c9c6a2140bb"
+  },
+  "historicalPermanentEvidenceUnchanged": [
+    {
+      "path": "docs/implementation/evidence/t101-installed-inventory.json",
+      "sha256": "4d93913cee51660ee0e12b94cb0b31f66c0938ea7237d2bd51c523781814cf88"
+    },
+    {
+      "path": "docs/implementation/evidence/t101-candidate-metadata.json",
+      "sha256": "8aa87f5c588f086196f3a4a26cb3fefb03787bd50f40d7460f7a2f2a763b4571"
+    },
+    {
+      "path": "docs/implementation/evidence/t103-isolated-experiment.json",
+      "sha256": "a64b2c72db8099c067d30eab6aa18a462ed25a69aa9f1c1881164805cd114171"
+    },
+    {
+      "path": "docs/implementation/evidence/t103-profile-experiment.json",
+      "sha256": "f9a44b8b859a7e120674191c866caa669b9e3ce44f4668e82f25b15048cb569e"
+    },
+    {
+      "path": "docs/implementation/evidence/t103-isolation-correction.json",
+      "sha256": "b486194975f91437d0ec7849cc0dd3dfe13cf0bee78c4724c5ed76dbae652019"
+    },
+    {
+      "path": "docs/implementation/evidence/t104-coder-lab.json",
+      "sha256": "f82c45fc3c5623a348f71af011fd5889fa92d6d39bfbb7622ee65f6ac3604ddd"
+    },
+    {
+      "path": "docs/implementation/evidence/t105-connection-implementation.json",
+      "sha256": "d51525b1a52eb192f04f5891aeee75a5b22f07bd2edca9cabc5d837bb598a721"
+    },
+    {
+      "path": "docs/implementation/evidence/t105-independent-acceptance-pass1.json",
+      "sha256": "954b1d098aac6bebbb1df6d6959aa31153b19b279a16ed959394b51bdc7740bc"
+    },
+    {
+      "path": "docs/implementation/evidence/t106-implementation-selftest.json",
+      "sha256": "cc8f954f55768b45f98cfd16402d06f6ea49d2f49f353ab87201c4eaa5bf1fbc"
+    },
+    {
+      "path": "docs/implementation/evidence/t106-final-implementation-selftest.json",
+      "sha256": "174c51e59c0bb4e462c1f888ff047f19f21c2d5c918d300e5aa49c38f78cf637"
+    },
+    {
+      "path": "docs/implementation/evidence/t106-independent-acceptance-review1.json",
+      "sha256": "822eae16a0c0124b862d2e89bb4d4f2b49b96208716cb5c14486a11e6e142a02"
+    },
+    {
+      "path": "docs/implementation/evidence/t106-independent-acceptance-review1-validation.json",
+      "sha256": "e65e945591cbddd429ce3414700ea6211d7e14b103afe09d78429061f049a507"
+    }
+  ],
+  "historicalIndependentFullRunFailures": [
+    {
+      "run": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191",
+      "focus": "all",
+      "controllerExitCode": 1,
+      "candidateExitCode": 1,
+      "checkCount": 11,
+      "failedCases": [
+        {
+          "case": "A-filesystem-bytes-and-boundaries",
+          "error": {
+            "type": "SyntaxError",
+            "code": null,
+            "kind": null,
+            "mutationMayHaveStarted": null
+          }
+        }
+      ],
+      "gateCount": 2,
+      "gatesCurrentAndAccepted": true,
+      "cleanup": {
+        "action": "authenticated-admin-shutdown",
+        "acknowledged": true,
+        "before": [
+          {
+            "pid": 4923,
+            "state": "S",
+            "ppid": 1,
+            "pgid": 4923,
+            "startTick": "631065945",
+            "kind": "daemon",
+            "uid": 1000
+          },
+          {
+            "pid": 5645,
+            "state": "S",
+            "ppid": 4923,
+            "pgid": 5645,
+            "startTick": "631068802",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          },
+          {
+            "pid": 5656,
+            "state": "S",
+            "ppid": 5645,
+            "pgid": 5655,
+            "startTick": "631068895",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          }
+        ],
+        "after": [],
+        "unreaped": [],
+        "releaseRetained": true,
+        "dataDeleted": false
+      },
+      "result": {
+        "path": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191/result.json",
+        "sha256": "0c4dcc2f086589d9ae224315759ce7f99ab808a30607572fc3c63a56a75fae87"
+      },
+      "candidate": {
+        "path": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191/candidate.json",
+        "sha256": "330db17239d4859ae2b47683e96fe4757d1cd7eb16678407f852bbe82c389ddd"
+      },
+      "initialFailureOrReasonedSingleRetry": "initial"
+    },
+    {
+      "run": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5",
+      "focus": "all",
+      "controllerExitCode": 1,
+      "candidateExitCode": 1,
+      "checkCount": 11,
+      "failedCases": [
+        {
+          "case": "B-structured-command",
+          "error": {
+            "type": "SyntaxError",
+            "code": null,
+            "kind": null,
+            "mutationMayHaveStarted": null
+          }
+        }
+      ],
+      "gateCount": 2,
+      "gatesCurrentAndAccepted": true,
+      "cleanup": {
+        "action": "authenticated-admin-shutdown",
+        "acknowledged": true,
+        "before": [
+          {
+            "pid": 5703,
+            "state": "S",
+            "ppid": 1,
+            "pgid": 5703,
+            "startTick": "631074183",
+            "kind": "daemon",
+            "uid": 1000
+          },
+          {
+            "pid": 6433,
+            "state": "S",
+            "ppid": 5703,
+            "pgid": 6433,
+            "startTick": "631076946",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          },
+          {
+            "pid": 6444,
+            "state": "S",
+            "ppid": 6433,
+            "pgid": 6443,
+            "startTick": "631077041",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          }
+        ],
+        "after": [],
+        "unreaped": [],
+        "releaseRetained": true,
+        "dataDeleted": false
+      },
+      "result": {
+        "path": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5/result.json",
+        "sha256": "a5943b764ec338555e090464792eb6b6daaa634716207205a5aeb5a69b487e86"
+      },
+      "candidate": {
+        "path": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5/candidate.json",
+        "sha256": "c6f661703bf2b97869d28e5c309ef03c6b97815fe8edcf9ae3e47c45190770a3"
+      },
+      "initialFailureOrReasonedSingleRetry": "one unmodified full-suite retry for observer-response race"
+    }
+  ],
+  "findings": [
+    {
+      "id": "T106-IA-01",
+      "priorFinding": {
+        "id": "T106-IA-01",
+        "severity": "gate-blocking",
+        "category": "reproducible-harness-defect",
+        "files": [
+          {
+            "path": "scripts/m1/t106_candidate.mjs",
+            "lines": "54-60"
+          },
+          {
+            "path": "scripts/m1/t106_run.py",
+            "lines": "112"
+          },
+          {
+            "path": "scripts/m1/coder_lab.py",
+            "lines": "28-32",
+            "note": "unchanged T-105 trust dependency; fix publication at T-106 call site rather than silently changing accepted source"
+          }
+        ],
+        "scenario": "Producer opens final response path then serializes JSON; consumer waits only for existence and immediately JSON.parse()s it. A scheduler interleaving exposes empty/partial JSON.",
+        "actual": "Both unmodified full runs exited 1 (first A-filesystem, retry B-command), each with SyntaxError before its observer receipt was recorded. Completed response files are valid JSON. Verbatim consumer counterexample deterministically throws SyntaxError while writer is mid-response.",
+        "expected": "The response is consumed only after complete publication; all 11 default checks finish in the same run.",
+        "minimalReproduction": [
+          "node",
+          "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/observer_race.mjs"
+        ],
+        "reproductionExitCode": 1,
+        "evidence": {
+          "path": "artifacts/m1/t106/acceptance-cmy_rpp4/observer-race-zx0oRM/result.json",
+          "sha256": "ef73baec0794b8724e61fcecc717d4c14516d3594c447a0a4fe88cb810599485"
+        },
+        "suggestedRepair": "Atomically publish a complete response using a same-directory temporary file and rename, or an explicit completed-response protocol with a bounded read. Preserve real malformed-response errors and current failure history; add a publication-race regression, then rerun the full default suite."
+      },
+      "implementation": "T-106 publish_response serializes into an exclusive same-directory scratch inode, flushes and fsyncs it, then atomically hard-links the complete inode to the final name without overwriting. The directory is fsynced after scratch cleanup. Current consumer remains strict and unchanged; no JSON-error swallowing or arbitrary wait was added.",
+      "currentPublisher": "scripts/m1/t106_run.py:publish_response",
+      "currentConsumer": "scripts/m1/t106_candidate.mjs:observe",
+      "regression": "Actual current publisher paused inside real json.dump after the first character; the verbatim current consumer polls while the writer is held, sees no final name, and consumes only after release. A separate invalid-final-receipt case still raises SyntaxError.",
+      "publicationBarrierEvidence": [
+        {
+          "evidence": {
+            "path": "artifacts/m1/t106/publication-test-Q06krc/regression.json",
+            "sha256": "05f08360882d6d6aad7c01309c5ddc722fd1416f96bd0c4ef6b07a09556dca59"
+          },
+          "result": {
+            "partialWriteHeld": true,
+            "consumerPolledWhileHeld": true,
+            "consumedBeforePublication": false,
+            "completeReadback": true,
+            "publisherExitCode": 0
+          }
+        }
+      ],
+      "oldDirectHalfWriteCounterexampleUnchanged": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/observer_race.mjs",
+        "sha256": "687e4d5c499626d31d78702f0308819fbbb9b7a04c3b9225e355fc9f6c70c887"
+      },
+      "oldCounterexampleInterpretation": "Historical direct-to-final-path reproduction remains intact; it bypasses the repaired publisher and is not represented as proof of repair."
+    },
+    {
+      "id": "T106-IA-02",
+      "priorFinding": {
+        "id": "T106-IA-02",
+        "severity": "gate-blocking",
+        "category": "private-dependency-input-boundary",
+        "files": [
+          {
+            "path": "scripts/m1/t106_tools.py",
+            "lines": "58-69"
+          }
+        ],
+        "scenario": "verify_cached resolves manifest.parent before checking links, reads manifest without lstat, and checks only terminal package/binary paths; directory components are not checked.",
+        "actual": "download-directory-link, extracted-directory-link, manifest-link and cache-directory-link are accepted. Altered source URL, altered package, altered binary and terminal package/binary links are rejected. All linked targets in the repro are independent checker-owned copies; cryptographic pins were not bypassed.",
+        "expected": "All linked cache/source/package/binary inputs are rejected before reuse, including ancestors and manifest; unchanged genuine cache may still be reused without downloading.",
+        "minimalReproduction": [
+          "python3",
+          "-I",
+          "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/check_tools.py",
+          "negatives"
+        ],
+        "reproductionExitCode": 1,
+        "evidence": {
+          "path": "artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-n0xdrhl0/result.json",
+          "sha256": "e4c4ea3f524df8bf4c008f069b2252bf39e5c25a0973eb5d71c480927a633cbd"
+        },
+        "suggestedRepair": "Validate the un-resolved manifest and all relevant path components; use no-follow/open-descriptor identity checks for the manifest, package and binary. Keep the fixed package/source pins and signed provenance. Add regressions for all four accepted link forms."
+      },
+      "implementation": "Unresolved input components are traversed with openat-style dir_fd and O_NOFOLLOW; lstat/fstat identities and regular-file bounds are checked, ancestors remain open and their entries are rechecked. Manifest/package/binary are read through anchored descriptors. The pinned archive bytes are sent to dpkg stdin; immutable verified binary bytes are passed directly to stage_tool for the run copy rather than reopening the cache pathname.",
+      "regression": "Seven symlink forms (including the four reported forms), source/package/binary tampering, legitimate cache reuse without network, directory replacement before open, opened-cache-anchor replacement, archive snapshot and runner upload-staging snapshot are covered.",
+      "unchangedIndependentCounterexample": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/check_tools.py",
+        "sha256": "ee284f50927e0689156953f1781ddc93c3976953a4d1971f1e5a4758d48cb47b"
+      },
+      "unchangedCheckerRerun": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/result.json",
+        "sha256": "51c55cdd73615f2a650458d22d5d165ffcf88345a624e42f2c4a2b98ead4408d"
+      },
+      "checkerCases": [
+        {
+          "case": "valid-copy",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/valid-copy/manifest.json",
+          "expectedAccepted": true,
+          "actualAccepted": true,
+          "passed": true,
+          "error": null
+        },
+        {
+          "case": "tampered-source",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/tampered-source/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_PROVENANCE_MISMATCH"
+          }
+        },
+        {
+          "case": "tampered-package",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/tampered-package/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_PACKAGE_DIGEST_MISMATCH"
+          }
+        },
+        {
+          "case": "tampered-binary",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/tampered-binary/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_BINARY_DIGEST_MISMATCH"
+          }
+        },
+        {
+          "case": "leaf-package-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/leaf-package-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "leaf-binary-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/leaf-binary-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "download-directory-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/download-directory-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "extracted-directory-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/extracted-directory-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "manifest-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/manifest-link/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        },
+        {
+          "case": "cache-directory-link",
+          "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/linked-cache-owned/manifest.json",
+          "expectedAccepted": false,
+          "actualAccepted": false,
+          "passed": true,
+          "error": {
+            "type": "ValueError",
+            "code": "T106_TOOL_CACHE_SYMLINK"
+          }
+        }
+      ],
+      "cryptographicScope": "The old finding demonstrated accepted symlink inputs, not a digest bypass. Fixed source/package/binary pins are unchanged."
+    }
+  ],
+  "changedExistingRuntimeFiles": [
+    "scripts/m1/t106_run.py",
+    "scripts/m1/t106_tools.py"
+  ],
+  "newRegressionFiles": [
+    "scripts/m1/t106_boundary_test.py",
+    "scripts/m1/t106_publication.test.mjs"
+  ],
+  "sourceSha256": {
+    "scripts/m1/t106_boundary_test.py": "b02054354aa3abd192be9b3848f0a99efc423cd31e5102162c6516abb6f211ae",
+    "scripts/m1/t106_candidate.mjs": "51f05ce0e17d141f489744240b74c080f2e99df023c1c207ed9a9c5876ff52e6",
+    "scripts/m1/t106_cleanup.py": "98b80e41b5a7a77f070a95b3ef670d255ed17460e6355946fef6d4f9871b82ee",
+    "scripts/m1/t106_observe.py": "37fbea6a5e1c211117518bfac7a99500121763f4f81ebf340da1a2be78f31761",
+    "scripts/m1/t106_payload.py": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0",
+    "scripts/m1/t106_provider.mjs": "ed469675ef37aae2feb3981642f4053f65faf6ddbcbcc91634684c9d1508b5c6",
+    "scripts/m1/t106_provider.test.mjs": "730093c760a276ed7229c25aa745f80fd253014bf0250f1777df31ccf4540167",
+    "scripts/m1/t106_publication.test.mjs": "af2cf766c2b60a9aa9c79fa82aaa6946e79b68b1f79f171f549afcd0ee6cac2c",
+    "scripts/m1/t106_run.py": "f63eeea7210edeb43662bd799229193183fde40a8a4b953b1f506a68ed12d0fc",
+    "scripts/m1/t106_tools.py": "2ba34fe665fa6c57d62c94f912557441bc153056901da369623b9977cd24a342"
+  },
+  "trustedSourceIntegrity": {
+    "trustedSources": {
+      "evidenceSha256": "954b1d098aac6bebbb1df6d6959aa31153b19b279a16ed959394b51bdc7740bc",
+      "sourceMatches": {
+        "scripts/m1/t105_connection.py": true,
+        "scripts/m1/t105_remote_gate.py": true,
+        "scripts/m1/t105_candidate.mjs": true,
+        "scripts/m1/t105_cleanup.py": true,
+        "scripts/m1/test_t105_connection.py": true,
+        "scripts/m1/record_t105.py": true,
+        "scripts/m1/ssh_remote_entry.mjs": true,
+        "scripts/m1/network_guard.mjs": true,
+        "scripts/m1/coder_lab.py": true,
+        "scripts/m1/coder_template.py": true,
+        "scripts/m1/audit_coder_lab.py": true
+      },
+      "helperBundle": {
+        "sha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+        "bytes": 217238
+      }
+    },
+    "candidateFilesMatched": 298,
+    "finalSourceSha256": {
+      "scripts/m1/t106_boundary_test.py": "b02054354aa3abd192be9b3848f0a99efc423cd31e5102162c6516abb6f211ae",
+      "scripts/m1/t106_candidate.mjs": "51f05ce0e17d141f489744240b74c080f2e99df023c1c207ed9a9c5876ff52e6",
+      "scripts/m1/t106_cleanup.py": "98b80e41b5a7a77f070a95b3ef670d255ed17460e6355946fef6d4f9871b82ee",
+      "scripts/m1/t106_observe.py": "37fbea6a5e1c211117518bfac7a99500121763f4f81ebf340da1a2be78f31761",
+      "scripts/m1/t106_payload.py": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0",
+      "scripts/m1/t106_provider.mjs": "ed469675ef37aae2feb3981642f4053f65faf6ddbcbcc91634684c9d1508b5c6",
+      "scripts/m1/t106_provider.test.mjs": "730093c760a276ed7229c25aa745f80fd253014bf0250f1777df31ccf4540167",
+      "scripts/m1/t106_publication.test.mjs": "af2cf766c2b60a9aa9c79fa82aaa6946e79b68b1f79f171f549afcd0ee6cac2c",
+      "scripts/m1/t106_run.py": "f63eeea7210edeb43662bd799229193183fde40a8a4b953b1f506a68ed12d0fc",
+      "scripts/m1/t106_tools.py": "2ba34fe665fa6c57d62c94f912557441bc153056901da369623b9977cd24a342"
+    },
+    "independentHistoryAndReproductionsUnchanged": [
+      {
+        "path": "docs/implementation/evidence/t106-independent-acceptance-review1.json",
+        "sha256": "822eae16a0c0124b862d2e89bb4d4f2b49b96208716cb5c14486a11e6e142a02",
+        "bytes": 28393
+      },
+      {
+        "path": "docs/implementation/evidence/t106-independent-acceptance-review1-validation.json",
+        "sha256": "e65e945591cbddd429ce3414700ea6211d7e14b103afe09d78429061f049a507",
+        "bytes": 5637
+      },
+      {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/observer_race.mjs",
+        "sha256": "687e4d5c499626d31d78702f0308819fbbb9b7a04c3b9225e355fc9f6c70c887",
+        "bytes": 3024
+      },
+      {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/check_tools.py",
+        "sha256": "ee284f50927e0689156953f1781ddc93c3976953a4d1971f1e5a4758d48cb47b",
+        "bytes": 8826
+      }
+    ],
+    "independentFullRunFailuresUnchanged": [
+      {
+        "run": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191",
+        "focus": "all",
+        "controllerExitCode": 1,
+        "candidateExitCode": 1,
+        "checkCount": 11,
+        "failedCases": [
+          {
+            "case": "A-filesystem-bytes-and-boundaries",
+            "error": {
+              "type": "SyntaxError",
+              "code": null,
+              "kind": null,
+              "mutationMayHaveStarted": null
+            }
+          }
+        ],
+        "gateCount": 2,
+        "gatesCurrentAndAccepted": true,
+        "cleanup": {
+          "action": "authenticated-admin-shutdown",
+          "acknowledged": true,
+          "before": [
+            {
+              "pid": 4923,
+              "state": "S",
+              "ppid": 1,
+              "pgid": 4923,
+              "startTick": "631065945",
+              "kind": "daemon",
+              "uid": 1000
+            },
+            {
+              "pid": 5645,
+              "state": "S",
+              "ppid": 4923,
+              "pgid": 5645,
+              "startTick": "631068802",
+              "kind": "owned-supervisor-or-guardian",
+              "uid": 1000
+            },
+            {
+              "pid": 5656,
+              "state": "S",
+              "ppid": 5645,
+              "pgid": 5655,
+              "startTick": "631068895",
+              "kind": "owned-supervisor-or-guardian",
+              "uid": 1000
+            }
+          ],
+          "after": [],
+          "unreaped": [],
+          "releaseRetained": true,
+          "dataDeleted": false
+        },
+        "result": {
+          "path": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191/result.json",
+          "sha256": "0c4dcc2f086589d9ae224315759ce7f99ab808a30607572fc3c63a56a75fae87"
+        },
+        "candidate": {
+          "path": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191/candidate.json",
+          "sha256": "330db17239d4859ae2b47683e96fe4757d1cd7eb16678407f852bbe82c389ddd"
+        },
+        "initialFailureOrReasonedSingleRetry": "initial"
+      },
+      {
+        "run": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5",
+        "focus": "all",
+        "controllerExitCode": 1,
+        "candidateExitCode": 1,
+        "checkCount": 11,
+        "failedCases": [
+          {
+            "case": "B-structured-command",
+            "error": {
+              "type": "SyntaxError",
+              "code": null,
+              "kind": null,
+              "mutationMayHaveStarted": null
+            }
+          }
+        ],
+        "gateCount": 2,
+        "gatesCurrentAndAccepted": true,
+        "cleanup": {
+          "action": "authenticated-admin-shutdown",
+          "acknowledged": true,
+          "before": [
+            {
+              "pid": 5703,
+              "state": "S",
+              "ppid": 1,
+              "pgid": 5703,
+              "startTick": "631074183",
+              "kind": "daemon",
+              "uid": 1000
+            },
+            {
+              "pid": 6433,
+              "state": "S",
+              "ppid": 5703,
+              "pgid": 6433,
+              "startTick": "631076946",
+              "kind": "owned-supervisor-or-guardian",
+              "uid": 1000
+            },
+            {
+              "pid": 6444,
+              "state": "S",
+              "ppid": 6433,
+              "pgid": 6443,
+              "startTick": "631077041",
+              "kind": "owned-supervisor-or-guardian",
+              "uid": 1000
+            }
+          ],
+          "after": [],
+          "unreaped": [],
+          "releaseRetained": true,
+          "dataDeleted": false
+        },
+        "result": {
+          "path": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5/result.json",
+          "sha256": "a5943b764ec338555e090464792eb6b6daaa634716207205a5aeb5a69b487e86"
+        },
+        "candidate": {
+          "path": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5/candidate.json",
+          "sha256": "c6f661703bf2b97869d28e5c309ef03c6b97815fe8edcf9ae3e47c45190770a3"
+        },
+        "initialFailureOrReasonedSingleRetry": "one unmodified full-suite retry for observer-response race"
+      }
+    ]
+  },
+  "verificationCommands": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "scripts/m1/t106_boundary_test.py"
+      ],
+      "exitCode": 0,
+      "stdout": "Private retained fixtures: /home/ubuntu/workspace/agent-studio/artifacts/m1/t106/boundary-tests-k3umrydx\n",
+      "stderr": "test_all_link_forms_rejected (__main__.BoundaryTests.test_all_link_forms_rejected) ... ok\ntest_archive_parser_receives_verified_snapshot_not_reopened_path (__main__.BoundaryTests.test_archive_parser_receives_verified_snapshot_not_reopened_path) ... ok\ntest_directory_swap_between_lstat_and_open_rejected (__main__.BoundaryTests.test_directory_swap_between_lstat_and_open_rejected) ... ok\ntest_genuine_cache_reuse_without_download (__main__.BoundaryTests.test_genuine_cache_reuse_without_download) ... ok\ntest_open_cache_anchor_replacement_detected (__main__.BoundaryTests.test_open_cache_anchor_replacement_detected) ... ok\ntest_publisher_no_overwrite_and_failed_serialization_not_visible (__main__.BoundaryTests.test_publisher_no_overwrite_and_failed_serialization_not_visible) ... ok\ntest_runner_stages_verified_bytes_despite_later_path_replacement (__main__.BoundaryTests.test_runner_stages_verified_bytes_despite_later_path_replacement) ... ok\ntest_tampering_rejected (__main__.BoundaryTests.test_tampering_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.353s\n\nOK\n"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "scripts/m1/t106_publication.test.mjs",
+        "scripts/m1/t106_provider.test.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "✔ 24-hex run token, exact owned root and fixed raw-session version (4.623666ms)\n✔ strict relative paths with explicit empty-directory allowance (0.394602ms)\n✔ structured argv/cwd/env/dimensions validation prevents dispatch (1.64293ms)\n✔ Buffer writes check count; complete Buffer readback rejects truncated data (3.762661ms)\n✔ single dispatch, original operation ID and no replay after uncertainty (0.955485ms)\n✔ read failure does not poison mutations; operation IDs still cannot replay (0.754084ms)\n✔ closed transport and changed session reject without reacquisition (0.533403ms)\n✔ unsupported channels and methods are explicit unsent rejections (0.579803ms)\n✔ bootstrap creates only owned run, closes handle and never exposes /workspace (1.882131ms)\n✔ byte chunks preserve UTF-8 spanning RPC frames (0.842444ms)\n✔ input/resize lanes serialize and validate sequence receipts (0.861045ms)\n✔ discovery closes resource after negative dependency result (0.685124ms)\n✔ private tool HOME is derived from run token, never a caller-supplied root (0.334402ms)\n✔ chunked upload and version-bound complete range read preserve all bytes (6.003634ms)\n✔ range reads reject changed versions, short pages and false EOF (3.842381ms)\n✔ unknown upload commits retain original failure, abort receipt and mutation fence (1.303887ms)\n✔ real publisher hides a deterministically paused partial write from the current consumer (156.09504ms)\n✔ consumer still rejects a malformed final receipt rather than swallowing JSON errors (1.672049ms)\nℹ tests 18\nℹ suites 0\nℹ pass 18\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 234.937645\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "scripts/m1/t106_tools.py",
+        "prepare"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/tools-rg14-3211d20ec95e/manifest.json\", \"packageSha256\": \"71fe8a5667bc87d2bca175a3426c6ec518e0679cc821d23ae7056de7096f04de\", \"binarySha256\": \"51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702\", \"binaryBytes\": 4917680, \"reused\": true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/check_tools.py",
+        "negatives"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"passed\": true, \"evidence\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/result.json\", \"cases\": [{\"case\": \"valid-copy\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/valid-copy/manifest.json\", \"expectedAccepted\": true, \"actualAccepted\": true, \"passed\": true, \"error\": null}, {\"case\": \"tampered-source\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/tampered-source/manifest.json\", \"expectedAccepted\": false, \"actualAccepted\": false, \"passed\": true, \"error\": {\"type\": \"ValueError\", \"code\": \"T106_TOOL_PROVENANCE_MISMATCH\"}}, {\"case\": \"tampered-package\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/tampered-package/manifest.json\", \"expectedAccepted\": false, \"actualAccepted\": false, \"passed\": true, \"error\": {\"type\": \"ValueError\", \"code\": \"T106_TOOL_PACKAGE_DIGEST_MISMATCH\"}}, {\"case\": \"tampered-binary\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/tampered-binary/manifest.json\", \"expectedAccepted\": false, \"actualAccepted\": false, \"passed\": true, \"error\": {\"type\": \"ValueError\", \"code\": \"T106_TOOL_BINARY_DIGEST_MISMATCH\"}}, {\"case\": \"leaf-package-link\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/leaf-package-link/manifest.json\", \"expectedAccepted\": false, \"actualAccepted\": false, \"passed\": true, \"error\": {\"type\": \"ValueError\", \"code\": \"T106_TOOL_CACHE_SYMLINK\"}}, {\"case\": \"leaf-binary-link\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/leaf-binary-link/manifest.json\", \"expectedAccepted\": false, \"actualAccepted\": false, \"passed\": true, \"error\": {\"type\": \"ValueError\", \"code\": \"T106_TOOL_CACHE_SYMLINK\"}}, {\"case\": \"download-directory-link\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/download-directory-link/manifest.json\", \"expectedAccepted\": false, \"actualAccepted\": false, \"passed\": true, \"error\": {\"type\": \"ValueError\", \"code\": \"T106_TOOL_CACHE_SYMLINK\"}}, {\"case\": \"extracted-directory-link\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/extracted-directory-link/manifest.json\", \"expectedAccepted\": false, \"actualAccepted\": false, \"passed\": true, \"error\": {\"type\": \"ValueError\", \"code\": \"T106_TOOL_CACHE_SYMLINK\"}}, {\"case\": \"manifest-link\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/manifest-link/manifest.json\", \"expectedAccepted\": false, \"actualAccepted\": false, \"passed\": true, \"error\": {\"type\": \"ValueError\", \"code\": \"T106_TOOL_CACHE_SYMLINK\"}}, {\"case\": \"cache-directory-link\", \"manifest\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-7agi00en/linked-cache-owned/manifest.json\", \"expectedAccepted\": false, \"actualAccepted\": false, \"passed\": true, \"error\": {\"type\": \"ValueError\", \"code\": \"T106_TOOL_CACHE_SYMLINK\"}}]}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-m",
+        "py_compile",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_boundary_test.py",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_cleanup.py",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_observe.py",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_payload.py",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_run.py",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_tools.py"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_candidate.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_provider.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_provider.test.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_publication.test.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_run.py",
+        "run"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"status\": \"implementation-self-test-awaiting-independent-review\", \"failures\": [], \"evidence\": \"/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/run-c33b304de99833bf20d450c2/result.json\"}\n",
+      "stderr": ""
+    }
+  ],
+  "fullDefaultRun": {
+    "command": [
+      "python3",
+      "-I",
+      "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_run.py",
+      "run"
+    ],
+    "controllerExitCode": 0,
+    "nodeExitCode": 0,
+    "focus": "all",
+    "runtimePassed": true,
+    "caseCount": 11,
+    "failures": [],
+    "runtimeEvidence": {
+      "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/result.json",
+      "sha256": "f0235c2e5b68114d5da283e492066c3e2c89c6cde28bb1a2c6cf501fa5dd97ab"
+    },
+    "candidateEvidence": {
+      "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/candidate.json",
+      "sha256": "4b2447ce68d04df7cc672edeb0d76cfc58c68012a7ef0bcfce8d540c6d307f92"
+    },
+    "sourceHashesMatchAtArchival": true,
+    "sameRunAllCases": [
+      {
+        "case": "A-filesystem-bytes-and-boundaries",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "writes": [
+            {
+              "written": 68,
+              "operation": "create",
+              "version": "v1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMDk0MzUyMjIwLCJkZXYiOjIwNDksImlubyI6OTExNTY3MywibXRpbWVOcyI6MTc5MzM3MDU2MTA5MjM1MjIwOSwic2hhMjU2IjoiODc1ZTU2ODVhOTA0YjM3NzU4NGM1NDU5OWFkZTc0ZDNhZGRkY2JiZjgyY2VhODBmYmNiNzhjY2QxNTBiYTAxMSIsInNpemUiOjY4fQ",
+              "statVersion": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMDk0MzUyMjIwLCJkZXYiOjIwNDksImlubyI6OTExNTY3MywibW9kZSI6NDIwLCJtdGltZU5zIjoxNzkzMzcwNTYxMDkyMzUyMjA5LCJzaXplIjo2OH0",
+              "metadata": {
+                "type": "file",
+                "size": 68,
+                "mode": 420,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370561092352300,
+                "ctimeNs": 1793370561094352100,
+                "version": "v1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMDk0MzUyMjIwLCJkZXYiOjIwNDksImlubyI6OTExNTY3MywibXRpbWVOcyI6MTc5MzM3MDU2MTA5MjM1MjIwOSwic2hhMjU2IjoiODc1ZTU2ODVhOTA0YjM3NzU4NGM1NDU5OWFkZTc0ZDNhZGRkY2JiZjgyY2VhODBmYmNiNzhjY2QxNTBiYTAxMSIsInNpemUiOjY4fQ"
+              }
+            },
+            {
+              "written": 736,
+              "operation": "create",
+              "version": "v1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMTAyMzUyMjY2LCJkZXYiOjIwNDksImlubyI6OTExNTY3NCwibXRpbWVOcyI6MTc5MzM3MDU2MTEwMDM1MjI1NCwic2hhMjU2IjoiMmZiYzk0MWIyZTdmM2Q5ZDRkYzZlNWFmNDE0NDc3NDE1MmEwMWExYTg1ZDQ4Zjk0Y2E3Nzg5NGY4YWI0NGIxYSIsInNpemUiOjczNn0",
+              "statVersion": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMTAyMzUyMjY2LCJkZXYiOjIwNDksImlubyI6OTExNTY3NCwibW9kZSI6NDIwLCJtdGltZU5zIjoxNzkzMzcwNTYxMTAwMzUyMjU0LCJzaXplIjo3MzZ9",
+              "metadata": {
+                "type": "file",
+                "size": 736,
+                "mode": 420,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370561100352300,
+                "ctimeNs": 1793370561102352400,
+                "version": "v1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMTAyMzUyMjY2LCJkZXYiOjIwNDksImlubyI6OTExNTY3NCwibXRpbWVOcyI6MTc5MzM3MDU2MTEwMDM1MjI1NCwic2hhMjU2IjoiMmZiYzk0MWIyZTdmM2Q5ZDRkYzZlNWFmNDE0NDc3NDE1MmEwMWExYTg1ZDQ4Zjk0Y2E3Nzg5NGY4YWI0NGIxYSIsInNpemUiOjczNn0"
+              }
+            }
+          ],
+          "reads": [
+            {
+              "path": "binary fixture.bin",
+              "bytes": 736,
+              "sha256": "2fbc941b2e7f3d9d4dc6e5af4144774152a01a1a85d48f94ca77894f8ab44b1a"
+            },
+            {
+              "path": "probe.py",
+              "bytes": 5994,
+              "sha256": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0"
+            },
+            {
+              "path": "utf8 文件.txt",
+              "bytes": 68,
+              "sha256": "875e5685a904b377584c54599ade74d3adddcbbf82cea80fbcb78ccd150ba011"
+            }
+          ],
+          "listing": [
+            {
+              "name": "internal-link",
+              "metadata": {
+                "type": "symlink",
+                "size": 15,
+                "mode": 511,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370561737355800,
+                "ctimeNs": 1793370561737355800,
+                "version": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTYxNzM3MzU1ODQ2LCJkZXYiOjIwNDksImlubyI6OTExNTY3NiwibW9kZSI6NTExLCJtdGltZU5zIjoxNzkzMzcwNTYxNzM3MzU1ODQ2LCJzaXplIjoxNX0"
+              }
+            },
+            {
+              "name": "cwd space",
+              "metadata": {
+                "type": "directory",
+                "size": 4096,
+                "mode": 493,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370561076352000,
+                "ctimeNs": 1793370561076352000,
+                "version": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMDc2MzUyMTE5LCJkZXYiOjIwNDksImlubyI6OTExNTY3MSwibW9kZSI6NDkzLCJtdGltZU5zIjoxNzkzMzcwNTYxMDc2MzUyMTE5LCJzaXplIjo0MDk2fQ"
+              }
+            },
+            {
+              "name": "binary fixture.bin",
+              "metadata": {
+                "type": "file",
+                "size": 736,
+                "mode": 420,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370561100352300,
+                "ctimeNs": 1793370561102352400,
+                "version": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMTAyMzUyMjY2LCJkZXYiOjIwNDksImlubyI6OTExNTY3NCwibW9kZSI6NDIwLCJtdGltZU5zIjoxNzkzMzcwNTYxMTAwMzUyMjU0LCJzaXplIjo3MzZ9"
+              }
+            },
+            {
+              "name": "utf8 文件.txt",
+              "metadata": {
+                "type": "file",
+                "size": 68,
+                "mode": 420,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370561092352300,
+                "ctimeNs": 1793370561094352100,
+                "version": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMDk0MzUyMjIwLCJkZXYiOjIwNDksImlubyI6OTExNTY3MywibW9kZSI6NDIwLCJtdGltZU5zIjoxNzkzMzcwNTYxMDkyMzUyMjA5LCJzaXplIjo2OH0"
+              }
+            },
+            {
+              "name": "escape",
+              "metadata": {
+                "type": "symlink",
+                "size": 14,
+                "mode": 511,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370561737355800,
+                "ctimeNs": 1793370561737355800,
+                "version": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTYxNzM3MzU1ODQ2LCJkZXYiOjIwNDksImlubyI6OTExNTY3NSwibW9kZSI6NTExLCJtdGltZU5zIjoxNzkzMzcwNTYxNzM3MzU1ODQ2LCJzaXplIjoxNH0"
+              }
+            },
+            {
+              "name": "escape-dir",
+              "metadata": {
+                "type": "symlink",
+                "size": 2,
+                "mode": 511,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370561737355800,
+                "ctimeNs": 1793370561737355800,
+                "version": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTYxNzM3MzU1ODQ2LCJkZXYiOjIwNDksImlubyI6OTExNTY3NywibW9kZSI6NTExLCJtdGltZU5zIjoxNzkzMzcwNTYxNzM3MzU1ODQ2LCJzaXplIjoyfQ"
+              }
+            },
+            {
+              "name": "probe.py",
+              "metadata": {
+                "type": "file",
+                "size": 5994,
+                "mode": 420,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370561083352000,
+                "ctimeNs": 1793370561085352200,
+                "version": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTYxMDg1MzUyMTcwLCJkZXYiOjIwNDksImlubyI6OTExNTY3MiwibW9kZSI6NDIwLCJtdGltZU5zIjoxNzkzMzcwNTYxMDgzMzUyMTU4LCJzaXplIjo1OTk0fQ"
+              }
+            }
+          ],
+          "errors": {
+            "missing": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_NOT_FOUND",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "../outside.txt": {
+              "type": "Error",
+              "code": "T106_PATH_OUTSIDE_BINDING",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "native:../outside.txt": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_OUTSIDE_ROOT",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "/workspace/t106-c33b304de99833bf20d450c2/outside.txt": {
+              "type": "Error",
+              "code": "T106_PATH_OUTSIDE_BINDING",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "native:/workspace/t106-c33b304de99833bf20d450c2/outside.txt": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_INVALID_PATH",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "cwd space/../../outside.txt": {
+              "type": "Error",
+              "code": "T106_PATH_OUTSIDE_BINDING",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "native:cwd space/../../outside.txt": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_OUTSIDE_ROOT",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "escape": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_SYMLINK",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "write:escape": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_SYMLINK",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "internal-link": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_SYMLINK",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "write:internal-link": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_SYMLINK",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "escape-dir/outside.txt": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_NOT_DIRECTORY",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            },
+            "write:escape-dir/outside.txt": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_NOT_DIRECTORY",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            }
+          },
+          "independentObservation": "fs-direct-storage",
+          "outsideCanaryUnchanged": true
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      },
+      {
+        "case": "A-non-Git-search-known-dependency-gap",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "outcome": "blocked-dependency-not-search-pass",
+          "complete": false,
+          "error": {
+            "code": "E_EXECUTABLE_NOT_FOUND",
+            "message": "ripgrep is required in the remote login-shell PATH"
+          },
+          "reason": "Frozen image lacks ripgrep; no tool installed or capability spoofed."
+        },
+        "capabilityStatus": "blocked-missing-dependency"
+      },
+      {
+        "case": "A-pinned-private-rg-storage-and-runtime",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "committed": {
+            "operation": "create",
+            "written": 4917680,
+            "sha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702",
+            "version": "v1:eyJjdGltZU5zIjoxNzkzMzcwNTY1MDk4Mzc0Nzk3LCJkZXYiOjEwNDg2OTYsImlubyI6OTExNTY4NCwibXRpbWVOcyI6MTc5MzM3MDU2NTA3MTM3NDY0NSwic2hhMjU2IjoiNTE0MDdmNDY1MjVjZjM2OGY5OTAxMTA0NGZhZTdhYTAwOTEyZGNlNjQ2NzczMWY5N2JiN2NmNDIzZTJiZDcwMiIsInNpemUiOjQ5MTc2ODB9",
+            "statVersion": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTY1MDk4Mzc0Nzk3LCJkZXYiOjEwNDg2OTYsImlubyI6OTExNTY4NCwibW9kZSI6NDQ4LCJtdGltZU5zIjoxNzkzMzcwNTY1MDcxMzc0NjQ1LCJzaXplIjo0OTE3NjgwfQ",
+            "metadata": {
+              "type": "file",
+              "size": 4917680,
+              "mode": 448,
+              "uid": 1000,
+              "gid": 1000,
+              "mtimeNs": 1793370565071374600,
+              "ctimeNs": 1793370565098375000,
+              "version": "v1:eyJjdGltZU5zIjoxNzkzMzcwNTY1MDk4Mzc0Nzk3LCJkZXYiOjEwNDg2OTYsImlubyI6OTExNTY4NCwibXRpbWVOcyI6MTc5MzM3MDU2NTA3MTM3NDY0NSwic2hhMjU2IjoiNTE0MDdmNDY1MjVjZjM2OGY5OTAxMTA0NGZhZTdhYTAwOTEyZGNlNjQ2NzczMWY5N2JiN2NmNDIzZTJiZDcwMiIsInNpemUiOjQ5MTc2ODB9"
+            }
+          },
+          "direct": {
+            "binary": {
+              "exists": true,
+              "bytes": 4917680,
+              "sha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702",
+              "uid": 1000,
+              "mode": 448
+            },
+            "profile": {
+              "exists": true,
+              "bytes": 65,
+              "sha256": "3233367dd242c7404bcfc3998ec46d452a62e1b19dc1f92eecb6862edbad6ef7",
+              "uid": 1000,
+              "mode": 420,
+              "base64": "ZXhwb3J0IFBBVEg9IiRIT01FLy50MTA2LXRvb2xzL2JpbjovdXNyL2xvY2FsL2JpbjovdXNyL2JpbjovYmluIgo="
+            }
+          },
+          "readback": {
+            "bytes": 4917680,
+            "sha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702",
+            "byteEqual": true
+          },
+          "listing": [
+            {
+              "name": "rg",
+              "metadata": {
+                "type": "file",
+                "size": 4917680,
+                "mode": 448,
+                "uid": 1000,
+                "gid": 1000,
+                "mtimeNs": 1793370565071374600,
+                "ctimeNs": 1793370565098375000,
+                "version": "s1:eyJjdGltZU5zIjoxNzkzMzcwNTY1MDk4Mzc0Nzk3LCJkZXYiOjEwNDg2OTYsImlubyI6OTExNTY4NCwibW9kZSI6NDQ4LCJtdGltZU5zIjoxNzkzMzcwNTY1MDcxMzc0NjQ1LCJzaXplIjo0OTE3NjgwfQ"
+              }
+            }
+          ],
+          "version": {
+            "argv": [
+              "/tmp/t105-c33b304de99833bf20d450c2/home/.t106-tools/bin/rg",
+              "--version"
+            ],
+            "status": {
+              "processId": "147a005c-8fce-40d8-b913-16ca0fce9931",
+              "pid": 6862,
+              "pgid": 6862,
+              "tty": false,
+              "running": false,
+              "exitCode": 0,
+              "signal": null,
+              "latestSeq": "1"
+            },
+            "chunks": [
+              {
+                "stream": "stdout",
+                "data": "cmlwZ3JlcCAxNC4xLjAKCmZlYXR1cmVzOi1zaW1kLWFjY2VsLCtwY3JlMgpzaW1kKGNvbXBpbGUpOitORU9OCnNpbWQocnVudGltZSk6K05FT04KClBDUkUyIDEwLjQyIGlzIGF2YWlsYWJsZSAoSklUIGlzIGF2YWlsYWJsZSkK"
+              }
+            ],
+            "stdout": "ripgrep 14.1.0\n\nfeatures:-simd-accel,+pcre2\nsimd(compile):+NEON\nsimd(runtime):+NEON\n\nPCRE2 10.42 is available (JIT is available)\n",
+            "stderr": ""
+          },
+          "environment": {
+            "search": {
+              "available": true,
+              "path": "/tmp/t105-c33b304de99833bf20d450c2/home/.t106-tools/bin/rg",
+              "version": "ripgrep 14.1.0"
+            }
+          },
+          "profileScope": "Only exact run helper HOME; no global PATH or image change"
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      },
+      {
+        "case": "A-native-non-Git-filename-search-private-rg",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "text": {
+            "entries": [
+              {
+                "path": "binary fixture.bin",
+                "kind": "file"
+              },
+              {
+                "path": "utf8 文件.txt",
+                "kind": "file"
+              },
+              {
+                "path": "probe.py",
+                "kind": "file"
+              }
+            ],
+            "cursor": 3,
+            "done": true,
+            "eof": true,
+            "complete": true,
+            "reason": null,
+            "error": null,
+            "source": "rg",
+            "pathBytes": 41,
+            "count": 3,
+            "skipped": 0,
+            "candidates": [
+              {
+                "path": "utf8 文件.txt",
+                "kind": "file"
+              }
+            ]
+          },
+          "binary": {
+            "entries": [
+              {
+                "path": "binary fixture.bin",
+                "kind": "file"
+              },
+              {
+                "path": "utf8 文件.txt",
+                "kind": "file"
+              },
+              {
+                "path": "probe.py",
+                "kind": "file"
+              }
+            ],
+            "cursor": 3,
+            "done": true,
+            "eof": true,
+            "complete": true,
+            "reason": null,
+            "error": null,
+            "source": "rg",
+            "pathBytes": 41,
+            "count": 3,
+            "skipped": 0,
+            "candidates": [
+              {
+                "path": "binary fixture.bin",
+                "kind": "file"
+              }
+            ]
+          },
+          "noGitRepository": true,
+          "dependency": "Pinned per-run private rg; frozen image remains missing rg"
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      },
+      {
+        "case": "A-content-search-private-rg-bound-command",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "found": {
+            "argv": [
+              "rg",
+              "--json",
+              "--fixed-strings",
+              "--no-config",
+              "--",
+              "Remote UTF-8 中文 café",
+              "utf8 文件.txt"
+            ],
+            "status": {
+              "processId": "d4d69165-2583-4cc1-af39-bec663e6e563",
+              "pid": 6986,
+              "pgid": 6986,
+              "tty": false,
+              "running": false,
+              "exitCode": 0,
+              "signal": null,
+              "latestSeq": "1"
+            },
+            "chunks": [
+              {
+                "stream": "stdout",
+                "data": "eyJ0eXBlIjoiYmVnaW4iLCJkYXRhIjp7InBhdGgiOnsidGV4dCI6InV0Zjgg5paH5Lu2LnR4dCJ9fX0KeyJ0eXBlIjoibWF0Y2giLCJkYXRhIjp7InBhdGgiOnsidGV4dCI6InV0Zjgg5paH5Lu2LnR4dCJ9LCJsaW5lcyI6eyJ0ZXh0IjoiUmVtb3RlIFVURi04IOS4reaWhyBjYWbDqVxuIn0sImxpbmVfbnVtYmVyIjoxLCJhYnNvbHV0ZV9vZmZzZXQiOjAsInN1Ym1hdGNoZXMiOlt7Im1hdGNoIjp7InRleHQiOiJSZW1vdGUgVVRGLTgg5Lit5paHIGNhZsOpIn0sInN0YXJ0IjowLCJlbmQiOjI1fV19fQp7InR5cGUiOiJlbmQiLCJkYXRhIjp7InBhdGgiOnsidGV4dCI6InV0Zjgg5paH5Lu2LnR4dCJ9LCJiaW5hcnlfb2Zmc2V0IjpudWxsLCJzdGF0cyI6eyJlbGFwc2VkIjp7InNlY3MiOjAsIm5hbm9zIjoxNzUxMjEsImh1bWFuIjoiMC4wMDAxNzVzIn0sInNlYXJjaGVzIjoxLCJzZWFyY2hlc193aXRoX21hdGNoIjoxLCJieXRlc19zZWFyY2hlZCI6NjgsImJ5dGVzX3ByaW50ZWQiOjI4NCwibWF0Y2hlZF9saW5lcyI6MSwibWF0Y2hlcyI6MX19fQp7ImRhdGEiOnsiZWxhcHNlZF90b3RhbCI6eyJodW1hbiI6IjAuMDAxMjg2cyIsIm5hbm9zIjoxMjg1Njg3LCJzZWNzIjowfSwic3RhdHMiOnsiYnl0ZXNfcHJpbnRlZCI6Mjg0LCJieXRlc19zZWFyY2hlZCI6NjgsImVsYXBzZWQiOnsiaHVtYW4iOiIwLjAwMDE3NXMiLCJuYW5vcyI6MTc1MTIxLCJzZWNzIjowfSwibWF0Y2hlZF9saW5lcyI6MSwibWF0Y2hlcyI6MSwic2VhcmNoZXMiOjEsInNlYXJjaGVzX3dpdGhfbWF0Y2giOjF9fSwidHlwZSI6InN1bW1hcnkifQo="
+              }
+            ],
+            "stdout": "{\"type\":\"begin\",\"data\":{\"path\":{\"text\":\"utf8 文件.txt\"}}}\n{\"type\":\"match\",\"data\":{\"path\":{\"text\":\"utf8 文件.txt\"},\"lines\":{\"text\":\"Remote UTF-8 中文 café\\n\"},\"line_number\":1,\"absolute_offset\":0,\"submatches\":[{\"match\":{\"text\":\"Remote UTF-8 中文 café\"},\"start\":0,\"end\":25}]}}\n{\"type\":\"end\",\"data\":{\"path\":{\"text\":\"utf8 文件.txt\"},\"binary_offset\":null,\"stats\":{\"elapsed\":{\"secs\":0,\"nanos\":175121,\"human\":\"0.000175s\"},\"searches\":1,\"searches_with_match\":1,\"bytes_searched\":68,\"bytes_printed\":284,\"matched_lines\":1,\"matches\":1}}}\n{\"data\":{\"elapsed_total\":{\"human\":\"0.001286s\",\"nanos\":1285687,\"secs\":0},\"stats\":{\"bytes_printed\":284,\"bytes_searched\":68,\"elapsed\":{\"human\":\"0.000175s\",\"nanos\":175121,\"secs\":0},\"matched_lines\":1,\"matches\":1,\"searches\":1,\"searches_with_match\":1}},\"type\":\"summary\"}\n",
+            "stderr": ""
+          },
+          "missing": {
+            "argv": [
+              "rg",
+              "--json",
+              "--fixed-strings",
+              "--no-config",
+              "--",
+              "ABSENT-CONTENT-c33b304de99833bf20d450c2",
+              "utf8 文件.txt"
+            ],
+            "status": {
+              "processId": "1a4edc0a-19bd-4f22-ac10-2473919095be",
+              "pid": 6997,
+              "pgid": 6997,
+              "tty": false,
+              "running": false,
+              "exitCode": 1,
+              "signal": null,
+              "latestSeq": "1"
+            },
+            "chunks": [
+              {
+                "stream": "stdout",
+                "data": "eyJkYXRhIjp7ImVsYXBzZWRfdG90YWwiOnsiaHVtYW4iOiIwLjAwMDM2OHMiLCJuYW5vcyI6MzY3NzYyLCJzZWNzIjowfSwic3RhdHMiOnsiYnl0ZXNfcHJpbnRlZCI6MCwiYnl0ZXNfc2VhcmNoZWQiOjAsImVsYXBzZWQiOnsiaHVtYW4iOiIwLjAwMDAwMHMiLCJuYW5vcyI6MCwic2VjcyI6MH0sIm1hdGNoZWRfbGluZXMiOjAsIm1hdGNoZXMiOjAsInNlYXJjaGVzIjowLCJzZWFyY2hlc193aXRoX21hdGNoIjowfX0sInR5cGUiOiJzdW1tYXJ5In0K"
+              }
+            ],
+            "stdout": "{\"data\":{\"elapsed_total\":{\"human\":\"0.000368s\",\"nanos\":367762,\"secs\":0},\"stats\":{\"bytes_printed\":0,\"bytes_searched\":0,\"elapsed\":{\"human\":\"0.000000s\",\"nanos\":0,\"secs\":0},\"matched_lines\":0,\"matches\":0,\"searches\":0,\"searches_with_match\":0}},\"type\":\"summary\"}\n",
+            "stderr": ""
+          },
+          "matches": [
+            {
+              "type": "match",
+              "data": {
+                "path": {
+                  "text": "utf8 文件.txt"
+                },
+                "lines": {
+                  "text": "Remote UTF-8 中文 café\n"
+                },
+                "line_number": 1,
+                "absolute_offset": 0,
+                "submatches": [
+                  {
+                    "match": {
+                      "text": "Remote UTF-8 中文 café"
+                    },
+                    "start": 0,
+                    "end": 25
+                  }
+                ]
+              }
+            }
+          ],
+          "scope": "Explicit pinned rg via bound command; NOT product search/index integration or filename evidence"
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      },
+      {
+        "case": "A-native-Git-filename-search",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "initialized": {
+            "argv": [
+              "git",
+              "-c",
+              "init.defaultBranch=t106",
+              "init",
+              "--quiet",
+              "--template="
+            ],
+            "status": {
+              "processId": "f827b4a1-bbf9-42d1-97bb-253c6bf5686e",
+              "pid": 7008,
+              "pgid": 7008,
+              "tty": false,
+              "running": false,
+              "exitCode": 0,
+              "signal": null,
+              "latestSeq": "0"
+            },
+            "chunks": [],
+            "stdout": "",
+            "stderr": ""
+          },
+          "text": [
+            {
+              "path": "utf8 文件.txt",
+              "kind": "file"
+            }
+          ],
+          "binary": [
+            {
+              "path": "binary fixture.bin",
+              "kind": "file"
+            }
+          ],
+          "native": {
+            "entries": [
+              {
+                "path": "binary fixture.bin",
+                "kind": "file"
+              },
+              {
+                "path": "probe.py",
+                "kind": "file"
+              },
+              {
+                "path": "utf8 文件.txt",
+                "kind": "file"
+              }
+            ],
+            "cursor": 3,
+            "done": true,
+            "eof": true,
+            "complete": true,
+            "reason": null,
+            "error": null,
+            "source": "git",
+            "pathBytes": 41,
+            "count": 3,
+            "skipped": 0
+          },
+          "scope": "Native Git-backed filename index only; no content-search or arbitrary non-Git search acceptance."
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      },
+      {
+        "case": "B-structured-command",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "ready": {
+            "event": "command-ready",
+            "pid": 7173,
+            "pgid": 7173,
+            "uid": 1000,
+            "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project/cwd space",
+            "host": "m1-a",
+            "argv": [
+              "space arg",
+              "single'quote",
+              "double\"quote",
+              "$(must-not-run)",
+              "; not a shell",
+              "",
+              "中文"
+            ],
+            "env": "remote env with spaces '\" 中文",
+            "token": "c33b304de99833bf20d450c2",
+            "isatty": [
+              false,
+              false,
+              false
+            ]
+          },
+          "actual": {
+            "pid": 7173,
+            "state": "S",
+            "ppid": 7169,
+            "pgid": 7173,
+            "sid": 7169,
+            "tty": 0,
+            "tpgid": -1,
+            "startTick": "631262554",
+            "uid": 1000,
+            "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project/cwd space",
+            "mode": "command",
+            "belongsToRun": true,
+            "kind": "workload",
+            "ownerTokenPresent": false,
+            "agentTokenPresent": false
+          },
+          "argv": [
+            "python3",
+            "-I",
+            "/workspace/t106-c33b304de99833bf20d450c2/project/probe.py",
+            "command",
+            "c33b304de99833bf20d450c2",
+            "space arg",
+            "single'quote",
+            "double\"quote",
+            "$(must-not-run)",
+            "; not a shell",
+            "",
+            "中文"
+          ],
+          "status": {
+            "processId": "40786404-55b4-4405-91b6-4ab3b0c57d5b",
+            "pid": 7173,
+            "pgid": 7173,
+            "tty": false,
+            "running": false,
+            "exitCode": 17,
+            "signal": null,
+            "latestSeq": "3"
+          },
+          "chunks": [
+            {
+              "stream": "stdout",
+              "data": "eyJldmVudCI6ICJjb21tYW5kLXJlYWR5IiwgInBpZCI6IDcxNzMsICJwZ2lkIjogNzE3MywgInVpZCI6IDEwMDAsICJjd2QiOiAiL3dvcmtzcGFjZS90MTA2LWMzM2IzMDRkZTk5ODMzYmYyMGQ0NTBjMi9wcm9qZWN0L2N3ZCBzcGFjZSIsICJob3N0IjogIm0xLWEiLCAiYXJndiI6IFsic3BhY2UgYXJnIiwgInNpbmdsZSdxdW90ZSIsICJkb3VibGVcInF1b3RlIiwgIiQobXVzdC1ub3QtcnVuKSIsICI7IG5vdCBhIHNoZWxsIiwgIiIsICLkuK3mlociXSwgImVudiI6ICJyZW1vdGUgZW52IHdpdGggc3BhY2VzICdcIiDkuK3mlociLCAidG9rZW4iOiAiYzMzYjMwNGRlOTk4MzNiZjIwZDQ1MGMyIiwgImlzYXR0eSI6IFtmYWxzZSwgZmFsc2UsIGZhbHNlXX0K"
+            },
+            {
+              "stream": "stderr",
+              "data": "c3RkZXJyIGV4YWN0OiBxdW90ZXMgJyIgYW5kIFVURi04IOS4reaWhwo="
+            },
+            {
+              "stream": "stdout",
+              "data": "c3Rkb3V0IGZpbmlzaGVkCg=="
+            }
+          ],
+          "stdout": "{\"event\": \"command-ready\", \"pid\": 7173, \"pgid\": 7173, \"uid\": 1000, \"cwd\": \"/workspace/t106-c33b304de99833bf20d450c2/project/cwd space\", \"host\": \"m1-a\", \"argv\": [\"space arg\", \"single'quote\", \"double\\\"quote\", \"$(must-not-run)\", \"; not a shell\", \"\", \"中文\"], \"env\": \"remote env with spaces '\\\" 中文\", \"token\": \"c33b304de99833bf20d450c2\", \"isatty\": [false, false, false]}\nstdout finished\n",
+          "stderr": "stderr exact: quotes '\" and UTF-8 中文\n",
+          "after": [
+            {
+              "pid": 7173,
+              "startTick": "631262554",
+              "state": "gone"
+            }
+          ]
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      },
+      {
+        "case": "C-real-PTY-foreground",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "ready": {
+            "event": "pty-ready",
+            "pid": 7209,
+            "pgid": 7209,
+            "parent": 7204,
+            "token": "c33b304de99833bf20d450c2",
+            "isatty": [
+              true,
+              true,
+              true
+            ],
+            "rows": 27,
+            "cols": 91,
+            "foreground": 7209
+          },
+          "fg": {
+            "pgid": 7209,
+            "verified": true
+          },
+          "actual": [
+            {
+              "pid": 7204,
+              "state": "S",
+              "ppid": 7201,
+              "pgid": 7204,
+              "sid": 7201,
+              "tty": 34816,
+              "tpgid": 7209,
+              "startTick": "631262765",
+              "uid": 1000,
+              "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project",
+              "mode": "pty",
+              "belongsToRun": true,
+              "kind": "workload",
+              "ownerTokenPresent": false,
+              "agentTokenPresent": false
+            },
+            {
+              "pid": 7209,
+              "state": "S",
+              "ppid": 7204,
+              "pgid": 7209,
+              "sid": 7201,
+              "tty": 34816,
+              "tpgid": 7209,
+              "startTick": "631262802",
+              "uid": 1000,
+              "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project",
+              "mode": "pty",
+              "belongsToRun": true,
+              "kind": "workload",
+              "ownerTokenPresent": false,
+              "agentTokenPresent": false
+            }
+          ],
+          "signal": {
+            "delivered": true,
+            "targetPgid": 7209,
+            "verified": true
+          },
+          "argv": [
+            "python3",
+            "-I",
+            "/workspace/t106-c33b304de99833bf20d450c2/project/probe.py",
+            "pty",
+            "c33b304de99833bf20d450c2"
+          ],
+          "status": {
+            "processId": "d8bf7f7b-87e9-4295-8c17-6b9d89dcc4d0",
+            "pid": 7204,
+            "pgid": 7204,
+            "tty": true,
+            "running": false,
+            "exitCode": 0,
+            "signal": null,
+            "latestSeq": "7"
+          },
+          "chunks": [
+            {
+              "stream": "pty",
+              "data": "eyJldmVudCI6ICJwdHktcmVhZHkiLCAicGlkIjogNzIwOSwgInBnaWQiOiA3MjA5LCAicGFyZW50IjogNzIwNCwgInRva2VuIjogImMzM2IzMDRkZTk5ODMzYmYyMGQ0NTBjMiIsICJpc2F0dHkiOiBbdHJ1ZSwgdHJ1ZSwgdHJ1ZV0sICJyb3dzIjogMjcsICJjb2xzIjogOTEsICJmb3JlZ3JvdW5kIjogNzIwOX0NCg=="
+            },
+            {
+              "stream": "pty",
+              "data": "aW5wdXQgc3BhY2VzIGFuZCDkuK3mlocNCg=="
+            },
+            {
+              "stream": "pty",
+              "data": "eyJldmVudCI6ICJwdHktaW5wdXQiLCAicGlkIjogNzIwOSwgInBnaWQiOiA3MjA5LCAidGV4dCI6ICJzcGFjZXMgYW5kIOS4reaWhyJ9DQo="
+            },
+            {
+              "stream": "pty",
+              "data": "c2l6ZQ0K"
+            },
+            {
+              "stream": "pty",
+              "data": "eyJldmVudCI6ICJwdHktcmVzaXplIiwgInBpZCI6IDcyMDksICJwZ2lkIjogNzIwOSwgInJvd3MiOiA0MSwgImNvbHMiOiAxMjN9DQo="
+            },
+            {
+              "stream": "pty",
+              "data": "eyJldmVudCI6ICJwdHktY2hpbGQtc2lnbmFsIiwgInBpZCI6IDcyMDksICJwZ2lkIjogNzIwOSwgInNpZ25hbCI6IDIsICJ0b2tlbiI6ICJjMzNiMzA0ZGU5OTgzM2JmMjBkNDUwYzIifQ0K"
+            },
+            {
+              "stream": "pty",
+              "data": "eyJldmVudCI6ICJwdHktcGFyZW50LXJlYXBlZCIsICJwaWQiOiA3MjA0LCAicGdpZCI6IDcyMDQsICJjaGlsZCI6IDcyMDksICJjaGlsZEV4aXQiOiAyMywgImZvcmVncm91bmQiOiA3MjA0LCAidG9rZW4iOiAiYzMzYjMwNGRlOTk4MzNiZjIwZDQ1MGMyIn0NCg=="
+            }
+          ],
+          "stdout": "",
+          "stderr": "",
+          "readback": [
+            {
+              "path": "binary fixture.bin",
+              "bytes": 736,
+              "sha256": "2fbc941b2e7f3d9d4dc6e5af4144774152a01a1a85d48f94ca77894f8ab44b1a"
+            },
+            {
+              "path": "cwd space/command-identity.json",
+              "bytes": 371,
+              "sha256": "68242f5bb2f2cb6260154a0dd49d133f1865b3d76858eee7d52de34fcd2bab3c"
+            },
+            {
+              "path": "probe.py",
+              "bytes": 5994,
+              "sha256": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0"
+            },
+            {
+              "path": "pty-child-signal.json",
+              "bytes": 106,
+              "sha256": "26d4214b171774fcbca5807690b39916ccb6582d3ca17762e1f8268329a7daf6"
+            },
+            {
+              "path": "pty-parent-reaped.json",
+              "bytes": 146,
+              "sha256": "2f7828f8eee24c18da1c1c1c59de0458a176882ad8246a5573c25fd4a8362581"
+            },
+            {
+              "path": "pty-ready.json",
+              "bytes": 176,
+              "sha256": "dd10ef361a011901d84745e93d0aeb225bb42fe6a1fe9730cb8c1a2247dbc661"
+            },
+            {
+              "path": "pty-resize.json",
+              "bytes": 75,
+              "sha256": "c4ef8e6fbbc4acdc549b2aad1cef38fba8e4e76d6f853c87e579c51e09b0ab1b"
+            },
+            {
+              "path": "utf8 文件.txt",
+              "bytes": 68,
+              "sha256": "875e5685a904b377584c54599ade74d3adddcbbf82cea80fbcb78ccd150ba011"
+            }
+          ],
+          "after": [
+            {
+              "pid": 7204,
+              "startTick": "631262765",
+              "state": "gone"
+            },
+            {
+              "pid": 7209,
+              "startTick": "631262802",
+              "state": "gone"
+            }
+          ]
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      },
+      {
+        "case": "D-cancel-owned-parent-child-group",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "ready": {
+            "event": "cancel-parent-ready",
+            "pid": 7250,
+            "pgid": 7250,
+            "child": 7255,
+            "token": "c33b304de99833bf20d450c2"
+          },
+          "members": [
+            {
+              "pid": 7250,
+              "state": "S",
+              "ppid": 7246,
+              "pgid": 7250,
+              "sid": 7246,
+              "tty": 0,
+              "tpgid": -1,
+              "startTick": "631262991",
+              "uid": 1000,
+              "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project",
+              "mode": "cancel",
+              "belongsToRun": true,
+              "kind": "workload",
+              "ownerTokenPresent": false,
+              "agentTokenPresent": false
+            },
+            {
+              "pid": 7251,
+              "state": "S",
+              "ppid": 7246,
+              "pgid": 7250,
+              "sid": 7246,
+              "tty": 0,
+              "tpgid": -1,
+              "startTick": "631262991",
+              "uid": 1000,
+              "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project",
+              "mode": null,
+              "belongsToRun": true,
+              "kind": "supervisor-or-guardian",
+              "ownerTokenPresent": false,
+              "agentTokenPresent": false
+            },
+            {
+              "pid": 7255,
+              "state": "S",
+              "ppid": 7250,
+              "pgid": 7250,
+              "sid": 7246,
+              "tty": 0,
+              "tpgid": -1,
+              "startTick": "631263022",
+              "uid": 1000,
+              "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project",
+              "mode": "cancel-child",
+              "belongsToRun": true,
+              "kind": "workload",
+              "ownerTokenPresent": false,
+              "agentTokenPresent": false
+            }
+          ],
+          "cancelled": {
+            "graceful": {
+              "running": true,
+              "graceMs": 1500,
+              "scope": "group"
+            },
+            "forced": null,
+            "final": {
+              "processId": "8c1d0493-8411-40fb-b536-4a98e835770e",
+              "pid": 7250,
+              "pgid": 7250,
+              "tty": false,
+              "running": false,
+              "exitCode": 0,
+              "signal": null,
+              "latestSeq": "3"
+            }
+          },
+          "parent": {
+            "event": "cancel-parent-reaped",
+            "pid": 7250,
+            "pgid": 7250,
+            "child": 7255,
+            "childExit": 0,
+            "signals": [
+              15
+            ],
+            "forwardedSignal": false,
+            "token": "c33b304de99833bf20d450c2"
+          },
+          "child": {
+            "pid": 7255,
+            "signal": 15,
+            "token": "c33b304de99833bf20d450c2"
+          },
+          "output": [
+            {
+              "stream": "stdout",
+              "data": "eyJldmVudCI6ICJjYW5jZWwtY2hpbGQtcmVhZHkiLCAicGlkIjogNzI1NSwgInBnaWQiOiA3MjUwLCAidG9rZW4iOiAiYzMzYjMwNGRlOTk4MzNiZjIwZDQ1MGMyIn0K"
+            },
+            {
+              "stream": "stdout",
+              "data": "eyJldmVudCI6ICJjYW5jZWwtcGFyZW50LXJlYWR5IiwgInBpZCI6IDcyNTAsICJwZ2lkIjogNzI1MCwgImNoaWxkIjogNzI1NSwgInRva2VuIjogImMzM2IzMDRkZTk5ODMzYmYyMGQ0NTBjMiJ9Cg=="
+            },
+            {
+              "stream": "stdout",
+              "data": "eyJldmVudCI6ICJjYW5jZWwtcGFyZW50LXJlYXBlZCIsICJwaWQiOiA3MjUwLCAicGdpZCI6IDcyNTAsICJjaGlsZCI6IDcyNTUsICJjaGlsZEV4aXQiOiAwLCAic2lnbmFscyI6IFsxNV0sICJmb3J3YXJkZWRTaWduYWwiOiBmYWxzZSwgInRva2VuIjogImMzM2IzMDRkZTk5ODMzYmYyMGQ0NTBjMiJ9Cg=="
+            }
+          ],
+          "after": [
+            {
+              "pid": 7250,
+              "startTick": "631262991",
+              "state": "gone"
+            },
+            {
+              "pid": 7251,
+              "startTick": "631262991",
+              "state": "gone"
+            },
+            {
+              "pid": 7255,
+              "startTick": "631263022",
+              "state": "gone"
+            }
+          ],
+          "readback": [
+            {
+              "path": "binary fixture.bin",
+              "bytes": 736,
+              "sha256": "2fbc941b2e7f3d9d4dc6e5af4144774152a01a1a85d48f94ca77894f8ab44b1a"
+            },
+            {
+              "path": "cancel-child-ready.json",
+              "bytes": 95,
+              "sha256": "ea30c8fad624e2093272e2cff2a90247d83f963754144d163ba4da356531ba95"
+            },
+            {
+              "path": "cancel-child-term.json",
+              "bytes": 64,
+              "sha256": "80bd0d112c0bd0e925d005c25ca3485291299590c2aebfe7c8a5984dcd116efd"
+            },
+            {
+              "path": "cancel-parent-ready.json",
+              "bytes": 111,
+              "sha256": "d3dfa7b8b9688515c3dbdbb323e368658f9d9e67a7ee82c635df296ce74ce3ca"
+            },
+            {
+              "path": "cancel-parent-reaped.json",
+              "bytes": 171,
+              "sha256": "9f08ee72e529f26180a0c2057513d2d2da969040e9e3bb83d913a4038637837a"
+            },
+            {
+              "path": "cwd space/command-identity.json",
+              "bytes": 371,
+              "sha256": "68242f5bb2f2cb6260154a0dd49d133f1865b3d76858eee7d52de34fcd2bab3c"
+            },
+            {
+              "path": "probe.py",
+              "bytes": 5994,
+              "sha256": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0"
+            },
+            {
+              "path": "pty-child-signal.json",
+              "bytes": 106,
+              "sha256": "26d4214b171774fcbca5807690b39916ccb6582d3ca17762e1f8268329a7daf6"
+            },
+            {
+              "path": "pty-parent-reaped.json",
+              "bytes": 146,
+              "sha256": "2f7828f8eee24c18da1c1c1c59de0458a176882ad8246a5573c25fd4a8362581"
+            },
+            {
+              "path": "pty-ready.json",
+              "bytes": 176,
+              "sha256": "dd10ef361a011901d84745e93d0aeb225bb42fe6a1fe9730cb8c1a2247dbc661"
+            },
+            {
+              "path": "pty-resize.json",
+              "bytes": 75,
+              "sha256": "c4ef8e6fbbc4acdc549b2aad1cef38fba8e4e76d6f853c87e579c51e09b0ab1b"
+            },
+            {
+              "path": "utf8 文件.txt",
+              "bytes": 68,
+              "sha256": "875e5685a904b377584c54599ade74d3adddcbbf82cea80fbcb78ccd150ba011"
+            }
+          ]
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      },
+      {
+        "case": "D-healthy-resource-cleanup",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "reads": [
+            {
+              "path": "binary fixture.bin",
+              "bytes": 736,
+              "sha256": "2fbc941b2e7f3d9d4dc6e5af4144774152a01a1a85d48f94ca77894f8ab44b1a"
+            },
+            {
+              "path": "cancel-child-ready.json",
+              "bytes": 95,
+              "sha256": "ea30c8fad624e2093272e2cff2a90247d83f963754144d163ba4da356531ba95"
+            },
+            {
+              "path": "cancel-child-term.json",
+              "bytes": 64,
+              "sha256": "80bd0d112c0bd0e925d005c25ca3485291299590c2aebfe7c8a5984dcd116efd"
+            },
+            {
+              "path": "cancel-parent-ready.json",
+              "bytes": 111,
+              "sha256": "d3dfa7b8b9688515c3dbdbb323e368658f9d9e67a7ee82c635df296ce74ce3ca"
+            },
+            {
+              "path": "cancel-parent-reaped.json",
+              "bytes": 171,
+              "sha256": "9f08ee72e529f26180a0c2057513d2d2da969040e9e3bb83d913a4038637837a"
+            },
+            {
+              "path": "cwd space/command-identity.json",
+              "bytes": 371,
+              "sha256": "68242f5bb2f2cb6260154a0dd49d133f1865b3d76858eee7d52de34fcd2bab3c"
+            },
+            {
+              "path": "probe.py",
+              "bytes": 5994,
+              "sha256": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0"
+            },
+            {
+              "path": "pty-child-signal.json",
+              "bytes": 106,
+              "sha256": "26d4214b171774fcbca5807690b39916ccb6582d3ca17762e1f8268329a7daf6"
+            },
+            {
+              "path": "pty-parent-reaped.json",
+              "bytes": 146,
+              "sha256": "2f7828f8eee24c18da1c1c1c59de0458a176882ad8246a5573c25fd4a8362581"
+            },
+            {
+              "path": "pty-ready.json",
+              "bytes": 176,
+              "sha256": "dd10ef361a011901d84745e93d0aeb225bb42fe6a1fe9730cb8c1a2247dbc661"
+            },
+            {
+              "path": "pty-resize.json",
+              "bytes": 75,
+              "sha256": "c4ef8e6fbbc4acdc549b2aad1cef38fba8e4e76d6f853c87e579c51e09b0ab1b"
+            },
+            {
+              "path": "utf8 文件.txt",
+              "bytes": 68,
+              "sha256": "875e5685a904b377584c54599ade74d3adddcbbf82cea80fbcb78ccd150ba011"
+            }
+          ],
+          "listing": {
+            "entries": [
+              {
+                "path": "binary fixture.bin",
+                "kind": "file"
+              },
+              {
+                "path": "cancel-child-ready.json",
+                "kind": "file"
+              },
+              {
+                "path": "cancel-child-term.json",
+                "kind": "file"
+              },
+              {
+                "path": "cancel-parent-ready.json",
+                "kind": "file"
+              },
+              {
+                "path": "cancel-parent-reaped.json",
+                "kind": "file"
+              },
+              {
+                "path": "cwd space",
+                "kind": "directory"
+              },
+              {
+                "path": "cwd space/command-identity.json",
+                "kind": "file"
+              },
+              {
+                "path": "probe.py",
+                "kind": "file"
+              },
+              {
+                "path": "pty-child-signal.json",
+                "kind": "file"
+              },
+              {
+                "path": "pty-parent-reaped.json",
+                "kind": "file"
+              },
+              {
+                "path": "pty-ready.json",
+                "kind": "file"
+              },
+              {
+                "path": "pty-resize.json",
+                "kind": "file"
+              },
+              {
+                "path": "utf8 文件.txt",
+                "kind": "file"
+              }
+            ],
+            "cursor": 13,
+            "done": true,
+            "eof": true,
+            "complete": true,
+            "reason": null,
+            "error": null,
+            "source": "git",
+            "pathBytes": 247,
+            "count": 13,
+            "skipped": 0
+          },
+          "health": {
+            "ok": true,
+            "home": "/tmp/t105-c33b304de99833bf20d450c2/home",
+            "uptimeMs": 26471,
+            "workspaces": 1,
+            "openingWorkspaces": 0,
+            "discoveries": 0,
+            "processes": 0,
+            "pathLocks": 0,
+            "readHandles": 0,
+            "writeHandles": 0
+          }
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      },
+      {
+        "case": "E-unavailable-and-in-flight-unknown-no-fallback",
+        "status": "observed-pass-awaiting-review",
+        "facts": {
+          "operationId": "50812d01-989b-4844-a844-5748c4b0505c",
+          "providerError": {
+            "type": "RemoteHelperCallInterruptedError",
+            "code": null,
+            "kind": "disconnect",
+            "mutationMayHaveStarted": true
+          },
+          "mutationOutcome": "unknown-to-provider; independently observed once; not retried",
+          "childPidIsLocalTransportOnly": 2408158,
+          "actualRemote": [
+            {
+              "pid": 7422,
+              "state": "S",
+              "ppid": 7412,
+              "pgid": 7422,
+              "sid": 7412,
+              "tty": 0,
+              "tpgid": -1,
+              "startTick": "631263624",
+              "uid": 1000,
+              "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project",
+              "mode": "uncertain",
+              "belongsToRun": true,
+              "kind": "workload",
+              "ownerTokenPresent": false,
+              "agentTokenPresent": false
+            }
+          ],
+          "readError": {
+            "type": "Error",
+            "code": null,
+            "kind": null,
+            "mutationMayHaveStarted": null
+          },
+          "writeError": {
+            "type": "Error",
+            "code": "T106_UNKNOWN_OUTCOME",
+            "kind": null,
+            "mutationMayHaveStarted": null
+          },
+          "commandError": {
+            "type": "Error",
+            "code": "T106_UNKNOWN_OUTCOME",
+            "kind": null,
+            "mutationMayHaveStarted": null
+          },
+          "exactOperationDispatchCount": 1,
+          "backoffAttemptCounter": 0,
+          "counterSha256": "b990cf3dceb0412ee8ca1a7fff244b3e3eeedfab29f556067c8c1c357a90ed70",
+          "after": [
+            {
+              "pid": 7422,
+              "startTick": "631263624",
+              "state": "gone"
+            }
+          ],
+          "retainedSupervisorsRequireAuthenticatedCleanup": [
+            {
+              "pid": 7412,
+              "state": "S",
+              "ppid": 6676,
+              "pgid": 7412,
+              "sid": 7412,
+              "tty": 0,
+              "tpgid": -1,
+              "startTick": "631263536",
+              "uid": 1000,
+              "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project",
+              "mode": null,
+              "belongsToRun": true,
+              "kind": "supervisor-or-guardian",
+              "ownerTokenPresent": false,
+              "agentTokenPresent": false
+            },
+            {
+              "pid": 7423,
+              "state": "S",
+              "ppid": 7412,
+              "pgid": 7422,
+              "sid": 7412,
+              "tty": 0,
+              "tpgid": -1,
+              "startTick": "631263624",
+              "uid": 1000,
+              "cwd": "/workspace/t106-c33b304de99833bf20d450c2/project",
+              "mode": null,
+              "belongsToRun": true,
+              "kind": "supervisor-or-guardian",
+              "ownerTokenPresent": false,
+              "agentTokenPresent": false
+            }
+          ],
+          "providerReadbackAfterFault": "unavailable-not-claimed",
+          "centralCanariesUnchanged": true
+        },
+        "capabilityStatus": "awaiting-independent-review"
+      }
+    ],
+    "mixedRuns": false,
+    "attemptCountThisRepair": 1
+  },
+  "independentFileObservations": [
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-001.response.json",
+        "sha256": "1b605b481a9ffc72dff21612c39fbd9bf62bb53b77a42151ba0af5b65354dc53"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-002.response.json",
+        "sha256": "1b605b481a9ffc72dff21612c39fbd9bf62bb53b77a42151ba0af5b65354dc53"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-003.response.json",
+        "sha256": "e42881818999877e3d885fb2068e9591626bc72bd7338fb23e29c035e9455d67"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-004.response.json",
+        "sha256": "e42881818999877e3d885fb2068e9591626bc72bd7338fb23e29c035e9455d67"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-005.response.json",
+        "sha256": "63f938c884bb229af8b1d2059037b106667d6ba8e73d82e0dad51af33fa48120"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-006.response.json",
+        "sha256": "afc0dc7aa6764d942350586ef09f3c53f6731cb216e25c3eb3d0799d8005be4c"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-007.response.json",
+        "sha256": "834c122e40e0ef667691143fac4143f27022b84c5ffa51e3cb583cf0681cee73"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-008.response.json",
+        "sha256": "63f73359fc566e0d577af6fae70b46f8a5ad97a62514d72c969d5b843e57c4ee"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-009.response.json",
+        "sha256": "ce94cc3788eb354cf62671e563ca04bf9917b15137ddd1c9b31a084cfd14dac0"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-010.response.json",
+        "sha256": "828a63301e001a6fffaa097273ea848d3430fddbd55486e6aa7013fb5483d420"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-011.response.json",
+        "sha256": "c216f85c0eee66456f59a857e1527af3a4102f581cfd4e8206e98a9bb22541ef"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-012.response.json",
+        "sha256": "ee99cd9f156265cb028352ad536aa01026484f33cd6566fa4480f09dd067d2dd"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    },
+    {
+      "response": {
+        "path": "artifacts/m1/t106/run-c33b304de99833bf20d450c2/observe-013.response.json",
+        "sha256": "d86418234c6ae7d724b060ea29e96dc6c6be80dc188781dd2c3991d06044e602"
+      },
+      "unchangedChecks": {
+        "centralCanariesUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "secondWorkspaceUnchanged": true,
+        "nonTargetUnchanged": true
+      }
+    }
+  ],
+  "privateTool": {
+    "metadata": {
+      "sourceUrl": "https://ports.ubuntu.com/ubuntu-ports/pool/universe/r/rust-ripgrep/ripgrep_14.1.0-1_arm64.deb",
+      "packageVersion": "14.1.0-1",
+      "architecture": "arm64",
+      "packageSha256": "71fe8a5667bc87d2bca175a3426c6ec518e0679cc821d23ae7056de7096f04de",
+      "packageBytes": 1455230,
+      "binarySha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702",
+      "binaryBytes": 4917680,
+      "actualLocalVersion": "ripgrep 14.1.0\n\nfeatures:-simd-accel,+pcre2\nsimd(compile):+NEON\nsimd(runtime):+NEON\n\nPCRE2 10.42 is available (JIT is available)\n",
+      "versionExitCode": 0,
+      "existingInstalledPackage": "14.1.0-1 arm64",
+      "existingBinaryByteMatched": true,
+      "acquisition": "fixed-https-download",
+      "independentSignedMetadata": {
+        "inReleaseSha256": "cdb2f31d809f589719a53c6ad15f255b27569c4059542ada282aaa21b8e164b0",
+        "keyringSha256": "80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31",
+        "packagesSha256": "adb1c01115c3b11d2a5cde43b17ce3c53fa7cc48f834b930f63910d2c7dc74f5",
+        "packagesBytes": 72105605,
+        "packageStanza": {
+          "Package": "ripgrep",
+          "Architecture": "arm64",
+          "Version": "14.1.0-1",
+          "Built-Using": "rustc (= 1.73.0+dfsg0ubuntu1-0ubuntu1)",
+          "Multi-Arch": "allowed",
+          "Priority": "optional",
+          "Section": "universe/utils",
+          "Source": "rust-ripgrep",
+          "Origin": "Ubuntu",
+          "Maintainer": "Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>",
+          "Original-Maintainer": "Debian Rust Maintainers <pkg-rust-maintainers@alioth-lists.debian.net>",
+          "Bugs": "https://bugs.launchpad.net/ubuntu/+filebug",
+          "Installed-Size": "4878",
+          "Depends": "libc6 (>= 2.34), libgcc-s1 (>= 4.2), libpcre2-8-0 (>= 10.22)",
+          "Filename": "pool/universe/r/rust-ripgrep/ripgrep_14.1.0-1_arm64.deb",
+          "Size": "1455230",
+          "MD5sum": "819153703184e217ee08161916e4bf5b",
+          "SHA1": "cb9a905301bc1da9a8f1780d20c47cdf77cb3545",
+          "SHA256": "71fe8a5667bc87d2bca175a3426c6ec518e0679cc821d23ae7056de7096f04de",
+          "SHA512": "812c9cca231d918c4fffa09ada88a58e4dbc2f5412d027aec5d66d95ba0d137e67d06734db8126aacddb5569b97f5d6ac2cc87cfc58a7d83a6862c680083fd15",
+          "Homepage": "https://github.com/BurntSushi/ripgrep",
+          "Description": "Recursively searches directories for a regex pattern",
+          "X-Cargo-Built-Using": "rust-aho-corasick (= 1.1.2-1), rust-anyhow (= 1.0.75-1), rust-bstr (= 1.7.0-2build1), rust-cfg-if (= 1.0.0-1), rust-crossbeam-deque (= 0.8.3-1), rust-crossbeam-epoch (= 0.9.13-1), rust-crossbeam-utils (= 0.8.12-1), rust-encoding-rs (= 0.8.33-1), rust-encoding-rs-io (= 0.1.7-1), rust-globset (= 0.4.14-1), rust-grep-cli (= 0.1.10-1), rust-grep (= 0.3.1-1), rust-grep-matcher (= 0.1.7-1), rust-grep-pcre2 (= 0.1.7-1), rust-grep-printer (= 0.2.1-1), rust-grep-regex (= 0.1.12-1), rust-grep-searcher (= 0.1.13-1), rust-ignore (= 0.4.22-1), rust-itoa (= 1.0.9-1), rust-lexopt (= 0.3.0-1), rust-libc (= 0.2.150-1), rust-log (= 0.4.20-2), rust-memchr (= 2.6.4-3build2), rust-memmap2 (= 0.9.0-3), rust-memoffset (= 0.6.5-1), rust-pcre2 (= 0.2.6-1), rust-pcre2-sys (= 0.2.7-1), rust-regex-automata (= 0.4.3-1build2), rust-regex-syntax (= 0.8.2-1), rust-ryu (= 1.0.15-1), rust-same-file (= 1.0.6-1), rust-scopeguard (= 1.1.0-1), rust-serde (= 1.0.195-1), rust-serde-json (= 1.0.108-1), rust-termcolor (= 1.4.0-1), rust-textwrap (= 0.16.0-2), rust-walkdir (= 2.4.0-1), rustc (= 1.73.0+dfsg0ubuntu1-0ubuntu1)",
+          "Description-md5": "45d1dfa98f350bc31d65169b0acf761d"
+        },
+        "signatureCheck": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/tools-rg14-3211d20ec95e/signature-check.json"
+      },
+      "scope": "private per-run test dependency, not frozen-image or global installation",
+      "manifest": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/tools-rg14-3211d20ec95e/manifest.json",
+      "binary": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/tools-rg14-3211d20ec95e/extracted/rg",
+      "reused": true,
+      "verifiedInputs": {
+        "manifest": {
+          "device": 2049,
+          "inode": 9114977,
+          "bytes": 3725,
+          "sha256": "c16ca4e13afd658aa95e439e98cdc2a8c7f3c767d2a568ac832096cfba4fc8ac"
+        },
+        "package": {
+          "device": 2049,
+          "inode": 9114961,
+          "bytes": 1455230,
+          "sha256": "71fe8a5667bc87d2bca175a3426c6ec518e0679cc821d23ae7056de7096f04de"
+        },
+        "binary": {
+          "device": 2049,
+          "inode": 9114968,
+          "bytes": 4917680,
+          "sha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702"
+        }
+      }
+    },
+    "remoteEnvironment": {
+      "search": {
+        "available": true,
+        "path": "/tmp/t105-c33b304de99833bf20d450c2/home/.t106-tools/bin/rg",
+        "version": "ripgrep 14.1.0"
+      }
+    },
+    "reusedWithoutDownload": true,
+    "initialFrozenHelper": {
+      "version": "0.13.1",
+      "state": "degraded",
+      "environment": {
+        "search": {
+          "available": false,
+          "error": "ripgrep is not available in the remote login-shell PATH"
+        }
+      },
+      "sha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+      "bytes": 217238
+    },
+    "frozenImageFixed": false,
+    "globalEnvironmentChanged": false
+  },
+  "sessionAndCleanup": {
+    "identityGateCount": 2,
+    "allCurrentIdentityGatesPassed": true,
+    "disposal": {
+      "errors": [],
+      "disposer": {
+        "entered": 1,
+        "completed": 1
+      },
+      "helpersDisposed": true,
+      "helperEntries": 0,
+      "registrySize": 0,
+      "javascriptNetworkAttempts": [],
+      "logTypes": [],
+      "centralEntries": [
+        "binary fixture.bin",
+        "central-canary.txt",
+        "utf8 文件.txt"
+      ],
+      "remoteCleanup": "Independent /proc and authenticated per-run helper shutdown required by Python controller; transport exit is not proof."
+    },
+    "finalResources": {
+      "fullRun": "artifacts/m1/t106/run-c33b304de99833bf20d450c2",
+      "exactTrackedIdentities": [
+        {
+          "pid": 7173,
+          "startTick": "631262554"
+        },
+        {
+          "pid": 7204,
+          "startTick": "631262765"
+        },
+        {
+          "pid": 7209,
+          "startTick": "631262802"
+        },
+        {
+          "pid": 7250,
+          "startTick": "631262991"
+        },
+        {
+          "pid": 7251,
+          "startTick": "631262991"
+        },
+        {
+          "pid": 7255,
+          "startTick": "631263022"
+        },
+        {
+          "pid": 7422,
+          "startTick": "631263624"
+        },
+        {
+          "pid": 6676,
+          "startTick": "631260823"
+        },
+        {
+          "pid": 7412,
+          "startTick": "631263536"
+        },
+        {
+          "pid": 7423,
+          "startTick": "631263624"
+        }
+      ],
+      "perRunFinalObservation": {
+        "run-2efc2949793519731c68dfa4": {
+          "m1-a": {
+            "processes": [],
+            "tracked": []
+          },
+          "m1-b": {
+            "processes": [],
+            "tracked": []
+          }
+        },
+        "run-363f7ed31043d3f1216024b9": {
+          "m1-a": {
+            "processes": [],
+            "tracked": []
+          },
+          "m1-b": {
+            "processes": [],
+            "tracked": []
+          }
+        },
+        "run-4e2b77ddde89acd3c2e0f4d0": {
+          "m1-a": {
+            "processes": [],
+            "tracked": []
+          },
+          "m1-b": {
+            "processes": [],
+            "tracked": []
+          }
+        },
+        "run-6eb2c4d3427ac4e41059d191": {
+          "m1-a": {
+            "processes": [],
+            "tracked": []
+          },
+          "m1-b": {
+            "processes": [],
+            "tracked": []
+          }
+        },
+        "run-96eb47106bb9cbbe905fe5a5": {
+          "m1-a": {
+            "processes": [],
+            "tracked": []
+          },
+          "m1-b": {
+            "processes": [],
+            "tracked": []
+          }
+        },
+        "run-aba98d32e809206c611088ce": {
+          "m1-a": {
+            "processes": [],
+            "tracked": []
+          },
+          "m1-b": {
+            "processes": [],
+            "tracked": []
+          }
+        },
+        "run-bc3e71b509a7486a96ca6b84": {
+          "m1-a": {
+            "processes": [],
+            "tracked": []
+          },
+          "m1-b": {
+            "processes": [],
+            "tracked": []
+          }
+        },
+        "run-c33b304de99833bf20d450c2": {
+          "m1-a": {
+            "processes": [],
+            "tracked": [
+              {
+                "pid": 7173,
+                "startTick": "631262554",
+                "state": "gone"
+              },
+              {
+                "pid": 7204,
+                "startTick": "631262765",
+                "state": "gone"
+              },
+              {
+                "pid": 7209,
+                "startTick": "631262802",
+                "state": "gone"
+              },
+              {
+                "pid": 7250,
+                "startTick": "631262991",
+                "state": "gone"
+              },
+              {
+                "pid": 7251,
+                "startTick": "631262991",
+                "state": "gone"
+              },
+              {
+                "pid": 7255,
+                "startTick": "631263022",
+                "state": "gone"
+              },
+              {
+                "pid": 7422,
+                "startTick": "631263624",
+                "state": "gone"
+              },
+              {
+                "pid": 6676,
+                "startTick": "631260823",
+                "state": "gone"
+              },
+              {
+                "pid": 7412,
+                "startTick": "631263536",
+                "state": "gone"
+              },
+              {
+                "pid": 7423,
+                "startTick": "631263624",
+                "state": "gone"
+              }
+            ]
+          },
+          "m1-b": {
+            "processes": [],
+            "tracked": []
+          }
+        }
+      },
+      "ownedCwdOrExecutableProcesses": {
+        "m1-a": [],
+        "m1-b": []
+      },
+      "centralRunnerAndTestPids": [],
+      "transport": {
+        "hostBrokerPids": [],
+        "controlPlaneCliPids": []
+      },
+      "runningContainerIds": [
+        "0e1bbb9931571e4c185d72009833ed02e8e22cccb6c0bbdd2b0777070691d3cf",
+        "1170ce53f30ee12cd6f7a1dcfda775f83ea16e59cf1a233d03de30b2c25203d8",
+        "11821d480e407a0214e17889ce400ef4ee7fbf40d6bfec6fda9bc0565dad8982",
+        "19729d1d75708c4f7b728d13d5c3ce01bde09b1e93c640c5b48892dc8e8985d1",
+        "213c2946d9db9827b5515c0b4ee2dd29d96d9b5135a05901369b7dff4aaa3db9",
+        "31206ecb9aca8897a01cc85f3f3fede7bf5bc024f212255f8b7bf0f6edbbef97",
+        "342271385ce3277b3ab08c58f378f92fd396f9b6d95dc27f76ae1ce428d9cdcd",
+        "3f7d2301a2f1bbbe86f335ae73dee4f16be93f9767dd05a92b35350dfc584e18",
+        "4de9e261eb4aca93d9ba2fb04e3a8eb3517115eb9775f456bf4894447096e950",
+        "543a411122fcf35004a3b6147a8a2092ba3bba842451c9e0375261feaa16a6ae",
+        "57b42e34d4d3d20f4457c676b6e3b19c79e4a397e5589171ed697264342d4959",
+        "652e5095fd0e4273dd5ac892320b06c6893e257b6fd43daa53d4e064ef0cbe95",
+        "6f2b1ea76354c1afdb600e6e6ada52dcee1a3b332543fcc3d0086694c0a31985",
+        "70c5476304889bf176ce9cc7c6e099f2f4faad2b568b5dea6ff3427bf0b33ecf",
+        "8337ae80754b746168dff34a8860cf33323cd5caca76f81575d757d9bcf0b70a",
+        "84a1974e382c50f9b9d83f089c56dc0cbf3bfdad46b36b69cc31203a2a93c514",
+        "88ff6954eb84f4bbe50398a17bf41f2916dacbc30fc94b6c1428987a3a024a70",
+        "8a06806d1851fd04d741bb85987a45dcb02604b9ac74c1e45d430f054b950f12",
+        "8cb2847a1d6f57e8429f5fafdbc108598ef8cdf435355a08b2f4d27f73caaa8d",
+        "951a8cb6dfe1eb9a6662f6247c6b11a069fd1205439ed440200689d18bb5f4e4",
+        "a21f6526ef1dd576dde47b136ba2a98b6e724d8be080a000cc05f4b5039f986c",
+        "a3dac55d719774cb38fcdd1cfd9fde5df3556167fa572129fb0f840f3dc9873a",
+        "c4023b544feaca3013153c07a9c399a0954c2fe24881d6479a68f704da00c41c",
+        "c484db60fae0bd1525f68cd85357064abee6bfe3e1bbd80989e34fdeb570575f",
+        "c848c0f513209ab9ca2ae8e01b73db005c7d7ce1e953c34062f064603ac4913c",
+        "ca99877d9efab014b88b4243a45a0b10761e2802d168b410f8803d661960ab74",
+        "cbd28167495920d7bc310f5c97250304e1026230d5860adba2f77db7c20bf30f",
+        "cee331a2f01deaa97acce2095ac4df448cc63e26089fc184dccee4e3bdd762aa",
+        "d3fbd1d7f3cf07f1484196e19d45c6d1f2f1bbb9afb0897373258e1c1e309d6b",
+        "e0ed30f9540cc853e81f285cce76a1bb5495df52c762b7c5be49fac896ab276c",
+        "ea69b3f94a67fa6b744ed300ab431b6bf0a3cf70250c999f39e2e31733565e1c",
+        "f05ac33f542bbe76406cccb2b5ab5b9032119e5a80f02f13c3d4497b2d798447",
+        "f0a7cde5c8f878f37bdd8e6ab5ff91a3a5f0a9b9848606ba3b017ab3bf90a3f5",
+        "f0b21dbf84eded8926cb9553320a735b3b1936a46489cc14ec5390c1f77e16a4",
+        "fd5171f415ad30435c4e7acb108cb3f2367a1ef777e9e1ebf80233ff7ea2816e",
+        "feb804996383d43136bd031bdecb8ae6d59149ae29d2851cad5c9860fcf89e7b"
+      ],
+      "exactContainerSetUnchanged": true,
+      "labContainersRetained": 4,
+      "baselineContainersRetained": 32,
+      "historicalPermanentChecksumsUnchanged": 12,
+      "sourceHashesMatchFullRun": true,
+      "helperCleanup": {
+        "action": "authenticated-admin-shutdown",
+        "acknowledged": true,
+        "before": [
+          {
+            "pid": 6676,
+            "state": "S",
+            "ppid": 1,
+            "pgid": 6676,
+            "startTick": "631260823",
+            "kind": "daemon",
+            "uid": 1000
+          },
+          {
+            "pid": 7412,
+            "state": "S",
+            "ppid": 6676,
+            "pgid": 7412,
+            "startTick": "631263536",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          },
+          {
+            "pid": 7423,
+            "state": "S",
+            "ppid": 7412,
+            "pgid": 7422,
+            "startTick": "631263624",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          }
+        ],
+        "after": [],
+        "unreaped": [],
+        "releaseRetained": true,
+        "dataDeleted": false
+      },
+      "singleRawSessionGateCount": 2,
+      "unknownMutation": {
+        "dispatchCount": 1,
+        "mutationMayHaveStarted": true,
+        "newMutationCode": "T106_UNKNOWN_OUTCOME"
+      },
+      "dataDeleted": false
+    },
+    "finalResourcesEvidence": {
+      "path": "artifacts/m1/t106/repair1-fe66a9584b55/final-resources.json",
+      "sha256": "e8c98881ddb0104b38fc6fe4b4f53f926566fffa7abb2e7ce31e812a4ef5b89e"
+    }
+  },
+  "postWriteValidationEvidence": "artifacts/m1/t106/repair1-fe66a9584b55/documentation-checks.json",
+  "remainingLimits": [
+    "Both repairs require independent re-verification; previous repair-required gate is not cleared by this implementation self-test.",
+    "T-107, M1 and product scenarios remain unaccepted.",
+    "Frozen image still lacks rg; per-run private rg is not a deployment repair or product content-search integration.",
+    "Native SSH subprocess remote lifecycle remains disabled/unimplemented; no recovery, replay or main-session/provider integration added.",
+    "All historical failures, source digests, counterexamples and checksum rows are retained; no persistent data deletion, commit/push, workflows, subagents or infrastructure changes."
+  ]
+}

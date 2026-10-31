@@ -1,0 +1,198 @@
+{
+  "task": "T-106",
+  "case": "independent-reacceptance-post-write-validation",
+  "gate": "pass",
+  "t107Ready": true,
+  "t107Executed": false,
+  "stageM1Passed": false,
+  "acceptanceEvidence": {
+    "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+    "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+  },
+  "permanentFullReadbackBytes": 35256,
+  "storageKind": "append-only evidence JSON files; no database or application storage change",
+  "retrieval": {
+    "task": "T-106",
+    "cases": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+    ],
+    "findingOutcomes": {
+      "T106-IA-01": "pass",
+      "T106-IA-02": "pass"
+    },
+    "searchCommand": [
+      "rg",
+      "-n",
+      "-e",
+      "\"task\": \"T-106\"",
+      "-e",
+      "\"case\": \"[A-G]\"",
+      "-e",
+      "\"id\": \"T106-IA-0[12]\"",
+      "/home/ubuntu/workspace/agent-studio/docs/implementation/evidence/t106-independent-acceptance-review2.json"
+    ],
+    "searchExitCode": 0,
+    "searchOutput": "2:  \"task\": \"T-106\",\n78:      \"id\": \"T106-IA-01\",\n92:        \"task\": \"T-106\",\n165:      \"id\": \"T106-IA-02\",\n406:      \"case\": \"A\",\n442:      \"case\": \"B\",\n472:      \"case\": \"C\",\n515:      \"case\": \"D\",\n613:      \"case\": \"E\",\n645:      \"case\": \"F\",\n674:      \"case\": \"G\",\n"
+  },
+  "validationCommands": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/check_docs.py"
+      ],
+      "exitCode": 0,
+      "stdout": "PASS: 18 documents, 14 requirements, 8 non-functional requirements, 17 scenarios, 14 acceptance rows, 149 local links\nMappings: 75 declared, 75 in matrix; 8 non-functional mappings, 3 checkpoints\nExecution plan: 31 tasks; dependencies and phase boundaries checked\nExternal links counted, not re-fetched: 45\n",
+      "stderr": "",
+      "startedAtUnix": 1793372593.0786579,
+      "finishedAtUnix": 1793372593.1841323
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/test_check_docs.py"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ".....................................\n----------------------------------------------------------------------\nRan 37 tests in 3.724s\n\nOK\n",
+      "startedAtUnix": 1793372593.1841848,
+      "finishedAtUnix": 1793372597.004932
+    },
+    {
+      "command": [
+        "sha256sum",
+        "--check",
+        "docs/implementation/evidence/SHA256SUMS"
+      ],
+      "exitCode": 0,
+      "stdout": "docs/implementation/evidence/t101-installed-inventory.json: OK\ndocs/implementation/evidence/t101-candidate-metadata.json: OK\ndocs/implementation/evidence/t103-isolated-experiment.json: OK\ndocs/implementation/evidence/t103-profile-experiment.json: OK\ndocs/implementation/evidence/t103-isolation-correction.json: OK\ndocs/implementation/evidence/t104-coder-lab.json: OK\ndocs/implementation/evidence/t105-connection-implementation.json: OK\ndocs/implementation/evidence/t105-independent-acceptance-pass1.json: OK\ndocs/implementation/evidence/t106-implementation-selftest.json: OK\ndocs/implementation/evidence/t106-final-implementation-selftest.json: OK\ndocs/implementation/evidence/t106-independent-acceptance-review1.json: OK\ndocs/implementation/evidence/t106-independent-acceptance-review1-validation.json: OK\ndocs/implementation/evidence/t106-repair1-selftest.json: OK\ndocs/implementation/evidence/t106-independent-acceptance-review2.json: OK\n",
+      "stderr": "",
+      "startedAtUnix": 1793372597.004981,
+      "finishedAtUnix": 1793372597.0124252
+    },
+    {
+      "command": [
+        "sha256sum",
+        "--check",
+        "docs/research/evidence/SHA256SUMS"
+      ],
+      "exitCode": 0,
+      "stdout": "docs/research/evidence/historical-research-excerpts.txt: OK\ndocs/research/evidence/prototype-readme.txt: OK\ndocs/research/evidence/preparation.json: OK\ndocs/research/evidence/isolation.json: OK\ndocs/research/evidence/management.json: OK\ndocs/research/evidence/acp-probe.json: OK\ndocs/research/evidence/composition.json: OK\ndocs/research/evidence/e2e-verification.json: OK\n",
+      "stderr": "",
+      "startedAtUnix": 1793372597.0124707,
+      "finishedAtUnix": 1793372597.0154474
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/ubuntu/workspace/agent-studio",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "startedAtUnix": 1793372597.015487,
+      "finishedAtUnix": 1793372597.030919
+    }
+  ],
+  "transcript": {
+    "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/post-document-verification.json",
+    "sha256": "b30025c98051c6bf4b4b7795a4ccc22f21baa5f5ccc34fd3cf7b8d392b41cf39"
+  },
+  "archivalChecker": {
+    "initialFailure": {
+      "path": "artifacts/m1/t106/acceptance-rereview-jil8o45d/archive-checker-failure1.json",
+      "sha256": "b7dc3da50f562920f5dd5d0244c02cdaaef93fb972c8486d852a30a813cac08f"
+    },
+    "initialExitCode": 1,
+    "case": "ARCHIVE-01-search-match-count",
+    "cause": "Nested task metadata gave an extra legitimate task search match; aggregate ten-line expectation was wrong.",
+    "correction": "Parsed task lookup plus separate exact seven-case and two-finding search checks.",
+    "retryNumber": 1,
+    "retryStatus": "passed",
+    "runtimeSourceModified": false,
+    "acceptanceEvidenceModified": false
+  },
+  "documentationSha256": {
+    "README.md": "64f89c9e65337f1fd0358bc8d04696d4964bdb8be02d424a8962eaac4db4de6b",
+    "docs/05-delivery-and-acceptance.md": "07bbe0b4fe4e1b057e33ba2672a0741888b558bb138640426ef8170b8a551611",
+    "docs/08-execution-plan.md": "c8c3f7155bd994f40d45e1dbfc3d44e104461ae3510f5cc583760d6149320ab4",
+    "docs/implementation/m1-closeout-tasks.md": "7c6677296d78e1724e5cc2676ebe3a02d1ee787ab80ad0acd85a9ad00ed96b30"
+  },
+  "existingFilesChangedByAcceptance": [
+    "README.md",
+    "docs/05-delivery-and-acceptance.md",
+    "docs/08-execution-plan.md",
+    "docs/implementation/evidence/SHA256SUMS",
+    "docs/implementation/m1-closeout-tasks.md"
+  ],
+  "runtimeAndTrustSourceMatches": {
+    "scripts/m1/t105_connection.py": true,
+    "scripts/m1/t105_remote_gate.py": true,
+    "scripts/m1/t105_candidate.mjs": true,
+    "scripts/m1/t105_cleanup.py": true,
+    "scripts/m1/test_t105_connection.py": true,
+    "scripts/m1/record_t105.py": true,
+    "scripts/m1/ssh_remote_entry.mjs": true,
+    "scripts/m1/network_guard.mjs": true,
+    "scripts/m1/coder_lab.py": true,
+    "scripts/m1/coder_template.py": true,
+    "scripts/m1/audit_coder_lab.py": true,
+    "scripts/m1/t106_boundary_test.py": true,
+    "scripts/m1/t106_candidate.mjs": true,
+    "scripts/m1/t106_cleanup.py": true,
+    "scripts/m1/t106_observe.py": true,
+    "scripts/m1/t106_payload.py": true,
+    "scripts/m1/t106_provider.mjs": true,
+    "scripts/m1/t106_provider.test.mjs": true,
+    "scripts/m1/t106_publication.test.mjs": true,
+    "scripts/m1/t106_run.py": true,
+    "scripts/m1/t106_tools.py": true
+  },
+  "referenceHashesVerified": {
+    "docs/implementation/evidence/t106-independent-acceptance-review1.json": "822eae16a0c0124b862d2e89bb4d4f2b49b96208716cb5c14486a11e6e142a02",
+    "docs/implementation/evidence/t106-independent-acceptance-review1-validation.json": "e65e945591cbddd429ce3414700ea6211d7e14b103afe09d78429061f049a507",
+    "docs/implementation/evidence/t106-repair1-selftest.json": "060649e76c761dd898b182b6cc09cd09c314a04f415d8190a014f8eb690e19a7",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/source-baseline.json": "e1107dc28a575067aa8c995571e1beb1f5860817894189e0e832fe52d85c391c",
+    "artifacts/m1/t106/acceptance-cmy_rpp4/integrity-ek9btokt/result.json": "9ed8c0b5b58a059b2af296f8ebd5bf8fa73a5cd91369ef57419386f12f0dbe02",
+    "artifacts/m1/t106/publication-test-vpGljn/regression.json": "05f08360882d6d6aad7c01309c5ddc722fd1416f96bd0c4ef6b07a09556dca59",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/independent-boundaries-14vkvetk/result.json": "720d64892f94ec9f35f4a8f22644d37e487b09c7f5d73da607d50965d0e15f51",
+    "artifacts/m1/t106/acceptance-cmy_rpp4/observer_race.mjs": "687e4d5c499626d31d78702f0308819fbbb9b7a04c3b9225e355fc9f6c70c887",
+    "artifacts/m1/t106/run-b26a6fc0d124d0ee4c84aa85/result.json": "38da9ad2bd9d7904344ba6350becd3d25950ac23a7c0bdfd95b05ba1196f2946",
+    "artifacts/m1/t106/run-b26a6fc0d124d0ee4c84aa85/candidate.json": "9faeae9ea6ef93c098b95229ad1ed6a3fae6daec8aa6c6b4f117d6ef9762fd5d",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/runner-help.json": "a6f233a412346590ebb4692a33ad3233c01d88c71331d166df1aa93dbf248bec",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/repair-boundary-regressions.json": "1e62c094dabe79f03e9fe74beb592f0944aade53dc537bca72a84b7c011d73cf",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/publication-and-provider-regressions.json": "4c2aa85010a2768d891cbbb7986668eee845038b008e864d0ba717c77b9a5658",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/unchanged-independent-tool-negatives.json": "42978d511256bd2814f0267f052a3dc8190c10e7661e3042ed57e9f0e8bc42bd",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/independent-repair-boundaries.json": "b34f8f1d7b4b0f769dec9586a3b620ecc4676bfaf9763a705d60a9f03295f549",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/full-default-suite.json": "de19607e464754dc033b324971779bfe965a4c30110a8b3cd1e1f73e1f0d18d1",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/final-observation-command.json": "22378658c7330e2e2007e6f3bca5334781aaad43a836cf14da76d82185c1f48d",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/syntax.json": "f6d1dcfb3808cbb40193feef3197c3dccaa1df1943b47912ca7838c31d039e0f",
+    "artifacts/m1/t106/acceptance-rereview-jil8o45d/independent-final-observation.json": "e854d8479c1cd9d30a1b0d871a55a399b4d551acda45fe8f3f1c6126e2564b94"
+  },
+  "all13ObserverResponsesComplete": true,
+  "pendingResponseFiles": 0,
+  "cachedDependencyHashesUnchanged": true,
+  "independentCheckersUnchanged": true,
+  "oldChecksumRowsUnchanged": 13,
+  "oldEvidenceJsonUnchanged": true,
+  "otherExistingBaselineFilesUnchanged": 74,
+  "sourceModification": false,
+  "infrastructureModification": false,
+  "committedOrPublished": false,
+  "resourceObservationWindowUTC": [
+    "2026-10-30T14:48:29.244097+00:00",
+    "2026-10-30T14:48:31.189932+00:00"
+  ],
+  "logWindowStartedUTC": "2026-10-30T14:44:58+00:00",
+  "nextAction": "Coordinator may schedule T-107 after this bounded experimental prerequisite pass. T-107 was not run; M1 and dependent product tasks remain unpassed."
+}

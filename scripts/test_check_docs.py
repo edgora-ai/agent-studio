@@ -17,6 +17,10 @@ class DocumentationChecks(unittest.TestCase):
         self.root = pathlib.Path(self.directory.name)
         shutil.copy2(ROOT / 'README.md', self.root / 'README.md')
         shutil.copytree(ROOT / 'docs', self.root / 'docs')
+        shutil.copytree(ROOT / 'scripts', self.root / 'scripts')
+        shutil.copytree(ROOT / 'infra', self.root / 'infra')
+        shutil.copytree(ROOT / 'packages', self.root / 'packages')
+        shutil.copytree(ROOT / 'profiles', self.root / 'profiles')
 
     def run_checker(self):
         result = subprocess.run(
@@ -50,6 +54,42 @@ class DocumentationChecks(unittest.TestCase):
         code, result = self.run_checker()
         self.assertNotEqual(code, 0)
         self.assertTrue(any('broken local link' in error for error in result['errors']))
+
+    def test_missing_linked_script_fails(self):
+        (self.root / 'scripts/m1/activate_candidate.mjs').unlink()
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertTrue(any(
+            'broken local link: ../../scripts/m1/activate_candidate.mjs' in error
+            for error in result['errors']
+        ))
+
+    def test_missing_linked_template_fails(self):
+        (self.root / 'infra/coder-lab/template/main.tf').unlink()
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertTrue(any(
+            'broken local link: ../../infra/coder-lab/template/main.tf' in error
+            for error in result['errors']
+        ))
+
+    def test_missing_preview_source_fails(self):
+        (self.root / 'packages/dsh-agent-studio/store.mjs').unlink()
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertTrue(any(
+            'broken local link: ../../packages/dsh-agent-studio/store.mjs' in error
+            for error in result['errors']
+        ))
+
+    def test_missing_preview_profile_fails(self):
+        (self.root / 'profiles/agent-studio-preview/sources.lock.json').unlink()
+        code, result = self.run_checker()
+        self.assertNotEqual(code, 0)
+        self.assertTrue(any(
+            'broken local link: profiles/agent-studio-preview/sources.lock.json' in error
+            for error in result['errors']
+        ))
 
     def test_undefined_requirement_fails(self):
         path = self.root / 'README.md'

@@ -1,0 +1,13 @@
+FROM python@sha256:dc1546eefcbe8caaa1f004f16ab76b204b5e1dbd58ff81b899f21cd40541232f
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates curl git openssh-client procps \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd --gid 1000 coder \
+    && useradd --uid 1000 --gid 1000 --create-home --shell /bin/bash coder \
+    && mkdir -p /workspace /run/agent-studio \
+    && chown 1000:1000 /workspace
+COPY ca.crt /usr/local/share/ca-certificates/agent-studio-lab.crt
+RUN update-ca-certificates
+USER 1000:1000
+ENV HOME=/home/coder
+WORKDIR /workspace

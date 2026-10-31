@@ -1,0 +1,334 @@
+{
+  "scope": "D04-local limited development verification; not whole-project completion, formal M1/M2 acceptance or release",
+  "date": "2026-10-30",
+  "result": "pass-limited-development",
+  "verified_counts": {
+    "unit": 15,
+    "local_integration": 10,
+    "local_restart_and_scope": 5,
+    "original_local_ui": 11,
+    "d01_regression": 76,
+    "d02_regression": 25,
+    "remote_restart": 4,
+    "d03_core": 11,
+    "d03_lifecycle": 3,
+    "original_remote_ui": 8,
+    "final_verification": 5,
+    "esm_syntax": 23,
+    "python_syntax": 6,
+    "locked_upstream_files": 44,
+    "local_sdk_files": 14,
+    "sql_operations_full_api_list": 928,
+    "historical_local_process_identities": 100,
+    "historical_remote_pty_pids": 36
+  },
+  "verified": [
+    "Authenticated principal/session/version -> authoritative explicit local-managed kind/policy -> actual SDK filesystem and subprocess in the real Agent realm; Host Files and original TerminalController consume the same provider.",
+    "Original local Files list/read/write/mkdir and UI Save -> independent physical bytes/SHA -> complete API/list/search; strong CAS and persistent mtime bridge reject conflicting writes.",
+    "Original bounded Git status/staged+worktree Diff, search line/partial reasons, full named typed snapshot and shared polling work through the same provider; local is not mislabeled remote.",
+    "True local native PTY input/output/resize and physical file; exact PID/startTick, owner-bound cancellation/release, shutdown joins owned tasks and clears watches.",
+    "Schema v3->v4 preserves all original columns/rows, including 535 prior operations; new local identity is durable, immutable and cannot contain remote helper fields. New SQL -> full API -> list and restart verified.",
+    "Same relative filename with distinct local/remote bytes; original UI both-direction switching retains original file tabs/snapshots/task ownership. Disconnected remote read/write/command/search/reference fail and local canary hash is unchanged.",
+    "Normal shutdown/restart retains snapshots/bytes/identity; old native tab and unknown task do not replay. Explicit new native tab works. local-demo is idempotent.",
+    "Global subprocess/network/model fence retained; exact local argv/cwd/env one-shot capability expires across async continuations. Separate local HOME and exact startup env verified, native DSH_SESSION_ID verified and stripped.",
+    "Public health200; missing/wrong auth401 and valid auth200; original browser login to data; unexpected JS/HTTP/RPC/console and external requests zero in both final UI runs.",
+    "New startup log delta0, retained historical log5360 bytes; private permissions, deployment/source hashes and old evidence remain intact."
+  ],
+  "limits": [
+    "Owned synthetic local root only; no arbitrary user-project scanner, production profile/secrets, installation, model calls, external CLI sessions, public listener or Coder lifecycle operations; only authorized existing m1-a remote regression, no m1-b load.",
+    "Trusted-user local execution, not OS/root/network sandbox. SDK process-group/tree ownership is not hard containment; cwd and symlink-backed dependencies are not isolation. Direct app network/generic spawn remain fenced; trusted shell commands are not a security sandbox.",
+    "Local writes require UTF8 without NUL, including base64 input; file cap196608 bytes. Output ring1MiB/read64KiB, explicit truncation; 8 tasks/binding and32 total including starting.",
+    "Existing Git read-only limits: subprocess output196608 bytes/status1000; no linked worktrees, history/graph/show or writes; unborn diff-head unavailable.",
+    "Bounded Python literal UTF8 search, not rg/regex/full gitignore; entries5000/hits200/depth24/file196608 bytes/total8MiB; explicit incomplete reasons. No full pagination.",
+    "Shared nonrecursive 2500ms polling plus request time, max1000 entries/directory,32 directories,16 sockets; not native watch. References preserve full original-bound snapshot across native blank-draft transfer.",
+    "No container/image changes or rebuild; existing approved broker transport only. ESM and locked precompiled UI use syntax/real private deployment, not a fictional build step. No commit/push, author setup or project-data deletion."
+  ],
+  "commands": [
+    {
+      "command": "node --test scripts/dev/store.test.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d04/unit-final.txt",
+      "actual_output_summary": {
+        "tests": 15,
+        "pass": 15,
+        "fail": 0
+      }
+    },
+    {
+      "command": "node scripts/dev/local.integration.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d04/integration-e7453830-d295-4c9d-82a4-9b2ff5649da4.json",
+      "actual_output_summary": {
+        "result": "pass-limited-development",
+        "checks": 10
+      }
+    },
+    {
+      "command": "node scripts/dev/local.restart.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d04/restart-7cba53ed-fb59-4cc0-ae05-37deddcf5e08.json",
+      "actual_output_summary": {
+        "result": "pass-limited-development",
+        "checks": 5
+      }
+    },
+    {
+      "command": "node scripts/dev/integration.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d02/local-regression-63b39e06-d447-4050-aa38-f0ec3b128aeb/integration.json",
+      "actual_output_summary": {
+        "result": "pass",
+        "checks": 76
+      }
+    },
+    {
+      "command": "node scripts/dev/remote.integration.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d02/integration-0c33c960-69fd-4381-8b9f-fb9147f822ef.json",
+      "actual_output_summary": {
+        "result": "pass",
+        "checks": 25
+      }
+    },
+    {
+      "command": "node scripts/dev/remote.restart.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d02/restart-5bad7b0e-8a96-40bd-a615-9258f917cc6f.json",
+      "actual_output_summary": {
+        "result": "pass",
+        "checks": 4
+      }
+    },
+    {
+      "command": "node scripts/dev/core.integration.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d03/integration-146aba32-490b-466f-bb1a-ee8a80408410.json",
+      "actual_output_summary": {
+        "result": "pass-limited-development",
+        "checks": 11
+      }
+    },
+    {
+      "command": "node scripts/dev/core.lifecycle.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d03/lifecycle-e7a425f4-aa43-4c07-a64b-822cb773dbbe.json",
+      "actual_output_summary": {
+        "result": "pass-limited-development",
+        "checks": 3
+      }
+    },
+    {
+      "command": "artifacts/m1/t104/browser-venv/bin/python -I scripts/dev/core.browser.py --local --root /home/ubuntu/workspace/agent-studio/.preview/agent-studio --out /home/ubuntu/workspace/agent-studio/artifacts/d04/browser-final --browser /home/ubuntu/.cache/ms-playwright/chromium-1234/chrome-linux/chrome",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d04/browser-final/browser.json",
+      "actual_output_summary": {
+        "result": "pass-limited-development",
+        "checks": 11
+      }
+    },
+    {
+      "command": "artifacts/m1/t104/browser-venv/bin/python -I scripts/dev/core.browser.py --root /home/ubuntu/workspace/agent-studio/.preview/agent-studio --out /home/ubuntu/workspace/agent-studio/artifacts/d04/remote-browser-regression --browser /home/ubuntu/.cache/ms-playwright/chromium-1234/chrome-linux/chrome",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d04/remote-browser-regression/browser.json",
+      "actual_output_summary": {
+        "result": "pass-limited-development",
+        "checks": 8
+      }
+    },
+    {
+      "command": "node scripts/dev/core.verify.mjs --local",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d04/final-verification-76cf91b9-7043-428d-842b-f37c179af2f1.json",
+      "actual_output_summary": {
+        "result": "pass-limited-development",
+        "checks": 5
+      }
+    }
+  ],
+  "failure_fixes": [
+    {
+      "name": "D04_FIXTURE_GIT_SYMLINK_UNTRACKED",
+      "evidence": "artifacts/d04/integration-f90640f3-54f0-42f0-867f-61a5ea6b9195.json",
+      "fix": "Add exact link ignore in owned synthetic Git fixture; keep symlink/data and fail-closed worker unchanged."
+    },
+    {
+      "name": "D04_NATIVE_TERMINAL_SESSION_ENV",
+      "evidence": "artifacts/d04/restart-c8caf28c-b0c8-477a-b056-f641a29f34e7.json",
+      "fix": "Inspect native controller contract; verify DSH_SESSION_ID against authoritative session and remove it. Public local environment whitelist unchanged."
+    },
+    {
+      "name": "D04_SHUTDOWN_CANCEL_RELEASE_RACE",
+      "evidence": "artifacts/d04/restart-31b9ce7b-2a27-4939-9386-da4aec5acedc.json",
+      "fix": "Serialize dispose and task mutations; late cancel cannot demote release. Deterministic unit plus real stop/restart passed. Historical cancelled row retained; process independently stopped."
+    },
+    {
+      "name": "D04_UI_HIDDEN_WORKSPACE_SELECTORS",
+      "evidence": "artifacts/d04/browser-1/browser.json",
+      "fix": "Observe actual hidden workspace DOM/screenshot; target visible search/editor/terminal controls. One grounded retry passed all 11; final run also passed."
+    }
+  ],
+  "database_checkpoint": {
+    "schema": 4,
+    "integrity": "ok",
+    "operations": 928,
+    "states": [
+      {
+        "state": "cancelled",
+        "n": 1
+      },
+      {
+        "state": "completed",
+        "n": 547
+      },
+      {
+        "state": "failed",
+        "n": 23
+      },
+      {
+        "state": "released",
+        "n": 352
+      },
+      {
+        "state": "unknown",
+        "n": 5
+      }
+    ],
+    "local_remote_identity_fields_nonnull": 0,
+    "retained_unknowns_not_replayed": 5,
+    "historical_race_cancelled_not_rewritten": 1
+  },
+  "cleanup": {
+    "pending_or_running": 0,
+    "watch_clients": 0,
+    "watch_directories": 0,
+    "local_test_root_stopped": "/tmp/agent-studio-test-integration-DXCxbw",
+    "retained": "Running owned preview, verified remote channel, stable helper HOME/daemon and all synthetic project data. No claim all platform processes are stopped."
+  },
+  "next_slice": "Coordinator to schedule model/session interaction and environment management. Public Coder v2.37.8 API findings are only handoff; exact deployment version still requires verification. No create/start/stop enabled or run.",
+  "validation": "artifacts/d04/closeout-validation.json",
+  "runtime": {
+    "pid": 307948,
+    "run_id": "f8db2e39-10e8-475a-a1a9-83eb79c2d355",
+    "origin": "http://127.0.0.1:44151",
+    "auth_file": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio/login.url",
+    "root": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio",
+    "reconciliation": {
+      "bindings_ready": 0,
+      "sessions_ready": 0,
+      "failed": 0
+    },
+    "running": true
+  },
+  "local_ids": {
+    "project_id": "project-71930bbf-546b-428d-9aed-1b5df22d2cf4",
+    "environment_id": "environment-3f637cca-0001-4482-8b0f-0f6b0523ce74",
+    "binding_id": "binding-75396594-93b1-4657-9660-512f847dacce",
+    "version": 1,
+    "session_id": "session-3d91f325-6ec5-44c9-a19a-6f7528b19c42",
+    "workspace_id": "ff4c1c12-c742-4fc5-bb2c-e30a9450127c",
+    "target_root": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio/projects/d04-local-v1"
+  },
+  "remote_ids": {
+    "project_id": "project-9de2a7d5-dafd-4830-97d3-d03d0fabe946",
+    "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+    "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+    "version": 1,
+    "session_id": "session-f8a4a1bc-a782-4728-b84c-66c121d25784",
+    "workspace_id": "26e47f17-846c-44b5-93c4-328050b53b7c",
+    "target_root": "/workspace/agent-studio-binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da-v1"
+  },
+  "source_sha256": {
+    ".gitignore": "2b0a9f8b6a90a9fbfc0d3e77c8923e0dab39d6c28ff9c708e087fe3ae59a24ac",
+    "README.md": "bcba42a0a9cd01d7e5c30c7937757f6108d42202945526c5aaa6f8dfc1817bce",
+    "docs/implementation/development-ledger.md": "1f0e28f0cf0228715d360720479e37a12e78e1e466356a5225068b01e162084e",
+    "packages/dsh-agent-studio/adapters/agent-terminal.mjs": "4913ef9b254123804f98796e26f7eb0bf580d4966147d889953382f6383d9d6d",
+    "packages/dsh-agent-studio/adapters/bound-provider.mjs": "451bcd3094e226f6567fbe403b51762121b9204a7e18753720571a309266a453",
+    "packages/dsh-agent-studio/adapters/bound-reads.mjs": "ae1ef262870711578f3db7028f976737abd8a2d06a3fd8398e573cd3d5266bea",
+    "packages/dsh-agent-studio/adapters/bound-watch.mjs": "c4ff617280c28266128c91077da9c753ec8e8c723b83678751939075de3377ee",
+    "packages/dsh-agent-studio/adapters/coder_broker.py": "e72d810151c7b4b051b5c17a89e64e89e13a7d6498cdecf0afcdb791d1eccc19",
+    "packages/dsh-agent-studio/adapters/helper-channel.mjs": "beb19b7177400f9baee4f2808b1f4398a50592f5b7dddff194a94de3393f327e",
+    "packages/dsh-agent-studio/adapters/host-files.mjs": "e2efb24d13b95654d20f92e4b70cff67690111426da3d275671911acda13bb71",
+    "packages/dsh-agent-studio/adapters/host.mjs": "5286569ca211d384a5436e4f4ed10887fb52701fca3c4af06c95c802e76654c5",
+    "packages/dsh-agent-studio/adapters/local-provider.mjs": "b3a082450206641664ba3e2d0f9233dca54cce4180ae15f8e3dbd049490c18a0",
+    "packages/dsh-agent-studio/adapters/remote-read.py": "d4f6b6d0829e640aa97b2c763ecba9be068f13f41672681bf1b677a595bbe3f1",
+    "packages/dsh-agent-studio/bindings.mjs": "062e514d93042f71ba9c944ba9876a0e2ae1946af2e678192844b578933b1ab5",
+    "packages/dsh-agent-studio/index.mjs": "c7f0d516c5501dd904e37b9f73496b09b2aefc9b3052abcd5a18252319789819",
+    "packages/dsh-agent-studio/store.mjs": "6849f3a49c5a2367032d095ffaad2bbd1d4c1cbb9b2f0244d78429e0655f9acd",
+    "profiles/agent-studio-preview/cordis.patch.yml": "cba1cf7eb5dbb3f80dad722ae23a86ba0b1eda35dc6dc74141c8d9d34c2c5471",
+    "profiles/agent-studio-preview/package.json": "185b7825b0c2a39cada29eff56f664f0365057fa0a9155df199c5dbd1254f189",
+    "profiles/agent-studio-preview/sources.lock.json": "7fd6a0d299d9eada3191ac8e6ef959c556920c42485a25a4b6dc6c6dd0bbf06c",
+    "scripts/dev/browser.py": "294b8500bf422273635753f427dcb41457781abde33137855fbdfd91cb5b765b",
+    "scripts/dev/core.browser.py": "8a5bd47863dd60766d2d962028bddb1b8dc0d935c08467530f5e2a2f40de6d70",
+    "scripts/dev/core.integration.mjs": "de85bb01fce7718189c69361a4a56c7ac3c7d9387f4e4195c886af0a7a17dee7",
+    "scripts/dev/core.lifecycle.mjs": "cdb719a4fc1397d99549dcf048cddb934bc4dd1750be1c623c0553f6b3bbca58",
+    "scripts/dev/core.verify.mjs": "37000a795804a3b624134657361ca83cc2016054cad44c6e5606b0df9277d716",
+    "scripts/dev/fence.mjs": "47498336a0aa2c055cf071fa77f909cc4a2cdff721e07d8bca8cea11893fa648",
+    "scripts/dev/integration.mjs": "6c4633ab1b868bbb2785d5a0bebc59d644dc99fc6661a611dce919cb8f83794b",
+    "scripts/dev/local.integration.mjs": "d3fefa2a06efe986bfe2a373a9ad9287a078bad985af34a360c7b9583bd235a6",
+    "scripts/dev/local.restart.mjs": "2b36767cda649b59d24cc296ef150659671b05a3f72840354ceb559508be287b",
+    "scripts/dev/observe_remote.py": "68d88f5836078d608047b85740c6a3670d1acd573612e564a8c7333d70bcc6f7",
+    "scripts/dev/preview.mjs": "e8f69ac66e68ed75921812c29c551e51c865c4c87069675d4f7a689b56e7ef29",
+    "scripts/dev/remote.browser.py": "b2898906aa81cdedcb51bf7097f2cbdf4e5c312c48f8c6f590a65ce9ed9e0801",
+    "scripts/dev/remote.integration.mjs": "f99d9ac074077449545fe0d7994edce50b1d3281c1a61bf8234c27c0590b4f23",
+    "scripts/dev/remote.restart.mjs": "a17fa30da131b32c69520908ee5cac3c143a1b2016745f8a132242f1a15cf043",
+    "scripts/dev/sidebar-projection.mjs": "39422b2922a3cf521b513c1843e666c116eeb64f602cd92325b8b829e6660595",
+    "scripts/dev/store.test.mjs": "72954bcaade46ad4878144e5fe3066b9715aae632d6d798059ca275d6e3b7d0a"
+  },
+  "output_sha256": {
+    "artifacts/d02/integration-0c33c960-69fd-4381-8b9f-fb9147f822ef.json": "55eb2f4c8e644e462ed1f3a2407ce52bc043a6f420e2adafb26ff12a33e997f6",
+    "artifacts/d02/local-regression-63b39e06-d447-4050-aa38-f0ec3b128aeb/integration.json": "9c6a19aac6d04f33e797f162b988c244867e9c98722228bced524ec517b6935d",
+    "artifacts/d02/restart-5bad7b0e-8a96-40bd-a615-9258f917cc6f.json": "54c8ce76fb5687e9c8da01fa2418bf2d5181cafae2cc35e1ae13590fedeba1e1",
+    "artifacts/d03/integration-146aba32-490b-466f-bb1a-ee8a80408410.json": "034c3ea668e3b7510cab7efd1a28f70dfd6873e3c47bebbccf45817ca1d3c2d1",
+    "artifacts/d03/lifecycle-e7a425f4-aa43-4c07-a64b-822cb773dbbe.json": "7d771cdd9dff74faddf4f482d570bb6f49d4caf565aff96c6c9497356876e1eb",
+    "artifacts/d04/browser-1/browser.json": "8dbcf7250d5f935dd4116109ba0c9255c5a4ca1d628177ff08cdba55401113df",
+    "artifacts/d04/browser-2/browser.json": "ac1a20a1bd85238befda7ed8e491ddb8cdb1e11831536ba408d8d9975d756dfc",
+    "artifacts/d04/browser-final/D03_CLEAN_DONE.png": "3c53432fe8b3388b121e4865f8aa6e0d5a214a5c79ff1c90b534c0f6cc978213",
+    "artifacts/d04/browser-final/D03_CONFLICT_DONE.png": "5dbd7d292b0bd2dcf6808f2ad786bb4e4c5d1d2207d0d14b252f7342db26bf1f",
+    "artifacts/d04/browser-final/browser.json": "ade8e76638704132b1865ce0c141dca6360a16cae6cf3e29cb8fd8c6ec289451",
+    "artifacts/d04/browser-final/clean-refresh.png": "27a647c3af625d27c8490ffdff1fa0c9c975172001bfa421f988989db61bdbab",
+    "artifacts/d04/browser-final/dirty-conflict.png": "6150e63c128cb7872c6669fc04c70f4dbf89d287d787850df99d491a526bd691",
+    "artifacts/d04/browser-final/git-index.png": "76bce9a85bb892b243f56c6f6b72e2c730a43f1c5a3f688402adaa816000c78e",
+    "artifacts/d04/browser-final/git-worktree.png": "114741011ab466454e180db5b531ea54d12724c9ed8c94ba7cd7e0321faea6c3",
+    "artifacts/d04/browser-final/local-restored-file.png": "037e4c6711e756e4884ad53d183d0b2349eec896efcde0803927edd6575ccf89",
+    "artifacts/d04/browser-final/local-save.png": "de1da93ee8d0d9ce26bb64c885c0178236956df6a1d11500c208e13774876681",
+    "artifacts/d04/browser-final/other-binding.png": "f30a11d1e26f1b606779bea63630b54beeec0de18cc1f38be777e24d8ee79ee6",
+    "artifacts/d04/browser-final/remote-same-file.png": "445a5263371cf53bf59ecfc01992ec51f03b01e79092edb78e3fbfdadd4014fa",
+    "artifacts/d04/browser-final/search-reference.png": "b4050b5811c5bfd1d0a375604f9aa1d648533b6888c83d90338c4bc87a731e07",
+    "artifacts/d04/final-verification-76cf91b9-7043-428d-842b-f37c179af2f1.json": "19c228a582ba880bb954d578a9fa57401c845a3bba5872f60b93848135b5a536",
+    "artifacts/d04/integration-62f74dc7-63fa-47f7-b144-416084c36b3f.json": "914482eb1ca26a5bbd7468832512da10c191ecef4288277776c5ff27d22779b8",
+    "artifacts/d04/integration-e7453830-d295-4c9d-82a4-9b2ff5649da4.json": "5524d896f84a6b3b0891432767f5f7aa57b9dc6509df5453b4569c49c85c2545",
+    "artifacts/d04/integration-f90640f3-54f0-42f0-867f-61a5ea6b9195.json": "1e8a95b8c417adbd922fa53631bd227ae39f2291af1277142a7ddf274f72d1e8",
+    "artifacts/d04/pre-migration.json": "72e7a2a0514de800fb7407e29e55200fcd05039903d402ec7e1275bff285f909",
+    "artifacts/d04/remote-browser-regression/D03_CLEAN_DONE.png": "5f24b812c102fbe3b56ab854821422fafd1a8998f7b9dbaa9c570ea31a29c25e",
+    "artifacts/d04/remote-browser-regression/D03_CONFLICT_DONE.png": "c546c9eda506c87f5ce0dbd149b681ec7a41c0d2b077be7fdc8af508026019b7",
+    "artifacts/d04/remote-browser-regression/browser.json": "c534f49501135a6fe444cf107e9223fdeb7eba3c0dce73bbbf0a89f42a7fb10f",
+    "artifacts/d04/remote-browser-regression/clean-refresh.png": "1c100e60bcd0bb02b419be61dc08f9f42ddd9504b588897a36ea997fe13f2175",
+    "artifacts/d04/remote-browser-regression/dirty-conflict.png": "381d748f259c98d1148c4ffccd431ba448938acb291fa7f467c75656d59b852b",
+    "artifacts/d04/remote-browser-regression/git-index.png": "902972c8f1a5ad6202a6c24709d2be6eb278348bc1c9ac152a7c0930bbbe260a",
+    "artifacts/d04/remote-browser-regression/git-worktree.png": "2bb3a91271aa1f979a1dbca18653f95c128907f3847ba8b7c57af61e260d9b9d",
+    "artifacts/d04/remote-browser-regression/other-binding.png": "347692b8c5b50059370cb88dd86a46af671e9af91b47649ef3c8e9d5edf147f7",
+    "artifacts/d04/remote-browser-regression/search-reference.png": "1dd858ce7fcadd402f89883583c02e9c1a67d24436d3e1c8103ee4d1bec84b07",
+    "artifacts/d04/restart-31b9ce7b-2a27-4939-9386-da4aec5acedc.json": "adf018c4d6e45ab1ad9366c1131c09c0f1f7376dcf299151af42865322d9a827",
+    "artifacts/d04/restart-3a23dc38-19f1-4df8-bb29-60ed2d887321.json": "7d9bc9c37152281b606ce5ac8a8e10ff4b57d28b61785ec7045649789a7c3d09",
+    "artifacts/d04/restart-7cba53ed-fb59-4cc0-ae05-37deddcf5e08.json": "137ad85d23f553cd74a7cbd66cf6f771f831f524ec684f69292d20944574ab4e",
+    "artifacts/d04/restart-c8caf28c-b0c8-477a-b056-f641a29f34e7.json": "c74b10fe315d3da32316a796ef8590cc4dd7e551b0305eb96ccd697d918a20ed",
+    "artifacts/d04/ui-fixture.json": "14597b47c7c53589dc3f87071dccfb25f558cb45de17c5470f1b6eb0c532b37d",
+    "artifacts/d04/unit-final.txt": "83948ee22c7efbd6885ab5f6d695243358c36922e91cb5656bec523fc9ad7941"
+  },
+  "unchanged_historical_evidence": {
+    "docs/implementation/evidence/d01-development-selftest.json": "428ba538176f852a9149fda3cd26aeb9d18ccf00ab3a1f786cfb4e98541bc725",
+    "docs/implementation/evidence/d02-d03-development-selftest.json": "16368189452a21db38dca001cd244b39ecfd6d06b05e0fd975d34bfc5820a674",
+    "docs/implementation/evidence/d03-core-development-selftest.json": "f2e640c99695118e81870dca68dcf23cb6a60f8b4ccb9ae2669550ce81fc4f22"
+  }
+}

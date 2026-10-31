@@ -1,0 +1,87 @@
+# Only used under the private launcher-generated HOME / DSH_HOME.
+# No inherited production configuration; unknown stock methods fail closed at Gateway.
+# In dsh patches, `name` is an assertion, not a replacement. Disable + insert.
+- id: typert-gateway
+  disabled: true
+# rc.4 rpc.handle retains Connection's owner Context for physical registration.
+- id: connection
+  inject: [webStartup, webServer]
+- id: web-runtime
+  config:
+    openBrowser: false
+    printUrl: false
+    surfaceContext: false
+- id: session-controller
+  config:
+    nativeOpen: false
+- id: agent-preset-registry
+  config:
+    default: preview
+- insert:
+    - id: studio-typert-gateway
+      name: './gateway/lib/index.js'
+    - id: preset-preview
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: preview
+        plugins: []
+    - id: studio-credentials
+      name: './studio/credentials.mjs'
+    - id: agent-studio
+      name: './studio/index.mjs'
+
+# No automatic/background generation, ambient providers, raw uploads, native openers,
+# hot reload or package mutation. Explicit D05 routes and bound Agent tools are
+# installed only after authoritative session/policy admission; stock presets stay off.
+- id: session-title-llm
+  disabled: true
+- id: llm-deepseek
+  disabled: true
+- id: llm-deepseek-account
+  disabled: true
+# Explicit profile routes only; StudioCredentials replaces all ambient discovery.
+- id: credentials
+  disabled: true
+- id: llm-retry
+  disabled: true
+- id: llm-pi-ai
+  config:
+    providers: {}
+- id: deepseek-account
+  disabled: true
+- id: web-search-deepseek
+  disabled: true
+- id: web-deepseek-api
+  disabled: true
+- id: web-fetch-http
+  disabled: true
+- id: session-telemetry-otel
+  disabled: true
+- id: plugin-manager
+  disabled: true
+- id: hmr
+  disabled: true
+- id: open-in-app
+  disabled: true
+- id: ui-open-in-app
+  disabled: true
+# fileUploads is a hard dependency of sessionController; the raw HTTP route
+# is shadowed by an authenticated exact denial, and its Remote methods by Gateway.
+- id: account-controller
+  disabled: true
+- id: ui-deliverables
+  disabled: true
+- id: directory-picker
+  disabled: true
+- id: workspace-changes
+  disabled: true
+- id: file-reference-local
+  disabled: true
+- id: preset-standard
+  disabled: true
+- id: preset-minimal
+  disabled: true
+- id: preset-cordis
+  disabled: true
+- id: preset-ptc
+  disabled: true

@@ -1,0 +1,275 @@
+{
+  "task": "T-101",
+  "kind": "installed-static-inventory",
+  "runtimeTested": false,
+  "packages": [
+    {
+      "label": "dsh",
+      "metadata": {
+        "name": "@deepseek-ai/dsh",
+        "version": "0.2.1-rc.4",
+        "license": "MIT",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+          "directory": "apps/cli"
+        }
+      },
+      "files": [
+        {
+          "path": "package.json",
+          "size": 7989,
+          "sha256": "ab0994ef7fc70a9974d39735d6e30b500b4be3435012b53cab1df149f39bbc5c"
+        },
+        {
+          "path": "lib/bin.js",
+          "size": 11772,
+          "sha256": "80112efe368efb1a39720c7ada0af00442e5131fb2744edaaff8a3e8bb499e6f"
+        }
+      ]
+    },
+    {
+      "label": "fs",
+      "metadata": {
+        "name": "@deepseek-ai/dsh-fs",
+        "version": "0.2.1-rc.4",
+        "license": "MIT",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+          "directory": "packages/fs/fs"
+        },
+        "peerDependencies": {
+          "@deepseek-ai/dsh-brand": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-llm": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-sandbox": "0.2.1-rc.4",
+          "@deepseek-ai/cordis": "~4.0.5"
+        }
+      },
+      "files": [
+        {
+          "path": "package.json",
+          "size": 1220,
+          "sha256": "2e8027d2612145c4106f11ff9b7fff6fc2d38cdcdb8e212f7184e67921dfc776"
+        },
+        {
+          "path": "lib/index.js",
+          "size": 4338,
+          "sha256": "b165659f1eff0607222a7fe761bc56bae03fec8337c2e25affd064a3047dacb9"
+        },
+        {
+          "path": "lib/types/index.d.ts",
+          "size": 13410,
+          "sha256": "e3695ded49b42d128638cc1a03163117126862af8a32e78dd08dc8dc781066d4"
+        },
+        {
+          "path": "lib/types/types.d.ts",
+          "size": 7612,
+          "sha256": "1704091dad1c6c4604465a3b2a5ff82d08edf7341cf271ee20ea738b8649655a"
+        }
+      ]
+    },
+    {
+      "label": "subprocess",
+      "metadata": {
+        "name": "@deepseek-ai/dsh-subprocess",
+        "version": "0.2.1-rc.4",
+        "license": "MIT",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+          "directory": "packages/subprocess/subprocess"
+        },
+        "peerDependencies": {
+          "@deepseek-ai/cordis": "~4.0.5",
+          "@deepseek-ai/dsh-http-proxy": "0.2.1-rc.4"
+        }
+      },
+      "files": [
+        {
+          "path": "package.json",
+          "size": 1218,
+          "sha256": "a4a15d4444b9f4e32e8e5813f0d903bbd30c6fd34d6e00aa1cf0b9efbe3723e4"
+        },
+        {
+          "path": "lib/index.js",
+          "size": 5354,
+          "sha256": "0ea9e95a73639f9e69b48aa48f373f34881adffa2ee2ac2acd4702728da9592b"
+        },
+        {
+          "path": "lib/types/index.d.ts",
+          "size": 7219,
+          "sha256": "db2a5a1cd508f8ed6a74af98497a7a524f0631d120a191b2d0bd573de20e6fee"
+        },
+        {
+          "path": "lib/types/types.d.ts",
+          "size": 13552,
+          "sha256": "d3c79f91d4a52ca09046d1f4af48ee220d3fe8f1f2efae24f7b12cda3bd2848d"
+        }
+      ]
+    },
+    {
+      "label": "workspace",
+      "metadata": {
+        "name": "@deepseek-ai/dsh-workspace",
+        "version": "0.2.1-rc.4",
+        "license": "MIT",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+          "directory": "packages/workspace/workspace"
+        },
+        "peerDependencies": {
+          "@deepseek-ai/cordis": "~4.0.5",
+          "@deepseek-ai/dsh-session": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-session-persistence": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-storage": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-storage-domain": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-typert-protocol": "0.2.1-rc.4"
+        }
+      },
+      "files": [
+        {
+          "path": "package.json",
+          "size": 1727,
+          "sha256": "54ea40daa6dc0b06a43c764673a774fd791e67112c3bb2b38e6cfd675572b3da"
+        },
+        {
+          "path": "lib/index.js",
+          "size": 39257,
+          "sha256": "931ca0cb10c5102066c7723690a887f0e6e8e7ab0ffdee1a782686745b0b934f"
+        },
+        {
+          "path": "lib/types/index.d.ts",
+          "size": 14444,
+          "sha256": "24a0250b95f0a9e7491071e7eb2608c48b11ac16eff68788dd8e5e6a57fa7405"
+        }
+      ]
+    },
+    {
+      "label": "working-directory",
+      "metadata": {
+        "name": "@deepseek-ai/dsh-working-directory",
+        "version": "0.2.1-rc.4",
+        "license": "MIT",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+          "directory": "packages/session/working-directory"
+        },
+        "peerDependencies": {
+          "@deepseek-ai/cordis": "~4.0.5",
+          "@deepseek-ai/dsh-agent": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-fs": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-llm": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-session": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-session-projection": "0.2.1-rc.4",
+          "@deepseek-ai/dsh-system-prompt": "0.2.1-rc.4"
+        }
+      },
+      "files": [
+        {
+          "path": "package.json",
+          "size": 1817,
+          "sha256": "2cef99cdac72a3db9e6919d3185a4c9fb9d56055272a9916aa5367c3d8ded366"
+        },
+        {
+          "path": "lib/index.js",
+          "size": 6916,
+          "sha256": "af5bb7f33c52efe018da19c39c54e07b5a3ac804fff83f8a68e341f411ecf703"
+        },
+        {
+          "path": "lib/types/index.d.ts",
+          "size": 3769,
+          "sha256": "2a11a4208dfccb9c4b252631b62ad833a9830b5ddde2d69348a2321f36a8bf1a"
+        }
+      ]
+    },
+    {
+      "label": "sidebar",
+      "metadata": {
+        "name": "dsh-better-sidebar",
+        "version": "0.28.2",
+        "license": "MIT",
+        "repository": {
+          "type": "git",
+          "url": "https://github.com/omdsh-dev/DSH-better-sidebar"
+        },
+        "engines": {
+          "node": ">=20"
+        },
+        "peerDependencies": {
+          "@deepseek-ai/cordis": "^4.0.5",
+          "@deepseek-ai/dsh-agent": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-client-locale": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-client-ui-conversation": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-client-ui-primitives": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-client-ui-settings": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-client-ui-sidebar-right": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-client-ui-slots": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-host-webserver": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-llm": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-session": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-settings": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-subagent": "^0.2.1-rc.1",
+          "@deepseek-ai/dsh-tools": "^0.2.1-rc.1",
+          "@huanlin/dsh-plugin-better-locale": "^0.1.0",
+          "react": "^18.2.0",
+          "react-dom": "^18.2.0"
+        }
+      },
+      "files": [
+        {
+          "path": "package.json",
+          "size": 7916,
+          "sha256": "5f78a2cb9cd70515fe575b46a01e4c2c9e4e4f21e58e43a0d9b0c6f972f9974c"
+        },
+        {
+          "path": "LICENSE",
+          "size": 1069,
+          "sha256": "f4d265194e0824721af0592462a71fe750c04db3565c23c5d6c65fdee25fb4b0"
+        },
+        {
+          "path": "lib/index.js",
+          "size": 391898,
+          "sha256": "871e8d02a7b37ea487308d8516d839d51fedfe46f1c3ed50d99435acc984c7e1"
+        },
+        {
+          "path": "src/fs-tree.ts",
+          "size": 19009,
+          "sha256": "f48d5a900b0d97a19d5449fb831badf5a076bddafa2b99b6e2f4f80376b5998e"
+        },
+        {
+          "path": "src/fs-watch.ts",
+          "size": 4678,
+          "sha256": "f8781bf9a2d7e593893611fece527a282439c697a58fbfc8dc9033c7e06bad34"
+        },
+        {
+          "path": "src/git.ts",
+          "size": 51029,
+          "sha256": "8859f145d0b2d2bc96ffec73c915ff59ab2fe80f84874cd714521fe7a635d804"
+        },
+        {
+          "path": "src/open-external.ts",
+          "size": 13383,
+          "sha256": "535a4d38c5ac2e4c33fc68b83b1c24ef1e1a4dacbbe7541f6098cc86fe0b10bf"
+        },
+        {
+          "path": "src/index.ts",
+          "size": 98436,
+          "sha256": "5938d2703c59570e2812de335fcb52250d6f608c8d73bbae368379f869e096a2"
+        },
+        {
+          "path": "lib/types/client/service.d.ts",
+          "size": 43952,
+          "sha256": "fc59b967bb773f38086cf5a9e9b8ada6c0957ca0a1443ab3200652af8847931b"
+        },
+        {
+          "path": "lib/types/client/api.d.ts",
+          "size": 27843,
+          "sha256": "b96b65e3886185febce473790bc1b555b103cdf8c8de03c0d82d59ce04ba2afc"
+        }
+      ]
+    }
+  ]
+}

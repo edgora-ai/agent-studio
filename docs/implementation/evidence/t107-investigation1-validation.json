@@ -1,0 +1,167 @@
+{
+  "task": "T-107",
+  "kind": "post-write-validation-not-independent-acceptance",
+  "recordedOn": "2026-10-30",
+  "matrix": {
+    "path": "docs/implementation/t107-m1-matrix.json",
+    "sha256": "726beb6993b0e21700b4ff19cab32c04984f62142ca58bd927a7ea9b15ae0cd3"
+  },
+  "investigation": {
+    "path": "docs/implementation/evidence/t107-investigation1.json",
+    "sha256": "57870ea6f612e67f276f33f9a0a3645fb1915f35e68ddb708b7327df572fca6d"
+  },
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "scripts/m1/t107_gate_test.py"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "test_actual_entrypoints_observed_not_fake_denials (__main__.GateEvidenceTests.test_actual_entrypoints_observed_not_fake_denials) ... ok\ntest_cannot_greenwash_recovery_or_release (__main__.GateEvidenceTests.test_cannot_greenwash_recovery_or_release) ... ok\ntest_cannot_omit_a_failed_gate (__main__.GateEvidenceTests.test_cannot_omit_a_failed_gate) ... ok\ntest_changed_evidence_hash_rejected (__main__.GateEvidenceTests.test_changed_evidence_hash_rejected) ... ok\ntest_exact_eleven_clauses_and_gate_lookup (__main__.GateEvidenceTests.test_exact_eleven_clauses_and_gate_lookup) ... ok\ntest_frozen_and_new_sources_match_written_evidence (__main__.GateEvidenceTests.test_frozen_and_new_sources_match_written_evidence) ... ok\ntest_real_small_boundary_results_are_separate (__main__.GateEvidenceTests.test_real_small_boundary_results_are_separate) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.056s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-m",
+        "py_compile",
+        "scripts/m1/t107_run.py",
+        "scripts/m1/t107_matrix.py",
+        "scripts/m1/t107_gate_test.py"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "scripts/m1/t107_entrypoints.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "scripts/m1/t107_capacity.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "scripts/check_docs.py"
+      ],
+      "exitCode": 0,
+      "stdout": "PASS: 19 documents, 14 requirements, 8 non-functional requirements, 17 scenarios, 14 acceptance rows, 161 local links\nMappings: 75 declared, 75 in matrix; 8 non-functional mappings, 3 checkpoints\nExecution plan: 31 tasks; dependencies and phase boundaries checked\nExternal links counted, not re-fetched: 45\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "scripts/test_check_docs.py"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ".....................................\n----------------------------------------------------------------------\nRan 37 tests in 3.750s\n\nOK\n"
+    },
+    {
+      "command": [
+        "sha256sum",
+        "--check",
+        "docs/implementation/evidence/SHA256SUMS"
+      ],
+      "exitCode": 0,
+      "stdout": "docs/implementation/evidence/t101-installed-inventory.json: OK\ndocs/implementation/evidence/t101-candidate-metadata.json: OK\ndocs/implementation/evidence/t103-isolated-experiment.json: OK\ndocs/implementation/evidence/t103-profile-experiment.json: OK\ndocs/implementation/evidence/t103-isolation-correction.json: OK\ndocs/implementation/evidence/t104-coder-lab.json: OK\ndocs/implementation/evidence/t105-connection-implementation.json: OK\ndocs/implementation/evidence/t105-independent-acceptance-pass1.json: OK\ndocs/implementation/evidence/t106-implementation-selftest.json: OK\ndocs/implementation/evidence/t106-final-implementation-selftest.json: OK\ndocs/implementation/evidence/t106-independent-acceptance-review1.json: OK\ndocs/implementation/evidence/t106-independent-acceptance-review1-validation.json: OK\ndocs/implementation/evidence/t106-repair1-selftest.json: OK\ndocs/implementation/evidence/t106-independent-acceptance-review2.json: OK\ndocs/implementation/evidence/t106-independent-acceptance-review2-validation.json: OK\ndocs/implementation/t107-m1-matrix.json: OK\ndocs/implementation/evidence/t107-investigation1.json: OK\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sha256sum",
+        "--check",
+        "docs/research/evidence/SHA256SUMS"
+      ],
+      "exitCode": 0,
+      "stdout": "docs/research/evidence/historical-research-excerpts.txt: OK\ndocs/research/evidence/prototype-readme.txt: OK\ndocs/research/evidence/preparation.json: OK\ndocs/research/evidence/isolation.json: OK\ndocs/research/evidence/management.json: OK\ndocs/research/evidence/acp-probe.json: OK\ndocs/research/evidence/composition.json: OK\ndocs/research/evidence/e2e-verification.json: OK\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "postReadmeCountCorrection": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "scripts/check_docs.py"
+      ],
+      "exitCode": 0,
+      "stdout": "PASS: 19 documents, 14 requirements, 8 non-functional requirements, 17 scenarios, 14 acceptance rows, 161 local links\nMappings: 75 declared, 75 in matrix; 8 non-functional mappings, 3 checkpoints\nExecution plan: 31 tasks; dependencies and phase boundaries checked\nExternal links counted, not re-fetched: 45\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "focusedTests": 7,
+  "documentationTests": 37,
+  "documentCount": 19,
+  "localLinks": 161,
+  "oldChecksumRowsBytePreserved": 15,
+  "sourceMatchesMatrix": true,
+  "newSourceCount": 5,
+  "historicalSourceCount": 36,
+  "fullJsonReadback": true,
+  "gateLookupIds": [
+    "M1-01",
+    "M1-02",
+    "M1-03",
+    "M1-04",
+    "M1-05",
+    "M1-06",
+    "M1-07",
+    "M1-08",
+    "M1-09",
+    "M1-10",
+    "M1-11"
+  ],
+  "secretValueScan": {
+    "knownCredentialValuesChecked": 3,
+    "filesChecked": 9,
+    "valuesPrinted": false,
+    "matches": 0
+  },
+  "independentFinalResourceEvidence": {
+    "path": "artifacts/m1/t107/final-independent-resources.json",
+    "sha256": "e6c71d7e2b09c7f53bc19ca0cc86380acf909f472b8b3058d3b92694fb0ef227"
+  },
+  "m1Passed": false,
+  "t201Ready": false,
+  "gate": "blocked-awaiting-independent-review",
+  "finalChecksumCheck": "This new row is appended after this immutable file; the complete18-row result is recorded in ignored final-readback.json."
+}

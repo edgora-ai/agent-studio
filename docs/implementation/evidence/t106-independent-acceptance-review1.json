@@ -1,0 +1,744 @@
+{
+  "task": "T-106",
+  "role": "independent-acceptance-agent-not-implementer",
+  "recordedOn": "2026-10-30",
+  "gate": "repair-required",
+  "pass": false,
+  "t107Ready": false,
+  "t107Executed": false,
+  "stageM1Passed": false,
+  "productScenariosPassed": [],
+  "summary": "Frozen final source was independently reviewed and the full default suite actually rerun twice in new roots. Both controller and candidate exited 1, in different cases, on a reproducible non-atomic observation-response race. Independent input tests additionally found four accepted symlink forms in the private-tool cache. Per-case remote success facts are retained but are not merged into a passing full run.",
+  "boundaries": {
+    "branch": "work/m1-source-audit",
+    "runtimeSourceModified": false,
+    "infrastructureModified": false,
+    "modelsOrPublicNetworkUsed": false,
+    "downloadedOrSystemPackagesChanged": false,
+    "commitPushResetCleanOrPublish": false,
+    "otherAgentsOrWorkflowsStarted": false,
+    "onlyWorkspaces": [
+      "m1-a",
+      "m1-b"
+    ],
+    "coder": "2.37.8",
+    "template": "lab-v3",
+    "candidate": "0.13.3",
+    "helper": "0.13.1",
+    "installedDsh": "0.2.1-rc.4",
+    "privateTool": "Ubuntu arm64 ripgrep 14.1.0-1"
+  },
+  "sourceSha256": {
+    "scripts/m1/t105_connection.py": "4855f897eb1e1804d31c819cdd7303216ac9e6003cbd47d1cbe879c0f19f87e7",
+    "scripts/m1/t105_remote_gate.py": "56b0285abb0a30a1627a346cb80400bd0d5d5fb4bf2778a039b6eee013b81efe",
+    "scripts/m1/t105_candidate.mjs": "45fac62670fbd519a57bdee18f47a7d94170d02498095fd3aa19912071b66a54",
+    "scripts/m1/t105_cleanup.py": "9d218608182e746b6b4d3886b7aa737fa027a513144f7fbd62135bd24a2a1239",
+    "scripts/m1/test_t105_connection.py": "daf764aa5e35d4fd537aa79041da381b56cce523adad8e34857169b8894ccc8b",
+    "scripts/m1/record_t105.py": "16ba6d05002fcf3be350b2a750d9b3acb6bbc3f58ba4877007184057369f4607",
+    "scripts/m1/ssh_remote_entry.mjs": "089d133d31dca7df627111865655b86c9817f14b0becbcfd1251c5f311dc0d6f",
+    "scripts/m1/network_guard.mjs": "a5b1dfcd5a71fef8454a5bfb65c15330812a3cedd4833085b69db674e6750e8f",
+    "scripts/m1/coder_lab.py": "906e345fc616893b6a76a4442139f456492759cfcf75f4a56201b1285f2da3e3",
+    "scripts/m1/coder_template.py": "ade62ffd189f083eec9fa44cb9d64da3c62ddeeafea6fc5ecd3e7d0a27d1ad4e",
+    "scripts/m1/audit_coder_lab.py": "ac0a997ee7832b2d6f60f00ceca104c15e8bacbc69bb3cc6a5f008b957489a67",
+    "scripts/m1/t106_candidate.mjs": "51f05ce0e17d141f489744240b74c080f2e99df023c1c207ed9a9c5876ff52e6",
+    "scripts/m1/t106_cleanup.py": "98b80e41b5a7a77f070a95b3ef670d255ed17460e6355946fef6d4f9871b82ee",
+    "scripts/m1/t106_observe.py": "37fbea6a5e1c211117518bfac7a99500121763f4f81ebf340da1a2be78f31761",
+    "scripts/m1/t106_payload.py": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0",
+    "scripts/m1/t106_provider.mjs": "ed469675ef37aae2feb3981642f4053f65faf6ddbcbcc91634684c9d1508b5c6",
+    "scripts/m1/t106_provider.test.mjs": "730093c760a276ed7229c25aa745f80fd253014bf0250f1777df31ccf4540167",
+    "scripts/m1/t106_run.py": "a5694ca9eae47eced055c50408c22953329558fa17b23977173ca987ce9e39b4",
+    "scripts/m1/t106_tools.py": "0e4e402531e2c5b933f771fac7a6184355afc7509ebadb536930d1029998dd36"
+  },
+  "reviewedFinalImplementationEvidence": {
+    "path": "docs/implementation/evidence/t106-final-implementation-selftest.json",
+    "sha256": "174c51e59c0bb4e462c1f888ff047f19f21c2d5c918d300e5aa49c38f78cf637"
+  },
+  "priorImmutableEvidence": [
+    {
+      "path": "docs/implementation/evidence/t106-implementation-selftest.json",
+      "sha256": "cc8f954f55768b45f98cfd16402d06f6ea49d2f49f353ab87201c4eaa5bf1fbc"
+    },
+    {
+      "path": "docs/implementation/evidence/t105-independent-acceptance-pass1.json",
+      "sha256": "954b1d098aac6bebbb1df6d6959aa31153b19b279a16ed959394b51bdc7740bc"
+    }
+  ],
+  "trustChecks": {
+    "t105SourceFingerprintsUnchanged": 11,
+    "t106FinalSourceFingerprintsUnchanged": 8,
+    "candidateFileSetAndArchiveByteMatched": 298,
+    "helperBundleSha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+    "helperBundleBytes": 217238,
+    "signedInReleasePackagesDebBinaryRevalidatedWithoutDownload": true,
+    "integrityEvidence": {
+      "path": "artifacts/m1/t106/acceptance-cmy_rpp4/integrity-ek9btokt/result.json",
+      "sha256": "9ed8c0b5b58a059b2af296f8ebd5bf8fa73a5cd91369ef57419386f12f0dbe02"
+    }
+  },
+  "fullDefaultRuns": [
+    {
+      "run": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191",
+      "focus": "all",
+      "controllerExitCode": 1,
+      "candidateExitCode": 1,
+      "checkCount": 11,
+      "failedCases": [
+        {
+          "case": "A-filesystem-bytes-and-boundaries",
+          "error": {
+            "type": "SyntaxError",
+            "code": null,
+            "kind": null,
+            "mutationMayHaveStarted": null
+          }
+        }
+      ],
+      "gateCount": 2,
+      "gatesCurrentAndAccepted": true,
+      "cleanup": {
+        "action": "authenticated-admin-shutdown",
+        "acknowledged": true,
+        "before": [
+          {
+            "pid": 4923,
+            "state": "S",
+            "ppid": 1,
+            "pgid": 4923,
+            "startTick": "631065945",
+            "kind": "daemon",
+            "uid": 1000
+          },
+          {
+            "pid": 5645,
+            "state": "S",
+            "ppid": 4923,
+            "pgid": 5645,
+            "startTick": "631068802",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          },
+          {
+            "pid": 5656,
+            "state": "S",
+            "ppid": 5645,
+            "pgid": 5655,
+            "startTick": "631068895",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          }
+        ],
+        "after": [],
+        "unreaped": [],
+        "releaseRetained": true,
+        "dataDeleted": false
+      },
+      "result": {
+        "path": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191/result.json",
+        "sha256": "0c4dcc2f086589d9ae224315759ce7f99ab808a30607572fc3c63a56a75fae87"
+      },
+      "candidate": {
+        "path": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191/candidate.json",
+        "sha256": "330db17239d4859ae2b47683e96fe4757d1cd7eb16678407f852bbe82c389ddd"
+      },
+      "initialFailureOrReasonedSingleRetry": "initial"
+    },
+    {
+      "run": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5",
+      "focus": "all",
+      "controllerExitCode": 1,
+      "candidateExitCode": 1,
+      "checkCount": 11,
+      "failedCases": [
+        {
+          "case": "B-structured-command",
+          "error": {
+            "type": "SyntaxError",
+            "code": null,
+            "kind": null,
+            "mutationMayHaveStarted": null
+          }
+        }
+      ],
+      "gateCount": 2,
+      "gatesCurrentAndAccepted": true,
+      "cleanup": {
+        "action": "authenticated-admin-shutdown",
+        "acknowledged": true,
+        "before": [
+          {
+            "pid": 5703,
+            "state": "S",
+            "ppid": 1,
+            "pgid": 5703,
+            "startTick": "631074183",
+            "kind": "daemon",
+            "uid": 1000
+          },
+          {
+            "pid": 6433,
+            "state": "S",
+            "ppid": 5703,
+            "pgid": 6433,
+            "startTick": "631076946",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          },
+          {
+            "pid": 6444,
+            "state": "S",
+            "ppid": 6433,
+            "pgid": 6443,
+            "startTick": "631077041",
+            "kind": "owned-supervisor-or-guardian",
+            "uid": 1000
+          }
+        ],
+        "after": [],
+        "unreaped": [],
+        "releaseRetained": true,
+        "dataDeleted": false
+      },
+      "result": {
+        "path": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5/result.json",
+        "sha256": "a5943b764ec338555e090464792eb6b6daaa634716207205a5aeb5a69b487e86"
+      },
+      "candidate": {
+        "path": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5/candidate.json",
+        "sha256": "c6f661703bf2b97869d28e5c309ef03c6b97815fe8edcf9ae3e47c45190770a3"
+      },
+      "initialFailureOrReasonedSingleRetry": "one unmodified full-suite retry for observer-response race"
+    }
+  ],
+  "commands": [
+    {
+      "case": "provider-tests",
+      "command": [
+        "node",
+        "--test",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_provider.test.mjs"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/provider-tests.json",
+        "sha256": "9165910be4d0df31b4e4cc23147f20c067f28c60223800117bf1baa15929bf2f"
+      }
+    },
+    {
+      "case": "t105-contract-tests",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/test_t105_connection.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/t105-contract-tests.json",
+        "sha256": "55a752a4f4b3097dd97a0f04798186139cbd8ef59eea5e99c4cb598d29b85d6a"
+      }
+    },
+    {
+      "case": "full-default-suite",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_run.py",
+        "run"
+      ],
+      "exitCode": 1,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/full-default-suite.json",
+        "sha256": "ca31b36e6debacffe364e1a9c8954ae8fed86945d6255b299503102abdbbbfc2"
+      }
+    },
+    {
+      "case": "full-default-suite-retry1",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_run.py",
+        "run"
+      ],
+      "exitCode": 1,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/full-default-suite-retry1.json",
+        "sha256": "c9d171d7f764b6f9ddcfed078cd416702d60edc6fc14ea357a81e4dfdce1edf8"
+      }
+    },
+    {
+      "case": "independent-integrity",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/check_tools.py",
+        "integrity"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/independent-integrity.json",
+        "sha256": "31562eb5da1d21f4583102c633d5b169c76bdc1edf1149c2b2251dc73511fa64"
+      }
+    },
+    {
+      "case": "independent-tool-negatives",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/check_tools.py",
+        "negatives"
+      ],
+      "exitCode": 1,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/independent-tool-negatives.json",
+        "sha256": "d8ca6861c5934ff4eb428dc02a61ca5fe81e57a3529dc4db36802f7101e7c45d"
+      }
+    },
+    {
+      "case": "independent-observer-race",
+      "command": [
+        "node",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/observer_race.mjs"
+      ],
+      "exitCode": 1,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/independent-observer-race.json",
+        "sha256": "f8ca6c72b4a698400569335d858d76b67d67da9da7dd963f02868c261c2c29d5"
+      }
+    },
+    {
+      "case": "independent-cleanup-ownership",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/check_cleanup.py"
+      ],
+      "exitCode": 1,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/independent-cleanup-ownership.json",
+        "sha256": "63915b6cf0ed8453f0ba789c18025e51c2226c1c6f013fbbbce749d97963a92f"
+      }
+    },
+    {
+      "case": "independent-cleanup-ownership-retry1",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/check_cleanup.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/independent-cleanup-ownership-retry1.json",
+        "sha256": "d111d528d8e0156aaa23f84600551bd000ae348dcd7e0a171cedb94dcfe26ae6"
+      }
+    },
+    {
+      "case": "final-lab-resource-log-audit",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/audit_coder_lab.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/final-lab-audit.json",
+        "sha256": "76e1febcf0cc8ce68e2204c16281a1f89bf07a58310116f8a00d67f005009139"
+      }
+    },
+    {
+      "case": "independent-final-observation-command",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/final_observation.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/final-observation-command.json",
+        "sha256": "8b6864af80229449b2b750f41955e4e8df6fef0179c0a39c863394c4c551ca06"
+      }
+    },
+    {
+      "case": "node-syntax",
+      "command": [
+        "node",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_provider.mjs"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/node-syntax.json",
+        "sha256": "ee6c9738ab410fe1d53cb95a70fead6c884d08b0be5eea4546811a789aa33f02"
+      }
+    },
+    {
+      "case": "node-syntax",
+      "command": [
+        "node",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_candidate.mjs"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/node-syntax.json",
+        "sha256": "ee6c9738ab410fe1d53cb95a70fead6c884d08b0be5eea4546811a789aa33f02"
+      }
+    },
+    {
+      "case": "node-syntax",
+      "command": [
+        "node",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_provider.test.mjs"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/node-syntax.json",
+        "sha256": "ee6c9738ab410fe1d53cb95a70fead6c884d08b0be5eea4546811a789aa33f02"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "T106-IA-01",
+      "severity": "gate-blocking",
+      "category": "reproducible-harness-defect",
+      "files": [
+        {
+          "path": "scripts/m1/t106_candidate.mjs",
+          "lines": "54-60"
+        },
+        {
+          "path": "scripts/m1/t106_run.py",
+          "lines": "112"
+        },
+        {
+          "path": "scripts/m1/coder_lab.py",
+          "lines": "28-32",
+          "note": "unchanged T-105 trust dependency; fix publication at T-106 call site rather than silently changing accepted source"
+        }
+      ],
+      "scenario": "Producer opens final response path then serializes JSON; consumer waits only for existence and immediately JSON.parse()s it. A scheduler interleaving exposes empty/partial JSON.",
+      "actual": "Both unmodified full runs exited 1 (first A-filesystem, retry B-command), each with SyntaxError before its observer receipt was recorded. Completed response files are valid JSON. Verbatim consumer counterexample deterministically throws SyntaxError while writer is mid-response.",
+      "expected": "The response is consumed only after complete publication; all 11 default checks finish in the same run.",
+      "minimalReproduction": [
+        "node",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/observer_race.mjs"
+      ],
+      "reproductionExitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/observer-race-zx0oRM/result.json",
+        "sha256": "ef73baec0794b8724e61fcecc717d4c14516d3594c447a0a4fe88cb810599485"
+      },
+      "suggestedRepair": "Atomically publish a complete response using a same-directory temporary file and rename, or an explicit completed-response protocol with a bounded read. Preserve real malformed-response errors and current failure history; add a publication-race regression, then rerun the full default suite."
+    },
+    {
+      "id": "T106-IA-02",
+      "severity": "gate-blocking",
+      "category": "private-dependency-input-boundary",
+      "files": [
+        {
+          "path": "scripts/m1/t106_tools.py",
+          "lines": "58-69"
+        }
+      ],
+      "scenario": "verify_cached resolves manifest.parent before checking links, reads manifest without lstat, and checks only terminal package/binary paths; directory components are not checked.",
+      "actual": "download-directory-link, extracted-directory-link, manifest-link and cache-directory-link are accepted. Altered source URL, altered package, altered binary and terminal package/binary links are rejected. All linked targets in the repro are independent checker-owned copies; cryptographic pins were not bypassed.",
+      "expected": "All linked cache/source/package/binary inputs are rejected before reuse, including ancestors and manifest; unchanged genuine cache may still be reused without downloading.",
+      "minimalReproduction": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t106/acceptance-cmy_rpp4/check_tools.py",
+        "negatives"
+      ],
+      "reproductionExitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/tool-inputs-n0xdrhl0/result.json",
+        "sha256": "e4c4ea3f524df8bf4c008f069b2252bf39e5c25a0973eb5d71c480927a633cbd"
+      },
+      "suggestedRepair": "Validate the un-resolved manifest and all relevant path components; use no-follow/open-descriptor identity checks for the manifest, package and binary. Keep the fixed package/source pins and signed provenance. Add regressions for all four accepted link forms."
+    }
+  ],
+  "coverage": [
+    {
+      "case": "A",
+      "status": "individual-success-observed-in-retry; full-suite-not-passed",
+      "evidence": {
+        "path": "artifacts/m1/t106/run-96eb47106bb9cbbe905fe5a5/candidate.json",
+        "sha256": "c6f661703bf2b97869d28e5c309ef03c6b97815fe8edcf9ae3e47c45190770a3"
+      },
+      "facts": {
+        "providerUtf8BinaryWrite": true,
+        "independentDiskBytesAndHashes": true,
+        "fullProviderReadback": [
+          {
+            "path": "binary fixture.bin",
+            "bytes": 736,
+            "sha256": "e8660d792ffe3523176d97378dfe170a846634b3f6806fb8bad4c8b59504972e"
+          },
+          {
+            "path": "probe.py",
+            "bytes": 5994,
+            "sha256": "96b0330b36d0d4b20344d2ade3da71a56006ec752c33f3753c59cfe119d0d4d0"
+          },
+          {
+            "path": "utf8 文件.txt",
+            "bytes": 68,
+            "sha256": "0ffdd180881bbc619fc124bc53e2f0b980b4f64cf443909ce8bc51fd159b67f6"
+          }
+        ],
+        "nameListingAndGitRgDiscovery": true,
+        "missingTraversalAndSymlinkNegativeCodes": [
+          "E_INVALID_PATH",
+          "E_NOT_DIRECTORY",
+          "E_NOT_FOUND",
+          "E_OUTSIDE_ROOT",
+          "E_SYMLINK",
+          "T106_PATH_OUTSIDE_BINDING"
+        ],
+        "outsideRootCanaryUnchanged": true,
+        "centralCanariesAndPeerMarkerTopLevelUnchanged": true,
+        "firstRunObserverFailurePreserved": true
+      }
+    },
+    {
+      "case": "B",
+      "status": "individual-success-observed-in-first-run; retry-observer-failed",
+      "evidence": {
+        "path": "artifacts/m1/t106/run-6eb2c4d3427ac4e41059d191/candidate.json",
+        "sha256": "330db17239d4859ae2b47683e96fe4757d1cd7eb16678407f852bbe82c389ddd"
+      },
+      "facts": {
+        "structuredArgv": [
+          "space arg",
+          "single'quote",
+          "double\"quote",
+          "$(must-not-run)",
+          "; not a shell",
+          "",
+          "中文"
+        ],
+        "cwd": "/workspace/t106-6eb2c4d3427ac4e41059d191/project/cwd space",
+        "envRoundTrip": "remote env with spaces '\" 中文",
+        "remoteUid": 1000,
+        "remotePid": 5400,
+        "startTick": "631067732",
+        "stdoutStderrSeparated": true,
+        "exitCode": 17,
+        "reaped": [
+          {
+            "pid": 5400,
+            "startTick": "631067732",
+            "state": "gone"
+          }
+        ],
+        "nativeSpawnAccepted": false,
+        "nativeSpawnSource": "artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote/lib/runtime-router.js:227-255"
+      }
+    },
+    {
+      "case": "C",
+      "status": "observed-in-both-runs",
+      "facts": {
+        "isatty": [
+          true,
+          true,
+          true
+        ],
+        "initialRowsCols": [
+          27,
+          91
+        ],
+        "resizedRowsCols": [
+          41,
+          123
+        ],
+        "remoteForegroundGroupDiffersFromParent": true,
+        "inputUtf8RoundTrip": true,
+        "foregroundSignal": "SIGINT",
+        "childExit": 23,
+        "parentExit": 0,
+        "directPidStartTickReaped": true
+      }
+    },
+    {
+      "case": "D",
+      "status": "observed-in-both-runs-with-bounded-additional-negatives",
+      "facts": {
+        "groupMembers": 3,
+        "parentChildAndGuardianObserved": true,
+        "parentForwardedSignal": false,
+        "childReceivedSignal": 15,
+        "forcedEscalation": null,
+        "allPidStartTicksGone": true,
+        "helperShutdownAuthenticatedOnlyForExactRunHome": true,
+        "matchingWrongUidRejected": true,
+        "otherSyntheticRootHelperTokenExcludedAndStillAlive": true,
+        "mismatchedHomeTokenRejectedBeforeAuthentication": true
+      },
+      "independentEvidence": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/cleanup-ownership-xbh343ap/result.json",
+        "sha256": "8e9d0cfe620a64b0d8fe173f16e1de09bc76e8fbbfbafa8cacc4bbd15da48a50"
+      },
+      "checkerFixtureCorrection": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/checker-correction.json",
+        "sha256": "96875fda174bb0aed8283230e103ceed19cde51ad4e364db59bf79aba8949c7f"
+      }
+    },
+    {
+      "case": "E",
+      "status": "observed-in-both-runs; recovery-and-dedup-not-accepted",
+      "facts": {
+        "onlyOwnBrokerReceiveLaneFaulted": true,
+        "providerError": {
+          "type": "RemoteHelperCallInterruptedError",
+          "code": null,
+          "kind": "disconnect",
+          "mutationMayHaveStarted": true
+        },
+        "originalOperationId": "fa5ba59d-406d-4abf-8ad8-ecc2b7d737ad",
+        "dispatchCount": 1,
+        "directSideEffectCount": 1,
+        "newMutationError": "T106_UNKNOWN_OUTCOME",
+        "noCentralFallback": true,
+        "unknownOriginalIdentityRetained": true,
+        "singleRawSession": true,
+        "gatedHelperDispatchesPerRun": 2,
+        "separateHostKeyEnrollmentProbePerRun": 1,
+        "backoffCounterNotUsedAsConnectionCount": true,
+        "recoveryOrReplayClaimed": false
+      }
+    },
+    {
+      "case": "F",
+      "status": "repair-required-input-link-boundary",
+      "facts": {
+        "frozenImageMissingRgNegativeRetained": true,
+        "privateToolVersion": "14.1.0-1 arm64",
+        "binarySha256": "51407f46525cf368f99011044fae7aa00912dce6467731f97bb7cf423e2bd702",
+        "binaryBytes": 4917680,
+        "helperUploadIndependentDiskReadbackAndVersion": true,
+        "remoteMode": "0700",
+        "remoteUid": 1000,
+        "nonGitDiscoverSource": "rg",
+        "GitDiscoverSource": "git",
+        "contentSearchChannel": "bound command rg --json --fixed-strings --no-config",
+        "contentMatchExitCode": 0,
+        "contentNoMatchExitCode": 1,
+        "productContentSearchEnabled": false,
+        "privateHomeAndProcessPathOnly": true,
+        "fourLinkFormsWronglyAccepted": true,
+        "originalCacheUnmodified": true
+      }
+    },
+    {
+      "case": "G",
+      "status": "observed-bounded-lifecycle-and-resources; not-product-isolation",
+      "facts": {
+        "currentT105BindingGatesPassedBothRuns": true,
+        "currentBindingsUnchanged": true,
+        "disabledChannels": [
+          "stock-SSH-subprocess",
+          "product-content-search",
+          "mutation-replay",
+          "recovery"
+        ],
+        "singleDisposerEachRun": true,
+        "registryAndHelperEntriesZero": true,
+        "beforeFaultHealth": {
+          "ok": true,
+          "home": "/tmp/t105-6eb2c4d3427ac4e41059d191/home",
+          "uptimeMs": 27848,
+          "workspaces": 1,
+          "openingWorkspaces": 0,
+          "discoveries": 0,
+          "processes": 0,
+          "pathLocks": 0,
+          "readHandles": 0,
+          "writeHandles": 0
+        },
+        "authenticatedDaemonAndRetainedSupervisorCleanupBothRuns": true,
+        "trackedRemotePidStartTickCount": 19,
+        "remoteAndCentralExperimentalProcessRemainders": 0,
+        "fourLabAnd32OriginalContainersRetained": true,
+        "dataDeleted": false
+      },
+      "independentEvidence": {
+        "path": "artifacts/m1/t106/acceptance-cmy_rpp4/independent-final-observation.json",
+        "sha256": "878e138d68d31475d8e6cbaeb3a878c98276bce4f245a20ad82df45c42a858e6"
+      }
+    }
+  ],
+  "finalResources": {
+    "runningContainers": 36,
+    "labContainersRetained": 4,
+    "originalContainersRetained": 32,
+    "exactSetUnchanged": true,
+    "remainingOwnerSessions": 1,
+    "currentBindingsUnchanged": true,
+    "transport": {
+      "hostBrokerPids": [],
+      "controlPlaneCliPids": []
+    },
+    "centralRunnerAndCandidatePids": [],
+    "ownedRemoteProcesses": {
+      "m1-a": [],
+      "m1-b": []
+    },
+    "storage": [
+      {
+        "token": "6eb2c4d3427ac4e41059d191",
+        "allRecordedFilesRetained": true,
+        "randomUtf8BinaryOutsideAndCounterBytesMatch": true,
+        "centralCanariesByteUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "otherWorkspaceRunAbsent": true,
+        "fileAndDirectoryCount": 22
+      },
+      {
+        "token": "96eb47106bb9cbbe905fe5a5",
+        "allRecordedFilesRetained": true,
+        "randomUtf8BinaryOutsideAndCounterBytesMatch": true,
+        "centralCanariesByteUnchanged": true,
+        "centralAbsoluteRunAbsent": true,
+        "otherWorkspaceRunAbsent": true,
+        "fileAndDirectoryCount": 22
+      }
+    ],
+    "observationWindowUnix": [
+      1793369313.3737602,
+      1793369314.8295906
+    ],
+    "resourceAudit": {
+      "path": "artifacts/m1/t104/lab/resource-audit-bbb30b86.json",
+      "sha256": "a5612c2cb888ed76b6438918e50077db508676e10ab3fb9ec254f1995009f7d7"
+    }
+  },
+  "retainedWarnings": {
+    "historicalImplementationExit1RecordsAndExpectedSshEofUnchanged": true,
+    "independentFullRunExitCodes": [
+      1,
+      1
+    ],
+    "initialLocalCleanupCheckerExitCode": 1,
+    "localCheckerFailureReason": "Synthetic host UID 1001 is not remote UID 1000; initial failure preserved and correctly classified, negative-only retry exit 0; no privilege change.",
+    "nodePermissionWarning": "PERM0002 retained in both node.stderr files; --allow-child-process is not an OS sandbox.",
+    "recentLogAuditSeconds": 120,
+    "recentWarningOrErrorLines": 0,
+    "startupHistoryErrorFreeClaimed": false
+  },
+  "independentCheckerSha256": {
+    "final_observation.py": "7383d519683b3fec76adc9271fd7c3524944ba482eef27f2c30c526b2c8368f8",
+    "observer_race.mjs": "687e4d5c499626d31d78702f0308819fbbb9b7a04c3b9225e355fc9f6c70c887",
+    "check_tools.py": "ee284f50927e0689156953f1781ddc93c3976953a4d1971f1e5a4758d48cb47b",
+    "check_cleanup.py": "9c39ad10f08e9e7eed307f7235db8d49c42287c5174749caa2e3fdd1143edeec"
+  },
+  "remainingLimits": [
+    "T-106 gate is repair-required; T-107 is not ready and was not executed.",
+    "Frozen lab-v3 image still lacks ripgrep; private test dependency is not deployment/product search support.",
+    "Native ctx.subprocess.spawn still manages a local OpenSSH child, not remote lifecycle.",
+    "Only the explicit experimental adapter was tested; product/main-session integration is absent.",
+    "No recovery, mutation replay, deduplication guarantee, rebuild race, production isolation or full M1 acceptance.",
+    "No new browser/deployment/authentication configuration work was performed.",
+    "Prior arbitrary project data were not exhaustively byte-hashed; no deletion occurred, non-target top-level metadata and peer marker remained unchanged, and both new synthetic roots were directly re-read."
+  ],
+  "handoff": "Return these two repair items to the coordinator. No fixes or T-107 work performed."
+}

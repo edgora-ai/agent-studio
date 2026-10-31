@@ -1,0 +1,81 @@
+name: agent-studio-coder-lab
+
+services:
+  database:
+    image: ${POSTGRES_IMAGE:?Run prepare first}
+    environment:
+      POSTGRES_USER: coder
+      POSTGRES_DB: coder
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run prepare first}
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks: [control]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U coder -d coder"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    mem_limit: 512m
+    cpus: 0.5
+    pids_limit: 128
+    security_opt: [no-new-privileges:true]
+    restart: "no"
+
+  coder:
+    image: ${CODER_IMAGE:?Run prepare first}
+    environment:
+      CODER_PG_CONNECTION_URL: postgresql://coder:${POSTGRES_PASSWORD}@database/coder?sslmode=disable
+      CODER_HTTP_ADDRESS: ""
+      CODER_TLS_ENABLE: "true"
+      CODER_TLS_ADDRESS: 0.0.0.0:${CODER_TLS_PORT}
+      CODER_TLS_CERT_FILE: /run/lab-tls/server.crt
+      CODER_TLS_KEY_FILE: /run/lab-tls/server.key
+      CODER_TLS_MIN_VERSION: tls12
+      CODER_ACCESS_URL: https://coder:${CODER_TLS_PORT}
+      CODER_TELEMETRY_ENABLE: "false"
+      CODER_UPDATE_CHECK: "false"
+      CODER_PROVISIONER_DAEMONS: "1"
+      CODER_DERP_SERVER_STUN_ADDRESSES: disable
+      CODER_DISABLE_WORKSPACE_SHARING: "true"
+      CODER_DISABLE_TEMPLATE_BUILDER: "true"
+      SSL_CERT_FILE: /run/lab-tls/ca.crt
+    ports:
+      - "${LAB_BIND_ADDRESS:?Loopback bind address required}::${CODER_TLS_PORT}"
+    group_add:
+      - "${DOCKER_SOCKET_GID}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - home:/home/coder
+      - ${LAB_TLS_DIR}:/run/lab-tls:ro
+      - ${LAB_TEMPLATE_DIR}:/opt/lab-template:ro
+    networks:
+      control:
+      workspaces:
+        aliases: [coder]
+    depends_on:
+      database:
+        condition: service_healthy
+    mem_limit: 2g
+    cpus: 2
+    pids_limit: 256
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    restart: "no"
+
+  workspace-image:
+    profiles: [build]
+    image: agent-studio-workspace:t104
+    build:
+      context: ${LAB_BUILD_DIR:?Run prepare first}
+      dockerfile: Dockerfile
+    entrypoint: [/bin/false]
+
+networks:
+  control:
+  workspaces:
+    name: agent-studio-coder-lab-workspaces
+    internal: true
+
+volumes:
+  database:
+  home:

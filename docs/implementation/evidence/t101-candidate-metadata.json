@@ -1,0 +1,112 @@
+{
+  "task": "T-101",
+  "kind": "fixed-upstream-metadata",
+  "observedDate": "2026-10-30",
+  "runtimeTested": false,
+  "retrieval": "gh api: fixed tag refs, commit-pinned package.json and LICENSE, release metadata, manifest and SHA256SUMS metadata assets",
+  "artifactDigestVerification": "Published API digests, manifest and SHA256SUMS agree. Package archives were not downloaded; no archive digest was independently computed.",
+  "sshRemote": {
+    "repository": "https://github.com/CrazyShout/dsh-ssh-remote",
+    "license": "MIT",
+    "licenseBodyChecked": true,
+    "nodeEngine": ">=22",
+    "cordisPeer": "^4.0.1",
+    "dshPeerRange": ">=0.2.0-rc.2 <0.3.0 || >=0.2.1-rc.2 <0.3.0",
+    "dshPeerPackages": [
+      "@deepseek-ai/dsh-atomic-write",
+      "@deepseek-ai/dsh-fs",
+      "@deepseek-ai/dsh-home-paths",
+      "@deepseek-ai/dsh-sandbox",
+      "@deepseek-ai/dsh-sandbox-policy",
+      "@deepseek-ai/dsh-scope",
+      "@deepseek-ai/dsh-shell",
+      "@deepseek-ai/dsh-subprocess",
+      "@deepseek-ai/dsh-terminal",
+      "@deepseek-ai/dsh-typert-protocol"
+    ],
+    "dependencies": {
+      "@deepseek-ai/schemastery": "^3.18.0",
+      "@noble/hashes": "2.4.0",
+      "yaml": "^2.9.1",
+      "zod": "4.6.6"
+    },
+    "manifestDshVersions": ["0.2.0-rc.2", "0.2.1-rc.2", "0.2.1-rc.3"],
+    "helper": {
+      "manifestVersion": "0.13.1",
+      "publishedSha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+      "independentlyHashed": false
+    },
+    "versions": [
+      {
+        "tag": "v0.13.2",
+        "version": "0.13.2",
+        "commit": "61ebead8dbfa4640b10a0da9b4c8c59d82347a93",
+        "packageSource": "https://github.com/CrazyShout/dsh-ssh-remote/blob/61ebead8dbfa4640b10a0da9b4c8c59d82347a93/package.json",
+        "licenseSource": "https://github.com/CrazyShout/dsh-ssh-remote/blob/61ebead8dbfa4640b10a0da9b4c8c59d82347a93/LICENSE",
+        "releaseId": 423158724,
+        "releaseSource": "https://github.com/CrazyShout/dsh-ssh-remote/releases/tag/v0.13.2",
+        "manifestSource": "https://github.com/CrazyShout/dsh-ssh-remote/releases/download/v0.13.2/release-manifest.json",
+        "assets": [
+          {"name": "dsh-ssh-remote-0.13.2.tgz", "id": 674146491, "size": 1508506, "publishedSha256": "df2442148981486abf3ac408d75a5ff9ab11e2e7291de2c16927a9660ae75dc7"},
+          {"name": "release-manifest.json", "id": 674146483, "size": 522, "publishedSha256": "0b34b177fd1124e3469628342c4088fc24974ff1ad40bdea635a6f9ec6617c98"},
+          {"name": "SHA256SUMS", "id": 674146482, "size": 92, "publishedSha256": "bbb7376375be62e4a7661f7adfb1aa1f176ba456894228a7d1be3715fc1bb88e"}
+        ]
+      },
+      {
+        "tag": "v0.13.3",
+        "version": "0.13.3",
+        "commit": "312524ec3627785fdf8ea537408fc6871a58271b",
+        "packageSource": "https://github.com/CrazyShout/dsh-ssh-remote/blob/312524ec3627785fdf8ea537408fc6871a58271b/package.json",
+        "licenseSource": "https://github.com/CrazyShout/dsh-ssh-remote/blob/312524ec3627785fdf8ea537408fc6871a58271b/LICENSE",
+        "releaseId": 428281211,
+        "releaseSource": "https://github.com/CrazyShout/dsh-ssh-remote/releases/tag/v0.13.3",
+        "manifestSource": "https://github.com/CrazyShout/dsh-ssh-remote/releases/download/v0.13.3/release-manifest.json",
+        "assets": [
+          {"name": "dsh-ssh-remote-0.13.3.tgz", "id": 689590055, "size": 1518475, "publishedSha256": "cab6fa53954dc1272dfde9ec8a8fd3928fd79232c78b658cb1b434fb0644b162"},
+          {"name": "release-manifest.json", "id": 689590059, "size": 522, "publishedSha256": "c33374b0fde1a950a9efd970919397234fe2ac24bb09dba1a9d122479ee452d4"},
+          {"name": "SHA256SUMS", "id": 689590056, "size": 92, "publishedSha256": "f28df13cf9244916a9d8c78c63ea5715cc590a0fedb2b39727bb5a1f2362067e"}
+        ]
+      }
+    ]
+  },
+  "remoteVs": {
+    "repository": "https://github.com/xiray-xia/dsh-remote-vs",
+    "tag": "v0.11.1",
+    "version": "0.11.1",
+    "commit": "b73cb97fec7f74c17801012016d8054ba2e8621e",
+    "packageSource": "https://github.com/xiray-xia/dsh-remote-vs/blob/b73cb97fec7f74c17801012016d8054ba2e8621e/package.json",
+    "licenseSource": "https://github.com/xiray-xia/dsh-remote-vs/blob/b73cb97fec7f74c17801012016d8054ba2e8621e/LICENSE",
+    "releaseSource": "https://github.com/xiray-xia/dsh-remote-vs/releases/tag/v0.11.1",
+    "releaseId": 428593029,
+    "license": "MIT",
+    "licenseBodyChecked": true,
+    "dshEngine": ">=0.2.2-alpha.2 <0.3.0",
+    "cordisPeer": "^4.0.6-alpha.1",
+    "dshPeerRange": "^0.2.2-alpha.2",
+    "dshPeerPackages": [
+      "@deepseek-ai/dsh-agent-preset",
+      "@deepseek-ai/dsh-bash-local",
+      "@deepseek-ai/dsh-file-reference",
+      "@deepseek-ai/dsh-fs",
+      "@deepseek-ai/dsh-shell",
+      "@deepseek-ai/dsh-spill",
+      "@deepseek-ai/dsh-subprocess",
+      "@deepseek-ai/dsh-tools"
+    ],
+    "relatedDependencies": {
+      "@deepseek-ai/dsh-fs-ssh": "0.2.1-rc.2",
+      "@deepseek-ai/dsh-ssh": "0.2.1-rc.2",
+      "@deepseek-ai/schemastery": "3.18.6-alpha.1"
+    },
+    "ssh2DevelopmentDependency": "^1.17.0",
+    "releaseAssets": [],
+    "releaseManifest": null,
+    "manifestSearchScope": "Release attachments and the complete fixed-commit source tree; no manifest file found",
+    "failedUnprefixedTag": {"tag": "0.11.1", "refHttpStatus": 404, "releaseHttpStatus": 404}
+  },
+  "interpretation": [
+    "The installed rc.4 version is not enumerated in the SSH release manifests; this is not proof of installation failure.",
+    "Dependency and engine declarations are metadata, not runtime compatibility results.",
+    "No transitive dependency license audit, package installation, SSH connection, helper execution or Coder workspace test was performed."
+  ]
+}

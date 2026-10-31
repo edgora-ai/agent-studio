@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-30",
+  "scope": "D-01/T-201 isolated development implementation verification only; not formal T-201, M1 or M2 acceptance",
+  "runtime_result": "pass",
+  "formal_m1": "not-passed; independent review remains deferred",
+  "versions": {"node": "24.22.1", "sqlite": "3.53.4", "dsh": "0.2.1-rc.4", "sidebar": "0.28.2"},
+  "commands": [
+    {"command": "node --check <each of 8 new ESM source/test files>", "exit": 0},
+    {"command": "python3 -I: ast.parse(scripts/dev/browser.py)", "exit": 0},
+    {"command": "python3 -I scripts/check_docs.py", "exit": 0, "documents": 20, "local_links": 185},
+    {"command": "python3 -I scripts/test_check_docs.py", "exit": 0, "passed": 39},
+    {"command": "git diff --check", "exit": 0},
+    {"command": "git check-ignore .preview/agent-studio/login.url", "exit": 0},
+    {"command": "node --test scripts/dev/store.test.mjs", "exit": 0, "passed": 3},
+    {"command": "node scripts/dev/integration.mjs", "exit": 0, "passed": 76, "root": "/tmp/agent-studio-test-integration-ZuhFyW", "owned_process_stopped": true},
+    {"command": "private persistent-root readonly SQL/RPC/list comparison, stop/start, full row comparison", "exit": 0, "integrity_check": "ok", "rows_unchanged": true},
+    {"command": "artifacts/m1/t104/browser-venv/bin/python -I scripts/dev/browser.py --root /home/ubuntu/workspace/agent-studio/.preview/agent-studio --out /home/ubuntu/workspace/agent-studio/artifacts/d01/final-browser --browser /home/ubuntu/.cache/ms-playwright/chromium-1234/chrome-linux/chrome", "exit": 0}
+  ],
+  "coverage": [
+    "SQLite migration/transaction/immutable snapshots/ownership; write -> independent readonly SQL -> complete RPC readback -> ID/list retrieval",
+    "Real Agent factory, explicit flush, native inspect, physical compressed JSONL, Workspace attachment; pending recovery with/without JSONL and expiry",
+    "Public health 200; protected root/RPC without or invalid auth 401; valid signed cookie exchange 303; untrusted Origin 403; RPC envelope error despite HTTP 200",
+    "Binding/version/session/anchor/current-target checks; superseded versions and unverified remote rejected; dispatch.check metadata eligibility is not execution",
+    "Bound original-UI session selection and real session creation; unknown Workspace, cross-binding session, cwd/default creator, non-preview preset denied",
+    "Exact single welcome acknowledgement persisted across restart; adjacent and extra configuration writes denied",
+    "Owner unary and stream guard before receiver lookup; sidebar HTTP/raw upload/write/file/archive/html and dangerous model/project-I/O operations denied",
+    "Denied operations leave target root empty and tested JSONL unchanged; model catalog empty; networkBlocked/subprocessBlocked/generationBlocked all zero",
+    "Child environment exact allowlist; inherited synthetic canary absent; private runtime 0700 and files 0600-or-stricter; fresh test startup log empty",
+    "Original dsh Web and byte-preserved sidebar client; real login, Workspace/session selection, Files interaction and visually inspected screenshot"
+  ],
+  "browser": {
+    "pageerrors": 0,
+    "unexpected_console_errors": 0,
+    "unexpected_rpc_failures": 0,
+    "external_requests": 0,
+    "expected_denials": ["sidebar FS/Git HTTP 409", "sidebar fs-watch WebSocket 403", "skills/list agent-studio/disabled"],
+    "blank_session_ui_label": "New Session",
+    "native_title_projection": "D01 Native Session"
+  },
+  "persistent_preview_at_capture": {
+    "root": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio",
+    "origin": "http://127.0.0.1:44037",
+    "pid": 3472353,
+    "auth_file": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio/login.url",
+    "session_id": "session-d591a741-bc77-487f-a2de-7e37a820ec1c",
+    "running": true,
+    "note": "Port is dynamically allocated; consult launcher status. Authentication contents are intentionally excluded."
+  },
+  "source_sha256": {
+    "scripts/test_check_docs.py": "18ddadfb8d877e4a8d4064d82a1a777b02b0f72edd6163b04f59cc2a288e7219",
+    "packages/dsh-agent-studio/adapters/host.mjs": "b3ceea43e30c0b46a605241782f11041dc02f69a787e22b69144fbd41bc9e64a",
+    "packages/dsh-agent-studio/bindings.mjs": "808c61a0652ad8f7a8acff419d91329f94780a66d53cdf8570d1a844cbf6a271",
+    "packages/dsh-agent-studio/index.mjs": "87440375fa9168f85aa5942f514fab8e6700d36d495ee4f7e63760a5cbd64b2b",
+    "packages/dsh-agent-studio/store.mjs": "b63b2f34c71b3fcb7b04cff85f95ec5c5c6a1c392f3cd272ca79e424a54fe2c5",
+    "scripts/dev/fence.mjs": "38b7cd2d7413bd3af79c9c2ed8f312febfc75579a2f22e575d81eaa257415ef9",
+    "scripts/dev/integration.mjs": "9ca65fc9eb68b5e63bfb8d94f878b3b2f1ac56e08fc532487f07509d54621a5f",
+    "scripts/dev/preview.mjs": "80f183c682e8b2ef57293a9c4fb1f917c84dba144b3d8bee9eb5a80c5fa02320",
+    "scripts/dev/store.test.mjs": "81dda234211c7696b7a3a6ac99d69e6641081d003f10fe4c09676b123179f987",
+    "scripts/dev/browser.py": "294b8500bf422273635753f427dcb41457781abde33137855fbdfd91cb5b765b",
+    "profiles/agent-studio-preview/cordis.patch.yml": "cba1cf7eb5dbb3f80dad722ae23a86ba0b1eda35dc6dc74141c8d9d34c2c5471",
+    "profiles/agent-studio-preview/package.json": "185b7825b0c2a39cada29eff56f664f0365057fa0a9155df199c5dbd1254f189",
+    "profiles/agent-studio-preview/sources.lock.json": "0b6db46b00464b1afb1a9a495bc9a841c301b1572c11f0edca4e6439cc35c821"
+  },
+  "evidence_sha256": {
+    "artifacts/d01/documentation-failure-fixture.json": "3b83ae366587d8865c158bcc9d10e6b0270adc3d814d8ff0045aa33c9bc47850",
+    "artifacts/d01/integration.json": "587645761d85e0f28e81515577d820ce344dc2d7e6c1af790bc45a85e83edb09",
+    "artifacts/d01/persistent.json": "6c8f0e4726540d671f9c71105613ff0f283e0e1c3b44edc594729dbf50edf6be",
+    "artifacts/d01/final-browser/browser.json": "eec4f315ad89d2ba18a4c8226d59cb2728d5d8caf53d0f4c1e3f449ee6dd4e5d",
+    "artifacts/d01/final-browser/browser.png": "f6fe59926e23485122775a5ad62257a8efea2ba4929cdafd2b539e98b5fb1264",
+    "artifacts/d01/integration-failure-gateway-owner.json": "d3d6bc257b0f3de3ac5e189ead7efff8383f7b7e78526dfc9ff1c3c4601cf24f",
+    "artifacts/d01/integration-failure-jsonl-locator.json": "198417a46883ace14a2d7bb0f3646fd1d28d9c666a1ec94d34c3f25735042ef7",
+    "artifacts/d01/integration-failure-terminal-input.json": "31170a7a71835971386da740de709fbc631a098641556b954e5bf7246bc9e9ae",
+    "artifacts/d01/browser-failure-gateway-client-manifest.json": "f9c01b36076e2aea78b14f07e91e744c7e35029f2a80af2871593e6cdc03150f"
+  },
+  "limits": [
+    "No remote connection, FS/command/PTY provider or actual model conversation; no central fallback",
+    "No production/global package/Coder/template/SSH/DNS/CA changes, installs, commit/push or deletion of existing data",
+    "Trusted-code process guards and dependency symlinks are not an OS sandbox or enforced read-only mount",
+    "Original UI retains disabled controls and expected refusal messages; environment lifecycle registration/update awaits later implementation",
+    "Earlier failures and historical M1 conclusions are retained; local artifact paths may be regenerated by reruns"
+  ]
+}

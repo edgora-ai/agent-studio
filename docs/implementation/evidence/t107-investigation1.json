@@ -1,0 +1,548 @@
+{
+  "task": "T-107",
+  "role": "implementation-investigation-not-independent-acceptance",
+  "recordedOn": "2026-10-30",
+  "gate": "blocked-awaiting-independent-review",
+  "m1Passed": false,
+  "t201Ready": false,
+  "matrix": {
+    "path": "docs/implementation/t107-m1-matrix.json",
+    "sha256": "726beb6993b0e21700b4ff19cab32c04984f62142ca58bd927a7ea9b15ae0cd3"
+  },
+  "record": {
+    "path": "docs/implementation/t107-m1-investigation.md",
+    "sha256": "fba1fe3cdc9f7945a54c5a9ec9991fe52e185a33ac236701110db1f677e0b342"
+  },
+  "gates": [
+    {
+      "id": "M1-01",
+      "status": "pass",
+      "blockers": []
+    },
+    {
+      "id": "M1-02",
+      "status": "pass",
+      "blockers": []
+    },
+    {
+      "id": "M1-03",
+      "status": "pass",
+      "blockers": []
+    },
+    {
+      "id": "M1-04",
+      "status": "pass",
+      "blockers": []
+    },
+    {
+      "id": "M1-05",
+      "status": "fail",
+      "blockers": [
+        "B-01"
+      ]
+    },
+    {
+      "id": "M1-06",
+      "status": "pass",
+      "blockers": []
+    },
+    {
+      "id": "M1-07",
+      "status": "pass",
+      "blockers": []
+    },
+    {
+      "id": "M1-08",
+      "status": "pass",
+      "blockers": []
+    },
+    {
+      "id": "M1-09",
+      "status": "pass",
+      "blockers": []
+    },
+    {
+      "id": "M1-10",
+      "status": "fail",
+      "blockers": [
+        "B-02"
+      ]
+    },
+    {
+      "id": "M1-11",
+      "status": "pass",
+      "blockers": []
+    }
+  ],
+  "sourceSha256": {
+    "scripts/m1/t107_capacity.mjs": "12b0bd1018ae620da88181bcf5577821fd492efee8a21372947c9a669f147575",
+    "scripts/m1/t107_entrypoints.mjs": "d28490cca79e648ab18de1a1d49e1c510fe4dad5c62454069d9af01a5a6e96e9",
+    "scripts/m1/t107_gate_test.py": "1393c6fb34e0fc5068952b3281dbacfa045dc57cdcba32a3f0d914ae776d3e5f",
+    "scripts/m1/t107_matrix.py": "ab7508caa001862583001b230ec8c772d4aab7293e0ace464f5366c79ba829e7",
+    "scripts/m1/t107_run.py": "78dbd2b7ad0fe6c85651041ff044a0d6fcdc27d907d8beb1a9d2db6751d9d82c"
+  },
+  "checks": [
+    {
+      "command": "python3 -I scripts/m1/t107_run.py entrypoints",
+      "exitCode": 0,
+      "evidence": {
+        "path": "artifacts/m1/t107/entrypoints-tf2gb_o5/entrypoints.json",
+        "sha256": "52cc1a51e1eff654f619cb1a4f15db2a6804b0038e2773a96596d87020f33afc"
+      },
+      "observedCases": 7,
+      "meaning": "probe completed; EP-01..05 safety fail"
+    },
+    {
+      "command": "python3 -I scripts/m1/t107_run.py runtime",
+      "exitCode": 0,
+      "evidence": {
+        "path": "artifacts/m1/t107/run-fad308ff9b16af3393d1e781/result.json",
+        "sha256": "6d638c3e13664540962b7b4fc26866bc2e71ff4fec6378b7c9e8904ee579e26c"
+      },
+      "observedCases": 5,
+      "meaning": "bounded samples only, controller and Node0"
+    },
+    {
+      "command": "python3 -I scripts/m1/t107_gate_test.py",
+      "exitCode": 0,
+      "tests": 7
+    },
+    {
+      "command": "python3 -I -m py_compile scripts/m1/t107_run.py scripts/m1/t107_matrix.py scripts/m1/t107_gate_test.py",
+      "exitCode": 0,
+      "files": 3
+    },
+    {
+      "command": "node --check scripts/m1/t107_entrypoints.mjs && node --check scripts/m1/t107_capacity.mjs",
+      "exitCode": 0,
+      "files": 2
+    },
+    {
+      "command": "python3 -I scripts/m1/audit_coder_lab.py",
+      "exitCode": 0,
+      "evidence": {
+        "path": "artifacts/m1/t104/lab/resource-audit-2be443f7.json",
+        "sha256": "a5612c2cb888ed76b6438918e50077db508676e10ab3fb9ec254f1995009f7d7"
+      },
+      "recentWarningErrorLines": 0
+    }
+  ],
+  "frozenEvidence": {
+    "installedInventoryFiles": 26,
+    "priorSourceFiles": 36,
+    "candidateFileCount": 298,
+    "reusedIndependentT106": {
+      "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+      "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+    },
+    "reranHistoricalBrowserDeploymentOrFullSdk": false
+  },
+  "dataVerification": {
+    "helperWrites": [
+      {
+        "path": "probe.py",
+        "bytes": 250,
+        "sha256": "53b151f18834ab0f1111e5f923e0a9d49f2fcc2422dff0d0029fc7f51fef1f42"
+      },
+      {
+        "path": "small/f0.txt",
+        "bytes": 31,
+        "sha256": "85bf06db083cdf42ce42729ad56535bd39546695254059037f27e37435d29db3"
+      },
+      {
+        "path": "small/f1.txt",
+        "bytes": 31,
+        "sha256": "85bf06db083cdf42ce42729ad56535bd39546695254059037f27e37435d29db3"
+      },
+      {
+        "path": "small/f2.txt",
+        "bytes": 31,
+        "sha256": "85bf06db083cdf42ce42729ad56535bd39546695254059037f27e37435d29db3"
+      },
+      {
+        "path": "bytes-31.bin",
+        "bytes": 31,
+        "sha256": "665a319fc79884f3b1e107428d64af34410b5bf08552c8da6237530aebd96450"
+      },
+      {
+        "path": "bytes-32.bin",
+        "bytes": 32,
+        "sha256": "85e7eac2862f1cbd85bc18769c75172c3fdcd899ab468b9e973d59ec620d9991"
+      },
+      {
+        "path": "bytes-33.bin",
+        "bytes": 33,
+        "sha256": "a5c66fdc6ade7a254dc188833f01fb87e6ef674e4156f6a7d6ad88bd52e9c747"
+      },
+      {
+        "path": "inline-65535.bin",
+        "bytes": 65535,
+        "sha256": "70c81e176f9e62a4c656da59ea4e017c9094fd2ba6a70dff7b6b9b2d67ed215c"
+      },
+      {
+        "path": "inline-65536.bin",
+        "bytes": 65536,
+        "sha256": "2dc4424addd6f849f68402090e7d0d19018adf629de600210d807575932f2e2d"
+      }
+    ],
+    "directStorageMatched": true,
+    "fullHelperReadback": true,
+    "filenameSearch": "bytes-33.bin",
+    "matrixFullReadback": true,
+    "matrixGateLookupCount": 11
+  },
+  "finalResources": {
+    "reference": {
+      "path": "artifacts/m1/t107/final-independent-resources.json",
+      "sha256": "e6c71d7e2b09c7f53bc19ca0cc86380acf909f472b8b3058d3b92694fb0ef227"
+    },
+    "result": {
+      "task": "T-107",
+      "observations": [
+        {
+          "run": "artifacts/m1/t107/run-dd205de79ced5eee393847de",
+          "workspaces": {
+            "m1-a": {
+              "rootExists": true,
+              "processes": [],
+              "fileCount": 12,
+              "helper": {
+                "exists": true,
+                "sha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+                "bytes": 217238
+              }
+            },
+            "m1-b": {
+              "rootExists": false,
+              "processes": [],
+              "fileCount": 0,
+              "helper": {
+                "exists": false,
+                "sha256": null,
+                "bytes": null
+              }
+            }
+          }
+        },
+        {
+          "run": "artifacts/m1/t107/run-fad308ff9b16af3393d1e781",
+          "workspaces": {
+            "m1-a": {
+              "rootExists": true,
+              "processes": [],
+              "fileCount": 12,
+              "helper": {
+                "exists": true,
+                "sha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+                "bytes": 217238
+              }
+            },
+            "m1-b": {
+              "rootExists": false,
+              "processes": [],
+              "fileCount": 0,
+              "helper": {
+                "exists": false,
+                "sha256": null,
+                "bytes": null
+              }
+            }
+          }
+        }
+      ],
+      "recorderProcessChecks": [
+        {
+          "record": "artifacts/m1/t107/entrypoints-9aj8x2vt/actions/d1960ad2-67f0-49b9-bf13-4d40a480f0ee.json",
+          "pid": 2649799,
+          "state": "gone"
+        },
+        {
+          "record": "artifacts/m1/t107/entrypoints-9aj8x2vt/actions/dc9c97cb-5025-42fc-91ae-5dfd11d6fe12.json",
+          "pid": 2649816,
+          "state": "gone"
+        },
+        {
+          "record": "artifacts/m1/t107/entrypoints-9aj8x2vt/actions/f67a0283-40ad-41f1-b833-a3e33b372633.json",
+          "pid": 2649798,
+          "state": "gone"
+        },
+        {
+          "record": "artifacts/m1/t107/entrypoints-enxa9d_0/actions/15d7e1b1-8125-48e9-a0b7-e5f2f33d05f1.json",
+          "pid": 2645634,
+          "state": "gone"
+        },
+        {
+          "record": "artifacts/m1/t107/entrypoints-enxa9d_0/actions/e5e25e1c-2bf5-43e1-895b-0b6759ce4535.json",
+          "pid": 2645632,
+          "state": "gone"
+        },
+        {
+          "record": "artifacts/m1/t107/entrypoints-tf2gb_o5/actions/a402170b-92cf-4e43-8c0b-e2cbdf607ceb.json",
+          "pid": 2694080,
+          "state": "gone"
+        },
+        {
+          "record": "artifacts/m1/t107/entrypoints-tf2gb_o5/actions/b6f55cda-5eba-4fed-8a49-b2cba1b45c96.json",
+          "pid": 2694081,
+          "state": "gone"
+        },
+        {
+          "record": "artifacts/m1/t107/entrypoints-tf2gb_o5/actions/c73f16d4-28a4-4b88-9ad7-ad0c4edd709c.json",
+          "pid": 2694119,
+          "state": "gone"
+        },
+        {
+          "record": "artifacts/m1/t107/entrypoints-thefy1l1/actions/4ac2869e-fa1c-4bd3-8ad7-363092f4a4f7.json",
+          "pid": 2647563,
+          "state": "gone"
+        },
+        {
+          "record": "artifacts/m1/t107/entrypoints-thefy1l1/actions/e4dc7a08-2c7c-4581-8bdf-e1b675ad2c0f.json",
+          "pid": 2647562,
+          "state": "gone"
+        }
+      ],
+      "transport": {
+        "hostBrokerPids": [],
+        "controlPlaneCliPids": []
+      },
+      "containersExactMatchAcceptedT106": true,
+      "containerCount": 36,
+      "labCount": 4,
+      "baselineCount": 32,
+      "dataDeleted": false,
+      "runningIds": [
+        "0e1bbb9931571e4c185d72009833ed02e8e22cccb6c0bbdd2b0777070691d3cf",
+        "1170ce53f30ee12cd6f7a1dcfda775f83ea16e59cf1a233d03de30b2c25203d8",
+        "11821d480e407a0214e17889ce400ef4ee7fbf40d6bfec6fda9bc0565dad8982",
+        "19729d1d75708c4f7b728d13d5c3ce01bde09b1e93c640c5b48892dc8e8985d1",
+        "213c2946d9db9827b5515c0b4ee2dd29d96d9b5135a05901369b7dff4aaa3db9",
+        "31206ecb9aca8897a01cc85f3f3fede7bf5bc024f212255f8b7bf0f6edbbef97",
+        "342271385ce3277b3ab08c58f378f92fd396f9b6d95dc27f76ae1ce428d9cdcd",
+        "3f7d2301a2f1bbbe86f335ae73dee4f16be93f9767dd05a92b35350dfc584e18",
+        "4de9e261eb4aca93d9ba2fb04e3a8eb3517115eb9775f456bf4894447096e950",
+        "543a411122fcf35004a3b6147a8a2092ba3bba842451c9e0375261feaa16a6ae",
+        "57b42e34d4d3d20f4457c676b6e3b19c79e4a397e5589171ed697264342d4959",
+        "652e5095fd0e4273dd5ac892320b06c6893e257b6fd43daa53d4e064ef0cbe95",
+        "6f2b1ea76354c1afdb600e6e6ada52dcee1a3b332543fcc3d0086694c0a31985",
+        "70c5476304889bf176ce9cc7c6e099f2f4faad2b568b5dea6ff3427bf0b33ecf",
+        "8337ae80754b746168dff34a8860cf33323cd5caca76f81575d757d9bcf0b70a",
+        "84a1974e382c50f9b9d83f089c56dc0cbf3bfdad46b36b69cc31203a2a93c514",
+        "88ff6954eb84f4bbe50398a17bf41f2916dacbc30fc94b6c1428987a3a024a70",
+        "8a06806d1851fd04d741bb85987a45dcb02604b9ac74c1e45d430f054b950f12",
+        "8cb2847a1d6f57e8429f5fafdbc108598ef8cdf435355a08b2f4d27f73caaa8d",
+        "951a8cb6dfe1eb9a6662f6247c6b11a069fd1205439ed440200689d18bb5f4e4",
+        "a21f6526ef1dd576dde47b136ba2a98b6e724d8be080a000cc05f4b5039f986c",
+        "a3dac55d719774cb38fcdd1cfd9fde5df3556167fa572129fb0f840f3dc9873a",
+        "c4023b544feaca3013153c07a9c399a0954c2fe24881d6479a68f704da00c41c",
+        "c484db60fae0bd1525f68cd85357064abee6bfe3e1bbd80989e34fdeb570575f",
+        "c848c0f513209ab9ca2ae8e01b73db005c7d7ce1e953c34062f064603ac4913c",
+        "ca99877d9efab014b88b4243a45a0b10761e2802d168b410f8803d661960ab74",
+        "cbd28167495920d7bc310f5c97250304e1026230d5860adba2f77db7c20bf30f",
+        "cee331a2f01deaa97acce2095ac4df448cc63e26089fc184dccee4e3bdd762aa",
+        "d3fbd1d7f3cf07f1484196e19d45c6d1f2f1bbb9afb0897373258e1c1e309d6b",
+        "e0ed30f9540cc853e81f285cce76a1bb5495df52c762b7c5be49fac896ab276c",
+        "ea69b3f94a67fa6b744ed300ab431b6bf0a3cf70250c999f39e2e31733565e1c",
+        "f05ac33f542bbe76406cccb2b5ab5b9032119e5a80f02f13c3d4497b2d798447",
+        "f0a7cde5c8f878f37bdd8e6ab5ff91a3a5f0a9b9848606ba3b017ab3bf90a3f5",
+        "f0b21dbf84eded8926cb9553320a735b3b1936a46489cc14ec5390c1f77e16a4",
+        "fd5171f415ad30435c4e7acb108cb3f2367a1ef777e9e1ebf80233ff7ea2816e",
+        "feb804996383d43136bd031bdecb8ae6d59149ae29d2851cad5c9860fcf89e7b"
+      ]
+    },
+    "resourceAudit": {
+      "task": "T-104",
+      "stage": "resource-and-log-audit",
+      "passed": true,
+      "resources": [
+        {
+          "role": "coder",
+          "name": "agent-studio-coder-lab-coder-1",
+          "image": "ghcr.io/coder/coder@sha256:8514c20c3c7811a9835eb903c5123b0090ba6538dc8bcc8281624d0bdedd9063",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 2147483648,
+          "nanoCpus": 2000000000,
+          "pidsLimit": 256,
+          "mountDestinations": [
+            "/opt/lab-template",
+            "/var/run/docker.sock",
+            "/home/coder",
+            "/run/lab-tls"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 362,
+            "lastTwoMinutes": 0
+          }
+        },
+        {
+          "role": "database",
+          "name": "agent-studio-coder-lab-database-1",
+          "image": "postgres@sha256:1b92e7a80c021647bf70f5d3eb66066a998e4f5cf43c07bb9dc9f729782cf88e",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 536870912,
+          "nanoCpus": 500000000,
+          "pidsLimit": 128,
+          "mountDestinations": [
+            "/var/lib/postgresql/data"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 1,
+            "lastTwoMinutes": 0
+          }
+        },
+        {
+          "role": "workspace",
+          "name": "agent-studio-lab-d352009d-cb9b-405b-9d8b-c2405e9b4983",
+          "image": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 268435456,
+          "nanoCpus": 500000000,
+          "pidsLimit": null,
+          "mountDestinations": [
+            "/workspace"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 14,
+            "lastTwoMinutes": 0
+          }
+        },
+        {
+          "role": "workspace",
+          "name": "agent-studio-lab-ff136352-6a92-41d4-9c2c-6cc783cb989b",
+          "image": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 268435456,
+          "nanoCpus": 500000000,
+          "pidsLimit": null,
+          "mountDestinations": [
+            "/workspace"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 5,
+            "lastTwoMinutes": 0
+          }
+        }
+      ],
+      "preexistingRunningContainerCount": 32,
+      "preexistingContainersStillRunning": true,
+      "privateTopLevelFilesChecked": 11,
+      "privatePermissionsChecked": true,
+      "dedicatedCertificateValidBeyondOneDay": true,
+      "workspaceNetworkInternal": true,
+      "remainingOwnerSessionCount": 1,
+      "runnerSessionStillValid": true,
+      "databaseHbaRules": [
+        "local||trust",
+        "host|127.0.0.1|trust",
+        "host|::1|trust",
+        "local||trust",
+        "host|127.0.0.1|trust",
+        "host|::1|trust",
+        "host|all|scram-sha-256"
+      ],
+      "startupLogsEntirelyClean": false,
+      "recentLogWindowSeconds": 120,
+      "recentWarningOrErrorLines": 0,
+      "historicalDiagnostics": [
+        "Telemetry disabled: security notifications unavailable; intentional lab setting.",
+        "coder_agent.dir deprecated; non-HOME dir unsupported by Desktop file sync, which is not enabled.",
+        "PostgreSQL local/socket trust initialization warning; network-wide host rule uses scram-sha-256.",
+        "One workspace retried authentication before its provisioning job completed; current agents connected.",
+        "Agent prebuilt-workspace probe rejected; these workspaces are not prebuilt.",
+        "Userspace networking fakeRouter Up/Set warnings; not a full network-isolation verification."
+      ],
+      "resourcesRetained": true,
+      "persistentDataDeleted": false,
+      "stageM1Passed": false
+    }
+  },
+  "history": {
+    "entrypointHarnessFailures": [
+      {
+        "evidence": {
+          "path": "artifacts/m1/t107/entrypoints-dz7c_2e_/entrypoints.json",
+          "sha256": "1f1d72a410456db41db00abe6d425f4558b5057dfd6c9c51488f128fbd8a5681"
+        },
+        "failure": {
+          "name": "Error",
+          "code": "ERR_ACCESS_DENIED",
+          "message": "Access to this API has been restricted. Use --allow-fs-read to manage permissions."
+        },
+        "completedCases": []
+      },
+      {
+        "evidence": {
+          "path": "artifacts/m1/t107/entrypoints-enxa9d_0/entrypoints.json",
+          "sha256": "6250dd46f3c8e27a0e75f691abcde5907a59316eda4283e83f5dede2c5b30baf"
+        },
+        "failure": {
+          "name": "Error",
+          "code": "ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING",
+          "resource": null,
+          "message": "Stripping types is currently unsupported for files under node_modules, for \"file:///home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/client/api.ts\""
+        },
+        "completedCases": [
+          "EP-00",
+          "EP-01",
+          "EP-02"
+        ]
+      },
+      {
+        "evidence": {
+          "path": "artifacts/m1/t107/entrypoints-tde1z7rz/entrypoints.json",
+          "sha256": "ebdfc6728de4a9c8fe908afc8afa5f98c526c878992deaa301097d7395ecedb6"
+        },
+        "failure": {
+          "name": "RangeError",
+          "code": null,
+          "resource": null,
+          "message": "Maximum call stack size exceeded"
+        },
+        "completedCases": []
+      },
+      {
+        "evidence": {
+          "path": "artifacts/m1/t107/entrypoints-thefy1l1/entrypoints.json",
+          "sha256": "6d05fe60427bb11e692921a45562f30b1bce0cfdd61f8d0372382628253993e3"
+        },
+        "failure": {
+          "name": "Error",
+          "code": "ERR_ACCESS_DENIED",
+          "resource": "/home/ubuntu/.dsh/profiles/node_modules/react/package.json",
+          "message": "Access to this API has been restricted. Use --allow-fs-read to manage permissions."
+        },
+        "completedCases": [
+          "EP-00",
+          "EP-01",
+          "EP-02",
+          "EP-03"
+        ]
+      }
+    ],
+    "matrixArchiveSelectionFailure": {
+      "path": "artifacts/m1/t107/matrix-build-failure1.json",
+      "sha256": "7871fab593aaa0f92a9497340ef029bf53361804329e9e5623bcad8d4ac3c958"
+    },
+    "initialCapacityRun": {
+      "path": "artifacts/m1/t107/run-dd205de79ced5eee393847de/result.json",
+      "sha256": "380fd77a70d5153aded8c73b3dfe0007a7373192aab53e1b4e9c1eaaf85178e1"
+    },
+    "capacityErrata": "First run correctly advertised helper output limit2097152 but prose mistakenly said8MiB; final source and matrix use2MiB. FirstToCompleteMs included later search/close work; final probe records firstResultMs/scanCompleteMs separately. Old JSON unchanged.",
+    "allOldJsonAndShaRowsPreserved": true
+  },
+  "scope": {
+    "delegation": false,
+    "workflow": false,
+    "productIntegration": false,
+    "infrastructureChange": false,
+    "globalDependencyChange": false,
+    "persistentDataDeleted": false,
+    "mutationReplayEnabled": false
+  },
+  "followup": "Independent gate review required; U-01/U-02 not executed, U-03 needs infrastructure scope approval. T-201 remains blocked.",
+  "postWriteValidation": "Appended separately in t107-investigation1-validation.json; this immutable record does not predeclare its outcome."
+}

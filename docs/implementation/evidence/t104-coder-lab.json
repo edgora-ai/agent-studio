@@ -1,0 +1,358 @@
+{
+  "task": "T-104",
+  "recordedOn": "2026-10-30",
+  "status": "verified-local-lab-scope-with-known-limits",
+  "deployment": {
+    "project": "agent-studio-coder-lab",
+    "coderVersion": "2.37.8",
+    "coderImage": "ghcr.io/coder/coder@sha256:8514c20c3c7811a9835eb903c5123b0090ba6538dc8bcc8281624d0bdedd9063",
+    "databaseImage": "postgres@sha256:1b92e7a80c021647bf70f5d3eb66066a998e4f5cf43c07bb9dc9f729782cf88e",
+    "workspaceImage": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+    "workspaceDockerfileSha256": "54521e331d4016e8031b1682bde2d78c043c2330e240cc371b2e244d669a799b",
+    "templateId": "3f2fe2b4-54ac-4054-a32e-8159c46b52df",
+    "templateVersionId": "7621affa-b880-476f-91eb-74855d529702",
+    "templateSha256": "82407d4d87947d437e7b9e8ecc78b144e1229d098b25394c92b87fd3a68aefdb"
+  },
+  "templateAllowlist": {
+    "f398fa2d-fdd4-4fcc-a12e-25f2feabae84": {
+      "templateId": "3f2fe2b4-54ac-4054-a32e-8159c46b52df",
+      "revoked": true,
+      "name": "lab-v1"
+    },
+    "3ca4b951-351e-4dce-84cc-963118787d1a": {
+      "templateId": "3f2fe2b4-54ac-4054-a32e-8159c46b52df",
+      "revoked": true,
+      "name": "lab-v2"
+    },
+    "7621affa-b880-476f-91eb-74855d529702": {
+      "templateId": "3f2fe2b4-54ac-4054-a32e-8159c46b52df",
+      "revoked": false,
+      "name": "lab-v3"
+    }
+  },
+  "reports": {
+    "control_plane": {
+      "path": "artifacts/m1/t104/lab/control-plane-178ace8e.json",
+      "sha256": "a1654219312dcd25ff29c5060cd0b4599698a81b4a23e1b1f4dfbdbd94d958dc",
+      "result": {
+        "task": "T-104",
+        "stage": "control-plane",
+        "passed": true,
+        "coderVersion": "v2.37.8+7ac93cf",
+        "coderImage": "ghcr.io/coder/coder@sha256:8514c20c3c7811a9835eb903c5123b0090ba6538dc8bcc8281624d0bdedd9063",
+        "databaseImage": "postgres@sha256:1b92e7a80c021647bf70f5d3eb66066a998e4f5cf43c07bb9dc9f729782cf88e",
+        "publicHealth": 200,
+        "loginPage": 200,
+        "anonymousProtected": 401,
+        "invalidProtected": 401,
+        "authenticatedProtected": 200,
+        "ownerDatabaseReadback": true,
+        "ownerApiReadback": true,
+        "ownerSearch": true,
+        "tlsVerifiedWithDedicatedCA": true,
+        "hostBindingIsLoopbackOnly": true,
+        "preexistingContainersStillRunning": true,
+        "workspaceChecksComplete": false,
+        "browserLoginTested": false,
+        "stageM1Passed": false
+      }
+    },
+    "instances": {
+      "path": "artifacts/m1/t104/lab/instances-0379e669.json",
+      "sha256": "ee302e2aca1d5e6d203da4ad09d566a3cbf848f009102fc87cd74a53ce3ac88b",
+      "result": {
+        "task": "T-104",
+        "stage": "template-and-independent-instances",
+        "passed": true,
+        "templateSha256": "82407d4d87947d437e7b9e8ecc78b144e1229d098b25394c92b87fd3a68aefdb",
+        "records": [
+          {
+            "name": "m1-a",
+            "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+            "templateVersionId": "7621affa-b880-476f-91eb-74855d529702",
+            "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d",
+            "agentBuildAssociationReadback": true,
+            "record": {
+              "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+              "generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+              "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+              "policyVersion": "lab-v1",
+              "root": "/workspace",
+              "schemaVersion": 1,
+              "templateVersion": "lab-v3",
+              "uid": 1000,
+              "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+            },
+            "agentConnected": true,
+            "databaseReadback": true,
+            "independentContainerReadback": true,
+            "runtimePolicyChecked": true,
+            "markerOwner": 1000,
+            "markerMode": "0o444",
+            "markerTamperProofAgainstWorkspaceUser": false
+          },
+          {
+            "name": "m1-b",
+            "buildId": "2018bb75-2f83-4fad-98e1-7e11bb157fa5",
+            "templateVersionId": "7621affa-b880-476f-91eb-74855d529702",
+            "platformAgentId": "65019df5-cd66-4db6-b0a9-8c63a5a4766f",
+            "agentBuildAssociationReadback": true,
+            "record": {
+              "agentResourceId": "d7dbc09e-63b7-4a5b-971d-1ce754e4c331",
+              "generation": "ada53b10-cf14-f6e3-c15a-2ab5eef36c25",
+              "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+              "policyVersion": "lab-v1",
+              "root": "/workspace",
+              "schemaVersion": 1,
+              "templateVersion": "lab-v3",
+              "uid": 1000,
+              "workspaceId": "d352009d-cb9b-405b-9d8b-c2405e9b4983"
+            },
+            "agentConnected": true,
+            "databaseReadback": true,
+            "independentContainerReadback": true,
+            "runtimePolicyChecked": true,
+            "markerOwner": 1000,
+            "markerMode": "0o444",
+            "markerTamperProofAgainstWorkspaceUser": false
+          }
+        ],
+        "rejectedProbeCases": [
+          "unknown-version",
+          "wrong-template",
+          "outside-root",
+          "revoked-version",
+          "missing-record",
+          "wrong-instance",
+          "forged-generation"
+        ],
+        "approvedOlderVersionAcceptedByProbe": true,
+        "negativeProbesCreatedNoWorkspaces": true,
+        "productCreateApiTested": false,
+        "sshHelperTested": false,
+        "crossHostTested": false,
+        "stageM1Passed": false,
+        "limits": [
+          "same-host Docker, not VM isolation",
+          "marker owner can chmod it; marker is not a trust boundary",
+          "internal bridge is not full egress security proof",
+          "workspace writable image layer has no hard disk quota",
+          "no per-workspace PID cgroup limit yet",
+          "older-version acceptance is an offline policy probe, not a deployed rollback"
+        ]
+      }
+    },
+    "browser": {
+      "path": "artifacts/m1/t104/lab/browser-dbbd07441090416fa9f0291c9eb6da27/browser-login.json",
+      "sha256": "5cbef2e2b42bac2faef858392a3274b0cad3e8780eb32ad6c0cd81d17a01c423",
+      "result": {
+        "task": "T-104",
+        "stage": "browser-login-to-workspaces",
+        "passed": true,
+        "invalidPasswordStatus": 401,
+        "passwordLoginStatus": 201,
+        "authenticatedWorkspaceApiStatus": 200,
+        "twoWorkspaceEntriesVisible": true,
+        "certificatePinUsed": true,
+        "privateHostnameMappedOnlyInTestBrowser": true,
+        "javascriptErrors": [],
+        "blockedExternalHosts": [],
+        "credentialsCaptured": false,
+        "stageM1Passed": false
+      }
+    },
+    "audit": {
+      "path": "artifacts/m1/t104/lab/resource-audit-ef0f32f6.json",
+      "sha256": "87a82f6d37523492684b563587902e1a65c18eb11a9786ff0896da8fb953fadd",
+      "result": {
+        "task": "T-104",
+        "stage": "resource-and-log-audit",
+        "passed": true,
+        "resources": [
+          {
+            "role": "coder",
+            "name": "agent-studio-coder-lab-coder-1",
+            "image": "ghcr.io/coder/coder@sha256:8514c20c3c7811a9835eb903c5123b0090ba6538dc8bcc8281624d0bdedd9063",
+            "running": true,
+            "restartCount": 0,
+            "memoryBytes": 2147483648,
+            "nanoCpus": 2000000000,
+            "pidsLimit": 256,
+            "mountDestinations": [
+              "/var/run/docker.sock",
+              "/home/coder",
+              "/run/lab-tls",
+              "/opt/lab-template"
+            ],
+            "warningOrErrorLineCounts": {
+              "sinceCreation": 361,
+              "lastTwoMinutes": 0
+            }
+          },
+          {
+            "role": "database",
+            "name": "agent-studio-coder-lab-database-1",
+            "image": "postgres@sha256:1b92e7a80c021647bf70f5d3eb66066a998e4f5cf43c07bb9dc9f729782cf88e",
+            "running": true,
+            "restartCount": 0,
+            "memoryBytes": 536870912,
+            "nanoCpus": 500000000,
+            "pidsLimit": 128,
+            "mountDestinations": [
+              "/var/lib/postgresql/data"
+            ],
+            "warningOrErrorLineCounts": {
+              "sinceCreation": 1,
+              "lastTwoMinutes": 0
+            }
+          },
+          {
+            "role": "workspace",
+            "name": "agent-studio-lab-d352009d-cb9b-405b-9d8b-c2405e9b4983",
+            "image": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+            "running": true,
+            "restartCount": 0,
+            "memoryBytes": 268435456,
+            "nanoCpus": 500000000,
+            "pidsLimit": null,
+            "mountDestinations": [
+              "/workspace"
+            ],
+            "warningOrErrorLineCounts": {
+              "sinceCreation": 10,
+              "lastTwoMinutes": 0
+            }
+          },
+          {
+            "role": "workspace",
+            "name": "agent-studio-lab-ff136352-6a92-41d4-9c2c-6cc783cb989b",
+            "image": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+            "running": true,
+            "restartCount": 0,
+            "memoryBytes": 268435456,
+            "nanoCpus": 500000000,
+            "pidsLimit": null,
+            "mountDestinations": [
+              "/workspace"
+            ],
+            "warningOrErrorLineCounts": {
+              "sinceCreation": 4,
+              "lastTwoMinutes": 0
+            }
+          }
+        ],
+        "preexistingRunningContainerCount": 32,
+        "preexistingContainersStillRunning": true,
+        "privateTopLevelFilesChecked": 11,
+        "privatePermissionsChecked": true,
+        "dedicatedCertificateValidBeyondOneDay": true,
+        "workspaceNetworkInternal": true,
+        "remainingOwnerSessionCount": 1,
+        "runnerSessionStillValid": true,
+        "databaseHbaRules": [
+          "local||trust",
+          "host|127.0.0.1|trust",
+          "host|::1|trust",
+          "local||trust",
+          "host|127.0.0.1|trust",
+          "host|::1|trust",
+          "host|all|scram-sha-256"
+        ],
+        "startupLogsEntirelyClean": false,
+        "recentLogWindowSeconds": 120,
+        "recentWarningOrErrorLines": 0,
+        "historicalDiagnostics": [
+          "Telemetry disabled: security notifications unavailable; intentional lab setting.",
+          "coder_agent.dir deprecated; non-HOME dir unsupported by Desktop file sync, which is not enabled.",
+          "PostgreSQL local/socket trust initialization warning; network-wide host rule uses scram-sha-256.",
+          "One workspace retried authentication before its provisioning job completed; current agents connected.",
+          "Agent prebuilt-workspace probe rejected; these workspaces are not prebuilt.",
+          "Userspace networking fakeRouter Up/Set warnings; not a full network-isolation verification."
+        ],
+        "resourcesRetained": true,
+        "persistentDataDeleted": false,
+        "stageM1Passed": false
+      }
+    }
+  },
+  "offlineTests": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "scripts/m1/test_coder_contract.py"
+      ],
+      "exitCode": 0,
+      "testCount": 13
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "scripts/m1/test_isolation.py"
+      ],
+      "exitCode": 0,
+      "testCount": 8
+    }
+  ],
+  "sources": [
+    {
+      "path": "infra/coder-lab/Dockerfile.workspace",
+      "sha256": "54521e331d4016e8031b1682bde2d78c043c2330e240cc371b2e244d669a799b"
+    },
+    {
+      "path": "infra/coder-lab/compose.yaml",
+      "sha256": "5ef209828d31dbd8085481d52b07b4b3169f1157d6c9bb226f9deea4cd7ac130"
+    },
+    {
+      "path": "infra/coder-lab/template/main.tf",
+      "sha256": "82407d4d87947d437e7b9e8ecc78b144e1229d098b25394c92b87fd3a68aefdb"
+    },
+    {
+      "path": "scripts/m1/coder_lab.py",
+      "sha256": "906e345fc616893b6a76a4442139f456492759cfcf75f4a56201b1285f2da3e3"
+    },
+    {
+      "path": "scripts/m1/coder_template.py",
+      "sha256": "ade62ffd189f083eec9fa44cb9d64da3c62ddeeafea6fc5ecd3e7d0a27d1ad4e"
+    },
+    {
+      "path": "scripts/m1/test_coder_browser.py",
+      "sha256": "17f2df3edbb482d1c9bdf4c53f553a0b25e78f3b71e49b21d5aef401741b09f5"
+    },
+    {
+      "path": "scripts/m1/test_coder_contract.py",
+      "sha256": "49a847dbb9f19fa5202e6add11fc1df0644724026e66d7ff38a20c3d726f2c35"
+    },
+    {
+      "path": "scripts/m1/audit_coder_lab.py",
+      "sha256": "ac0a997ee7832b2d6f60f00ceca104c15e8bacbc69bb3cc6a5f008b957489a67"
+    },
+    {
+      "path": "scripts/m1/record_coder_lab.py",
+      "sha256": "c0b5676583bcb4b65a12e3e33254e27196714d9fcade7e72765900851f6dc78b"
+    }
+  ],
+  "corrections": [
+    "Coder password login returns HTTP 201; fixed expected status without resetting the database.",
+    "Terraform agentResourceId and REST platformAgentId are different; associate the latter with build resources and database job ID.",
+    "Marker is owned by workspace UID 1000, not root; lab-v3 declares observed ownership and makes no tamper-proof claim.",
+    "An earlier failed Playwright API request printed a disposable test session cookie. All disposable owner sessions were revoked; no cookie value is retained here.",
+    "Browser verification now uses in-page fetch, certificate pinning and browser-local hostname mapping; exceptions omit request details."
+  ],
+  "scope": {
+    "productCreateApiVerified": false,
+    "currentSshChannelIdentityVerified": false,
+    "remoteHelperVerified": false,
+    "crossHostVerified": false,
+    "stageM1Passed": false,
+    "productionDshChanged": false,
+    "publicIngressConfigured": false,
+    "unattendedRestartOrLongLivedDeploymentVerified": false
+  },
+  "nextTasks": [
+    "T-105",
+    "T-106",
+    "T-107"
+  ]
+}

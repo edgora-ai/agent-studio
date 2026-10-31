@@ -1,0 +1,117 @@
+{
+  "sdk": {"package": "@deepseek-ai/dsh", "version": "0.2.1-rc.4"},
+  "gateway": {
+    "package": "@deepseek-ai/dsh-api-gateway", "version": "0.2.1-rc.4",
+    "source": "lib/index.js", "sha256": "4fbe460fec585ebc2cf2887261f6c33f024081a539d9fb5d6557a9002324b23f",
+    "license": "MIT; Copyright (c) 2026 DeepSeek",
+    "files": {
+      "package.json": "9c69107b4885445acc286514379fbefb86617ab70460a9ca93f91089e186112f",
+      "LICENSE": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be",
+      "lib/client.browser.js": "3043de82334846a3a5654b7317830c5403f90e9aeca692d3c15e30e01d16505d",
+      "lib/client.node.js": "aca973689c3ee34524c8bd7de9c901f5a839e29bc15d4816a6dc5e2fb0e64e9f"
+    },
+    "change": "Add guardGateway import and await immediately after validateArguments, before owner bypass/receiver/lookup. Select its optional bound-session UI adapter instead of the stock method. D05 additionally guards the original reverse-event ID mint and authenticated reply seams for durable one-time approvals/questions; missing/late pending replies fail explicitly. All other bytes unchanged. Original manifest and precompiled clients retained."
+  },
+  "sidebar": {
+    "package": "dsh-better-sidebar", "version": "0.28.2",
+    "source": "https://github.com/omdsh-dev/DSH-better-sidebar",
+    "license": "MIT; Copyright (c) 2026 dsh-external",
+    "change": "Verify all original bytes before projection. Keep installed upstream unchanged. Rename original lib/index.js to upstream-host.js; use the scoped Host admission facade. Apply scripts/dev/sidebar-projection.mjs only to private client.js, client-registry.js and client-editor.js: bounded search labels/scope, snapshot references, read-only Git controls, exact empty diff side, editor binding-typed local/remote polling/conflict. Record projected hashes in private projection.json. No dependency installation or client rebuild.",
+    "files": {
+      "package.json": "5f78a2cb9cd70515fe575b46a01e4c2c9e4e4f21e58e43a0d9b0c6f972f9974c",
+      "cordis.patch.yml": "ec25fc02f0d283e913014bb2cbdef92a17ea360c92f2503d5104b4f8f5e7c064",
+      "LICENSE": "f4d265194e0824721af0592462a71fe750c04db3565c23c5d6c65fdee25fb4b0",
+      "icon.svg": "06dc6d2d1ae8bafcea1897662f61e0af14c37d77317ae2fb77fbc1b864a6a8a1",
+      "lib/client-editor.js": "033dff0c94a9a854794fd610188441be33460ecc736fedbdbb71ddb8c4a1cd49",
+      "lib/client-locale.js": "68d1819a6040c1eb5954d97fd234940ad0389e1bec7985a61a0cbb0eae79553c",
+      "lib/client-mermaid.js": "33b971e644ff82c83017260868369bf6881ba986b6c600695250d82782f70d16",
+      "lib/client-registry.js": "17a5e59e2b0ed1a6192fedce462944039acfc2498d4652ecb4855e0995560cd1",
+      "lib/client-terminal.js": "c539038d5897df17c5713e8a6d7c91130bbb3744f546059d018b34c710e4b4bc",
+      "lib/client.js": "dd93b4563f6fe3d384c0e8270fcf76656398ae358d18316a91aae4046bdf2432",
+      "lib/index.js": "871e8d02a7b37ea487308d8516d839d51fedfe46f1c3ed50d99435acc984c7e1",
+      "locale/en.json": "6b9d1ffb3c4cf70436fbe4ae15df7d6ccb1908375602db452573f975176f8b45",
+      "locale/zh.json": "2a12195111442a74fa98de0cdedd54b2c3a076a37d0c542560a716628f087f5c"
+    }
+  },
+  "local_sdk": {
+    "change": "Installed local providers and Linux PTY bytes, verified before private deployment; no global changes or dependency installation.",
+    "files": {
+      "@deepseek-ai/dsh-fs-local/package.json": "57dee8dcea7fcd1ad84ad34145d9c12ed805d8d88929f28f1228d09f01b4ec98",
+      "@deepseek-ai/dsh-fs-local/lib/index.js": "63fbb41d2c33e07111884b798be507e68c2752acab8249c821c20ade436e894f",
+      "@deepseek-ai/dsh-subprocess-local/package.json": "894a8c205f15a36c8b5c3a552acb2cf4b1cc9ea47f9b20b7745dbee5db223c90",
+      "@deepseek-ai/dsh-subprocess-local/lib/index.js": "2964d94d6aa735f79e5cd5f54035a9d73b371e8060dda7e3bf666593428c04f4",
+      "@deepseek-ai/dsh-subprocess-local/lib/runner-launch-B2zsQ1Dz.js": "6df08adc4a27f278878a5f4cde8b551b51e647b922ac7d6591fd62d272ced153",
+      "@deepseek-ai/dsh-subprocess-local/lib/output.js": "4f77ef6da608d36df168c99177e9b527e7145df1418845eba567635e64a4c2a3",
+      "@deepseek-ai/dsh-subprocess/lib/index.js": "0ea9e95a73639f9e69b48aa48f373f34881adffa2ee2ac2acd4702728da9592b",
+      "node-pty/package.json": "f4a19bbc7cf4c2e35c081e6a18a3d11d21c54c2f3cc25bfe48142742a781b71d",
+      "node-pty/lib/index.js": "17e79806518ab350cd7d729dcc94154c5d770ea03e38e53684c5a8618065f99c",
+      "node-pty/lib/unixTerminal.js": "63b605fb25c4e6d237493cd1799b01a8d880d89c78850108aae1853d04b4cdf0",
+      "node-pty/lib/terminal.js": "771f5388103c3eb7bc698b589f41c08f06044d96de609eec45c9a79e4ee4fc00",
+      "node-pty/lib/utils.js": "807bc62c8b702377d591136862309718ba48fb2b9eca54f4b25fbe43838c8fc6",
+      "node-pty/lib/eventEmitter2.js": "f1c14613aa90c10def4ca7238329270871997eb26f919f7074dc25533e3e75dd",
+      "node-pty/prebuilds/linux-x64/pty.node": "123792d8f22f36d519b21dfb6f4b716f9b18b9e579085ea2840d0773d88d35fd"
+    }
+  },
+  "model_sdk": {
+    "change": "D05 reuses these installed native model/settings/credential/Agent/tool/approval/question services and original UI without changing upstream bytes. Explicit route and bound-tool guards live in the private Studio composition.",
+    "files": {
+      "@deepseek-ai/dsh-settings/lib/index.js": "9432b872597b7a31473072eb38a55979ab23375c76bd1d86d751388a692a0136",
+      "@deepseek-ai/dsh-credentials/lib/index.js": "1b6afdb04e966285e0732eb766eb0a12f3f9c0821c8caacfd192ce1ac88bee7a",
+      "@deepseek-ai/dsh-api-settings-controller/lib/index.js": "9c92e35d80b2b59d08e38cafe8ff9896d96f6e82cc3be4b0e7ead21432e94e1a",
+      "@deepseek-ai/dsh-api-session-controller/lib/index.js": "a9801acb577b03053c5d5a3191ff555c5f1d791d0acddec113bea4511e33b386",
+      "@deepseek-ai/dsh-llm/lib/index.js": "d18d8ae4c8d961e628708c1e4698e09716a0ebb80e55a672e0bde1029bec1155",
+      "@deepseek-ai/dsh-llm-pi-ai/lib/index.js": "99b5c20830a52f69641df8a18a39206079b0c725201958cce2c4a934f1d4f7cd",
+      "@deepseek-ai/dsh-agent/lib/index.js": "7b59cf82c2784c25bdce4e3e24e5e5303b02b9f1003efacf50255492d17baf8b",
+      "@deepseek-ai/dsh-agent-loop/lib/index.js": "cf57e3ecd487ac5c2553455aaa5cef2c6fb41e6bd61be5aa455675d1d7193033",
+      "@deepseek-ai/dsh-tools/lib/index.js": "1e53932e7c4213ea24a7d87f06960b7a7702cb21f8a5741c97242b4a470a442a",
+      "@deepseek-ai/dsh-tool-fs/lib/index.js": "b11d3fa50b9042019a91cc38a6abe35d74ed651374278f95e60b42734e079df1",
+      "@deepseek-ai/dsh-tool-bash/lib/index.js": "a1215d7bcaf82c0755be48321ef6bb45075f1cb33296d6263009e9d10fd596f6",
+      "@deepseek-ai/dsh-tool-ask-user/lib/index.js": "1db15abff879ad09bfc64c0edaa764f5dc773d43c09fb05dea4eb44a1e274268",
+      "@deepseek-ai/dsh-user-approval/lib/index.js": "6a5ad1ba3c3dc3abbbae52e6c8c4463970ee0c1c8988cebb0d5cf2acd17ee90b",
+      "@deepseek-ai/dsh-user-questions/lib/index.js": "e1c51afac2e31be8593c6426976e5f31dbe2a709b85ae1ea43ed406146f54265",
+      "@deepseek-ai/dsh-api-remotes/lib/index.js": "2e7068e388541ca63648727a6659bdf24f3a0d1d90f5ef54959787285370a218",
+      "@deepseek-ai/dsh-shell-env/lib/index.js": "82b1e6663968307a387fd7f300ff9db5e3c1ff707b32953da82c3dfa12024364",
+      "@deepseek-ai/dsh-agent-default-model/lib/index.js": "3685a0d4665007cfd377f6555a2a0eeea061cd9e7eb87102430771858ac0bbcb",
+      "@deepseek-ai/dsh-client-ui-model-selection/lib/client.js": "18f6e74e203d50f66c8e30552d52e070d06941514cb0e72b149683c092a3ba2a",
+      "@deepseek-ai/dsh-client-ui-settings-models/lib/client.js": "190498e15358bcd3fe6810fe6368023a20b0403e3ea493bc979eca9bdb593b28",
+      "@deepseek-ai/dsh-client-ui-approval/lib/client.js": "d5ae6ff6ebdef5bfa1ef76e3c10024095ed5b6c51ce793abb9e8af3781a9eae4",
+      "@deepseek-ai/dsh-client-ui-user-questions/lib/client.js": "78e1ae223b1577acf121de4fc336bce664175b63d7ca3820c46a16d0c6b931c6",
+      "@deepseek-ai/dsh-client-ui-conversation/lib/client.js": "cfbd9fd95b0509f7c93a22a62a67ebc10481c8eda611704ea50c2e195b9a5a69"
+    }
+  },
+  "acp_sdk": {
+    "version": "1.4.0",
+    "change": "D06 installed ACP v1 client and NDJSON runtime; no upstream modification or dependency installation.",
+    "files": {
+      "@agentclientprotocol/sdk/package.json": "89bbcd7a71a3cd6e94b7096ef1f239dda62b5fb8aef840d3475af3fbfff3a955",
+      "@agentclientprotocol/sdk/dist/acp.js": "cc717d74b018c1fe3e1e53e31ff6355ccf52e729e753666051bda42499be7b9f",
+      "@agentclientprotocol/sdk/dist/jsonrpc.js": "1f322c9397c55282710f22f7bf0163f04b084efa6f1b108d3a2fb040426022a7",
+      "@agentclientprotocol/sdk/dist/stream.js": "042e7b09f1d1d7485c75777fbc8f864f68f76e5b3c30aeb51d60dd5d4db86ab3",
+      "@agentclientprotocol/sdk/dist/line-buffer.js": "78002508f23baee1b013ca5dc68acaa2bcde1e0b96e8f06ddf2828623eb0acb8",
+      "@agentclientprotocol/sdk/dist/schema/guards.gen.js": "7e706751f22e6a82165f813705aabc8e4a65351541397487e4b55cac62a88f46",
+      "@agentclientprotocol/sdk/dist/schema/index.js": "e855a3f9b5f8e7de952410f7b048393a16650e096ec7e51fbfef5902bd37bc06",
+      "@agentclientprotocol/sdk/dist/schema/zod.gen.js": "d94a98fab1fd126fa82e6e8e6c2eda6756b516bd5df42dbaaad1b9e9c22f5239",
+      "@agentclientprotocol/sdk/dist/schema-deserialize.js": "1fd2240595b8d813993f08f5816b7503f1acea8acec4186d86cb3b674e101c05"
+    }
+  },
+  "remote_helper": {
+    "package": "dsh-ssh-remote", "version": "0.13.3",
+    "source": "artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+    "helper_sha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+    "change": "Import only the fixed installer, SSH argument builder and raw RPC client; never apply the candidate bundle or runtime router. Central broker supplies same-process identity-gated transport and stable binding-version HOME.",
+    "files": {
+      "package.json": "00db8eee00e55f6191a35080cfa89c9e3bf088e432ec901d73ed98d295ecc892",
+      "LICENSE": "3257c2b0cbfea80481c2580ae1f516774c031a602a3791981d7f2871ea6b4a0e",
+      "lib/ssh-command.js": "c6d0ce876a2cfca5b2a7aff20ec2529535c21d9fc43239e2c56addf245fd6237",
+      "lib/helper/connection-error.js": "c2ede4c4bdf0cd0887f389a32191bb719274afa5c50df50292182ae8cf454cd0",
+      "lib/helper/framing.js": "ceb84a1eeeba7eb8802d1d517000aba979c9b3bfe7e7ca61e30b31d474586f67",
+      "lib/helper/installer.js": "84a4e0d8e5bbb7af9c81b996cbeb547b309de3f6e40fa50f2ba40625742cebfb",
+      "lib/helper/manager.js": "434ff4d022982773c4b573adee0a68ce5bef26bb86041e4c1037e813953bd052",
+      "lib/helper/protocol.js": "8bcd50961cca7e0f357518698433410c867e51a83d67fc713d1d9642afd9fc5c",
+      "lib/helper/rpc-client.js": "fbf651e00d69242eed8f5d200ccff4808a166494b1b2a68a1e2e661a3e118087",
+      "helper/dsh_remote_helper.py": "22fd97f5675b3d7af1cf3beeeb16f64b50bb85a3f3456364b45c02bc7c84aa28",
+      "helper/dsh_terminal_state.py": "7af0cd722a05f2712207c8094ecd881a351e37b6a477d0ef107c97a295afef6a",
+      "helper/dsh_transfer.py": "f585f76701f787915a3b619768717764a33c7c77b38c52065370778eca2c6caf"
+    }
+  }
+}

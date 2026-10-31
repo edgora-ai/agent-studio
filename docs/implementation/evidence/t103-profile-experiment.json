@@ -1,0 +1,336 @@
+{
+  "task": "T-103",
+  "observedDate": "2026-10-30",
+  "baselineCommit": "8e684fa70f14a0034d80b69e83914930fac778a5",
+  "status": "verified-isolated-profile",
+  "scope": "Actual dsh-app-boot public boot API, Loader and Include loading a file-backed minimal profile with the explicit disposer-preserving entry; not the production CLI/web/sidebar composition or any remote operation.",
+  "supersedesTaskBlockerStatusIn": "t103-isolated-experiment.json",
+  "retainedFinding": {
+    "id": "C-103-01",
+    "unwrappedRegistrationStillUnsupported": true,
+    "selectedEntry": "scripts/m1/ssh_remote_entry.mjs",
+    "resolution": "Nonconstructable exported apply forwards the candidate disposer; verified through actual file-backed profile load, disable, re-enable and full root teardown."
+  },
+  "candidate": {
+    "name": "dsh-ssh-remote",
+    "version": "0.13.3",
+    "assetId": 689590055,
+    "archiveSha256": "cab6fa53954dc1272dfde9ec8a8fd3928fd79232c78b658cb1b434fb0644b162",
+    "postProfileFilesByteMatched": 298
+  },
+  "sdk": [
+    {
+      "name": "@deepseek-ai/dsh-app-boot",
+      "version": "0.2.1-rc.4",
+      "entry": "lib/index.js",
+      "entrySha256": "5135179ac810e4f626f32ec3bdc3293dc7d2028e8aa92e5e0c006f1a33b78e76"
+    },
+    {
+      "name": "@deepseek-ai/cordis-plugin-loader",
+      "version": "1.0.6",
+      "entry": "lib/index.js",
+      "entrySha256": "638b9ad360e01236120772323f80a65570c4f3f42f4cfc6243330241025b6d72"
+    },
+    {
+      "name": "@deepseek-ai/cordis-plugin-include",
+      "version": "1.0.10",
+      "entry": "lib/index.js",
+      "entrySha256": "ad5eaf3b80a8fd9945466486493a0d1a8e9590895bcde01e5673f3d07b4fd306"
+    },
+    {
+      "name": "@deepseek-ai/cordis",
+      "version": "4.0.5",
+      "entry": "lib/index.js",
+      "entrySha256": "6a9394c0877ff45218818c6e815edd038f8057e1a1deb390a8d43ec81c57691e"
+    },
+    {
+      "name": "@deepseek-ai/dsh-fs-local",
+      "version": "0.2.1-rc.4",
+      "entry": "lib/index.js",
+      "entrySha256": "63fbb41d2c33e07111884b798be507e68c2752acab8249c821c20ade436e894f"
+    },
+    {
+      "name": "@deepseek-ai/dsh-subprocess-local",
+      "version": "0.2.1-rc.4",
+      "entry": "lib/index.js",
+      "entrySha256": "2964d94d6aa735f79e5cd5f54035a9d73b371e8060dda7e3bf666593428c04f4"
+    }
+  ],
+  "harnessSources": [
+    {
+      "path": "scripts/m1/ssh_remote_entry.mjs",
+      "sha256": "089d133d31dca7df627111865655b86c9817f14b0becbcfd1251c5f311dc0d6f"
+    },
+    {
+      "path": "scripts/m1/profile_candidate.mjs",
+      "sha256": "2b3ead3482d1d6e98c93c97ac6c657c956120dda334dd8b40faabbc45b2081e5"
+    },
+    {
+      "path": "scripts/m1/network_guard.mjs",
+      "sha256": "ec1d81c55198a1668c3f0a173de6d4bef78c308dc8c298d924990721a3b2c03d"
+    }
+  ],
+  "profileSpecification": {
+    "format": "JSON entry array",
+    "entries": [
+      {
+        "id": "t103-fs",
+        "package": "@deepseek-ai/dsh-fs-local",
+        "config": {
+          "cwd": "<isolated-workspace>"
+        }
+      },
+      {
+        "id": "t103-subprocess",
+        "package": "@deepseek-ai/dsh-subprocess-local",
+        "config": {}
+      },
+      {
+        "id": "t103-ssh-remote",
+        "name": "./ssh_remote_entry.mjs",
+        "config": {
+          "hosts": []
+        }
+      }
+    ],
+    "resolution": "Profile created below the isolated dependency project runtime; standard parent node_modules lookup resolves the exact pinned candidate, verified by realpath. No new dependency symlinks."
+  },
+  "attempts": [
+    {
+      "stage": "initial-setup",
+      "passed": false,
+      "code": "ERR_ACCESS_DENIED",
+      "operation": "fs.symlink",
+      "pluginBootReached": false,
+      "response": "Kept permissions unchanged; moved profile under the existing isolated dependency project and verified module identity."
+    },
+    {
+      "stage": "file-backed-profile-lifecycle-with-full-config-readback",
+      "successfulFreshRuns": 2
+    }
+  ],
+  "runs": [
+    {
+      "task": "T-103",
+      "stage": "file-backed-profile-boot",
+      "nodeVersion": "24.22.1",
+      "passed": true,
+      "startup": {
+        "configuredEntries": [
+          {
+            "id": "t103-fs",
+            "state": 2
+          },
+          {
+            "id": "t103-subprocess",
+            "state": 2
+          },
+          {
+            "id": "t103-ssh-remote",
+            "state": 2
+          }
+        ],
+        "entryIsConstructor": false,
+        "helperEntries": 0,
+        "intervals": [
+          {
+            "delay": 5000,
+            "cleared": false
+          }
+        ],
+        "localFsReadAndLookup": true
+      },
+      "disabled": {
+        "persistedDisabled": true,
+        "serviceAbsent": true,
+        "helperDisposed": true,
+        "helperDisposeCalls": 1,
+        "intervals": [
+          {
+            "delay": 5000,
+            "cleared": true
+          }
+        ],
+        "localFsReadAndLookup": true
+      },
+      "reenabled": {
+        "persistedDisabled": false,
+        "state": 2,
+        "freshHelper": true,
+        "localFsReadAndLookup": true
+      },
+      "shutdown": {
+        "helperStates": [
+          {
+            "disposed": true,
+            "disposeCalls": 1
+          },
+          {
+            "disposed": true,
+            "disposeCalls": 1
+          }
+        ],
+        "intervals": [
+          {
+            "delay": 5000,
+            "cleared": true
+          },
+          {
+            "delay": 5000,
+            "cleared": true
+          }
+        ],
+        "registryCount": 0,
+        "exitListenerBaseline": 1,
+        "exitListenersAfter": 1,
+        "configRemainsEnabled": true,
+        "configFullReadback": true
+      },
+      "checks": {
+        "allHelpersDisposedExactlyOnce": true,
+        "allIntervalsCleared": true,
+        "registryEmpty": true,
+        "providerExitListenerRemoved": true,
+        "configWriteReadbackIntact": true,
+        "entrySourceUnchanged": true,
+        "noNetworkAttempts": true,
+        "noCordisErrors": true,
+        "isolatedHomeUnchanged": true,
+        "workspaceOnlyContainsMarker": true
+      },
+      "cordisErrors": [],
+      "cordisWarnings": [],
+      "networkAttempts": [],
+      "forcedCleanup": [],
+      "profileEntrySha256": "089d133d31dca7df627111865655b86c9817f14b0becbcfd1251c5f311dc0d6f"
+    },
+    {
+      "task": "T-103",
+      "stage": "file-backed-profile-boot",
+      "nodeVersion": "24.22.1",
+      "passed": true,
+      "startup": {
+        "configuredEntries": [
+          {
+            "id": "t103-fs",
+            "state": 2
+          },
+          {
+            "id": "t103-subprocess",
+            "state": 2
+          },
+          {
+            "id": "t103-ssh-remote",
+            "state": 2
+          }
+        ],
+        "entryIsConstructor": false,
+        "helperEntries": 0,
+        "intervals": [
+          {
+            "delay": 5000,
+            "cleared": false
+          }
+        ],
+        "localFsReadAndLookup": true
+      },
+      "disabled": {
+        "persistedDisabled": true,
+        "serviceAbsent": true,
+        "helperDisposed": true,
+        "helperDisposeCalls": 1,
+        "intervals": [
+          {
+            "delay": 5000,
+            "cleared": true
+          }
+        ],
+        "localFsReadAndLookup": true
+      },
+      "reenabled": {
+        "persistedDisabled": false,
+        "state": 2,
+        "freshHelper": true,
+        "localFsReadAndLookup": true
+      },
+      "shutdown": {
+        "helperStates": [
+          {
+            "disposed": true,
+            "disposeCalls": 1
+          },
+          {
+            "disposed": true,
+            "disposeCalls": 1
+          }
+        ],
+        "intervals": [
+          {
+            "delay": 5000,
+            "cleared": true
+          },
+          {
+            "delay": 5000,
+            "cleared": true
+          }
+        ],
+        "registryCount": 0,
+        "exitListenerBaseline": 1,
+        "exitListenersAfter": 1,
+        "configRemainsEnabled": true,
+        "configFullReadback": true
+      },
+      "checks": {
+        "allHelpersDisposedExactlyOnce": true,
+        "allIntervalsCleared": true,
+        "registryEmpty": true,
+        "providerExitListenerRemoved": true,
+        "configWriteReadbackIntact": true,
+        "entrySourceUnchanged": true,
+        "noNetworkAttempts": true,
+        "noCordisErrors": true,
+        "isolatedHomeUnchanged": true,
+        "workspaceOnlyContainsMarker": true
+      },
+      "cordisErrors": [],
+      "cordisWarnings": [],
+      "networkAttempts": [],
+      "forcedCleanup": [],
+      "profileEntrySha256": "089d133d31dca7df627111865655b86c9817f14b0becbcfd1251c5f311dc0d6f"
+    }
+  ],
+  "sourceIntegrity": {
+    "installedInventoryMatchesT101": true,
+    "packages": 6,
+    "files": 26,
+    "candidateFilesMatchArchive": 298
+  },
+  "authorization": {
+    "productionProfileUsed": false,
+    "globalDependenciesChanged": false,
+    "coderConnected": false,
+    "sshConnected": false,
+    "modelApiCalled": false,
+    "stepLimitSeconds": 600,
+    "directoryBudgetBytes": 2147483648,
+    "childProcessPermissionGranted": false,
+    "directoryBudgetIsOsQuota": false,
+    "networkGuardIsOsSandbox": false
+  },
+  "fixtureTreeBytesAtCollection": 26806393,
+  "notTested": [
+    "production dsh CLI/web profile",
+    "better-sidebar UI",
+    "Coder resources or SSH",
+    "remote helper execution",
+    "remote filesystem/process/PTY/cancellation",
+    "authentication endpoints",
+    "deduplication/recovery",
+    "product release"
+  ],
+  "stageM1Passed": false,
+  "nextGate": {
+    "task": "T-104",
+    "status": "not-started-scope-and-authorization-missing"
+  }
+}

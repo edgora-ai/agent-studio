@@ -1,0 +1,411 @@
+{
+  "scope": "D05-model-session limited development verification only; explicit OFFLINE protocol fixture, NOT real LLM, formal M1/M2, ACP, lifecycle or whole-project acceptance",
+  "date": "2026-10-31",
+  "result": "pass-limited-development",
+  "cwd": "/home/ubuntu/workspace/agent-studio",
+  "verified": [
+    "Original Models settings/credential form and picker -> persisted explicit routes/references -> installed adapter -> actual native Agent streaming/tool loop -> native JSONL; accepted is admission only.",
+    "Each actual model request rechecks agent-loop attribution, authoritative session/binding/version, live provider, native signal, provider/model and persisted configuration revision/settings hash; background generation and unknown branches remain disabled.",
+    "Local and existing authorized m1-a native read/edit/write/bash/ask_user_question plus bound literal search execute through actual Agent realm filesystem/subprocess providers. SQL request/call/operation lineage and physical bytes/full API/search verified.",
+    "Original approvals/questions use authenticated replies, SQLite ownership/scope/event/run/deadline, one-shot transition and delivery. No unapproved effects; duplicate/late/expired/restarted decisions rejected; target rechecked after approval.",
+    "Disconnect never falls back to local or replays an operation; owned native in-flight stream can still be cancelled. Central same-name canaries unchanged. Fixture error/truncated streams do not become successful completion.",
+    "Original bound snapshot bytes/version/SHA retained; cross-binding Send rejected before admission with editable draft unchanged. Corrected new remote session installs actual native saved default. Native file/image/unknown content rejected.",
+    "Exact dynamic loopback POST capability tested; method/path/ambient fetch/net/generic spawn/redirect/expired async capability denied. Default fence remains. No real external model API or external coding CLI was run."
+  ],
+  "commands": [
+    {
+      "command": "node --test --test-reporter=tap scripts/dev/store.test.mjs",
+      "exit": 0,
+      "output": "artifacts/d05/unit-21.tap",
+      "checks": 21,
+      "sha256": "b1a45961e6963ead13fecfd3ae0edf5b222d807b5b57f11f7476b90b636d656b"
+    },
+    {
+      "command": "node scripts/dev/model.integration.mjs /home/ubuntu/workspace/agent-studio/.preview/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d05/integration-d7642d1f-d749-4943-933a-3306248c89a8.json",
+      "checks": 10,
+      "sha256": "1b7343ae9c60119459a6bdd8736e0a3b2e8de17a2b256735e8e4f6b1eaf673cb"
+    },
+    {
+      "command": "node scripts/dev/model.remote.mjs",
+      "exit": 0,
+      "output": "artifacts/d05/remote-39a2f340-21f3-47ae-a8ae-923aeea64e39.json",
+      "checks": 4,
+      "sha256": "a6e7216061575a5cfd33e95b77a069df4d2460253816d64fd3775e13bc04131f"
+    },
+    {
+      "command": "artifacts/m1/t104/browser-venv/bin/python -I scripts/dev/model.browser.py --root /home/ubuntu/workspace/agent-studio/.preview/agent-studio --out /home/ubuntu/workspace/agent-studio/artifacts/d05/ui-final --browser /home/ubuntu/.cache/ms-playwright/chromium-1234/chrome-linux/chrome",
+      "exit": 0,
+      "output": "artifacts/d05/ui-final/browser.json",
+      "checks": 7,
+      "sha256": "28fd98da9280c54477ea0153c1a5212abcea02933358680dccef415bdac8b885"
+    },
+    {
+      "command": "node scripts/dev/core.verify.mjs --models",
+      "exit": 0,
+      "output": "artifacts/d05/final-verification-23c45808-d571-4fea-b131-b69b2aa95d27.json",
+      "checks": 6,
+      "sha256": "c778afb0236cb0be6a114fd6072aa70e02535ae29515b48faf91683680aa2bc9"
+    },
+    {
+      "command": "node scripts/dev/integration.mjs",
+      "exit": 0,
+      "output": "artifacts/d02/local-regression-ac5c6ceb-eb8d-47b9-bdc8-e98420f4acf4/integration.json",
+      "checks": 76,
+      "sha256": "18da631e2d7ca64df1ab1aa3c7698eaaff78a9bc2b01bb9032dd95bdb0c6c51c"
+    },
+    {
+      "command": "node scripts/dev/remote.integration.mjs",
+      "exit": 0,
+      "output": "artifacts/d02/integration-759e999f-cad4-4a90-82c5-9f2c330c299c.json",
+      "checks": 25,
+      "sha256": "a4ffe8dc9ce9dd3999f2184944c63c649a164938758ab3d85a7eaac078080ff9"
+    },
+    {
+      "command": "node scripts/dev/remote.restart.mjs",
+      "exit": 0,
+      "output": "artifacts/d02/restart-a0bc8188-acfb-405d-be99-c363ff2d4688.json",
+      "checks": 4,
+      "sha256": "9d8a4e521d17acda0f1803557a09ddfb095dda446e4e24db6fa51c0571e28dcf"
+    },
+    {
+      "command": "node scripts/dev/core.integration.mjs",
+      "exit": 0,
+      "output": "artifacts/d03/integration-5cc3eafe-052a-42bf-b62c-bb5eb42e2231.json",
+      "checks": 11,
+      "sha256": "d07015e089d415b887a367a7a3a8f528c33d6b98b7b5c32cad0947a482564b36"
+    },
+    {
+      "command": "node scripts/dev/core.lifecycle.mjs",
+      "exit": 0,
+      "output": "artifacts/d03/lifecycle-376e7de4-99a4-4d70-80bc-595b55c6c432.json",
+      "checks": 3,
+      "sha256": "a50122e5e8d8ed888c94c2c92511fef3c3e53e1c1e6614a49551a2ebbf7357d8"
+    },
+    {
+      "command": "node scripts/dev/local.integration.mjs",
+      "exit": 0,
+      "output": "artifacts/d04/integration-6da63395-56d3-40e1-a394-7bc7765338f6.json",
+      "checks": 10,
+      "sha256": "d4a9068263eee7eb5f269ea825d2f6636d54f211315a73a2f747c1afe93a7265"
+    },
+    {
+      "command": "node scripts/dev/local.restart.mjs",
+      "exit": 0,
+      "output": "artifacts/d04/restart-c4773a05-001d-484f-ada8-f3c067bd5199.json",
+      "checks": 5,
+      "sha256": "a3b9e4143d89fa4882cd408518ddb54303b5a59e96fba17327e6e78fa9e4ef15"
+    },
+    {
+      "command": "artifacts/m1/t104/browser-venv/bin/python -I scripts/dev/core.browser.py --local --root /home/ubuntu/workspace/agent-studio/.preview/agent-studio --out /home/ubuntu/workspace/agent-studio/artifacts/d05/d04-ui-regression --browser /home/ubuntu/.cache/ms-playwright/chromium-1234/chrome-linux/chrome",
+      "exit": 0,
+      "output": "artifacts/d05/d04-ui-regression/browser.json",
+      "checks": 11,
+      "sha256": "07200205e77734a8da9652af9553454c7973d8831c3d9f2b8d4a26af62df2574"
+    },
+    {
+      "command": "artifacts/m1/t104/browser-venv/bin/python -I scripts/dev/core.browser.py --root /home/ubuntu/workspace/agent-studio/.preview/agent-studio --out /home/ubuntu/workspace/agent-studio/artifacts/d05/d03-ui-final --browser /home/ubuntu/.cache/ms-playwright/chromium-1234/chrome-linux/chrome",
+      "exit": 0,
+      "output": "artifacts/d05/d03-ui-final/browser.json",
+      "checks": 8,
+      "sha256": "7ffd0abb79d48c530d0e6bce7bdb1c8ce9698233be3636980d8c145f2963a4f5"
+    }
+  ],
+  "storage": {
+    "schema": 5,
+    "integrity": "ok",
+    "operation_count": 1356,
+    "operation_states": [
+      {
+        "state": "cancelled",
+        "n": 1
+      },
+      {
+        "state": "completed",
+        "n": 811
+      },
+      {
+        "state": "failed",
+        "n": 30
+      },
+      {
+        "state": "released",
+        "n": 508
+      },
+      {
+        "state": "unknown",
+        "n": 6
+      }
+    ],
+    "request_count": 39,
+    "control_count": 59,
+    "native_physical_jsonl_sessions": 9,
+    "schema4_original_rows_unchanged": {
+      "projects": 3,
+      "environments": 3,
+      "instance_records": 3,
+      "project_bindings": 3,
+      "session_bindings": 3,
+      "operation_records": 928,
+      "file_read_versions": 41
+    },
+    "model_states": {
+      "requests": [
+        {
+          "state": "cancelled",
+          "n": 8
+        },
+        {
+          "state": "completed",
+          "n": 20
+        },
+        {
+          "state": "failed",
+          "n": 9
+        },
+        {
+          "state": "interrupted",
+          "n": 2
+        }
+      ],
+      "controls": [
+        {
+          "state": "answered",
+          "delivery": "delivered",
+          "n": 54
+        },
+        {
+          "state": "cancelled",
+          "delivery": "request-cancelled",
+          "n": 2
+        },
+        {
+          "state": "expired",
+          "delivery": "deadline-expired",
+          "n": 3
+        }
+      ],
+      "configurations": [
+        {
+          "revision": 1,
+          "state": "active"
+        },
+        {
+          "revision": 2,
+          "state": "failed"
+        },
+        {
+          "revision": 3,
+          "state": "active"
+        },
+        {
+          "revision": 4,
+          "state": "active"
+        },
+        {
+          "revision": 5,
+          "state": "active"
+        },
+        {
+          "revision": 6,
+          "state": "active"
+        },
+        {
+          "revision": 7,
+          "state": "active"
+        },
+        {
+          "revision": 8,
+          "state": "active"
+        },
+        {
+          "revision": 9,
+          "state": "active"
+        }
+      ]
+    },
+    "active_operations_requests_calls_controls_watches": 0,
+    "local_process_identity_observations": 178,
+    "remote_pty_observations": 45,
+    "locked_source_files": 66,
+    "frozen_d01_files": 16,
+    "private_files": 293,
+    "private_directories": 89,
+    "root_mode": "0700",
+    "sensitive_files": "0600-or-stricter",
+    "new_startup_log_bytes": 0,
+    "retained_historical_log_bytes": 5360,
+    "credential_scan_files": 180,
+    "credential_leaks": 0,
+    "vault_mode": "600"
+  },
+  "ui_creation_note": "ui-settings-verified created the route and synthetic protected credential in the original UI (first check passed; later picker timing failed). ui-final reused that persisted route, created=false, and passed all seven groups. Failures are retained, not relabeled.",
+  "screenshots_read": {
+    "artifacts/d05/ui-final/remote-approval.png": "0204ec09fa3d738e5fe9b4419ec723b5deb0ec46982b18a77db7e9bc7babf675",
+    "artifacts/d05/ui-final/remote-question.png": "badbb12b35cf709d8e80b862f0fb140bd7712ffe8791dc200cf8c89066f6be2c",
+    "artifacts/d05/ui-final/cross-binding-draft.png": "b744b619fb9724362e6c7b171277a8452f7360f12a4f461302c553c3ca9bc239",
+    "artifacts/d05/ui-final/cancel-reopened.png": "e0f7ed32f3eb5862511e86fcb85640ec1384ac52981e43a56b1775aef3f71bbe",
+    "artifacts/d05/ui-default-installed/remote-complete.png": "776ae1959a3febbf7c0623469555a66296cd21455fa05ea53d2bd18c8b0fcd49",
+    "artifacts/d05/ui-default-installed/models-configured.png": "291da48a0fd6d84dcefb8125ca0c9fc04ad037ad722d2b8ec2fcfe062c6a7f55",
+    "artifacts/d05/d04-ui-regression/dirty-conflict.png": "56adde162fa31a0deae300ecc6e7d1b14c1ba635aacfc040195a808044b6daaf",
+    "artifacts/d05/d03-ui-regression/dirty-conflict.png": "93abd9297359e08d49ec8b1c320a8b63297a1f5cb5796fd0f5ebb9939d329324"
+  },
+  "failure_index": [
+    {
+      "label": "D05_CREDENTIAL_DESCRIBE_ARGS",
+      "path": "artifacts/d05/integration-d9d08407-f376-4db8-b4b1-bdde25396475.json",
+      "sha256": "1dacb57472fc370ed3542a12147dc76e1a6b08404dcb76447a06b45f45b68fbc"
+    },
+    {
+      "label": "D05_NATIVE_SHELL_ENV",
+      "path": "artifacts/d05/integration-89763da3-22a2-46cb-9320-facc2768b9a4.json",
+      "sha256": "c6b799fa766fa51e7ababe839dbf021f737500e338e84dec842385b4d095c1c8"
+    },
+    {
+      "label": "D05_TEST_CANCEL_DURABLE_WAIT",
+      "path": "artifacts/d05/integration-a151cd67-74e1-4412-80a1-72edb19fae15.json",
+      "sha256": "6033afa6a505a050cac2e415f9a2e0347459bb5d9620eec4c12d72f2f3b02cf4"
+    },
+    {
+      "label": "D05_NATIVE_SESSION_LIST_ARGS",
+      "path": "artifacts/d05/integration-b750a048-49e9-4cbe-96cd-a9f86031888e.json",
+      "sha256": "122fd8f42a4ad7a79c8398236ce38c3f5642f923e47a5891fef1b7b14979d23d"
+    },
+    {
+      "label": "D05_REMOTE_FS_OBSERVATION",
+      "path": "artifacts/d05/remote-0f0adb4e-89c0-455a-9e25-df70eeb4193b.json",
+      "sha256": "86cc9bef5b43fce192e38fa3b0433dcf68b4a58bfc79c627a49b3180e35219d1"
+    },
+    {
+      "label": "D05_CANCEL_BINDING_LOOKUP",
+      "path": "artifacts/d05/integration-4413480a-3bff-414a-a05b-7b92db046729.json",
+      "sha256": "d0de7a7a6d5b9f8b6899b480e352436de291f32f3e501fb8756a1493aae4d4eb"
+    },
+    {
+      "label": "D05_UI_HIDDEN_CUSTOM_FIELDS",
+      "path": "artifacts/d05/ui-run-1/browser.json",
+      "sha256": "ab36358407c0dc2c910af44b12f450d2615384f13d36f8b647ecaa9a8d1c38f2"
+    },
+    {
+      "label": "D05_UI_MODEL_DEFAULT_ARRAY",
+      "path": "artifacts/d05/ui-run-2/browser.json",
+      "sha256": "8b478c5c07e1a3531402db6593ccdfd1546631d9a257ed97189ad5b3581af6b5"
+    },
+    {
+      "label": "D05_SETTINGS_VIEW_INJECTION",
+      "path": "artifacts/d05/ui-native-contract/browser.json",
+      "sha256": "ff9058a47d59c21fac46d1b5a3266e775941318dfb3bd456c91894284f162b7b"
+    },
+    {
+      "label": "D05_UI_PICKER_SCOPE_TRANSITION",
+      "path": "artifacts/d05/ui-settings-verified/browser.json",
+      "sha256": "79e71a4fb9945a40800061adff4befda5c159bdeeedc670f8bf02bb7f8f1f62f"
+    },
+    {
+      "label": "D05_UI_FILENAME_QUERY",
+      "path": "artifacts/d05/ui-composer-ready/browser.json",
+      "sha256": "b151cbddfc023780e31d45140e4bb732c3d01324cfa252f760e905205d190978"
+    },
+    {
+      "label": "D05_UI_REFERENCE_MATCH",
+      "path": "artifacts/d05/ui-full-flow/browser.json",
+      "sha256": "2546165a2f89b856a559bd70a336d47ec0dc9948a47e94f44bc8b90589052c4c"
+    },
+    {
+      "label": "D05_UI_CURRENT_MODEL_NOOP",
+      "path": "artifacts/d05/ui-reference-exact/browser.json",
+      "sha256": "f8fe53a8cd5b2a6c88acc255333353e97ae0ae40caab6e5e69d53712583fbe1d"
+    },
+    {
+      "label": "D05_NATIVE_DEFAULT_NOT_INSTALLED",
+      "path": "artifacts/d05/ui-native-selection/browser.json",
+      "sha256": "c32b5f6d176150045f76505910b1676bd8c61616c91c53d7926b28bd726271a1"
+    },
+    {
+      "label": "D05_D03_UI_EXPECTED_DISABLED_CATALOG",
+      "path": "artifacts/d05/d03-ui-regression/browser.json",
+      "sha256": "be13d87ca14c51aeba8bc6f26c14f1f688cff6e9dfb9f4e8886bd9e2021bcbc6"
+    }
+  ],
+  "failure_label_note": "Index labels describe investigation groups; raw failure payloads and SQL history are unchanged. Fix details are in development-ledger section 10.",
+  "supporting_receipts": {
+    "artifacts/d05/closeout-data.json": "145bc18dd53a4221ccb60e4fcd5efadb3e64e94adfed16c0ebf3b219853343c6",
+    "artifacts/d05/final-auth.json": "32e10265e403cbf68c9a85c60a4254f856e418c43d95fb6851ec5de9869a8f70",
+    "artifacts/d05/final-status.json": "57ab9462a7fa61faa3db28ccc98f86642a4230b3120fd1c0589b63e83c089fd2",
+    "artifacts/d05/loopback-config-scan.txt": "cff66db626d0501e7afea6b027ce8cfa6cb9a1c53f00c8e86e8ea14177a480ae",
+    "artifacts/d05/pre-migration-snapshot.json": "7186b818c97ee972a71e5fb47e2efb3352f35d6ed12cd98bc24a85b53e5374b4",
+    "artifacts/d05/ui-settings-verified/browser.json": "79e71a4fb9945a40800061adff4befda5c159bdeeedc670f8bf02bb7f8f1f62f"
+  },
+  "source_sha256": {
+    "packages/dsh-agent-studio/adapters/agent-terminal.mjs": "4913ef9b254123804f98796e26f7eb0bf580d4966147d889953382f6383d9d6d",
+    "packages/dsh-agent-studio/adapters/agent-tools.mjs": "d12e220447491a373f88ec887b9df109013fa18941b48bbbf693b5fc28543ca3",
+    "packages/dsh-agent-studio/adapters/bound-provider.mjs": "451bcd3094e226f6567fbe403b51762121b9204a7e18753720571a309266a453",
+    "packages/dsh-agent-studio/adapters/bound-reads.mjs": "ae1ef262870711578f3db7028f976737abd8a2d06a3fd8398e573cd3d5266bea",
+    "packages/dsh-agent-studio/adapters/bound-watch.mjs": "c4ff617280c28266128c91077da9c753ec8e8c723b83678751939075de3377ee",
+    "packages/dsh-agent-studio/adapters/coder_broker.py": "64e9f90bec908ff91266089a13244e13c2549f5f061c9854eb5fa834cd585b57",
+    "packages/dsh-agent-studio/adapters/helper-channel.mjs": "beb19b7177400f9baee4f2808b1f4398a50592f5b7dddff194a94de3393f327e",
+    "packages/dsh-agent-studio/adapters/host-files.mjs": "e2efb24d13b95654d20f92e4b70cff67690111426da3d275671911acda13bb71",
+    "packages/dsh-agent-studio/adapters/host.mjs": "07c835d305379c5c78ff90d2a32034f3612fd25951693f07c6588a11b0466bac",
+    "packages/dsh-agent-studio/adapters/local-provider.mjs": "2568d92784162dae144f6b650ca52678af4f4bf62768f7c39e842876498d8e3c",
+    "packages/dsh-agent-studio/adapters/remote-read.py": "d4f6b6d0829e640aa97b2c763ecba9be068f13f41672681bf1b677a595bbe3f1",
+    "packages/dsh-agent-studio/bindings.mjs": "550888c6776f0d1d6b4b1b1988cc7f19d3bf271e55e4a1540c94cc1a6fc78ec8",
+    "packages/dsh-agent-studio/credentials.mjs": "829a27555cb94cd985452cc20b9ac52d9852eb41c123fff1c213454d645d89f2",
+    "packages/dsh-agent-studio/index.mjs": "d26d5537c928bdf3eb9912636c52271039f4caf32c1e3362eaa52f74a7bf528d",
+    "packages/dsh-agent-studio/model-session.mjs": "83fe10bf50125fdd94751ac95cd26009beca6ba6c1add40efc23cbe99cd00d36",
+    "packages/dsh-agent-studio/model-state.mjs": "b334d59ce9d8d9359a9e6e93d7905ee22c355ee6c6917a236ea4bda97d293afb",
+    "packages/dsh-agent-studio/store.mjs": "398147cc85f55aa14453b6c397a6f8ffa255cb52635df87dd6ad2b9fd0aa5233",
+    "scripts/dev/browser.py": "294b8500bf422273635753f427dcb41457781abde33137855fbdfd91cb5b765b",
+    "scripts/dev/core.browser.py": "a82e03ef94057089dadec682a7b2a922038b344441df269f579642e8c3656138",
+    "scripts/dev/core.integration.mjs": "de85bb01fce7718189c69361a4a56c7ac3c7d9387f4e4195c886af0a7a17dee7",
+    "scripts/dev/core.lifecycle.mjs": "cdb719a4fc1397d99549dcf048cddb934bc4dd1750be1c623c0553f6b3bbca58",
+    "scripts/dev/core.verify.mjs": "7d8d33b1250ae0573490c355279c3a991cb7d0beb9235ad74591245e06e0a863",
+    "scripts/dev/fence.mjs": "7700c798db3fdbf71f422b97ee6010ff6832f511d1d140947741ec7d8295c12a",
+    "scripts/dev/integration.mjs": "8ecb1316c892dc055fe57c168cad2a9701f98637d5c2d3104fb97acf1d249196",
+    "scripts/dev/local.integration.mjs": "e6301b9baae4615b143201c8b30938350678975903b8a99c203d3b94a60d64bc",
+    "scripts/dev/local.restart.mjs": "2b36767cda649b59d24cc296ef150659671b05a3f72840354ceb559508be287b",
+    "scripts/dev/model.browser.py": "f5703d5e312738f3a5b4d05a7dc3fb4022a4b30f43e14ca044dc2e939fa95bb7",
+    "scripts/dev/model.fixture.mjs": "762750ffce9cdc863c5c5564aa26cb48e0eb9b709895cf3751ddd79daaaac826",
+    "scripts/dev/model.integration.mjs": "88968ff134203608ec626e0c7082689701c417fa81ea403067bfb0e5f82e1701",
+    "scripts/dev/model.remote.mjs": "ffb08f5bb99729467c949de92ae93abd67173b16d75e52484038e3c374214bbd",
+    "scripts/dev/observe_remote.py": "68d88f5836078d608047b85740c6a3670d1acd573612e564a8c7333d70bcc6f7",
+    "scripts/dev/preview.mjs": "cf82d435d0c499252316285a071c92f7b4d16bf5a1448244660fea71626ef3bd",
+    "scripts/dev/remote.browser.py": "b2898906aa81cdedcb51bf7097f2cbdf4e5c312c48f8c6f590a65ce9ed9e0801",
+    "scripts/dev/remote.integration.mjs": "f99d9ac074077449545fe0d7994edce50b1d3281c1a61bf8234c27c0590b4f23",
+    "scripts/dev/remote.restart.mjs": "a17fa30da131b32c69520908ee5cac3c143a1b2016745f8a132242f1a15cf043",
+    "scripts/dev/sidebar-projection.mjs": "39422b2922a3cf521b513c1843e666c116eeb64f602cd92325b8b829e6660595",
+    "scripts/dev/store.test.mjs": "b7886acff42e2710e15eb060c73ef787cde776023601594fa2e45c1e5b787fbb",
+    "profiles/agent-studio-preview/cordis.patch.yml": "84626a3c1881731173a03e6db6e307d5092d8ad0c3e791c86c7bb8ed1b97994c",
+    "profiles/agent-studio-preview/sources.lock.json": "cb78fe42dc58992fb000998b476ce0eee6428006466954c41a866ae5c8d1fbed"
+  },
+  "retained_preview": {
+    "running": true,
+    "pid": 828489,
+    "run_id": "f9929872-234a-425b-825a-68eaa8a43b7a",
+    "origin": "http://127.0.0.1:44889",
+    "auth_file": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio/login.url",
+    "root": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio",
+    "reconciliation": {
+      "bindings_ready": 0,
+      "sessions_ready": 0,
+      "failed": 0
+    }
+  },
+  "d05_remote_connected_at_closeout": true,
+  "fixture_process": "Explicit persistent offline fixture retained; do not start a second copy. No automatic fixture creation on normal product startup.",
+  "test_process_cleanup": "Independent D05 test preview PID523444 and its fixture stopped; new D01 regression root stopped. Data and persistent preview/fixture retained.",
+  "real_model_inputs_and_steps": [
+    "User-selected HTTPS OpenAI Chat Completions-compatible baseURL, explicit model ID, studio-model-* provider alias, new protected credential/ref, and authorized prompt/project binding are still required.",
+    "Original Account menu -> Settings -> Models -> Add model provider -> Custom model API; enter model manually (automatic discovery disabled), save credential/reference and route, choose original picker in a D05 session, then Send.",
+    "API: read model.describe for current persistent revision and native settings_revision; model.configure requires both CAS values. Native credentials/set accepts controlled STUDIO_MODEL_* ref; apiKeyEnv is the reference, not an inherited secret.",
+    "Installed openai-completions is a wire protocol, not a vendor migration or proof of external provider compatibility/quality. No endpoint or paid model input was selected for this round."
+  ],
+  "limits": [
+    "Single outstanding request/session; steer/updateQueue, background tools, automatic retries, multimodal/reasoning, other wire protocols and unattributed generation remain disabled.",
+    "Normal approval/question deadline60s; explicit fixture15s; foreground bash at most60s. Existing file/search/Git/polling limits remain; search is bounded literal matching, not rg/regex/full gitignore.",
+    "Trusted single-user execution, not OS/root/network or multi-tenant sandbox; legitimate approved shell commands are not hard containment.",
+    "New owned synthetic local roots and existing authorized m1-a only; no m1-b workload, real production profile/OAuth/.env discovery, dependency install, global change, public listener, commit/push or data deletion.",
+    "No Coder create/start/stop/update/rebuild or image/container changes; configuration scan only explicit loopback test bindings/dynamic ports/endpoint guard. No unauthorized Docker rebuild.",
+    "ACP CLI bridge, environment management/new-generation recovery, real external model acceptance, formal OS isolation/multimachine/mobile and blocked M1 audit remain later work."
+  ]
+}

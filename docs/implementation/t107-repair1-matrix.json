@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "task": "T-107",
+  "revision": "repair1",
+  "kind": "current-candidate-delta-not-independent-acceptance",
+  "gate": "blocked-pending-independent-review",
+  "m1Passed": false,
+  "t201Ready": false,
+  "t201Executed": false,
+  "independentAcceptance": false,
+  "gates": [
+    {
+      "id": "M1-01",
+      "clause": "执行版本门：分别记录 manifest 枚举版本、peer 约束和安装产物，在隔离测试实例验证当前组合。rc.4 未列入候选 manifest 不证明不兼容；无需预先升级或改生产。仅在具体依赖／接口错误出现后评估升级、适配或更换候选，不假定 rc.5 自动兼容。",
+      "lastIndependentStatus": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t107-independent-review1.json",
+          "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+        }
+      ]
+    },
+    {
+      "id": "M1-02",
+      "clause": "锁定 dsh、侧边栏、远程插件、helper、Coder CLI／Server、模板／镜像版本及来源。",
+      "lastIndependentStatus": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t107-independent-review1.json",
+          "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+        }
+      ]
+    },
+    {
+      "id": "M1-03",
+      "clause": "验证目标插件不是 npm 同名的另一个项目；保存发布清单与完整性结果。",
+      "lastIndependentStatus": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t107-independent-review1.json",
+          "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+        }
+      ]
+    },
+    {
+      "id": "M1-04",
+      "clause": "冻结一份模板契约：隔离、资源、允许根目录、运行账号、网络策略与实例标记生成方式；完成 SC-17 的模板交付检查。",
+      "lastIndependentStatus": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t107-independent-review1.json",
+          "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+        }
+      ]
+    },
+    {
+      "id": "M1-05",
+      "clause": "确定 NF-07 的时限与恢复窗口初值、去重日志保留期，以及已知大目录接口的上限（NF-04）。对拟启用安全重传的操作执行 ACK 丢失、重复请求、日志丢失／过期及实例切换验证；未经验证的操作禁用有副作用请求自动重传。",
+      "lastIndependentStatus": "fail",
+      "currentCandidate": "selftest-pass-pending-independent-review",
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/recovery.json",
+          "sha256": "74bb8b81beee00661a82d4d0b86c48aeefd8de293921541dd1cbd914670fc342"
+        }
+      ]
+    },
+    {
+      "id": "M1-06",
+      "clause": "在不影响现有服务的 profile／测试实例进行，不直接升级生产。",
+      "lastIndependentStatus": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t107-independent-review1.json",
+          "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+        }
+      ]
+    },
+    {
+      "id": "M1-07",
+      "clause": "真实 Coder 工作区别名经 OpenSSH、插件、helper 三层连通。",
+      "lastIndependentStatus": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t107-independent-review1.json",
+          "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+        }
+      ]
+    },
+    {
+      "id": "M1-08",
+      "clause": "先用模板构建记录核验预置实例身份，并证明错误工作区、账号、根目录和过期实例会被拒绝；不能用同一连接内写入再读回的随机值自证目标。",
+      "lastIndependentStatus": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t107-independent-review1.json",
+          "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+        }
+      ]
+    },
+    {
+      "id": "M1-09",
+      "clause": "身份通过后完成独立随机文件读回、命令执行、PTY 输入、尺寸变化与取消；验证远端不可用时不在中央执行。",
+      "lastIndependentStatus": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t107-independent-review1.json",
+          "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+        }
+      ]
+    },
+    {
+      "id": "M1-10",
+      "clause": "拦截检查：本机打开器、URL scheme 与快捷键在远程绑定下的行为必须实测并记录（SC-16 的路由旁路部分可在 M1 先做技术验证）。",
+      "lastIndependentStatus": "fail",
+      "currentCandidate": "selftest-pass-pending-independent-review",
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/entrypoints/entrypoints.json",
+          "sha256": "2a2901140eb589450dca38e1f169db4706462c4f5813c7662d3f4c6a6a6ddb24"
+        }
+      ]
+    },
+    {
+      "id": "M1-11",
+      "clause": "输出接口覆盖及缺口清单，才决定复用、适配或最小核心修改。",
+      "lastIndependentStatus": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t107-independent-review1.json",
+          "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+        }
+      ]
+    }
+  ],
+  "history": [
+    {
+      "path": "docs/implementation/t107-m1-matrix.json",
+      "sha256": "726beb6993b0e21700b4ff19cab32c04984f62142ca58bd927a7ea9b15ae0cd3"
+    },
+    {
+      "path": "docs/implementation/evidence/t107-independent-review1.json",
+      "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+    },
+    {
+      "path": "docs/implementation/evidence/t107-independent-review1-validation.json",
+      "sha256": "109f08ab900d1df8b742553bf57b1a22b8d83a1bd8400cd7957d0a330cf3be64"
+    },
+    {
+      "path": "docs/implementation/evidence/t107-investigation1.json",
+      "sha256": "57870ea6f612e67f276f33f9a0a3645fb1915f35e68ddb708b7327df572fca6d"
+    },
+    {
+      "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+      "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+    },
+    {
+      "path": "docs/implementation/evidence/t105-independent-acceptance-pass1.json",
+      "sha256": "954b1d098aac6bebbb1df6d6959aa31153b19b279a16ed959394b51bdc7740bc"
+    }
+  ],
+  "sourceSha256": {
+    "scripts/m1/t107_repair.test.mjs": "d9ab4a9baa34a9cc679a760421161509556c6f209865e07c69b06d0b2ab2e95c",
+    "scripts/m1/t107_repair_entrypoints.mjs": "5a2b28ef419a05e5d35d07f1e6d4be0dcaf3117e7491794ad071e63fc2f8f537",
+    "scripts/m1/t107_repair_guard.mjs": "78130e6cf17c5cf2a64a2632812a0bcaa108c273c103ca88a2bc11aa383bfafa",
+    "scripts/m1/t107_repair_policy.mjs": "35de788bece19e0855bc5837a1781ed415213f843989b1fb659e84bbfca9eb42",
+    "scripts/m1/t107_repair_recovery.mjs": "40d9d7d8545e4f02eeb0dc0c20b9de76e23abe070021d11be3320fe33a520756",
+    "scripts/m1/t107_repair_run.py": "67793eb3e1787c22be2f06dddb8e04f1cfad028941e66722c1cde15f5303114e",
+    "scripts/m1/t107_repair_runtime.mjs": "b47af018b40ddc853cf2f79d92e9fbabee854b44e53584a50b9cf457d4311e2e"
+  },
+  "U-01": {
+    "implementation": "scripts/m1/t107_repair_recovery.mjs",
+    "interface": [
+      "saveOriginal",
+      "disconnect",
+      "recover",
+      "cancelOriginal"
+    ],
+    "defaultWindowMs": 30000,
+    "maximumWindowMs": 120000,
+    "mechanism": "installed raw RPC client; frozen T105 current API/SQL and same-channel gate on every connect; no manager automatic reconnect/fresh-session fallback",
+    "identityFields": [
+      "binding",
+      "sessionId",
+      "serverEpoch",
+      "clientId",
+      "workspaceId",
+      "root",
+      "processId",
+      "operationId",
+      "argv",
+      "argvSha256",
+      "startParamsSha256",
+      "pid",
+      "startTick",
+      "pgid",
+      "sid",
+      "uid"
+    ],
+    "sameInstanceScope": "healthy retained helper session, acknowledged single non-PTY task; independent PID/startTick continuity; original operationId and exactly one effect",
+    "rejects": [
+      "outside window",
+      "changed saved identity",
+      "binding/build/generation mismatch",
+      "session/client/serverEpoch mismatch",
+      "independent process identity mismatch"
+    ],
+    "mutationReplayEnabled": false,
+    "unknownOutcomeRemainsUnknown": true,
+    "runtimeEvidence": {
+      "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/recovery.json",
+      "sha256": "74bb8b81beee00661a82d4d0b86c48aeefd8de293921541dd1cbd914670fc342"
+    }
+  },
+  "initialDeadlines": {
+    "owner": "scripts/m1/t107_repair_policy.mjs::DeadlinePolicy",
+    "defaultsAndMaxima": {
+      "task": {
+        "defaultMs": 60000,
+        "maximumMs": 300000
+      },
+      "approval": {
+        "defaultMs": 30000,
+        "maximumMs": 120000
+      },
+      "recovery": {
+        "defaultMs": 30000,
+        "maximumMs": 120000
+      }
+    },
+    "admission": "task timer starts immediately before process dispatch; approval timer starts on creation",
+    "taskExpiry": "running -> cancel-pending -> expired-cancelled only after original status.running=false; exception/lost identity/unconfirmed cancellation -> unknown",
+    "approvalExpiry": "pending -> expired-denied; late approve rejects T107_APPROVAL_CLOSED; no auto-approve",
+    "actualTaskConfigurationMs": 20000,
+    "actualApprovalConfigurationMs": 20,
+    "productApprovalUIImplemented": false
+  },
+  "IA-03": {
+    "supersedesHistoricalField": "timeouts[id=TIME-DISCOVERY].maximumMs=18000",
+    "correctedContract": {
+      "owner": "frozen BoundWorkspace.discover",
+      "postOpenLoopBudgetMs": 18000,
+      "openRpcDefaultMs": 5000,
+      "readRpcDefaultMs": 5000,
+      "closeRpcDefaultMs": 5000,
+      "rpcPermittedMaximumMs": 10000,
+      "cleanup": "separately awaited close in finally; close error propagates",
+      "hardEndToEndDeadlineMs": null,
+      "lateEofCanReturnComplete": true,
+      "offlineCounterexampleMs": 28800,
+      "remoteLatencyMeasurement": false
+    },
+    "historicalGeneratorAndFocusedTestsUnchanged": true,
+    "hardDeadlineAdded": false,
+    "offlineCounterexampleSource": {
+      "path": "artifacts/m1/t107/acceptance-945cpr60/discovery_budget.mjs",
+      "sha256": "41226ca6c8379a3d30d532c2f01eb676ae9bf4f37a2246b36fcf6ffd3deecdc3"
+    },
+    "historicalCounterexample": {
+      "path": "artifacts/m1/t107/acceptance-945cpr60/discovery-budget.json",
+      "sha256": "df9fee17e84e35a170437f5a33d582ed567fac7db19325c53b9604622735fc68"
+    },
+    "unchangedSourceRerun": {
+      "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/counterexample/discovery-budget.json",
+      "sha256": "df9fee17e84e35a170437f5a33d582ed567fac7db19325c53b9604622735fc68"
+    },
+    "meaning": "28800 virtual ms, not a remote timing observation; 18000 starts after open, in-flight read and finally close are separately awaited"
+  },
+  "U-02": {
+    "implementation": "scripts/m1/t107_repair_guard.mjs::ContextAuthority",
+    "authority": "server fixture registry + opaque captured capability; request realm/cwd never authority",
+    "surfaces": [
+      "sidebar registered open.external route",
+      "host open-in-app route",
+      "SessionController.openWorkspacePath",
+      "launchExternal local opener",
+      "installed sidebar api.openExternal scheme",
+      "actual registered workspace.openLocal resolve/run"
+    ],
+    "negativeCases": 42,
+    "localPositiveCases": 7,
+    "executableRecorders": 5,
+    "navigationCaptures": 1,
+    "hostActionCaptures": 1,
+    "upstreamPatched": false,
+    "installedSourcesUnchanged": true,
+    "runtimeEvidence": {
+      "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/entrypoints/entrypoints.json",
+      "sha256": "2a2901140eb589450dca38e1f169db4706462c4f5813c7662d3f4c6a6a6ddb24"
+    }
+  },
+  "U-03": {
+    "status": "pending-resource-scope-deliberation",
+    "executed": false,
+    "permanentlyProhibited": false,
+    "labV3PromotedToProductIsolation": false
+  },
+  "completeFinalSourceRun": {
+    "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/result.json",
+    "sha256": "78bfd1d0b6998d2ef0c690284d2edb8f43d2f44f8531aa633d2a10708e16551f"
+  },
+  "notExecuted": [
+    "product binding persistence",
+    "browser authentication rerun",
+    "DOM keyboard dispatch",
+    "native desktop launch",
+    "daemon restart recovery",
+    "PTY/output cursor recovery",
+    "mutation replay/fault matrix",
+    "full M2/M3",
+    "deployment/template rebuild",
+    "T201",
+    "U03 infrastructure changes"
+  ]
+}

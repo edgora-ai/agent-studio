@@ -1,0 +1,480 @@
+{
+  "schemaVersion": 1,
+  "task": "T-107",
+  "review": "independent-review2",
+  "revisionUnderReview": "repair1",
+  "role": "independent-acceptance-not-implementation",
+  "gate": "repair-required",
+  "m1Passed": false,
+  "t201Ready": false,
+  "t201Executed": false,
+  "summary": "10 scoped M1 passes; M1-10 remains failed. IA-01 and IA-03 close in the declared technical scope; IA-02 remains open due to a new actual registered-route normalization bypass. One complete independent repair controller run passed, but two supplementary route-fixture invocations exited 1 and remain failures, not stitched into a passing run.",
+  "priorReview": {
+    "path": "docs/implementation/evidence/t107-independent-review1.json",
+    "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+  },
+  "implementationDelta": {
+    "path": "docs/implementation/t107-repair1-matrix.json",
+    "sha256": "61227e3656ead273b9d6539ebbb70c98062a7702a217f81c0ea4a217b41eb705"
+  },
+  "implementationSelftest": {
+    "path": "docs/implementation/evidence/t107-repair1-selftest.json",
+    "sha256": "243f1980a1d8055755c54eb2c6a8d60e9c0cd2be6e7377cea0e3b0201b38942e"
+  },
+  "implementationValidation": {
+    "path": "docs/implementation/evidence/t107-repair1-validation.json",
+    "sha256": "b027c4bfdee59dd7fad629ebf0b69cd012a7cc781409aa8b7da4222c40852f61"
+  },
+  "gates": [
+    {
+      "id": "M1-01",
+      "status": "pass",
+      "basis": "Reuse unchanged review1 isolated version-combination proof; no complete UI compatibility claim."
+    },
+    {
+      "id": "M1-02",
+      "status": "pass",
+      "basis": "Seven new source hashes pinned; 41 historical sources and 26 installed files match baseline; fixed candidate retained."
+    },
+    {
+      "id": "M1-03",
+      "status": "pass",
+      "basis": "Reuse fixed archive/exact candidate provenance; candidate-dependent installed files and accepted source hashes unchanged."
+    },
+    {
+      "id": "M1-04",
+      "status": "pass",
+      "basis": "Unchanged lab-v3 declared template/SC-17 experiment only. U-03 full P0 deployment/isolation remains unmet and separately permissioned."
+    },
+    {
+      "id": "M1-05",
+      "status": "pass",
+      "basis": "Now pass for the new explicit recovering adapter: one real same-session acknowledged non-PTY task recovered and deadline-cancelled; executable task/approval initial policies; discovery contract corrected. Frozen BoundProvider recovery remains disabled. No replay or full M3 claim."
+    },
+    {
+      "id": "M1-06",
+      "status": "pass",
+      "basis": "Owned fixtures only; unchanged installation, infrastructure, main documents and implementation matrices in this review; recorders replace real openers."
+    },
+    {
+      "id": "M1-07",
+      "status": "pass",
+      "basis": "Three fresh successful T-105 gated installer/initial/reconnect dispatches; enrollment is separate, not a fourth helper gate."
+    },
+    {
+      "id": "M1-08",
+      "status": "pass",
+      "basis": "Current identity records unchanged before/after; actual same-channel gate reused on reconnect, plus offline changed-binding/generation/session/task rejection tests. Historical wrong-target experiments are reused, not rerun."
+    },
+    {
+      "id": "M1-09",
+      "status": "pass",
+      "basis": "Reuse accepted file/PTY/signal/no-fallback scope; current run adds same-original-task status and cancellation with independent identity/effect checks, not a second successful native-spawn channel."
+    },
+    {
+      "id": "M1-10",
+      "status": "fail",
+      "basis": "Fail: actual guarded canonical entries reject as reported, but dot-segment URL spellings bypass authority before the installed normalized handler dispatches. See T107-R2-IA-04; formal product binding or DOM is not required to establish this defect."
+    },
+    {
+      "id": "M1-11",
+      "status": "pass",
+      "basis": "Coverage and gap inventory remains usable; this independent route finding is an additional recorded gap, not a silent rewrite of the implementation selftest."
+    }
+  ],
+  "findingDisposition": [
+    {
+      "id": "T107-IA-01",
+      "status": "closed-within-M1-technical-scope",
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/repair1-3b306efdbbb419d4cbc6ce95/recovery.json",
+          "sha256": "1f52830b6f68b4b9d19c6cf936d5d059d580be8318fcf6feabcdc19e3429fc2a"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/boundary-tests.json",
+          "sha256": "ef9007d2403912ec5f31a73cfacc1574497e3352e6a78297de1094c0e9d67d4b"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/independent-final-observation.json",
+          "sha256": "76fa2d4472487e03636344d8341ac3daa7356b449b34a6c0ee3d70652072371f"
+        }
+      ],
+      "basis": "Recovered the original server session/client/epoch, RPC workspace, task, PID/startTick and operationId after a fresh authenticated channel gate. One process/start and one persisted effect. Admission deadline cancelled the same task; independent /proc confirms disappearance. Recovery does not clear uncertain or enable replay.",
+      "window": "Default 30000/max 120000 ms, beginning at disconnect invocation before closing owned transport; checked before/after authentication and after status+independent observation, expiry -> unknown and closes next client. Actual reconnect completed at 3673 ms; exact 29999/30000 boundary tested offline, not a full 30-second outage SLA. Helper retention 600000 ms is only the prerequisite mechanism.",
+      "initialPolicy": "Task default 60000/max 300000; approval default 30000/max 120000. Owner schedules these values; tests verify exact maxima/+1 and expiry states. Actual workload uses 20000 ms admission timer and actual approval uses 20 ms. No product approval UI or late-reply protocol claim."
+    },
+    {
+      "id": "T107-IA-02",
+      "status": "not-closed",
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/repair1-3b306efdbbb419d4cbc6ce95/entrypoints/entrypoints.json",
+          "sha256": "217e7292552e5a6258c82bb59dda897a29286549641bfac8fcf6ea8aed679cb4"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route-observation.json",
+          "sha256": "ae6d2bce92bacc35f374b7aebc80dfb5e9b83eada7131ed6caef9030966ec603"
+        }
+      ],
+      "basis": "42 canonical/context negatives and 7 local positives pass through the declared isolated composition. Opaque server-created handles, not body realm/cwd, provide authority. Actual route registration and shortcut registration are wrapped; Host/API/scheme/local-opener use composed installed functions, not full product UI integration. New normalized-route variants escape the wrapper; see T107-R2-IA-04."
+    },
+    {
+      "id": "T107-IA-03",
+      "status": "closed-contract-correction",
+      "evidence": [
+        {
+          "path": "scripts/m1/t107_repair_policy.mjs",
+          "sha256": "35de788bece19e0855bc5837a1781ed415213f843989b1fb659e84bbfca9eb42"
+        },
+        {
+          "path": "artifacts/m1/t107/repair1-3b306efdbbb419d4cbc6ce95/counterexample/discovery-budget.json",
+          "sha256": "df9fee17e84e35a170437f5a33d582ed567fac7db19325c53b9604622735fc68"
+        }
+      ],
+      "basis": "Current delta explicitly supersedes historical maximumMs=18000 with postOpenLoopBudgetMs. Open/read/close each default 5000, permitted RPC max 10000; finally close separately awaited and its failure propagates. hardEndToEndDeadlineMs=null; unchanged virtual 28800 ms counterexample rerun byte-identically. Old generator and old focused tests remain historical; current closeout names repair controller/delta. No hard deadline was implemented or asserted."
+    },
+    {
+      "id": "T107-OBS-01",
+      "status": "closed",
+      "evidence": [
+        {
+          "path": "docs/06-decisions-and-risks.md",
+          "sha256": "dceb8708008e0e509ade1d87e8961f17cfb31e0c151544d015fda031fd8595a7"
+        },
+        {
+          "path": "docs/implementation/m1-closeout-tasks.md",
+          "sha256": "dacefa5192a27f79f9e918bcd72cb88573762d06ddb3008fb6e14ec72dbfbca7"
+        }
+      ],
+      "basis": "Current prose correctly records accepted T-106, review1 blocked and repair1 pending independent review. Reviewer did not edit it."
+    }
+  ],
+  "newFindings": [
+    {
+      "id": "T107-R2-IA-04",
+      "severity": "blocking-M1-10",
+      "status": "confirmed",
+      "locations": [
+        {
+          "path": "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_repair_guard.mjs",
+          "lines": "33-39"
+        },
+        {
+          "path": "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/lib/index.js",
+          "lines": "9194-9198,9418-9435"
+        }
+      ],
+      "scenario": "Trusted remote capability with POST /sidebar/api/./open.external, or absent capability with POST /sidebar/api/%2e/open.external; action=reveal and path=owned empty anchor. Forged local/binding/session fields do not prevent the bypass.",
+      "actual": "Raw URL mismatch delegates at guard line 38 without authorize(). Installed URL.pathname normalizes dot segments, then dispatches open.external. Both variants reached HTTP 200 and one recorder effect each; canonical remote/absent controls reached 403/zero, local positive 200/one. Three actual recorder files target only the owned fixture parent.",
+      "evidenceQualification": "Supplementary actual probe exited 1 at its final recorder-path assertion because reveal opens dirname(anchor), not anchor. The five response/count assertions are established by the reached terminal assertion and unchanged sequential source, not saved response bodies. All three action files were independently read; no third live run, no passing counterexample JSON invented.",
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route-observation.json",
+          "sha256": "ae6d2bce92bacc35f374b7aebc80dfb5e9b83eada7131ed6caef9030966ec603"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route_counterexample_retry.mjs",
+          "sha256": "716e5a2fe3c6bd7f1321b0c58e8d774f2afa41b1aa72afc5bc9bdd122075d09b"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route-counterexample-retry-command.json",
+          "sha256": "29f55532c2d69568c8406690a7dce8e0b872a6bc8e8b10ba7a1d5dc8a5e2a441"
+        }
+      ],
+      "expected": "Every spelling accepted as the protected action must reject remote/unknown context before delegation and produce zero effects.",
+      "smallestFix": "Normalize/parse request target identically to the installed handler before classifying protected action, or reject noncanonical spellings before delegation. Retain catalog access, installed local positive controls, and real registration-level tests for ./, encoded-dot, missing/remote/forged contexts. No infrastructure change or full T-201 binding persistence is needed.",
+      "reproduction": "Use the preserved retry checker with its recorded restricted Node invocation and a newly created private fixture containing home/bin/tmp/anchor/actions. Do not overwrite or delete existing evidence. Its known terminal dirname assertion will still exit 1 after the bypass actions; a future regression should expect 403/zero for the variants, not turn this historical failure into pass."
+    }
+  ],
+  "independentRun": {
+    "result": {
+      "path": "artifacts/m1/t107/repair1-3b306efdbbb419d4cbc6ce95/result.json",
+      "sha256": "da15bc49f30f93999559c7b5c8a037f610640c60179c1948ba7b2d3825b2c4d6"
+    },
+    "command": {
+      "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/complete-run-command.json",
+      "sha256": "ad3c18d4dbb683c65ce7d98e154471163d9b0b1ad8f4d1173af943c31775ab3f"
+    },
+    "completeControllerRuns": 1,
+    "controllerExitCode": 0,
+    "recoveryExitCode": 0,
+    "entrypointExitCode": 0,
+    "helperGates": 3,
+    "originalIdentity": {
+      "sessionId": "944644fc4b79bd7c23fa092871ac834a",
+      "clientId": "a5f396af-0ebb-4944-a38c-3dd202b3aa9a",
+      "serverEpoch": "2ebd730c35da8b1e023c128f39468932",
+      "workspaceId": "c3d9abd5-2228-4977-bc43-fb8ed57d6585",
+      "processId": "a9b9c192-5a00-44d1-8ab9-f326a8670009",
+      "operationId": "56c477f2-98e6-4b62-b6af-1c1d3f663181",
+      "pid": 10378,
+      "startTick": "632226194",
+      "argvSha256": "77ca2fec42566ed0371e07c1303280ad7f246d52c3167a79197ef75d9faae595",
+      "startParamsSha256": "442537399dd8b3722f6f13bdb352f9e1f93de360e56faa5575bd192d6b89aa9e"
+    },
+    "recoveryElapsedMs": 3673,
+    "configuredTaskMs": 20000,
+    "cancelState": "expired-cancelled",
+    "processStartDispatches": 1,
+    "persistedEffects": 1,
+    "transportClosures": [
+      {
+        "pid": 3058333,
+        "ended": true,
+        "exit": {
+          "code": 78,
+          "signal": null
+        },
+        "stderrBytes": 34
+      },
+      {
+        "pid": 3059092,
+        "ended": true,
+        "exit": {
+          "code": 78,
+          "signal": null
+        },
+        "stderrBytes": 34
+      }
+    ],
+    "transportMeaning": "exit 78 is intentionally closed owned transport, not remote process exit proof. Original PID/startTick and process status establish cancellation.",
+    "canonicalGuardNegatives": 42,
+    "guardLocalPositives": 7
+  },
+  "integrity": {
+    "baseline": {
+      "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/baseline.json",
+      "sha256": "388639984a4702ec48d2d3c6ed0d4ce425dff5b6bc41b1776bd7806f979b9d70"
+    },
+    "sourceSha256": {
+      "scripts/m1/t107_repair.test.mjs": "d9ab4a9baa34a9cc679a760421161509556c6f209865e07c69b06d0b2ab2e95c",
+      "scripts/m1/t107_repair_entrypoints.mjs": "5a2b28ef419a05e5d35d07f1e6d4be0dcaf3117e7491794ad071e63fc2f8f537",
+      "scripts/m1/t107_repair_guard.mjs": "78130e6cf17c5cf2a64a2632812a0bcaa108c273c103ca88a2bc11aa383bfafa",
+      "scripts/m1/t107_repair_policy.mjs": "35de788bece19e0855bc5837a1781ed415213f843989b1fb659e84bbfca9eb42",
+      "scripts/m1/t107_repair_recovery.mjs": "40d9d7d8545e4f02eeb0dc0c20b9de76e23abe070021d11be3320fe33a520756",
+      "scripts/m1/t107_repair_run.py": "67793eb3e1787c22be2f06dddb8e04f1cfad028941e66722c1cde15f5303114e",
+      "scripts/m1/t107_repair_runtime.mjs": "b47af018b40ddc853cf2f79d92e9fbabee854b44e53584a50b9cf457d4311e2e"
+    },
+    "historicalSourcesVerified": 41,
+    "installedInventoryFilesVerified": 26,
+    "implementationFailureHistoryPreserved": {
+      "path": "artifacts/m1/t107/repair1-e0a6b7e3cea45b5824fd3c99/result.json",
+      "sha256": "2faeecc168a6dcd06399390b61f7a8945eb1a1fc5891ddd468494f1ec9efadb5"
+    },
+    "oldChecksumRows": 23,
+    "independentCheckers": [
+      {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/independent_boundaries.mjs",
+        "sha256": "95e7692d254b8af71ccf063ccf06aa4b37134a310fb824b223a38c6a987fb460"
+      },
+      {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/observe_repair.py",
+        "sha256": "d0986211a148c3b8a50c11f5e86b36b589b1ed98ef454b8e692cebee8eab5ee0"
+      },
+      {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route_counterexample.mjs",
+        "sha256": "d9f74f7531bc4530e7201e31b9e537bb76a68bc9c7dda2b675c037f67d7f2f18"
+      },
+      {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route_counterexample_retry.mjs",
+        "sha256": "716e5a2fe3c6bd7f1321b0c58e8d774f2afa41b1aa72afc5bc9bdd122075d09b"
+      }
+    ]
+  },
+  "verification": {
+    "focused23": "Executed once inside the independent complete controller; 23 pass/0 fail.",
+    "historicalFocused7": "Passed; still tests historical matrix, not current release readiness.",
+    "independentBoundaryTests4": "Passed: default/max/+1, owner scheduling, recovery end-window boundary, wrong PID and preserved uncertain fence.",
+    "boundariesAndSyntax": {
+      "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/boundary-tests.json",
+      "sha256": "ef9007d2403912ec5f31a73cfacc1574497e3352e6a78297de1094c0e9d67d4b"
+    },
+    "originalCounterexample": {
+      "path": "artifacts/m1/t107/repair1-3b306efdbbb419d4cbc6ce95/counterexample/discovery-budget.json",
+      "sha256": "df9fee17e84e35a170437f5a33d582ed567fac7db19325c53b9604622735fc68"
+    },
+    "storageResources": {
+      "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/independent-final-observation.json",
+      "sha256": "76fa2d4472487e03636344d8341ac3daa7356b449b34a6c0ee3d70652072371f"
+    },
+    "observerCommand": {
+      "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/observation-command.json",
+      "sha256": "50f1960509e743dc7b518a668d34781f9e65397f6c5aef221839069a1675fdc4"
+    },
+    "expectedProbeBytesIndependentlyReconstructed": true,
+    "storedFiles": 2,
+    "effectRecords": 1,
+    "fileNameAndOperationLookup": true,
+    "finalDocsChecksumsDiff": "Recorded after these new immutable records are written; see validation and acceptance final-checks.json."
+  },
+  "failureHistory": [
+    {
+      "id": "T107R1-CLEANUP-CROSS-WORKSPACE-TRACKED",
+      "owner": "implementation",
+      "exitCode": 1,
+      "basis": "Directly compared old before/after peer snapshots: only tracked differs; m1-a cleanup has no unreaped process. Current controller line159 sends tracked only to m1-a and retains peer equality at line163. Independent complete run also passes this exact assertion."
+    },
+    {
+      "id": "R2-LOOKUP-01",
+      "owner": "reviewer-read-only-lookup",
+      "exitCode": 2,
+      "evidence": {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/lookup-failure.json",
+        "sha256": "f10a4f34bdef04a02f44c5ca23c60a3837f1c054ffbeb5b7cb43e75043a2a2dd"
+      },
+      "resolution": "Switched from nonexistent names to the exact baseline/import source paths; no runtime work."
+    },
+    {
+      "id": "R2-HARNESS-01",
+      "owner": "reviewer-route-fixture",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route-harness-failure.json",
+        "sha256": "28a916542dd9a888261656b2ecdf71c3a38954f658d92fe93757f6fd422cd4a1"
+      },
+      "resolution": "Missing ctx.get before registration; zero actions. Preserved source/output; one reasoned retry added only the missing fixture interface."
+    },
+    {
+      "id": "R2-HARNESS-02",
+      "owner": "reviewer-route-fixture-retry",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route-counterexample-retry-command.json",
+        "sha256": "29f55532c2d69568c8406690a7dce8e0b872a6bc8e8b10ba7a1d5dc8a5e2a441"
+      },
+      "resolution": "Final dirname expectation failed after all five route status/count checks; three actual recorders read directly. No additional live retry or claimed probe pass."
+    },
+    {
+      "id": "R2-ARCHIVE-01",
+      "owner": "reviewer-local-validation-wrapper",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/boundary-archive-failure.json",
+        "sha256": "9cdbb835de52bce712ff26ecab60248dd3b149f35f34d223f9658d1cc288985b"
+      },
+      "resolution": "All child tests exited0; wrapper incorrectly expected TAP prefix instead of Node spec output. One local validation retry corrected only summary parsing; remote controller not rerun."
+    }
+  ],
+  "finalResources": {
+    "windowUTC": [
+      "2026-10-30T17:19:23.152624+00:00",
+      "2026-10-30T17:19:25.788114+00:00"
+    ],
+    "containerIdsUnchanged": 36,
+    "lab": 4,
+    "original": 32,
+    "trackedRemoteIdentities": [
+      {
+        "pid": 10378,
+        "startTick": "632226194",
+        "state": "gone"
+      },
+      {
+        "pid": 10360,
+        "startTick": "632226071",
+        "state": "gone"
+      },
+      {
+        "pid": 10359,
+        "startTick": "632225958",
+        "state": "gone"
+      },
+      {
+        "pid": 10374,
+        "startTick": "632226140",
+        "state": "gone"
+      },
+      {
+        "pid": 10379,
+        "startTick": "632226194",
+        "state": "gone"
+      },
+      {
+        "pid": 10394,
+        "startTick": "632226475",
+        "state": "gone"
+      }
+    ],
+    "ownedRemoteProcesses": [],
+    "recordersGone": 8,
+    "centralProbePids": [],
+    "transport": {
+      "hostBrokerPids": [],
+      "controlPlaneCliPids": []
+    },
+    "resources": [
+      {
+        "name": "m1-a",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/workspace"
+        ],
+        "logWindowStartedUnix": 1793380204,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      },
+      {
+        "name": "m1-b",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/workspace"
+        ],
+        "logWindowStartedUnix": 1793380204,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      },
+      {
+        "name": "coder",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/var/run/docker.sock",
+          "/home/coder",
+          "/run/lab-tls",
+          "/opt/lab-template"
+        ],
+        "logWindowStartedUnix": 1793380204,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      },
+      {
+        "name": "database",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/var/lib/postgresql/data"
+        ],
+        "logWindowStartedUnix": 1793380204,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      }
+    ],
+    "dataDeleted": false
+  },
+  "remainingScope": {
+    "U01": "M1 technical repair accepted for healthy same-instance acknowledged non-PTY task only; full persistence, restart/generation fault matrix and PTY/output-cursor recovery remain untested.",
+    "U02": "One isolated-code guard normalization repair and real registration-level regressions remain. No formal M2 binding/DOM requirement is imposed as this fix prerequisite.",
+    "U03": "Not executed. Missing frozen-image rg, PID/hard-disk quota and full isolation remain deployment/security gaps. New template/image/storage/lifecycle actions need separate resource authorization; no circular full-M3 prerequisite for T-201 is created.",
+    "notExecuted": [
+      "T-201",
+      "product binding persistence/UI/auth/DOM/native desktop",
+      "daemon/platform restart or generation change",
+      "mutation replay and full M3 fault matrix",
+      "U-03 infrastructure, rebuild, third workspace or deployment",
+      "historical T103-T106 whole-suite reruns"
+    ]
+  },
+  "scope": "Only new independent evidence/fixtures and checksum appends. No frozen or new implementation source edit, matrix/main-document edit, production/global package change, workflow, delegation, public network, model API, commit/push, or persistent data deletion.",
+  "handoff": "Do not release M1 or start T-201. Coordinator may assign the bounded guard-normalization repair and its targeted independent re-review."
+}

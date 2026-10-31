@@ -1,0 +1,433 @@
+{
+  "schema": 1,
+  "slice": "D07-environment",
+  "date": "2026-10-31",
+  "result": "stage-report-final-comprehensive-runtime-failed",
+  "conclusion": "环境发现及新UI链路有通过证据；最终综合实跑未通过。不声明D07完整验收，不启动D08。",
+  "scope": {
+    "single_writer": true,
+    "delegation": false,
+    "current_operator_read_only": true,
+    "real_platform_lifecycle_requests": 0,
+    "real_model_or_external_cli": false,
+    "third_workspace": false,
+    "m1_b_workload": false,
+    "installations": false,
+    "production_or_global_config_changes": false,
+    "commit_or_push": false
+  },
+  "implemented": [
+    "Central real Coder owner/allowlist discovery with build/job/Agent/control-plane+DB identity and separate helper channel proof",
+    "Schema7 immutable observations/head revisions, durable lifecycle confirmations/attempt marker/target locks and connection sagas",
+    "Real configurable create/start/stop executor, exercised only with controlled offline transport; accepted is not ready, unknown is never resubmitted",
+    "Original Web global environment entry without fake session; existing/new bindings and real native sessions navigate to original Files/terminal",
+    "Same-generation pause vs generation/root/policy revocation, original controls invalidation across model/ACP/ordinary tasks",
+    "Cold saved-model Send installs current authorized native selection before assembly; serialization prevents old selection overwriting a new choice",
+    "Half-TTL real refresh for connected idle channels, near-expiry admission refresh, shared refresh, old response revision fence and dispose guard",
+    "Unknown monotonicity; late process ACK adds correlated audit identity/PID without restoring dispatch or erasing the initial cause"
+  ],
+  "verification": {
+    "offline_state_and_guard_tests": 45,
+    "offline_python_executor_tests": 5,
+    "real_readonly_api_storage_restart_checks": 6,
+    "original_browser_checks": 8,
+    "targeted_provider_offline_protocol_checks": 8,
+    "final_comprehensive_runtime": {
+      "attempts": 2,
+      "passed": false,
+      "completed_checks": [
+        0,
+        0
+      ],
+      "additional_attempts_stopped": true
+    },
+    "last_local_only_checks": 5,
+    "syntax": {
+      "esm": 45,
+      "python": 13
+    },
+    "locked_upstream_files": 75,
+    "deployed_source_files": 27,
+    "private_files": 400,
+    "private_directories": 115,
+    "startup_log_delta": 0,
+    "retained_historical_log_bytes": 5360
+  },
+  "current_storage": {
+    "schema": 7,
+    "integrity": "ok",
+    "counts": {
+      "acp_controls": 30,
+      "acp_events": 356,
+      "acp_task_operations": 179,
+      "acp_tasks": 25,
+      "environments": 7,
+      "file_read_versions": 54,
+      "instance_records": 7,
+      "model_configurations": 10,
+      "model_controls": 86,
+      "model_requests": 56,
+      "model_selections": 12,
+      "model_tool_calls": 124,
+      "model_tool_operations": 132,
+      "operation_records": 1658,
+      "project_bindings": 8,
+      "projects": 8,
+      "session_bindings": 21
+    },
+    "unknown_operation_count": 13,
+    "pending_running_operation_count": 0,
+    "active_model_or_acp_tasks": 0,
+    "unknown_processes_all_terminated": false,
+    "migration": "Schema6 17-table full-row checkpoint preserved. Subsequent authenticated new Sends changed only two existing selection timestamps, explicitly matched to new requests. All 17 current tables then matched byte-for-field across final owned restart."
+  },
+  "ui_error_classification": {
+    "changes_ops": {
+      "status": 409,
+      "code": "agent-studio/provider-unavailable",
+      "audit_time": "2026-10-31T03:18:30.350Z",
+      "after_channel_connected": "2026-10-31T03:18:22.298Z",
+      "before_later_session_binding_links": true,
+      "meaning": "Fixed disabled session-change history; not a connection failure, no claim this route recovered; original Files/terminal succeeded."
+    },
+    "expired_auth": {
+      "status": 401,
+      "non_json_response": true,
+      "test_listener_json_decode_error": true,
+      "ui_http_401_alert_verified": true
+    },
+    "js_errors": 0,
+    "external_requests": 0,
+    "all_network_errors_zero": false,
+    "unexpected_errors_assertion": "Exact route/status/code assertions against the saved browser report in environment.regression.mjs; not a blanket 409 ignore",
+    "phone_acceptance": false
+  },
+  "failures": [
+    {
+      "name": "D07_REMOTE_SEARCH_SSH_255",
+      "operation_ids": [
+        "966626f2-738a-4c34-a38d-2b90f8c12072",
+        "408cf66d-9600-4792-a4c0-0409a6a2f457",
+        "a2d2adc8-17f4-419d-9be8-85646e7a3bdd"
+      ],
+      "cause": "Unlocated historical transport failure; original stderr was discarded",
+      "state": "unknown",
+      "limits": "Known PID23134 later absent without original startTick/exit status; two unacknowledged PIDs do not prove no process started. New success is neither recovery nor a root-cause repair."
+    },
+    {
+      "name": "D07_OBSERVATION_TTL_DISPATCH_RACE",
+      "operation_ids": [
+        "90a931c8-55fe-4e7a-8982-638ea7aa3feb"
+      ],
+      "state": "unknown",
+      "remote_process_id": "72ec1377-ab1f-4286-8cb0-94531c7b8e8d",
+      "remote_pid": 23731,
+      "fix": "Refresh while idle-connected and before near-expiry dispatch; retain expiry fail-closed. Late ACK guard preserves unknown and appends identity evidence.",
+      "verification": "Offline timing/late ACK/shared refresh/generation/dispose tests; existing real idle control-plane observations span more than original TTL and show advancing Agent timestamps. No new remote task validation after final failure."
+    },
+    {
+      "name": "D07_HELPER_START_TIMEOUT_EOF",
+      "operation_ids": [
+        "17e4b4af-a7ef-441b-a4e5-61e145a724a2"
+      ],
+      "state": "unknown",
+      "remote_process_id": "b73ef497-d29d-4ad3-9c05-bbe5a4c437df",
+      "remote_pid": null,
+      "cause": "10-second process/start timeout followed by helper stdout EOF; underlying cause not located. Not attributed to TTL; no further runtime retry."
+    },
+    {
+      "name": "D07_COLD_MODEL_SELECTION_NOT_INSTALLED",
+      "request_id": "ff850703-40b9-45bc-943a-3c86b5d375ee",
+      "state": "failed",
+      "fixed": true,
+      "new_success_requests": [
+        "ccb670c0-771d-494e-b93a-1a75eff630bd",
+        "8bc3de37-98a0-439a-88fa-b588156790df"
+      ],
+      "new_cancel_request": "98a9c39e-4a05-47d9-901b-032e1001daaf",
+      "old_request_replayed": false
+    },
+    {
+      "name": "D07_UI_DISCOVERY_SELECTION_RACE",
+      "fixed": true,
+      "evidence": "ui-first failure retained; later new UI path succeeded"
+    },
+    {
+      "name": "D07_TEST_BASELINE_KEY",
+      "fixed": true,
+      "scope": "Comparison now uses complete-row multisets for tables without a primary key"
+    },
+    {
+      "name": "D07_UNIT_NULL_PROTO",
+      "fixed": true,
+      "scope": "New unit assertion normalized node:sqlite row prototype; failed TAP retained"
+    },
+    {
+      "name": "D07_STAGE_OBSERVATION_COLUMN",
+      "fixed": true,
+      "scope": "Local closeout query uses observed_at, not nonexistent created_at; failed JSON retained"
+    }
+  ],
+  "remaining": [
+    "Final full remote Files/Git/provider run did not pass; no full UI rerun after final timing guards",
+    "Three historical SSH255 operations, one TTL operation and one helper-timeout operation retain unknown outcomes; no unknown PID inferred to be unstarted",
+    "Original task/helper-session/ACP-session recovery, crash windows, and transport root-cause observability are not delivered",
+    "Real Coder lifecycle operations need explicit target/template/parameters/create name/resource/side-effect authorization; current policy remains readonly",
+    "Real model/external CLI, official SC-12, actual phone/multihost and strong isolation remain unaccepted"
+  ],
+  "runtime": {
+    "pid": 1734075,
+    "run_id": "b2f8e861-7e0d-4290-84db-80a930fd8ee6",
+    "origin": "http://127.0.0.1:34409",
+    "auth_file": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio/login.url",
+    "root": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio",
+    "reconciliation": {
+      "bindings_ready": 0,
+      "sessions_ready": 0,
+      "failed": 0
+    },
+    "running": true,
+    "authentication": "Private login.url file only; token/cookie never included",
+    "fixture": {
+      "pid": 538557,
+      "start_ticks": "634479748",
+      "not_restarted": true
+    }
+  },
+  "commands": [
+    {
+      "command": "node --test --test-reporter=tap scripts/dev/store.test.mjs scripts/dev/environment.test.mjs",
+      "exit": 0,
+      "output": "artifacts/d07/unit-stage-45.tap"
+    },
+    {
+      "command": "python3 -I scripts/dev/test_environment_broker.py",
+      "exit": 0,
+      "output": "artifacts/d07/python-stage-5.txt"
+    },
+    {
+      "command": "node scripts/dev/environment.integration.mjs --restart --after-regression",
+      "exit": 0,
+      "output": "artifacts/d07/integration-a3d78e7e-caad-45af-a8ad-df95f17e5ed5.json"
+    },
+    {
+      "command": "node scripts/dev/environment.regression.mjs",
+      "exit": 0,
+      "output": "artifacts/d07/regression-8a70d6fc-4aa5-498f-9ee7-6d90b13815e2.json"
+    },
+    {
+      "command": "Python Playwright environment.browser.py with existing Chromium, persistent root and unique ui-new-path output",
+      "exit": 0,
+      "output": "artifacts/d07/ui-new-path/browser.json"
+    },
+    {
+      "command": "node scripts/dev/core.verify.mjs --environment (first attempt and one retry)",
+      "exit": 1,
+      "outputs": [
+        "artifacts/d07/final-verification-dad2d917-5207-44df-9b73-6091924d0432.json",
+        "artifacts/d07/final-verification-7131584c-e5b3-49c1-8f1d-e20cc07611e3.json"
+      ]
+    },
+    {
+      "command": "Inline Node local-only closeout: SQL snapshot, owned preview stop/start, full operation/link readback, auth, syntax, source locks, permissions and own-preview secret scan",
+      "exit": 0,
+      "output": "artifacts/d07/stage-closeout-final.json"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "artifacts/d07/deployment-inventory.json",
+      "sha256": "e9cf97ca7f5585192a0c1810000123d31c28cbf3286cb974dcbb666538c7e0ff"
+    },
+    {
+      "path": "artifacts/d07/pre-migration-snapshot.json",
+      "sha256": "8beb01e701e84934b0239f2b0700eaa31fd21f5b2c751251a32bce2092d959de"
+    },
+    {
+      "path": "artifacts/d07/readonly-discovery-first.json",
+      "sha256": "d5974c9b240a0472b106ced8dfe6fd7d7db9f0ca491d067d763f7176d71e1f58"
+    },
+    {
+      "path": "artifacts/d07/unit-stage-45.tap",
+      "sha256": "1f58ad74271c33dbcfd200b9f577aa0968af35b13befc17bb07c0e002917313c"
+    },
+    {
+      "path": "artifacts/d07/python-stage-5.txt",
+      "sha256": "9adbf535bcefb286472a504563d8af80053329e96bcd0e3f74a024c96ceda30f"
+    },
+    {
+      "path": "artifacts/d07/integration-1841027f-251e-43b5-84c6-d678f7102139.json",
+      "sha256": "5c75d4a9ddfc36395e3f56f7c7e95d0a83d96ea51411aeb3cc61de96182bddaf"
+    },
+    {
+      "path": "artifacts/d07/integration-a3d78e7e-caad-45af-a8ad-df95f17e5ed5.json",
+      "sha256": "9982e3fde6a5d374f3cac4eaf8277f8f21b9bf48ce924ee2231c6f6e7b769834"
+    },
+    {
+      "path": "artifacts/d07/ui-new-path/browser.json",
+      "sha256": "3eb7d220a03b140ec00b267a3887542877c0f0293ae4760d6f3c22126c729b0e"
+    },
+    {
+      "path": "artifacts/d07/ui-new-path/no-session-discovery.png",
+      "sha256": "0b4fd44818551af5a0906a60e6d4a3f57ccb0a2598610b0394d9b1588b06d942"
+    },
+    {
+      "path": "artifacts/d07/ui-new-path/bound-original-files.png",
+      "sha256": "fe239395b22e4d43eb095ecc47197cb22b1677ab96be1c1cb95624ddda0ee144"
+    },
+    {
+      "path": "artifacts/d07/ui-new-path/bound-original-terminal.png",
+      "sha256": "df667157c516b2a38109e94a6ebfb0a46e85377ef31c02838b9d7fb87d0f45aa"
+    },
+    {
+      "path": "artifacts/d07/ui-new-path/mobile-390.png",
+      "sha256": "68bc896833e9ae144f34f829227347ceb024b90f99141cd524a4de1e77b69746"
+    },
+    {
+      "path": "artifacts/d07/ui-new-path/authentication-error.png",
+      "sha256": "87b680d19fe85ecaa3ba8bc89646bc2cf599d02b80975c710281d16c637332ba"
+    },
+    {
+      "path": "artifacts/d07/regression-8a70d6fc-4aa5-498f-9ee7-6d90b13815e2.json",
+      "sha256": "6211780971dd935d0f287770ebe3aebd805860e2e0905966ed7d71d9f957c7f5"
+    },
+    {
+      "path": "artifacts/d07/single-read-d72897d5-02e3-4e6d-aeca-3ec26e9f1210.json",
+      "sha256": "c4d7100aa2f13387dae92e0b17aa118bb81638248f65196449c4daeaf4a87ffe"
+    },
+    {
+      "path": "artifacts/d07/failure-ssh255-original-observation.json",
+      "sha256": "2e3f12636a5a5fba3cb9131f662b68e7e82f844c5a233fd6a87ed4998feb7f24"
+    },
+    {
+      "path": "artifacts/d07/ui-first/browser.json",
+      "sha256": "9c0fb02f48fec96092db0a5c39ba2afd70a54f9fea6235961b88333016008ff3"
+    },
+    {
+      "path": "artifacts/d07/ui-second/browser.json",
+      "sha256": "4bd0f39534b88fc4e2212e944f5dcb11b23b9f664222f504e48c3dffca516575"
+    },
+    {
+      "path": "artifacts/d07/regression-7f98012b-8eef-4af3-b9e1-4703024d50c4.json",
+      "sha256": "f45452b589d76adf45e82d50ebb7bcd54c85670ee3cc2ee74cb97eb3d77301c3"
+    },
+    {
+      "path": "artifacts/d07/unit-cold-selection-42.tap",
+      "sha256": "9540230c7b14021471b6f7430e23b038298707e5a0c1e440ce9f2d8f97bb1a8e"
+    },
+    {
+      "path": "artifacts/d07/integration-a1c9c13f-bd14-4ca1-87b4-3758a23e81bc.json",
+      "sha256": "389631d96ee7a6510e087c8fca9aa3d12fcad439e3ef113534c8f639907e43bf"
+    },
+    {
+      "path": "artifacts/d07/final-verification-dad2d917-5207-44df-9b73-6091924d0432.json",
+      "sha256": "eecf853a5e9a7405e5dffdf99afb08d0aad00daac96380127343dc24a3729ed5"
+    },
+    {
+      "path": "artifacts/d07/final-verification-7131584c-e5b3-49c1-8f1d-e20cc07611e3.json",
+      "sha256": "eecf853a5e9a7405e5dffdf99afb08d0aad00daac96380127343dc24a3729ed5"
+    },
+    {
+      "path": "artifacts/d07/final-retry-diagnostic.json",
+      "sha256": "237717759930908d8ae7f41edb10bf367a1e8215ba14468b1ad0d221ca30f2d6"
+    },
+    {
+      "path": "artifacts/d07/stage-closeout.json",
+      "sha256": "57b2670638cd4ac23b5943b3227b8cc17b375cabac5fbc258d4cf513aff6113c"
+    },
+    {
+      "path": "artifacts/d07/stage-closeout-final.json",
+      "sha256": "c2671cad8fbd8f5cc05976fcc825bbf6717eb12ea2122b4f2876f524823bba9c"
+    }
+  ],
+  "source_sha256": [
+    {
+      "path": "packages/dsh-agent-studio/environment-state.mjs",
+      "sha256": "745a11fd9f0f061708b7b62d5ef90ab7d9e8a42cbdbe1d2246f41af356962489"
+    },
+    {
+      "path": "packages/dsh-agent-studio/environment-manager.mjs",
+      "sha256": "15a92285443c77e0755b49d9aa99b2111f07948f5398b77f96867a9f56297373"
+    },
+    {
+      "path": "packages/dsh-agent-studio/environment-sidebar.mjs",
+      "sha256": "3546a1265b4ec01ea8233725929aa73ffb8ffb397a26a9aa7411fa7072cd41da"
+    },
+    {
+      "path": "packages/dsh-agent-studio/store.mjs",
+      "sha256": "5c3f6c02798a5930701f6713f7d5fe007d50bc77c5ea6010867a7cc23ce874e8"
+    },
+    {
+      "path": "packages/dsh-agent-studio/bindings.mjs",
+      "sha256": "8b1fadb8e627345abef55920a1d18a21955f71aa07a493fcf44ad9cb5c6721bf"
+    },
+    {
+      "path": "packages/dsh-agent-studio/index.mjs",
+      "sha256": "d080cbe6760e9f7e3ac2eeda37f9e8210835405357f38f0edb34d2b2637b60bf"
+    },
+    {
+      "path": "packages/dsh-agent-studio/model-session.mjs",
+      "sha256": "46f7fb2cbb2b757ae42eed44aaee8bcd695e18efb3109db7bcd276194418f3a5"
+    },
+    {
+      "path": "packages/dsh-agent-studio/acp-session.mjs",
+      "sha256": "17806f3e5cfac6a8c6f10363abc2e0d0e5ea5be727977a24090c3c5d3d86bdf5"
+    },
+    {
+      "path": "packages/dsh-agent-studio/adapters/environment-broker.mjs",
+      "sha256": "85af647a67ac5003937320b866467edf3af046f238abf4d3a8900049a680ee5a"
+    },
+    {
+      "path": "packages/dsh-agent-studio/adapters/coder_environment.py",
+      "sha256": "a130491364a4ac65ce8543931931ca90709b0ba6453315abc52a0fd2817cad1e"
+    },
+    {
+      "path": "packages/dsh-agent-studio/adapters/coder_broker.py",
+      "sha256": "13c5d35dfd5a27c180287acc896f208caf2f165380ae3fe62ecd2bb7232739d9"
+    },
+    {
+      "path": "packages/dsh-agent-studio/adapters/bound-provider.mjs",
+      "sha256": "9f8728eef38d5e0ea1f415fd7f6d13d55276eb20d17e857429ecf6742c5c07f9"
+    },
+    {
+      "path": "scripts/dev/fence.mjs",
+      "sha256": "95a3a2ed82e6bd3657d19a211f6c4b2311a31e037ef4cc38ce219816fc855dae"
+    },
+    {
+      "path": "scripts/dev/preview.mjs",
+      "sha256": "a12acba23be703185be7553295dc7130ee1128f3692affe5c41335ae14e1bf15"
+    },
+    {
+      "path": "scripts/dev/sidebar-projection.mjs",
+      "sha256": "be24395c5583540847d46ef0ac6c3ef2e79108d675dbe47ed21ea4e0de66a0c5"
+    },
+    {
+      "path": "scripts/dev/store.test.mjs",
+      "sha256": "74c31b25a1a0791c6faf76c45c018f481a679296b88582043e832d8b46c6a969"
+    },
+    {
+      "path": "scripts/dev/environment.test.mjs",
+      "sha256": "f316e24bf97782e01007ecf74e43881eb87cc9ac6a1e4260a7166c5b9e6dc7aa"
+    },
+    {
+      "path": "scripts/dev/test_environment_broker.py",
+      "sha256": "4e52450e62c37f3ae9bbf8ac4f439f97848d71282989a5e109f4f2ce27a5ff80"
+    },
+    {
+      "path": "scripts/dev/environment.integration.mjs",
+      "sha256": "ae545bcf21cd8df80a95503b3bf53cc72a3f83a1436614795f50315cd1310b95"
+    },
+    {
+      "path": "scripts/dev/environment.regression.mjs",
+      "sha256": "6a0a1060ef0b0dac04456b9992e4776fa86d43e8687d828a715aeda6eb0bfa00"
+    },
+    {
+      "path": "scripts/dev/environment.browser.py",
+      "sha256": "1aadcea962c74c292f9cabdcee46a57d36f2507b4a3cb3715ee396a86f95dfe8"
+    },
+    {
+      "path": "scripts/dev/core.verify.mjs",
+      "sha256": "fae87d1284616574ccfc840c5bb90e01237e1b43d639db8e8d4bb3c7ecb79e4f"
+    }
+  ]
+}

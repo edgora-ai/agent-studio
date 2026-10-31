@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "task": "T-107",
+  "revision": "repair2",
+  "kind": "implementation-local-post-write-validation-not-independent-review2-validation",
+  "gate": "blocked-pending-independent-validation",
+  "m1Passed": false,
+  "t201Ready": false,
+  "independentAcceptance": false,
+  "selftest": {
+    "path": "docs/implementation/evidence/t107-repair2-selftest.json",
+    "sha256": "f4ac6bcfb35c5edd77d6f187fc9da8b636768f1ed7809d89ab975b3ef8c7d3cf"
+  },
+  "commands": {
+    "path": "artifacts/m1/t107/repair2-local-d8m9zpo3/validation-commands.json",
+    "sha256": "3c71c6d3fa7d90b846983fca4007f6db3611e4933ae4198b577bd06e7fa29bdc"
+  },
+  "localRun": {
+    "path": "artifacts/m1/t107/repair2-local-d8m9zpo3/result.json",
+    "sha256": "eb17c721d693235b1a407586d87d17818af313f93bbb4760a4ad16d368ef916a"
+  },
+  "localReadback": {
+    "path": "artifacts/m1/t107/repair2-local-d8m9zpo3/local-readback.json",
+    "sha256": "7155568ce050d6caa189276b808b72ef8b5d888c59c2a5ea22bf9e04bdc003ed"
+  },
+  "storedSelftestBytes": 12243,
+  "fullStoredBytesReadAndJsonRoundTrip": true,
+  "taskLookup": "T-107",
+  "findingLookup": "T107-R2-IA-04",
+  "caseIdLookupCount": 61,
+  "currentFocusedTests": 28,
+  "historicalOriginalFocusedTests": 7,
+  "documentationTests": 37,
+  "documentsChecked": 19,
+  "localLinksChecked": 167,
+  "changedSourceSha256": {
+    "scripts/m1/t107_repair_guard.mjs": "49796acd5f42060bc105bdc3d9a798bfc85d8601eaf8945021df39918b06afc8",
+    "scripts/m1/t107_repair_entrypoints.mjs": "612fcb911e1be37556c820edb3b55ba37bcf3a10f6c127c2ceaaff4f47bb547f",
+    "scripts/m1/t107_repair.test.mjs": "4d534ced9ac5970d5e94a265f263aac6f6e21bc9d228c777a62f2bb0e3b7b027"
+  },
+  "unchangedRecoveryPolicyRuntimeController": {
+    "scripts/m1/t107_repair_policy.mjs": "35de788bece19e0855bc5837a1781ed415213f843989b1fb659e84bbfca9eb42",
+    "scripts/m1/t107_repair_recovery.mjs": "40d9d7d8545e4f02eeb0dc0c20b9de76e23abe070021d11be3320fe33a520756",
+    "scripts/m1/t107_repair_runtime.mjs": "b47af018b40ddc853cf2f79d92e9fbabee854b44e53584a50b9cf457d4311e2e",
+    "scripts/m1/t107_repair_run.py": "67793eb3e1787c22be2f06dddb8e04f1cfad028941e66722c1cde15f5303114e"
+  },
+  "oldChecksumRowsBytePreserved": 24,
+  "implementationRowsAtRecordedCheck": 25,
+  "researchRows": 8,
+  "thisReceiptAppendedAfterWrite": true,
+  "allRecordedCommandsPassed": true,
+  "noFailuresOrRetriesThisRepair": true,
+  "allEightRecorderPidsGone": [
+    3162425,
+    3162408,
+    3162396,
+    3162407,
+    3162431,
+    3162419,
+    3162389,
+    3162390
+  ],
+  "actualRevealArgument": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair2-local-d8m9zpo3/entrypoints",
+  "sourceAndEvidenceVerification": {
+    "historicalSourceHashesVerified": 36,
+    "originalT107SourceHashesVerified": 5,
+    "unchangedRecoveryPolicyRuntimeController": 4,
+    "upstreamSourceHashesVerified": 8,
+    "referenceHashesVerified": 20
+  },
+  "statusDocuments": [
+    {
+      "path": "docs/implementation/m1-closeout-tasks.md",
+      "sha256": "fc2f677df516c8ae1c1a0e130eee4dcd0e53232b32e9be577f7d3869e5ba6b2f"
+    },
+    {
+      "path": "docs/06-decisions-and-risks.md",
+      "sha256": "d4ca26c16657b57a5a037f5993ae26170e0f3fc56b9589a64fdefdf887daaf10"
+    }
+  ],
+  "independentReview2RecordUnchanged": {
+    "path": "docs/implementation/evidence/t107-independent-review2.json",
+    "sha256": "0520128e8b52f46e3bbc1277ea64791acdea0a33878c6da9efca753eeb2ccc6a"
+  },
+  "independentReview2ArchiveComplete": false,
+  "independentReview2ValidationCreated": false,
+  "oldIndependentFixtureFailuresUnchanged": true,
+  "noRemoteRecoveryOrFullControllerExecuted": true,
+  "noServiceOrDockerCheckPerformed": true,
+  "noNewContainerSetClaim": true,
+  "credentialsNotRead": true,
+  "handoff": "Local defensive repair self-test only. Stop this task; coordinator owns further independent validation. M1/T201 remain blocked."
+}

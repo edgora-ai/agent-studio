@@ -1,0 +1,10 @@
+{
+  "name": "agent-studio-preview-profile",
+  "private": true,
+  "type": "module",
+  "dsh": {
+    "profile": {
+      "bundles": ["@deepseek-ai/dsh-base", "@deepseek-ai/dsh-web-app", "dsh-better-sidebar"]
+    }
+  }
+}

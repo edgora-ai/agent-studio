@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "task": "T-107",
+  "revision": "repair2",
+  "role": "bounded-defensive-local-implementation-selftest-not-independent-review",
+  "gate": "blocked-pending-independent-validation",
+  "m1Passed": false,
+  "t201Ready": false,
+  "independentAcceptance": false,
+  "finding": {
+    "id": "T107-R2-IA-04",
+    "selftestStatus": "pass-pending-independent-validation",
+    "guardLocation": "scripts/m1/t107_repair_guard.mjs:37-44",
+    "downstreamLocation": "installed sidebar lib/index.js:9418-9435",
+    "correction": "Use exactly the installed URL(req.url ?? \"/\", \"http://dsh.internal\").pathname classification before delegation. Parsing failure rejects. Host action route remains unconditionally guarded; non-action directory requests still delegate.",
+    "targets": [
+      {
+        "id": "canonical",
+        "target": "/sidebar/api/open.external"
+      },
+      {
+        "id": "dot",
+        "target": "/sidebar/api/./open.external"
+      },
+      {
+        "id": "encoded-dot",
+        "target": "/sidebar/api/%2e/open.external"
+      }
+    ],
+    "newSpecifiedNegativeCases": 9,
+    "newSpecifiedLocalPositiveCases": 3,
+    "parseFailureRegression": "offline unit test rejects without calling delegate"
+  },
+  "review2Archive": {
+    "evidence": {
+      "path": "docs/implementation/evidence/t107-independent-review2.json",
+      "sha256": "0520128e8b52f46e3bbc1277ea64791acdea0a33878c6da9efca753eeb2ccc6a"
+    },
+    "status": "incomplete; no final validation",
+    "coordinatorReportedInterruption": "two upstream HTTP400 blocks; reviewer stopped",
+    "recordedGate": "repair-required",
+    "recordedIA01AndIA03Disposition": "closed only in declared scope",
+    "M1_10StillNotIndependentlyPassed": true,
+    "reviewResumed": false,
+    "alternateModelAgentOrChannelUsed": false
+  },
+  "run": {
+    "path": "artifacts/m1/t107/repair2-local-d8m9zpo3/result.json",
+    "sha256": "eb17c721d693235b1a407586d87d17818af313f93bbb4760a4ad16d368ef916a"
+  },
+  "entrypoints": {
+    "path": "artifacts/m1/t107/repair2-local-d8m9zpo3/entrypoints/entrypoints.json",
+    "sha256": "b08d522322ada8c8f6d358ae91901b22042d4b725a9827b6bf0914923f113a6c"
+  },
+  "localReadback": {
+    "path": "artifacts/m1/t107/repair2-local-d8m9zpo3/local-readback.json",
+    "sha256": "7155568ce050d6caa189276b808b72ef8b5d888c59c2a5ea22bf9e04bdc003ed"
+  },
+  "sourceDiff": {
+    "path": "artifacts/m1/t107/repair2-local-d8m9zpo3/source-changes.diff",
+    "sha256": "b434d1aa7b4bf5921ef84712d569e98b1c761f0fc5c8693deee9353a72bc355e"
+  },
+  "baseline": {
+    "path": "artifacts/m1/t107/repair2-baseline-grzeqqkg/manifest.json",
+    "sha256": "dea4487431df86f8b05e15fdc2419e8d9b8b4724f608c4a5bf72889177c048e9"
+  },
+  "changedSources": [
+    {
+      "path": "scripts/m1/t107_repair_guard.mjs",
+      "oldSha256": "78130e6cf17c5cf2a64a2632812a0bcaa108c273c103ca88a2bc11aa383bfafa",
+      "newSha256": "49796acd5f42060bc105bdc3d9a798bfc85d8601eaf8945021df39918b06afc8",
+      "snapshot": {
+        "path": "artifacts/m1/t107/repair2-baseline-grzeqqkg/scripts/m1/t107_repair_guard.mjs",
+        "sha256": "78130e6cf17c5cf2a64a2632812a0bcaa108c273c103ca88a2bc11aa383bfafa"
+      }
+    },
+    {
+      "path": "scripts/m1/t107_repair_entrypoints.mjs",
+      "oldSha256": "5a2b28ef419a05e5d35d07f1e6d4be0dcaf3117e7491794ad071e63fc2f8f537",
+      "newSha256": "612fcb911e1be37556c820edb3b55ba37bcf3a10f6c127c2ceaaff4f47bb547f",
+      "snapshot": {
+        "path": "artifacts/m1/t107/repair2-baseline-grzeqqkg/scripts/m1/t107_repair_entrypoints.mjs",
+        "sha256": "5a2b28ef419a05e5d35d07f1e6d4be0dcaf3117e7491794ad071e63fc2f8f537"
+      }
+    },
+    {
+      "path": "scripts/m1/t107_repair.test.mjs",
+      "oldSha256": "d9ab4a9baa34a9cc679a760421161509556c6f209865e07c69b06d0b2ab2e95c",
+      "newSha256": "4d534ced9ac5970d5e94a265f263aac6f6e21bc9d228c777a62f2bb0e3b7b027",
+      "snapshot": {
+        "path": "artifacts/m1/t107/repair2-baseline-grzeqqkg/scripts/m1/t107_repair.test.mjs",
+        "sha256": "d9ab4a9baa34a9cc679a760421161509556c6f209865e07c69b06d0b2ab2e95c"
+      }
+    }
+  ],
+  "sourceSha256": {
+    "scripts/m1/t107_repair_guard.mjs": "49796acd5f42060bc105bdc3d9a798bfc85d8601eaf8945021df39918b06afc8",
+    "scripts/m1/t107_repair_entrypoints.mjs": "612fcb911e1be37556c820edb3b55ba37bcf3a10f6c127c2ceaaff4f47bb547f",
+    "scripts/m1/t107_repair.test.mjs": "4d534ced9ac5970d5e94a265f263aac6f6e21bc9d228c777a62f2bb0e3b7b027"
+  },
+  "unchangedRecoveryPolicyRuntimeController": {
+    "scripts/m1/t107_repair_policy.mjs": "35de788bece19e0855bc5837a1781ed415213f843989b1fb659e84bbfca9eb42",
+    "scripts/m1/t107_repair_recovery.mjs": "40d9d7d8545e4f02eeb0dc0c20b9de76e23abe070021d11be3320fe33a520756",
+    "scripts/m1/t107_repair_runtime.mjs": "b47af018b40ddc853cf2f79d92e9fbabee854b44e53584a50b9cf457d4311e2e",
+    "scripts/m1/t107_repair_run.py": "67793eb3e1787c22be2f06dddb8e04f1cfad028941e66722c1cde15f5303114e"
+  },
+  "commands": [
+    {
+      "args": [
+        "node",
+        "--test",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_repair.test.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "--experimental-transform-types",
+        "--permission",
+        "--allow-child-process",
+        "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+        "--allow-fs-read=/home/ubuntu/.dsh/profiles/web/node_modules",
+        "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+        "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair2-local-d8m9zpo3/entrypoints",
+        "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair2-local-d8m9zpo3/entrypoints",
+        "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair2-local-d8m9zpo3/entrypoints/*",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_repair_entrypoints.mjs",
+        "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar",
+        "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair2-local-d8m9zpo3/entrypoints"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "invocation": "Imported the unchanged t107_repair_run.py and invoked only entrypoints(newLocalFixture); never main(). Existing restricted Node flags, read roots, write roots and clean environment preserved.",
+  "counts": {
+    "currentFocused": 28,
+    "priorFocusedRetained": 23,
+    "addedOfflineRouteTests": 5,
+    "actualNegativeZeroEffectCases": 51,
+    "actualLocalPositiveCases": 10,
+    "nonActionControls": 2,
+    "recorders": 8,
+    "navigationCaptures": 1,
+    "hostActionCaptures": 1
+  },
+  "nonActionControls": [
+    {
+      "id": "directory-read",
+      "target": "/sidebar/api/fs.tree",
+      "status": 200,
+      "entries": 0
+    },
+    {
+      "id": "application-catalog",
+      "target": "/open-in-app/apps",
+      "status": 200
+    }
+  ],
+  "revealSemantics": "Each new local positive records exactly xdg-open [dirname(anchor)]. Historical independent terminal expectation failure is not rewritten.",
+  "dataVerification": {
+    "directStoredRecordInspection": true,
+    "fullReadbackMatchesReport": true,
+    "uniqueCaseIdLookupCount": 61,
+    "newNormalizedNegativeLookups": 9,
+    "newNormalizedPositiveLookups": 3,
+    "allRecorderPidsGone": [
+      3162425,
+      3162408,
+      3162396,
+      3162407,
+      3162431,
+      3162419,
+      3162389,
+      3162390
+    ],
+    "dataDeleted": false
+  },
+  "upstreamSourceSha256": {
+    "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/lib/index.js": "871e8d02a7b37ea487308d8516d839d51fedfe46f1c3ed50d99435acc984c7e1",
+    "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/client/api.ts": "f04af9246b2f34bc63af2b42e1e3cb6dd39359adf7f1cb43b1e8102a72b4e98c",
+    "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/client/open-with.ts": "07eed2621c0182c3753a7d179253b68b6ccf26536260062e9bcf0e99e890edbf",
+    "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-api-session-controller/lib/index.js": "a9801acb577b03053c5d5a3191ff555c5f1d791d0acddec113bea4511e33b386",
+    "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-host-open-in-app/lib/index.js": "b1d17a0c2646389b27eefab2e1e22576a693b11c61c76884fc049aff54e00d96",
+    "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-client-ui-open-in-app/lib/client.js": "7a3adda611ea8318322e474294cba4c5a36be30f879c98dc52a41b57363cd6dc",
+    "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/open-external.ts": "535a4d38c5ac2e4c33fc68b83b1c24ef1e1a4dacbbe7541f6098cc86fe0b10bf",
+    "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/LICENSE": "f4d265194e0824721af0592462a71fe750c04db3565c23c5d6c65fdee25fb4b0"
+  },
+  "upstreamUnchanged": true,
+  "remainingRoutes": 0,
+  "remainingListeners": 0,
+  "networkAttempts": [],
+  "thisRepairFailures": [],
+  "thisRepairRetries": 0,
+  "historicalFailedFixturesPreserved": [
+    {
+      "id": "R2-HARNESS-01",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route-harness-failure.json",
+        "sha256": "28a916542dd9a888261656b2ecdf71c3a38954f658d92fe93757f6fd422cd4a1"
+      }
+    },
+    {
+      "id": "R2-HARNESS-02",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route-counterexample-retry-command.json",
+        "sha256": "29f55532c2d69568c8406690a7dce8e0b872a6bc8e8b10ba7a1d5dc8a5e2a441"
+      }
+    }
+  ],
+  "historicalFindingEvidence": [
+    {
+      "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route-observation.json",
+      "sha256": "ae6d2bce92bacc35f374b7aebc80dfb5e9b83eada7131ed6caef9030966ec603"
+    },
+    {
+      "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route_counterexample_retry.mjs",
+      "sha256": "716e5a2fe3c6bd7f1321b0c58e8d774f2afa41b1aa72afc5bc9bdd122075d09b"
+    },
+    {
+      "path": "artifacts/m1/t107/acceptance-repair1-sfiiepwz/route-counterexample-retry-command.json",
+      "sha256": "29f55532c2d69568c8406690a7dce8e0b872a6bc8e8b10ba7a1d5dc8a5e2a441"
+    }
+  ],
+  "reusedEvidence": [
+    {
+      "path": "docs/implementation/evidence/t107-repair1-selftest.json",
+      "sha256": "243f1980a1d8055755c54eb2c6a8d60e9c0cd2be6e7377cea0e3b0201b38942e"
+    },
+    {
+      "path": "docs/implementation/evidence/t107-repair1-validation.json",
+      "sha256": "b027c4bfdee59dd7fad629ebf0b69cd012a7cc781409aa8b7da4222c40852f61"
+    },
+    {
+      "path": "docs/implementation/t107-repair1-matrix.json",
+      "sha256": "61227e3656ead273b9d6539ebbb70c98062a7702a217f81c0ea4a217b41eb705"
+    },
+    {
+      "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/recovery.json",
+      "sha256": "74bb8b81beee00661a82d4d0b86c48aeefd8de293921541dd1cbd914670fc342"
+    },
+    {
+      "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/final-resources.json",
+      "sha256": "5f89eead362d18a36b299b599918d28ce996a30aab9de53571f1693a78597c62"
+    }
+  ],
+  "statusDocuments": [
+    {
+      "path": "docs/implementation/m1-closeout-tasks.md",
+      "sha256": "fc2f677df516c8ae1c1a0e130eee4dcd0e53232b32e9be577f7d3869e5ba6b2f"
+    },
+    {
+      "path": "docs/06-decisions-and-risks.md",
+      "sha256": "d4ca26c16657b57a5a037f5993ae26170e0f3fc56b9589a64fdefdf887daaf10"
+    }
+  ],
+  "notReverified": [
+    "remote recovery",
+    "full repair controller",
+    "existing services or Docker",
+    "36-container live set",
+    "discovery clock counterexample rerun",
+    "browser authentication",
+    "DOM keyboard",
+    "native desktop",
+    "product binding persistence",
+    "M1 independent acceptance"
+  ],
+  "scope": "Only guard, required local regression/entry fixture, concise status and append-only evidence. Frozen runtime and installed sources unchanged; no Workflow, agent/model/API switch, public network, install/download, global config or infrastructure action.",
+  "handoff": "Task stops after local verification and evidence; coordinator controls any later independent validation. T201 remains blocked."
+}

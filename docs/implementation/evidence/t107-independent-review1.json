@@ -1,0 +1,1123 @@
+{
+  "schemaVersion": 1,
+  "task": "T-107",
+  "role": "independent-gate-review-not-implementation",
+  "recordedOn": "2026-10-30",
+  "reviewCompleted": true,
+  "gate": "blocked",
+  "m1Passed": false,
+  "t201Ready": false,
+  "t201Executed": false,
+  "summary": "Independent dispositions: 9 pass in their stated M1 experimental scope, M1-05 and M1-10 fail. Fresh entrypoint/runtime probes and seven focused tests completed, but exit 0 is not rejection or complete M1 approval. One additional timeout-table semantic counterexample and stale status prose recorded. No implementation or main-document changes.",
+  "reviewedImplementation": {
+    "matrix": {
+      "path": "docs/implementation/t107-m1-matrix.json",
+      "sha256": "726beb6993b0e21700b4ff19cab32c04984f62142ca58bd927a7ea9b15ae0cd3"
+    },
+    "record": {
+      "path": "docs/implementation/t107-m1-investigation.md",
+      "sha256": "fba1fe3cdc9f7945a54c5a9ec9991fe52e185a33ac236701110db1f677e0b342"
+    },
+    "evidence": {
+      "path": "docs/implementation/evidence/t107-investigation1.json",
+      "sha256": "57870ea6f612e67f276f33f9a0a3645fb1915f35e68ddb708b7327df572fca6d"
+    },
+    "validation": {
+      "path": "docs/implementation/evidence/t107-investigation1-validation.json",
+      "sha256": "f5647343e69de781c97ac61d39f29b8cf13ad897674eaa973e13170aaaa1d3be"
+    }
+  },
+  "authority": [
+    {
+      "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+      "lines": "24-38,48-58"
+    },
+    {
+      "path": "/home/ubuntu/workspace/agent-studio/docs/01-product-requirements.md",
+      "lines": "99-106"
+    },
+    {
+      "path": "/home/ubuntu/workspace/agent-studio/docs/02-features-and-scenarios.md",
+      "lines": "94-104,205-223"
+    },
+    {
+      "path": "/home/ubuntu/workspace/agent-studio/docs/08-execution-plan.md",
+      "lines": "48-91"
+    },
+    {
+      "path": "/home/ubuntu/workspace/agent-studio/docs/06-decisions-and-risks.md",
+      "lines": "36-43,60-65,89-95"
+    }
+  ],
+  "gates": [
+    {
+      "id": "M1-01",
+      "clause": "执行版本门：分别记录 manifest 枚举版本、peer 约束和安装产物，在隔离测试实例验证当前组合。rc.4 未列入候选 manifest 不证明不兼容；无需预先升级或改生产。仅在具体依赖／接口错误出现后评估升级、适配或更换候选，不假定 rc.5 自动兼容。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "26"
+      },
+      "status": "pass",
+      "title": "版本门",
+      "independentBasis": "安装版本、manifest 枚举和 peer 范围是不同事实。固定 rc.4 与显式候选入口的隔离 profile/服务运行已有已独立验证来源，本轮逐字节核对后可复用；sidebar 仅新增指定实际入口调用。",
+      "limits": "不含完整 sidebar UI、生产 profile 或产品主会话兼容性。",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t101-installed-inventory.json",
+          "sha256": "4d93913cee51660ee0e12b94cb0b31f66c0938ea7237d2bd51c523781814cf88"
+        },
+        {
+          "path": "docs/implementation/evidence/t101-candidate-metadata.json",
+          "sha256": "8aa87f5c588f086196f3a4a26cb3fefb03787bd50f40d7460f7a2f2a763b4571"
+        },
+        {
+          "path": "docs/implementation/evidence/t103-isolation-correction.json",
+          "sha256": "b486194975f91437d0ec7849cc0dd3dfe13cf0bee78c4724c5ed76dbae652019"
+        }
+      ],
+      "findingIds": []
+    },
+    {
+      "id": "M1-02",
+      "clause": "锁定 dsh、侧边栏、远程插件、helper、Coder CLI／Server、模板／镜像版本及来源。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "27"
+      },
+      "status": "pass",
+      "title": "组合与来源锁定",
+      "independentBasis": "26 个安装文件、36 份历史源码、298 个候选文件和归档集合匹配既有摘要；组件版本及模板构建镜像与 Dockerfile base 分开记录。私有 rg 的条件来源不冒充冻结镜像部署。",
+      "limits": "组件锁定和所列实验组合成立，不等于全组件产品 UI 集成。",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t101-installed-inventory.json",
+          "sha256": "4d93913cee51660ee0e12b94cb0b31f66c0938ea7237d2bd51c523781814cf88"
+        },
+        {
+          "path": "docs/implementation/evidence/t101-candidate-metadata.json",
+          "sha256": "8aa87f5c588f086196f3a4a26cb3fefb03787bd50f40d7460f7a2f2a763b4571"
+        },
+        {
+          "path": "docs/implementation/evidence/t104-coder-lab.json",
+          "sha256": "f82c45fc3c5623a348f71af011fd5889fa92d6d39bfbb7622ee65f6ac3604ddd"
+        },
+        {
+          "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+          "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+        }
+      ],
+      "findingIds": []
+    },
+    {
+      "id": "M1-03",
+      "clause": "验证目标插件不是 npm 同名的另一个项目；保存发布清单与完整性结果。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "28"
+      },
+      "status": "pass",
+      "title": "候选项目与发布完整性",
+      "independentBasis": "候选归档摘要与 T-106 独立来源一致，298 文件内容和精确集合匹配；来源是已锁定 GitHub 候选，不是 npm 同名项目。",
+      "limits": "未重新访问发布站点或重新下载；使用未变的固定来源证据。",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t101-candidate-metadata.json",
+          "sha256": "8aa87f5c588f086196f3a4a26cb3fefb03787bd50f40d7460f7a2f2a763b4571"
+        },
+        {
+          "path": "docs/implementation/evidence/t103-isolation-correction.json",
+          "sha256": "b486194975f91437d0ec7849cc0dd3dfe13cf0bee78c4724c5ed76dbae652019"
+        }
+      ],
+      "findingIds": []
+    },
+    {
+      "id": "M1-04",
+      "clause": "冻结一份模板契约：隔离、资源、允许根目录、运行账号、网络策略与实例标记生成方式；完成 SC-17 的模板交付检查。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "29"
+      },
+      "status": "pass",
+      "title": "实验模板与 SC-17 交付",
+      "independentBasis": "05:29 与 SC-17 要求冻结契约、预置独立实例记录及准入/身份负向。lab-v3 的两个构建、标记/版本/root/UID/镜像/策略和准入探针已验且来源未变；当前记录与本轮前置保持一致。",
+      "limits": "仅实验声明策略交付：CPU/内存/卷及账号明确；PID/硬磁盘配额、完整网络/同 UID 防篡改均未通过 FR-08/NF-02/SC-08。该条不要求先完成 T-304 的全套 M3 产品隔离。",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t104-coder-lab.json",
+          "sha256": "f82c45fc3c5623a348f71af011fd5889fa92d6d39bfbb7622ee65f6ac3604ddd"
+        },
+        {
+          "path": "docs/implementation/evidence/t105-independent-acceptance-pass1.json",
+          "sha256": "954b1d098aac6bebbb1df6d6959aa31153b19b279a16ed959394b51bdc7740bc"
+        }
+      ],
+      "findingIds": []
+    },
+    {
+      "id": "M1-05",
+      "clause": "确定 NF-07 的时限与恢复窗口初值、去重日志保留期，以及已知大目录接口的上限（NF-04）。对拟启用安全重传的操作执行 ACK 丢失、重复请求、日志丢失／过期及实例切换验证；未经验证的操作禁用有副作用请求自动重传。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "30"
+      },
+      "status": "fail",
+      "title": "NF-07 初值、恢复和容量",
+      "independentBasis": "本轮真实小样本证明显式截断/超限、RPC 超时及其后显式取消；已启用执行通道的正向恢复仍不存在，任务/审批初值缺少可执行归属。R-11 明确将启用通道的恢复/超时技术验收列在 M1，不能全推给 M3。",
+      "limits": "只需 M1 技术可行性和初始策略，不要求完整 T-201/T-206/T-303 产品。未拟启用 mutation 重传，故其完整协议故障矩阵可保持 not-run，但不得启用。另须更正 discovery 最大耗时字段。",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+          "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+        },
+        {
+          "path": "artifacts/m1/t107/run-13fe8bc2f5a6d1e024f0c3b7/result.json",
+          "sha256": "b633109d1feebe3650e0ef581bdb26edfcad664787c6dfb8df25830e79647659"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/independent-final-observation.json",
+          "sha256": "8328366b14a26c10301461237f928e683d55d2f9ed0f9fcc48109a3c1b4ebf7b"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/discovery-budget.json",
+          "sha256": "df9fee17e84e35a170437f5a33d582ed567fac7db19325c53b9604622735fc68"
+        }
+      ],
+      "findingIds": [
+        "T107-IA-01",
+        "T107-IA-03"
+      ]
+    },
+    {
+      "id": "M1-06",
+      "clause": "在不影响现有服务的 profile／测试实例进行，不直接升级生产。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "31"
+      },
+      "status": "pass",
+      "title": "隔离测试与不影响生产",
+      "independentBasis": "两个新随机夹具和现有工作区；本轮仅新增独立证据/测试夹具，冻结源、安装包、主文档、实现矩阵及基础设施未修改。直接观测容器精确集合与持久卷保留。",
+      "limits": "Node 权限和网络 hook 不是 OS 沙箱；只认可本轮受限动作。",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t103-isolation-correction.json",
+          "sha256": "b486194975f91437d0ec7849cc0dd3dfe13cf0bee78c4724c5ed76dbae652019"
+        },
+        {
+          "path": "artifacts/m1/t107/run-13fe8bc2f5a6d1e024f0c3b7/result.json",
+          "sha256": "b633109d1feebe3650e0ef581bdb26edfcad664787c6dfb8df25830e79647659"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/independent-final-observation.json",
+          "sha256": "8328366b14a26c10301461237f928e683d55d2f9ed0f9fcc48109a3c1b4ebf7b"
+        },
+        {
+          "path": "artifacts/m1/t107/entrypoints-2lb78o0_/entrypoints.json",
+          "sha256": "928da027608b8e5b4cafc8031bb749ab6fae3e7595a8810e3bd78fdfcbf106cc"
+        }
+      ],
+      "findingIds": []
+    },
+    {
+      "id": "M1-07",
+      "clause": "真实 Coder 工作区别名经 OpenSSH、插件、helper 三层连通。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "32"
+      },
+      "status": "pass",
+      "title": "Coder/OpenSSH/插件/helper 连通",
+      "independentBasis": "T-105/T-106 独立证据可复用；本轮 runtime 再次通过两个当前身份门禁连接真实 helper 0.13.1，并完成文件/命令请求。",
+      "limits": "helper 初始 degraded/缺 rg 不否定已证三层连通；不把它当镜像搜索交付。",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t105-independent-acceptance-pass1.json",
+          "sha256": "954b1d098aac6bebbb1df6d6959aa31153b19b279a16ed959394b51bdc7740bc"
+        },
+        {
+          "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+          "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+        },
+        {
+          "path": "artifacts/m1/t107/run-13fe8bc2f5a6d1e024f0c3b7/result.json",
+          "sha256": "b633109d1feebe3650e0ef581bdb26edfcad664787c6dfb8df25830e79647659"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/independent-final-observation.json",
+          "sha256": "8328366b14a26c10301461237f928e683d55d2f9ed0f9fcc48109a3c1b4ebf7b"
+        }
+      ],
+      "findingIds": []
+    },
+    {
+      "id": "M1-08",
+      "clause": "先用模板构建记录核验预置实例身份，并证明错误工作区、账号、根目录和过期实例会被拒绝；不能用同一连接内写入再读回的随机值自证目标。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "33"
+      },
+      "status": "pass",
+      "title": "先核预置身份及负向",
+      "independentBasis": "T-104 构建记录、T-105 API/DB/当前已认证通道和错误目标/账号/root/旧世代负向的源码与证据未变；本轮两次同通道门禁及前后 current-records 再核对。",
+      "limits": "未重新运行全部身份负向或生命周期重建；可写 marker 不是单独信任根。",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t104-coder-lab.json",
+          "sha256": "f82c45fc3c5623a348f71af011fd5889fa92d6d39bfbb7622ee65f6ac3604ddd"
+        },
+        {
+          "path": "docs/implementation/evidence/t105-independent-acceptance-pass1.json",
+          "sha256": "954b1d098aac6bebbb1df6d6959aa31153b19b279a16ed959394b51bdc7740bc"
+        },
+        {
+          "path": "artifacts/m1/t107/run-13fe8bc2f5a6d1e024f0c3b7/result.json",
+          "sha256": "b633109d1feebe3650e0ef581bdb26edfcad664787c6dfb8df25830e79647659"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/independent-final-observation.json",
+          "sha256": "8328366b14a26c10301461237f928e683d55d2f9ed0f9fcc48109a3c1b4ebf7b"
+        }
+      ],
+      "findingIds": []
+    },
+    {
+      "id": "M1-09",
+      "clause": "身份通过后完成独立随机文件读回、命令执行、PTY 输入、尺寸变化与取消；验证远端不可用时不在中央执行。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "34"
+      },
+      "status": "pass",
+      "title": "文件/命令/PTY/取消及无回退",
+      "independentBasis": "复用 T-106 review2 同一完整运行的独立读盘、argv/cwd/env、真实 PTY/前台信号、进程组取消、一次副作用及无中央回退结论；本轮再实测小规模文件/命令和超时后显式取消。",
+      "limits": "只限单 raw helper 实验通道；原生 SSH spawn 不作为第二条已通过通道。Git、私有 rg 文件名和显式命令内容搜索的条件证据分开。",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+          "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+        },
+        {
+          "path": "artifacts/m1/t107/run-13fe8bc2f5a6d1e024f0c3b7/result.json",
+          "sha256": "b633109d1feebe3650e0ef581bdb26edfcad664787c6dfb8df25830e79647659"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/independent-final-observation.json",
+          "sha256": "8328366b14a26c10301461237f928e683d55d2f9ed0f9fcc48109a3c1b4ebf7b"
+        }
+      ],
+      "findingIds": []
+    },
+    {
+      "id": "M1-10",
+      "clause": "拦截检查：本机打开器、URL scheme 与快捷键在远程绑定下的行为必须实测并记录（SC-16 的路由旁路部分可在 M1 先做技术验证）。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "35"
+      },
+      "status": "fail",
+      "title": "打开器/scheme/快捷键拦截",
+      "independentBasis": "独立复现实际注册路由、已安装客户端 API、workspace.openLocal 回调与 Host API。两次 xdg-open、一次 code 记录器、客户端 navigation 和 Host 动作 seam 均发生；未满足 SC-16 的远程模式拒绝预期。",
+      "limits": "合成 remote 字段不是正式绑定，回调直调不是 DOM 键盘，navigation 不是 OS handler 成功；结论是缺少经过证明的远程权威拒绝组合，不宣称已利用真实产品远程绑定。",
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/entrypoints-2lb78o0_/entrypoints.json",
+          "sha256": "928da027608b8e5b4cafc8031bb749ab6fae3e7595a8810e3bd78fdfcbf106cc"
+        }
+      ],
+      "findingIds": [
+        "T107-IA-02"
+      ]
+    },
+    {
+      "id": "M1-11",
+      "clause": "输出接口覆盖及缺口清单，才决定复用、适配或最小核心修改。",
+      "spec": {
+        "path": "/home/ubuntu/workspace/agent-studio/docs/05-delivery-and-acceptance.md",
+        "lines": "36"
+      },
+      "status": "pass",
+      "title": "接口覆盖与缺口清单",
+      "independentBasis": "11 条对应、启用/拒绝通道、源摘要、容量/时限、未执行层级及最小后继面已经交付，足以决定保留候选并做窄适配。独立新增的 TIME-DISCOVERY 证据勘误纳入本报告，不默默改历史矩阵。",
+      "limits": "此项认可清单和决策材料，不豁免 M1-05/M1-10，不将 focused tests 的固定失败集合当独立裁决。",
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/run-13fe8bc2f5a6d1e024f0c3b7/result.json",
+          "sha256": "b633109d1feebe3650e0ef581bdb26edfcad664787c6dfb8df25830e79647659"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/independent-final-observation.json",
+          "sha256": "8328366b14a26c10301461237f928e683d55d2f9ed0f9fcc48109a3c1b4ebf7b"
+        },
+        {
+          "path": "artifacts/m1/t107/entrypoints-2lb78o0_/entrypoints.json",
+          "sha256": "928da027608b8e5b4cafc8031bb749ab6fae3e7595a8810e3bd78fdfcbf106cc"
+        }
+      ],
+      "findingIds": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "T107-IA-01",
+      "severity": "blocking-M1-05",
+      "status": "confirmed",
+      "title": "Enabled provider has no demonstrated recovery window; initial task/approval deadline policy is absent",
+      "locations": [
+        {
+          "path": "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_provider.mjs",
+          "lines": "43-87,275-282,312-319"
+        },
+        {
+          "path": "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_matrix.py",
+          "lines": "178-200,213,217-223"
+        }
+      ],
+      "actual": "compatibility(recovery) rejects and the provider is tied to one raw session. Helper resume capability and default 600000 ms retention are only mechanisms. In the new runtime, a 40 ms non-mutating RPC timed out at 41 ms while the task continued; a 40 ms wait returned deadline at 103 ms; subsequent explicit terminate finished at about 61 ms.",
+      "expected": "M1 fixes finite initial deadlines with an actual owner and state transitions and demonstrates saved-original-task requery/cancel after reconnect within a positive declared healthy-instance window. Timeout must not mean cancellation or authorize replay.",
+      "reproduce": [
+        "python3 -I /home/ubuntu/workspace/agent-studio/scripts/m1/t107_run.py runtime"
+      ],
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/run-13fe8bc2f5a6d1e024f0c3b7/result.json",
+          "sha256": "b633109d1feebe3650e0ef581bdb26edfcad664787c6dfb8df25830e79647659"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/independent-final-observation.json",
+          "sha256": "8328366b14a26c10301461237f928e683d55d2f9ed0f9fcc48109a3c1b4ebf7b"
+        },
+        {
+          "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+          "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+        }
+      ],
+      "smallestUnblock": "U-01: new isolated adapter/policy seam beside frozen T-106. Establish measured/justified initial task and approval budgets and test expiry/no-auto-approval. Save original process/session/instance identities; disconnect/reconnect, requery and cancel that same task without re-starting it. Independently verify PID/startTick and side-effect count. No need to implement full M2 UI/binding persistence or the full M3 restart/generation matrix here."
+    },
+    {
+      "id": "T107-IA-02",
+      "severity": "blocking-M1-10",
+      "status": "confirmed",
+      "title": "Actual installed opener surfaces are not gated by an authoritative remote binding",
+      "locations": [
+        {
+          "path": "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/lib/index.js",
+          "lines": "9194-9198,3970-3984"
+        },
+        {
+          "path": "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/client/api.ts",
+          "lines": "395-425"
+        },
+        {
+          "path": "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/lib/client.js",
+          "lines": "4217-4240"
+        },
+        {
+          "path": "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-client-ui-open-in-app/lib/client.js",
+          "lines": "768-818"
+        },
+        {
+          "path": "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-host-open-in-app/lib/index.js",
+          "lines": "1353-1399"
+        },
+        {
+          "path": "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-api-session-controller/lib/index.js",
+          "lines": "3150-3189"
+        },
+        {
+          "path": "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_entrypoints.mjs",
+          "lines": "43-44,93-121,143-177"
+        }
+      ],
+      "actual": "Real installed route callbacks return started=true and launch three harmless executable recorders. SSH scheme calls window.location.assign. The actual registered workspace.openLocal resolve is handled and its run dispatches to the actual host route using session.cwd. Actual Host API maps through LocalFileSystem and reaches its final native-action seam. Extra caller binding fields are ignored rather than a trusted lookup.",
+      "expected": "For a server-authoritatively identified remote/unknown context, supported app-owned routes/API/client scheme/shortcut paths must reject or disable before any central opener/navigation; valid local positive controls must still work.",
+      "reproduce": [
+        "python3 -I /home/ubuntu/workspace/agent-studio/scripts/m1/t107_run.py entrypoints"
+      ],
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/entrypoints-2lb78o0_/entrypoints.json",
+          "sha256": "928da027608b8e5b4cafc8031bb749ab6fae3e7595a8810e3bd78fdfcbf106cc"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/independent-final-observation.json",
+          "sha256": "8328366b14a26c10301461237f928e683d55d2f9ed0f9fcc48109a3c1b4ebf7b"
+        }
+      ],
+      "smallestUnblock": "U-02: isolated registration/API/client guard wrappers backed by a trusted fixture context map, not payload.binding. Include missing/forged context and direct-route/API bypass attempts. Distinguish baseline diagnostic mode (currently expects dispatch) from a new guarded acceptance test. Local positive, remote/unknown negative and zero action/navigation counts required; do not implement T-201 persistence first.",
+      "notClaimed": [
+        "real product remote binding bypass exploit",
+        "browser authentication",
+        "DOM key event delivery",
+        "native desktop application launch"
+      ]
+    },
+    {
+      "id": "T107-IA-03",
+      "severity": "evidence-correction-required-before-M1-05-closure",
+      "status": "confirmed-offline-counterexample",
+      "title": "TIME-DISCOVERY maximumMs=18000 is not an end-to-end method maximum",
+      "locations": [
+        {
+          "path": "/home/ubuntu/workspace/agent-studio/docs/implementation/t107-m1-matrix.json",
+          "lines": "783-789"
+        },
+        {
+          "path": "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_matrix.py",
+          "lines": "186"
+        },
+        {
+          "path": "/home/ubuntu/workspace/agent-studio/scripts/m1/t106_provider.mjs",
+          "lines": "205-223"
+        }
+      ],
+      "actual": "The 18-second loop budget starts after discoverOpen; a pending read can complete past it and return EOF, and finally performs a separate close RPC. The unchanged method returned complete at virtual 28800 ms with each mocked RPC taking 4800 ms, below the 5000 ms per-RPC default.",
+      "expected": "Distinguish post-open loopBudgetMs, individual RPC budgets and close/cleanup time; do not label 18000 as a full-call wall-time maximum.",
+      "reproduce": [
+        "node /home/ubuntu/workspace/agent-studio/artifacts/m1/t107/acceptance-945cpr60/discovery_budget.mjs"
+      ],
+      "evidence": [
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/discovery-budget.json",
+          "sha256": "df9fee17e84e35a170437f5a33d582ed567fac7db19325c53b9604622735fc68"
+        },
+        {
+          "path": "artifacts/m1/t107/acceptance-945cpr60/discovery-budget-command.json",
+          "sha256": "a5be4ce366cda48342c53dbc580b1008686a533c1cc3aa9c5c894b123aaf4c5f"
+        }
+      ],
+      "smallestUnblock": "Append a correction/new version of the time table. If a shared end-to-end deadline is actually required, implement remaining-budget propagation and test timeout state in the new U-01 adapter, not by silently changing frozen T-106.",
+      "scope": "Virtual monotonic clock/RPC carrier counterexample, not a real 28.8-second remote measurement. It corrects a T-107 maximum claim; it does not reopen the previously accepted, narrower T-106 experimental result."
+    },
+    {
+      "id": "T107-OBS-01",
+      "severity": "nonblocking-status-documentation",
+      "status": "confirmed",
+      "title": "Decision/risk document still describes T-106 as awaiting independent acceptance",
+      "locations": [
+        {
+          "path": "/home/ubuntu/workspace/agent-studio/docs/06-decisions-and-risks.md",
+          "lines": "115"
+        }
+      ],
+      "actual": "The paragraph says T-106 is still awaiting independent acceptance and instructs a next independent T-106 rerun; immutable review2 already passed, and T-107 is now under independent review.",
+      "expected": "Current prose should link accepted T-106 review2 and the current T-107 decision while retaining first-round history.",
+      "smallestUnblock": "Coordinator schedules a factual documentation-only update; this reviewer does not edit main documents.",
+      "evidence": [
+        {
+          "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+          "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+        },
+        {
+          "path": "docs/06-decisions-and-risks.md",
+          "sha256": "60e15d73fc39b0eb901168ad62fcfa7bbe5aaf8b0978415af0f59884c6ba3d77"
+        }
+      ]
+    }
+  ],
+  "unblockTaskReview": [
+    {
+      "id": "U-01",
+      "assessment": "necessary-and-bounded-for-M1-05",
+      "scope": "Technical recovery/deadline proof only, not complete M2/M3 products or mutation replay.",
+      "clarifications": [
+        "Declare a positive window based on the actual same helper session/instance and shorter bounded test lifetime; retention alone is insufficient.",
+        "Use a saved original task identity and one owned alarm-bounded workload; prove requery and cancellation after reconnect, not a replacement task or administrative teardown.",
+        "Task/approval initial values, configuration ownership and expiry/late-answer state transitions can be tested in an isolated policy module; a real product approval UI/CLI is not an M1 prerequisite.",
+        "Correct TIME-DISCOVERY field semantics; per-RPC timeout, loop budget, task wait and remote cancellation must remain distinct.",
+        "Keep mutation replay disabled; do not require full ACK/log expiry/restart/generation replay tests unless proposing to enable replay."
+      ],
+      "dependencies": [
+        "accepted T-105 current-channel identity",
+        "accepted T-106 task identity and fail-closed behavior",
+        "actual helper resume/retention mechanism"
+      ],
+      "doesNotDependOn": [
+        "T-201 persistent product bindings",
+        "T-206 complete CLI approval integration",
+        "T-303 complete fault matrix"
+      ],
+      "permission": "Can be scheduled in the existing approved isolated-code/two-workspace envelope, subject to implementation assignment. This review grants no frozen-source edit, daemon/platform restart, new workspace or production change.",
+      "acceptance": "Within-window healthy-instance disconnect/reconnect -> original-task status -> original-task cancellation; independent PID/startTick and effect count; bounded expiry/no replay/no auto-approval; window-outside state explicitly unknown, not success.",
+      "executed": false
+    },
+    {
+      "id": "U-02",
+      "assessment": "necessary-and-bounded-for-M1-10",
+      "scope": "Minimal executable trusted-context denial around actual installed app-owned entry surfaces.",
+      "clarifications": [
+        "A client-supplied binding.realm flag is not authority. Use a server-owned fixture mapping; unknown/missing/mismatched context must fail closed.",
+        "Cover actual sidebar route, host open-in-app route, Host API, client navigation branch and registered shortcut resolve/run; a compatibility() throw alone cannot guard them.",
+        "Retain real local positive recorder dispatch so an always-deny replacement cannot pass.",
+        "The existing entrypoints command is a diagnostic baseline that expects unsafe dispatch; it is not by itself the future guard acceptance command. New guarded tests must assert zero recorder/navigation effects.",
+        "No requirement for persisted product binding or complete DOM/sidebar integration before this technical seam; later M2 must integrate and reverify it."
+      ],
+      "dependencies": [
+        "independent EP-01..EP-05 observations",
+        "trusted context contract"
+      ],
+      "doesNotDependOn": [
+        "T-201 persistence",
+        "full T-205 UI"
+      ],
+      "permission": "Local new fixtures/wrappers can remain within the isolated-code envelope; no global package/profile edit or real OS opener. Implementation must be separately scheduled; reviewer did not implement it.",
+      "acceptance": "Verified local -> action, verified remote/unknown -> explicit reject and zero action/navigation; direct route/API calls and forged or absent metadata included. DOM keyboard verification remains separately unexecuted.",
+      "executed": false
+    },
+    {
+      "id": "U-03",
+      "assessment": "separate-resource-approval-required; not-a-circular-T201-prerequisite",
+      "scope": "New deployment policy/image/storage, distinct from the already delivered lab-v3 template/SC-17 experiment.",
+      "clarifications": [
+        "M1-04 may pass for frozen declared lab policy plus identity/admission delivery without claiming FR-08/NF-02/SC-08; those P0 capabilities remain explicitly unmet.",
+        "Full isolation behavior belongs to T-304/T-309 and must be proven before the corresponding product/security claim. Do not require all M3 products before T-201, and do not silently promote lab-v3 to a production-capable matrix.",
+        "Split dependency delivery from isolation policy: install verified rg in an approved new image before claiming frozen-image non-Git/product search; quotas/network/isolation have their own bounded behavior checks.",
+        "Any new template/image must reverify SC-17/version/identity before use; retain old template, both current workspaces and all volumes. Current authorization does not allow a third workspace or rebuilding these instances."
+      ],
+      "dependencies": [
+        "explicit resource/network policy",
+        "volume/data preservation plan",
+        "storage quota feasibility",
+        "new resource-change authorization"
+      ],
+      "permission": "Requires separate resource/permission review for new template/image, quota-capable storage and any workspace lifecycle action. No such approval or operation occurred in this audit.",
+      "acceptance": "Under separately approved resources: fixed version/image, bounded quota and rg-health behavior, independent pre-access identity/readback; no silent rebuild or deletion.",
+      "executed": false
+    }
+  ],
+  "sourceSha256": {
+    "scripts/m1/t107_capacity.mjs": "12b0bd1018ae620da88181bcf5577821fd492efee8a21372947c9a669f147575",
+    "scripts/m1/t107_entrypoints.mjs": "d28490cca79e648ab18de1a1d49e1c510fe4dad5c62454069d9af01a5a6e96e9",
+    "scripts/m1/t107_gate_test.py": "1393c6fb34e0fc5068952b3281dbacfa045dc57cdcba32a3f0d914ae776d3e5f",
+    "scripts/m1/t107_matrix.py": "ab7508caa001862583001b230ec8c772d4aab7293e0ace464f5366c79ba829e7",
+    "scripts/m1/t107_run.py": "78dbd2b7ad0fe6c85651041ff044a0d6fcdc27d907d8beb1a9d2db6751d9d82c"
+  },
+  "integrity": {
+    "baseline": {
+      "path": "artifacts/m1/t107/acceptance-945cpr60/baseline.json",
+      "sha256": "9179e201c9addc15355d3d6151a7cbfac694a6cb18c3059ed3af843a383829df"
+    },
+    "historicalSourceCountUnchanged": 36,
+    "installedInventoryFilesUnchanged": 26,
+    "candidateFilesAndExactSetUnchanged": 298,
+    "candidateArchiveSha256": "cab6fa53954dc1272dfde9ec8a8fd3928fd79232c78b658cb1b434fb0644b162",
+    "T106Review2": {
+      "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+      "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+    },
+    "entrypointSources": {
+      "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/lib/index.js": "871e8d02a7b37ea487308d8516d839d51fedfe46f1c3ed50d99435acc984c7e1",
+      "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/client/api.ts": "f04af9246b2f34bc63af2b42e1e3cb6dd39359adf7f1cb43b1e8102a72b4e98c",
+      "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/client/open-with.ts": "07eed2621c0182c3753a7d179253b68b6ccf26536260062e9bcf0e99e890edbf",
+      "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-api-session-controller/lib/index.js": "a9801acb577b03053c5d5a3191ff555c5f1d791d0acddec113bea4511e33b386",
+      "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-host-open-in-app/lib/index.js": "b1d17a0c2646389b27eefab2e1e22576a693b11c61c76884fc049aff54e00d96",
+      "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-client-ui-open-in-app/lib/client.js": "7a3adda611ea8318322e474294cba4c5a36be30f879c98dc52a41b57363cd6dc"
+    },
+    "packagedSidebarClient": {
+      "path": "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/lib/client.js",
+      "sha256": "dd93b4563f6fe3d384c0e8270fcf76656398ae358d18316a91aae4046bdf2432"
+    },
+    "keyReferencesRechecked": {
+      "artifacts/m1/t103/downloads/asset-c__545n_/dsh-ssh-remote-0.13.3.tgz": "cab6fa53954dc1272dfde9ec8a8fd3928fd79232c78b658cb1b434fb0644b162",
+      "artifacts/m1/t106/run-b26a6fc0d124d0ee4c84aa85/result.json": "38da9ad2bd9d7904344ba6350becd3d25950ac23a7c0bdfd95b05ba1196f2946",
+      "artifacts/m1/t106/run-b26a6fc0d124d0ee4c84aa85/candidate.json": "9faeae9ea6ef93c098b95229ad1ed6a3fae6daec8aa6c6b4f117d6ef9762fd5d",
+      "artifacts/m1/t106/acceptance-rereview-jil8o45d/source-baseline.json": "e1107dc28a575067aa8c995571e1beb1f5860817894189e0e832fe52d85c391c",
+      "artifacts/m1/t106/acceptance-rereview-jil8o45d/independent-final-observation.json": "e854d8479c1cd9d30a1b0d871a55a399b4d551acda45fe8f3f1c6126e2564b94",
+      "artifacts/m1/t104/lab/control-plane-178ace8e.json": "a1654219312dcd25ff29c5060cd0b4599698a81b4a23e1b1f4dfbdbd94d958dc",
+      "artifacts/m1/t104/lab/instances-0379e669.json": "ee302e2aca1d5e6d203da4ad09d566a3cbf848f009102fc87cd74a53ce3ac88b",
+      "artifacts/m1/t104/lab/browser-dbbd07441090416fa9f0291c9eb6da27/browser-login.json": "5cbef2e2b42bac2faef858392a3274b0cad3e8780eb32ad6c0cd81d17a01c423",
+      "artifacts/m1/t104/lab/resource-audit-ef0f32f6.json": "87a82f6d37523492684b563587902e1a65c18eb11a9786ff0896da8fb953fadd",
+      "docs/implementation/evidence/t101-installed-inventory.json": "4d93913cee51660ee0e12b94cb0b31f66c0938ea7237d2bd51c523781814cf88",
+      "docs/implementation/evidence/t101-candidate-metadata.json": "8aa87f5c588f086196f3a4a26cb3fefb03787bd50f40d7460f7a2f2a763b4571",
+      "docs/implementation/evidence/t103-isolation-correction.json": "b486194975f91437d0ec7849cc0dd3dfe13cf0bee78c4724c5ed76dbae652019",
+      "docs/implementation/evidence/t104-coder-lab.json": "f82c45fc3c5623a348f71af011fd5889fa92d6d39bfbb7622ee65f6ac3604ddd",
+      "docs/implementation/evidence/t105-independent-acceptance-pass1.json": "954b1d098aac6bebbb1df6d6959aa31153b19b279a16ed959394b51bdc7740bc",
+      "docs/implementation/evidence/t106-independent-acceptance-review2.json": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f",
+      "artifacts/m1/t107/run-fad308ff9b16af3393d1e781/result.json": "6d638c3e13664540962b7b4fc26866bc2e71ff4fec6378b7c9e8904ee579e26c",
+      "artifacts/m1/t107/entrypoints-tf2gb_o5/entrypoints.json": "52cc1a51e1eff654f619cb1a4f15db2a6804b0038e2773a96596d87020f33afc",
+      "docs/implementation/t107-m1-matrix.json": "726beb6993b0e21700b4ff19cab32c04984f62142ca58bd927a7ea9b15ae0cd3",
+      "docs/implementation/t107-m1-investigation.md": "fba1fe3cdc9f7945a54c5a9ec9991fe52e185a33ac236701110db1f677e0b342",
+      "docs/implementation/evidence/t107-investigation1.json": "57870ea6f612e67f276f33f9a0a3645fb1915f35e68ddb708b7327df572fca6d"
+    },
+    "historicalFullSuitesRerun": false
+  },
+  "freshExperiments": {
+    "entrypoints": {
+      "result": {
+        "path": "artifacts/m1/t107/entrypoints-2lb78o0_/entrypoints.json",
+        "sha256": "928da027608b8e5b4cafc8031bb749ab6fae3e7595a8810e3bd78fdfcbf106cc"
+      },
+      "executionExitCode": 0,
+      "caseCount": 7,
+      "safetyFailCases": [
+        "EP-01",
+        "EP-02",
+        "EP-03",
+        "EP-04",
+        "EP-05"
+      ],
+      "actionRecordCount": 3,
+      "actualRecorders": [
+        {
+          "pid": 2795432,
+          "command": "xdg-open",
+          "args": [
+            "/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/entrypoints-2lb78o0_/anchor"
+          ]
+        },
+        {
+          "pid": 2795433,
+          "command": "xdg-open",
+          "args": [
+            "vscode://file//home/ubuntu/workspace/agent-studio/artifacts/m1/t107/entrypoints-2lb78o0_/anchor/remote.txt"
+          ]
+        },
+        {
+          "pid": 2795485,
+          "command": "code",
+          "args": [
+            "/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/entrypoints-2lb78o0_/anchor"
+          ]
+        }
+      ],
+      "shortcutId": "workspace.openLocal",
+      "shortcutResolved": "handled",
+      "navigation": [
+        "vscode://vscode-remote/ssh-remote+t107-synthetic-alias/workspace/t107-synthetic/remote.txt"
+      ],
+      "admissionFixtureStatus": 403,
+      "invalidParametersStatuses": [
+        400,
+        400,
+        400
+      ],
+      "routesRemaining": 0,
+      "eventListenersRemaining": 0,
+      "authenticationTested": false,
+      "formalRemoteBindingTested": false,
+      "domKeyboardTested": false,
+      "realDesktopLaunched": false,
+      "sidebarApiSourceTransformedNotFullUi": true,
+      "packagedClientEquivalentBranchInspected": true
+    },
+    "runtime": {
+      "result": {
+        "path": "artifacts/m1/t107/run-13fe8bc2f5a6d1e024f0c3b7/result.json",
+        "sha256": "b633109d1feebe3650e0ef581bdb26edfcad664787c6dfb8df25830e79647659"
+      },
+      "controllerExitCode": 0,
+      "nodeExitCode": 0,
+      "caseCount": 5,
+      "identityGateCount": 2,
+      "identityGatesAllPassed": true,
+      "helperVersion": "0.13.1",
+      "helperHealth": "degraded",
+      "resumeAdvertisedNotProved": true,
+      "directory": {
+        "id": "CAP-DIR",
+        "status": "pass",
+        "lists": [
+          {
+            "requestedLimit": 2,
+            "entries": [
+              "f1.txt",
+              "f2.txt"
+            ],
+            "truncated": true,
+            "elapsedMs": 2
+          },
+          {
+            "requestedLimit": 3,
+            "entries": [
+              "f1.txt",
+              "f2.txt",
+              "f0.txt"
+            ],
+            "truncated": false,
+            "elapsedMs": 3
+          },
+          {
+            "requestedLimit": 4,
+            "entries": [
+              "f1.txt",
+              "f2.txt",
+              "f0.txt"
+            ],
+            "truncated": false,
+            "elapsedMs": 6
+          }
+        ],
+        "tooMany": {
+          "type": "RemoteHelperRpcError",
+          "code": "E_TOO_LARGE",
+          "kind": null,
+          "mutationMayHaveStarted": null
+        },
+        "pagination": "none; complete list or explicit truncation/rejection",
+        "configuredSmallLimit": 2,
+        "staticMaximum": 1000
+      },
+      "file": {
+        "id": "CAP-FILE",
+        "status": "pass",
+        "files": [
+          {
+            "bytes": 31,
+            "readLimit": 32,
+            "outcome": "complete"
+          },
+          {
+            "bytes": 32,
+            "readLimit": 32,
+            "outcome": "complete"
+          },
+          {
+            "bytes": 33,
+            "readLimit": 32,
+            "error": {
+              "type": "RemoteHelperRpcError",
+              "code": "E_TOO_LARGE",
+              "kind": null,
+              "mutationMayHaveStarted": null
+            }
+          }
+        ],
+        "inlineBoundary": [
+          65535,
+          65536,
+          65537
+        ],
+        "overInline": {
+          "type": "Error",
+          "code": "T106_INLINE_FIXTURE_LIMIT",
+          "kind": null,
+          "mutationMayHaveStarted": null
+        },
+        "aboveLimitDispatchCount": 0,
+        "rangeBytes": [
+          2,
+          1
+        ],
+        "rangeEof": [
+          false,
+          true
+        ]
+      },
+      "search": {
+        "entryCount": 10,
+        "firstResultMs": 1366,
+        "scanCompleteMs": 1456,
+        "found": [
+          "bytes-33.bin"
+        ],
+        "close": {
+          "closed": true
+        },
+        "activeScanCancellationProved": false
+      },
+      "output": {
+        "id": "CAP-OUTPUT",
+        "status": "pass",
+        "outputs": [
+          {
+            "requestedBytes": 131071,
+            "observedBytes": 131071,
+            "outcome": "complete",
+            "firstOutputMs": 767,
+            "elapsedMs": 779
+          },
+          {
+            "requestedBytes": 131072,
+            "observedBytes": 131072,
+            "outcome": "complete",
+            "firstOutputMs": 682,
+            "elapsedMs": 692
+          },
+          {
+            "requestedBytes": 131073,
+            "observedBytes": 131073,
+            "outcome": "T106_OUTPUT_LIMIT",
+            "firstOutputMs": 736,
+            "elapsedMs": 752
+          }
+        ],
+        "helperTruncation": "not triggered; 2 MiB ring eviction not tested",
+        "adapterLimit": 131072
+      },
+      "timeout": {
+        "id": "CAP-TIMEOUT",
+        "status": "pass",
+        "rpcTimeout": {
+          "type": "RemoteHelperCallInterruptedError",
+          "code": null,
+          "kind": "timeout",
+          "mutationMayHaveStarted": false
+        },
+        "requestedRpcTimeoutMs": 40,
+        "elapsedMs": 41,
+        "waitDeadline": {
+          "type": "Error",
+          "code": "T106_PROCESS_DEADLINE",
+          "kind": null,
+          "mutationMayHaveStarted": null
+        },
+        "requestedTaskWaitMs": 40,
+        "taskElapsedMs": 103,
+        "afterTimeout": "task still running; timeout is not terminal success or cancellation",
+        "termination": {
+          "graceful": {
+            "running": true,
+            "graceMs": 1500,
+            "scope": "group"
+          },
+          "forced": null,
+          "final": {
+            "processId": "7ddebfc6-e210-452e-9eee-916b1bcf9ce3",
+            "pid": 9698,
+            "pgid": 9698,
+            "tty": false,
+            "running": false,
+            "exitCode": null,
+            "signal": "SIGTERM",
+            "latestSeq": "1"
+          }
+        },
+        "cancelElapsedMs": 61,
+        "uncertainty": false
+      },
+      "helperConnectMs": 4209,
+      "helperOutputRingBytes": 2097152,
+      "cleanup": {
+        "helperEntries": 0,
+        "helpersDisposed": true,
+        "registrySize": 0,
+        "networkAttempts": [],
+        "centralWorkspaceEntries": [],
+        "logTypes": []
+      },
+      "directStorageMatched": true
+    },
+    "offlineBudgetCounterexample": {
+      "path": "artifacts/m1/t107/acceptance-945cpr60/discovery-budget.json",
+      "sha256": "df9fee17e84e35a170437f5a33d582ed567fac7db19325c53b9604622735fc68"
+    }
+  },
+  "commands": [
+    {
+      "case": "independent-focused-tests",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_gate_test.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t107/acceptance-945cpr60/focused-tests-command.json",
+        "sha256": "2565c6188ec65d69cd1db1fd38c8dc82ec5929af17589ddf4b3057f0bf9b276d"
+      }
+    },
+    {
+      "case": "independent-entrypoints",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_run.py",
+        "entrypoints"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t107/acceptance-945cpr60/entrypoints-command.json",
+        "sha256": "a94cd8f4e17b88be476db9736a691e30b0174be401a65b2a63abb7ca50f7a16b"
+      }
+    },
+    {
+      "case": "independent-runtime",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_run.py",
+        "runtime"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t107/acceptance-945cpr60/runtime-command.json",
+        "sha256": "4fd41527ec022d938b6a985365529d03311c453c869f26937ea75e7bbabc7fc3"
+      }
+    },
+    {
+      "case": "independent-final-observation-command",
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/acceptance-945cpr60/observe_independently.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t107/acceptance-945cpr60/observation-command.json",
+        "sha256": "184eb7126b4744994e6e2c7db937fe50341fa208e468d9f8257963e06fb73570"
+      }
+    },
+    {
+      "case": "independent-discovery-budget-counterexample",
+      "command": [
+        "node",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/acceptance-945cpr60/discovery_budget.mjs"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t107/acceptance-945cpr60/discovery-budget-command.json",
+        "sha256": "a5be4ce366cda48342c53dbc580b1008686a533c1cc3aa9c5c894b123aaf4c5f"
+      }
+    }
+  ],
+  "syntaxAndDocumentationChecks": {
+    "path": "artifacts/m1/t107/acceptance-945cpr60/validation-before-archive.json",
+    "sha256": "41b6fec6795385786e31263b5d710849f64554911d38a8a115a486b6099aa279"
+  },
+  "focusedTestsPassed": 7,
+  "documentationTestsPassed": 37,
+  "documentsChecked": 19,
+  "localLinksChecked": 161,
+  "finalResources": {
+    "evidence": {
+      "path": "artifacts/m1/t107/acceptance-945cpr60/independent-final-observation.json",
+      "sha256": "8328366b14a26c10301461237f928e683d55d2f9ed0f9fcc48109a3c1b4ebf7b"
+    },
+    "observationWindowUTC": [
+      "2026-10-30T16:10:26.593038+00:00",
+      "2026-10-30T16:10:29.427088+00:00"
+    ],
+    "logWindowStartedUTC": "2026-10-30T16:06:19+00:00",
+    "runningContainers": 36,
+    "labContainersRetained": 4,
+    "originalContainersRetained": 32,
+    "exactContainerIdsUnchanged": true,
+    "allNineStoredFilesMatchHelperReadback": true,
+    "eightSyntheticDataFixturesReconstructed": true,
+    "recorderPidChecks": [
+      {
+        "pid": 2795432,
+        "procExists": false,
+        "command": "xdg-open"
+      },
+      {
+        "pid": 2795433,
+        "procExists": false,
+        "command": "xdg-open"
+      },
+      {
+        "pid": 2795485,
+        "procExists": false,
+        "command": "code"
+      }
+    ],
+    "helperPidStartTickChecks": [
+      {
+        "pid": 9480,
+        "startTick": "631843546",
+        "state": "gone"
+      }
+    ],
+    "ownedRemoteProcessesAfter": [],
+    "cancelledWorkloadPidObservation": {
+      "pid": 9698,
+      "procExists": false,
+      "originalStartTickRecorded": false
+    },
+    "centralProbePids": [],
+    "transport": {
+      "hostBrokerPids": [],
+      "controlPlaneCliPids": []
+    },
+    "currentBindingsUnchanged": true,
+    "resources": [
+      {
+        "name": "m1-a",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/workspace"
+        ],
+        "logWindowStartedUnix": 1793376379,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      },
+      {
+        "name": "m1-b",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/workspace"
+        ],
+        "logWindowStartedUnix": 1793376379,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      },
+      {
+        "name": "coder",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/var/run/docker.sock",
+          "/home/coder",
+          "/run/lab-tls",
+          "/opt/lab-template"
+        ],
+        "logWindowStartedUnix": 1793376379,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      },
+      {
+        "name": "database",
+        "running": true,
+        "restartCount": 0,
+        "oomKilled": false,
+        "mountDestinations": [
+          "/var/lib/postgresql/data"
+        ],
+        "logWindowStartedUnix": 1793376379,
+        "warningErrorLines": 0,
+        "sshEofWarningLines": 0,
+        "unclassifiedWarningErrorLines": 0
+      }
+    ],
+    "dataDeleted": false,
+    "scope": "Only current review owned roots/HOME and recorded recorder PIDs; helper tracked with PID/startTick. No complete lifetime PID inventory for all finished short jobs, no DOM keyboard or desktop launch, no all-history clean-log claim."
+  },
+  "scope": {
+    "implementationSourceChanged": false,
+    "implementationMatrixChanged": false,
+    "mainDocumentsChanged": false,
+    "infrastructureChanged": false,
+    "globalProfileOrPackagesChanged": false,
+    "delegated": false,
+    "workflowStartedOrResumed": false,
+    "modelApiUsed": false,
+    "publicNetworkUsed": false,
+    "committedOrPushed": false,
+    "persistentDataDeleted": false,
+    "independentCheckerSha256": {
+      "observe_independently.py": "5d5106cd6bace9b2d2e3f128e055797429dd8f6d6ff3de670f4313075dce354d",
+      "discovery_budget.mjs": "41226ca6c8379a3d30d532c2f01eb676ae9bf4f37a2246b36fcf6ffd3deecdc3"
+    }
+  },
+  "notExecuted": [
+    "U-01/U-02/U-03 implementation",
+    "Actual reconnect/requery-original-task recovery, window expiry or daemon/platform lifecycle fault experiments",
+    "Replay protocol ACK/concurrent-duplicate/log-loss/expiry/restart/generation matrix; replay remains disabled",
+    "Formal binding persistence, real main session/provider/sidebar UI, browser login, DOM key events or native desktop handlers",
+    "Large-capacity/stress/OOM/ring-eviction and guaranteed active discovery cancellation",
+    "New template/image, PID/storage quotas, complete network isolation, cross-host, real mobile, deployment/rebuild or upgrade/rollback",
+    "T-103/T-104/T-105/T-106 full reruns, historical browser/deployment/full SDK audit",
+    "T-201 or any downstream development"
+  ],
+  "history": "All prior JSON/SHA rows and implementation failures/errata preserved. All fresh commands in this review exited 0; entrypoint safety outcomes remain fail. Final log window is not all-history error-free evidence.",
+  "postWriteValidation": "A separate new receipt will record complete stored-byte readback, gate/finding ID lookup and the final appended checksums/diff; this record does not predeclare that outcome.",
+  "handoff": "Return blocked full-M1 decision and these bounded implementation/evidence corrections to coordinator; do not start T-201."
+}

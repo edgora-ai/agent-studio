@@ -1,0 +1,549 @@
+{
+  "scope": "D06-ACP-client bridge implementation and offline protocol validation only; real installed SDK and managed local/m1-a stdio, NOT a real coding CLI, real model, SC-12, crash-recovery or whole-goal acceptance",
+  "date": "2026-10-31",
+  "result": "pass-limited-development",
+  "cwd": "/home/ubuntu/workspace/agent-studio",
+  "verified": [
+    "Installed @agentclientprotocol/sdk 1.4.0 client initialize/capabilities/session-new/prompt/update/cancel; frozen helper non-PTY stdin/write/read/status reused without modification. No PTY injection or dsh-acp server masquerading as a client.",
+    "Private server-owned backend catalog pins executable/version/hash/argv/bootstrap/assets, protocol, kind/policy and dedicated STUDIO_ACP references. New D06 policies/bindings/sessions; authoritative principal/session resolution before launch. Cross-binding task and self-asserted approval denied before any operation.",
+    "Single-use in-process launch capability; exact owned cwd/private HOME/env/PID/startTick/operation/instance verified. Dedicated credential absent from persisted launch input, event/operation DB, browser and scanned non-vault files. No central credential inheritance or remote-to-local fallback.",
+    "Real running request_permission and form elicitation use the original session approval/question UI and authenticated SQLite one-shot controls. Original once-only option IDs and schema-typed answers returned to the same RPC/CLI session/instance; provider mutation gate rechecks deadlines/cancellation after async identity verification.",
+    "Permission waiting has no business receipt; approve-once writes once. Reject/timeout/late/duplicate/old/cross-binding replies fail closed. Local real bytes/hash/full API/search and remote independent bytes/hash/cwd/PID observations agree; peer receipt proves actual answer use.",
+    "Bounded stream/frames/events and real malformed/incomplete-EOF/nonzero-exit/cancel paths verified. Unsupported fs callback gets a protocol error, not central filesystem access. No fake native model turn; D06 sessions have zero model_requests.",
+    "Exact owned broker channel loss leaves task/operation unknown, no approval replay/relaunch/fallback, central canary unchanged. Explicit reconnect does not adopt old instances. Actual stopped remote PID observation is not mislabeled cancellation.",
+    "Real pending-approval local peer is stopped before graceful restart; durable rows preserved, old replies invalid and zero replacement launches. Crash-recovery/session-resume window explicitly not claimed.",
+    "Original ACP sidebar starts and cancels tasks; original controls process runtime requests; history reload works. 390px layout inspected, not actual-phone acceptance. Affected D05 native tools/controls and original local/remote UI regressions passed."
+  ],
+  "commands": [
+    {
+      "command": "node --test --test-reporter=tap scripts/dev/store.test.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d06/unit-27.tap",
+      "checks": 27,
+      "sha256": "dee8cd5727b7eb0356b533b8c3382fb4b3a44bfa6e2a3af628a757ef1611c8af",
+      "actual_result": {
+        "tests": 27,
+        "pass": 27,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "command": "node scripts/dev/acp.integration.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d06/local-71034b28-3607-46fc-9e9a-989e4c1c5bd1.json",
+      "checks": 15,
+      "sha256": "098381dd38bef3aa34a8b64656c3feaa900156d5f6e1526add3509b3c23e98b0",
+      "actual_result": {
+        "checks": 15,
+        "failures": [],
+        "result": "all listed checks passed"
+      }
+    },
+    {
+      "command": "node scripts/dev/acp.remote.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d06/remote-4cd09830-e4b9-4e12-9bdd-db4841420a25.json",
+      "checks": 4,
+      "sha256": "5c9b6c70fd1ab90e7998c219b97b31b1310608b316b16f40a594edae36a32501",
+      "actual_result": {
+        "checks": 4,
+        "failures": [],
+        "result": "all listed checks passed"
+      }
+    },
+    {
+      "command": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t104/browser-venv/bin/python -I scripts/dev/acp.browser.py --root /home/ubuntu/workspace/agent-studio/.preview/agent-studio --out /home/ubuntu/workspace/agent-studio/artifacts/d06/ui-final --browser /home/ubuntu/.cache/ms-playwright/chromium-1234/chrome-linux/chrome",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d06/ui-final/browser.json",
+      "checks": 7,
+      "sha256": "2070318440ab3e1ec28382230fc69995973cf4b151eca9b3bbda262df2b399d3",
+      "actual_result": {
+        "checks": 7,
+        "failures": [],
+        "result": "pass-limited-development"
+      }
+    },
+    {
+      "command": "node scripts/dev/model.integration.mjs /home/ubuntu/workspace/agent-studio/.preview/agent-studio",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d05/integration-6ae4aa0b-e275-443b-beb0-018a2544d114.json",
+      "checks": 10,
+      "sha256": "78ca400974f645f275da7fdb4adfc8c098d27913427d95625e82f27ff16be043",
+      "actual_result": {
+        "checks": 10,
+        "failures": [],
+        "result": "all listed checks passed"
+      }
+    },
+    {
+      "command": "node scripts/dev/model.remote.mjs",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d05/remote-83a894de-79a2-40f2-a758-2d6db97b82da.json",
+      "checks": 4,
+      "sha256": "fcc27bab96faa763aeddb96be218f0e6e466ea0d214a8474c2e4eca9a198d571",
+      "actual_result": {
+        "checks": 4,
+        "failures": [],
+        "result": "all listed checks passed"
+      }
+    },
+    {
+      "command": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t104/browser-venv/bin/python -I scripts/dev/model.browser.py --root /home/ubuntu/workspace/agent-studio/.preview/agent-studio --out /home/ubuntu/workspace/agent-studio/artifacts/d06/d05-ui-regression --browser /home/ubuntu/.cache/ms-playwright/chromium-1234/chrome-linux/chrome",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d06/d05-ui-regression/browser.json",
+      "checks": 7,
+      "sha256": "70f94abc1f8013333d61250cb1f33c3c6611e5d51191f13772440c99f20191a0",
+      "actual_result": {
+        "checks": 7,
+        "failures": [],
+        "result": "pass-limited-development"
+      }
+    },
+    {
+      "command": "node scripts/dev/core.verify.mjs --acp",
+      "cwd": "/home/ubuntu/workspace/agent-studio",
+      "exit": 0,
+      "output": "artifacts/d06/final-verification-dc9c4700-c4b9-425b-92aa-fa5efbff92d2.json",
+      "checks": 7,
+      "sha256": "6cc710765be47ec333a8869315046012a2f3bebe96decf5b1c812621bcbb8d53",
+      "actual_result": {
+        "checks": 7,
+        "failures": [],
+        "result": "pass-limited-development"
+      }
+    }
+  ],
+  "final_storage": {
+    "schema": 6,
+    "integrity": "ok",
+    "operations": 1587,
+    "tasks": 23,
+    "controls": 26,
+    "events": 320,
+    "active_tasks": 0,
+    "pending_controls": 0,
+    "model_requests": 52,
+    "model_controls": 78,
+    "native_physical_logs": 11,
+    "acp_states": [
+      {
+        "state": "cancelled",
+        "n": 5
+      },
+      {
+        "state": "completed",
+        "n": 9
+      },
+      {
+        "state": "refused",
+        "n": 7
+      },
+      {
+        "state": "unknown",
+        "n": 2
+      }
+    ],
+    "operation_states": [
+      {
+        "state": "cancelled",
+        "n": 1
+      },
+      {
+        "state": "completed",
+        "n": 993
+      },
+      {
+        "state": "failed",
+        "n": 30
+      },
+      {
+        "state": "released",
+        "n": 555
+      },
+      {
+        "state": "unknown",
+        "n": 8
+      }
+    ],
+    "control_deliveries": [
+      {
+        "state": "answered",
+        "delivery": "stdio-written-unconfirmed",
+        "n": 17
+      },
+      {
+        "state": "cancelled",
+        "delivery": "acp-channel-lost",
+        "n": 2
+      },
+      {
+        "state": "expired",
+        "delivery": "stdio-written-unconfirmed",
+        "n": 4
+      },
+      {
+        "state": "rejected",
+        "delivery": "stdio-written-unconfirmed",
+        "n": 3
+      }
+    ],
+    "schema4_preserved_rows": {
+      "projects": 3,
+      "environments": 3,
+      "instance_records": 3,
+      "project_bindings": 3,
+      "session_bindings": 3,
+      "operation_records": 928,
+      "file_read_versions": 41
+    },
+    "schema5_to_6_checkpoint": {
+      "path": "artifacts/d06/schema6-preservation.json",
+      "sha256": "b68b641fc1b36d155f2f8b13da696fe9433e503a365d1ac1ab2684b38bd26791"
+    },
+    "schema5_checkpoint_caveat": "All 13 tables preserved at migration; later D05 regression legitimately changes configuration/selection revisions. This is not a claim that all mutable model metadata stays unchanged forever.",
+    "local_process_observations": 203,
+    "remote_pty_observations": 45,
+    "remote_acp_identity_observations": 10
+  },
+  "delivery_semantics": "stdio-written-unconfirmed means bytes were accepted by the managed transport, NOT peer acknowledgement. Offline receipt/update independently proves answer use in these cases; no generic exactly-once recovery claim.",
+  "final_checks": {
+    "locked_files": 75,
+    "frozen_baseline_files": 16,
+    "private_files": 357,
+    "private_directories": 111,
+    "new_startup_log_bytes": 0,
+    "retained_historical_log_bytes": 5360,
+    "esm_syntax": 38,
+    "python_syntax": 10,
+    "acp_credential_scan_files": 414,
+    "public_health": 200,
+    "unauthenticated_root": 401,
+    "acp_absent_or_wrong_auth_401": 16,
+    "final_auth": {
+      "path": "artifacts/d06/final-auth.json",
+      "sha256": "1b457300b72c38f16da4bdfed78686327c74a412e598a303d4395045e943377b"
+    },
+    "config_scan": {
+      "path": "artifacts/d06/config-scan.json",
+      "sha256": "659789b9e17bb49436e75d1ae9468863934bc7deadce037c07a16f14b85be7b1"
+    }
+  },
+  "ui": {
+    "result": "pass-limited-development",
+    "layout": {
+      "viewport": 390,
+      "scroll": 390,
+      "panel": {
+        "left": 1,
+        "right": 390,
+        "width": 389
+      },
+      "panelScroll": 389,
+      "panelClient": 389
+    },
+    "js_errors": [],
+    "unexpected_rpc": [],
+    "unexpected_http": [],
+    "unexpected_console": [],
+    "external_requests": [],
+    "expected_denial": "skills/list agent-studio/disabled",
+    "d05_regression_provider_created": false,
+    "viewed_final_screenshots": [
+      "remote-approval.png",
+      "remote-question.png",
+      "remote-complete.png",
+      "mobile-width-layout.png"
+    ],
+    "viewed_d05_regression_screenshots": [
+      "local-complete.png",
+      "remote-complete.png"
+    ]
+  },
+  "screenshots": [
+    {
+      "path": "artifacts/d06/ui-final/local-approval.png",
+      "sha256": "a27c0c67d4df1118a4cb7c6b1003220a4e72846af1b565b71294e066df04b5c1"
+    },
+    {
+      "path": "artifacts/d06/ui-final/local-cancel.png",
+      "sha256": "617bbd385628f24301c7bb8302b80e284b4c293c2634c824c1af471ad419e266"
+    },
+    {
+      "path": "artifacts/d06/ui-final/local-complete.png",
+      "sha256": "e0f003e7685e6f4958a3bbe6a0645122688a33105d1c832d4c14b967d9ac255a"
+    },
+    {
+      "path": "artifacts/d06/ui-final/local-question.png",
+      "sha256": "e16b2c2544084f2fac8374f9ba6ab7433bb8645a4c1f562595b96612a6ff4a32"
+    },
+    {
+      "path": "artifacts/d06/ui-final/local-reject.png",
+      "sha256": "de46b770e0d64ea6ddb4491e08de71b1e1b7b770987fe3a17e5fde9172c51b28"
+    },
+    {
+      "path": "artifacts/d06/ui-final/local-timeout.png",
+      "sha256": "3d1c7e5eb4bada83849af94994c54558a582cf3fdb9c217118b16fa701d24545"
+    },
+    {
+      "path": "artifacts/d06/ui-final/mobile-width-layout.png",
+      "sha256": "7ead308c59357f10937572d5d9be8fd869f1b19185c86837df9ea53fd3e3cd7a"
+    },
+    {
+      "path": "artifacts/d06/ui-final/remote-approval.png",
+      "sha256": "7338db3ddb22c0a8b094b9bcad387ffbc8942f86ad3a78932541c99b7716bdc2"
+    },
+    {
+      "path": "artifacts/d06/ui-final/remote-complete.png",
+      "sha256": "ff4eaa54d74b18d0f8f15bdce1ad9365d1a7c2a028fb2ca158765ed2dd4b3d05"
+    },
+    {
+      "path": "artifacts/d06/ui-final/remote-question.png",
+      "sha256": "a62a94995c9bf7854d23a8880923c9f50054d123b539ecc3b8514c01665c378c"
+    },
+    {
+      "path": "artifacts/d06/d05-ui-regression/local-complete.png",
+      "sha256": "dcc24d976476d82f6e493ec5d872fdbdcc7db34024e919a17b2307ea6394d344"
+    },
+    {
+      "path": "artifacts/d06/d05-ui-regression/remote-complete.png",
+      "sha256": "c1a0090c9ea09407aa168965eb98a7fd1091d80d6e71c68066f37f64f0d21606"
+    }
+  ],
+  "inventory": [
+    {
+      "path": "artifacts/d06/backend-inventory-local.json",
+      "sha256": "d5b09887c9499a732f4563ac6d267df780e8fc108a72d81dcb5b10645bff810b"
+    },
+    {
+      "path": "artifacts/d06/backend-inventory-remote.json",
+      "sha256": "953b1db9293db3ac0d96f42b299719a8f0bec774311d2d8eb471fcb0c9fe10a7"
+    }
+  ],
+  "registered_backends": [
+    {
+      "kind": "local",
+      "session_id": "session-26a245ba-047e-49cc-b599-7d1b251c4d49",
+      "binding_id": "binding-e03e4c57-a1c2-48b8-a705-3858b89715fc",
+      "version": 1,
+      "descriptor": {
+        "backends": [
+          {
+            "id": "offline-acp-peer-local-v1",
+            "name": "OFFLINE ACP PROTOCOL PEER — NOT A CODING CLI",
+            "version": "protocol-peer-1.0.0",
+            "protocol": "acp",
+            "offline_fixture": true,
+            "credential_refs": {
+              "ACP_TEST_KEY": "STUDIO_ACP_OFFLINE_PEER"
+            },
+            "configured": true,
+            "missing_credentials": []
+          }
+        ],
+        "configured": true,
+        "policy": "d06-acp-local-v1",
+        "real_cli_verified": false
+      }
+    },
+    {
+      "kind": "remote",
+      "session_id": "session-3024dd28-8411-4d0d-86e6-09248399039e",
+      "binding_id": "binding-7b85475c-6da8-47e1-8c5d-80e5fd0aa9cc",
+      "version": 1,
+      "descriptor": {
+        "backends": [
+          {
+            "id": "offline-acp-peer-m1-a-v1",
+            "name": "OFFLINE ACP PROTOCOL PEER — NOT A CODING CLI",
+            "version": "protocol-peer-1.0.0",
+            "protocol": "acp",
+            "offline_fixture": true,
+            "credential_refs": {
+              "ACP_TEST_KEY": "STUDIO_ACP_OFFLINE_PEER"
+            },
+            "configured": true,
+            "missing_credentials": []
+          }
+        ],
+        "configured": true,
+        "policy": "d06-acp-helper-v1",
+        "real_cli_verified": false
+      }
+    }
+  ],
+  "runtime": {
+    "pid": 1234150,
+    "run_id": "32ba1cd1-8817-4d8d-9287-dd78447ea8e7",
+    "origin": "http://127.0.0.1:35047",
+    "auth_file": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio/login.url",
+    "root": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio",
+    "reconciliation": {
+      "bindings_ready": 0,
+      "sessions_ready": 0,
+      "failed": 0
+    },
+    "running": true
+  },
+  "retained_services": {
+    "preview": "running; dynamic origin and private auth-file path only, no token/cookie published",
+    "offline_d05_fixture": {
+      "pid": 538557,
+      "start_ticks": "634479748",
+      "state": "S",
+      "background_task": "bit7syyr7",
+      "purpose": "retained offline D05 protocol fixture; not pending development"
+    },
+    "acp_peer": "per-task process, not a daemon; no active task/pending control at final verification",
+    "random_local_test_root": "/tmp/agent-studio-test-acp-71034b28-3607-46fc-9e9a-989e4c1c5bd1",
+    "random_local_preview_stopped": {
+      "running": false,
+      "stopped": true,
+      "pid": 1175363
+    }
+  },
+  "retained_failures": [
+    {
+      "name": "D06_TEST_SCHEMA_EXPECTATION",
+      "artifact": {
+        "path": "artifacts/d06/unit-schema6-regression.tap",
+        "sha256": "36bebb84514df35960145162e9d85b1029b80070946637828ee2063295677573"
+      },
+      "finding": "Old test still expected schema5; 20/21 at that checkpoint. Corrected assertion and added tests; final 27/27."
+    },
+    {
+      "name": "D06_UI_PAREN",
+      "artifact": null,
+      "finding": "Initial node --check reported Unexpected token close-parenthesis; fixed one extra parenthesis before deployment. Original command output is in session transcript; no fabricated failed TAP. Subsequent syntax/24-unit checks passed."
+    },
+    {
+      "name": "D06_TEST_NATIVE_QUESTION_AUTOADVANCE",
+      "artifact": {
+        "path": "artifacts/d06/ui-first/browser.json",
+        "sha256": "e4e0fd6fec2f7578182a897225cec6c8798a335253d716c9056c47a4edf7c9e4"
+      },
+      "screenshot": {
+        "path": "artifacts/d06/ui-first/failure.png",
+        "sha256": "6d14d22e8b5c65ecec9e41d219145a453ef8a93432460aa267fb8ddcb2ebabac"
+      },
+      "finding": "Harness clicked Next after single-choice auto-advance; empty required integer timed out. No receipt; deadline held. Original cleanup_error retained, later cleanup checks live state."
+    },
+    {
+      "name": "D06_TEST_HIDDEN_SESSION_PANES",
+      "artifact": {
+        "path": "artifacts/d06/ui-native-questions/browser.json",
+        "sha256": "8022525843b0b21af1fedbe929e2e595abb41bf15c09ae80b1d49919a7704ecb"
+      },
+      "screenshot": {
+        "path": "artifacts/d06/ui-native-questions/failure.png",
+        "sha256": "69d23380fa1b0f0f962146e8a2db010872005870d247e85cc0723363a5d43576"
+      },
+      "finding": "Four local checks passed, remote locator matched a retained hidden pane. Scoped to visible panel, then all seven checks passed in ui-visible-scope and ui-final."
+    }
+  ],
+  "prior_checkpoint_artifacts": [
+    {
+      "path": "artifacts/d06/pre-migration-snapshot.json",
+      "sha256": "e82e66c720ee0e1005edae2e2c6be6a4b1ba39ba811b6db28acc7c248a8b1464"
+    },
+    {
+      "path": "artifacts/d06/unit-control-refactor.tap",
+      "sha256": "bed05f78c8ff5f4b0122c9b678af3e9b89fc8e602d587945c20a385bdac60ee1"
+    },
+    {
+      "path": "artifacts/d06/unit-control-state-24.tap",
+      "sha256": "237113fac65582d656b8325dcb7a83041f3aef22fae5ddbf4df2bb7285f965a0"
+    },
+    {
+      "path": "artifacts/d06/unit-provider-seam-24.tap",
+      "sha256": "77c2814e1b7e5a99e0c0df4b05780e0b7d3fa74acaf72d83e0b942587b293db7"
+    },
+    {
+      "path": "artifacts/d06/unit-client-wiring-24.tap",
+      "sha256": "163fd4916a9f1384daea43d7013742addfdaa96de495c3a7b565d946bd23974f"
+    },
+    {
+      "path": "artifacts/d06/unit-sidebar-24.tap",
+      "sha256": "e2286b89e4a58f941c6a1a3396699cb5b41ac9217ab425a49e6538da58f31437"
+    },
+    {
+      "path": "artifacts/d06/local-61d06f1b-a3f5-427d-8536-fad06e51ae9d.json",
+      "sha256": "1bbafbb2b243f1cdb954cff39f53307ca9fdece64467ece1e37e163afccfb0e5"
+    },
+    {
+      "path": "artifacts/d06/remote-e56ccede-b37c-49d8-b26b-8fdf85656da5.json",
+      "sha256": "780c7d153109047eda8c60ebac73b8f77f697c840e0cd8d054a09c7c6c63dc6e"
+    },
+    {
+      "path": "artifacts/d06/ui-visible-scope/browser.json",
+      "sha256": "d1e882813df75e998ed8d4c17f7f184b6abca70e67c87a186b1c9ead01c598c4"
+    }
+  ],
+  "real_cli_missing_inputs": [
+    "Approved actual executable/version/hash and structured ACP argv, plus pinned Python bootstrap; m1-a managed PATH has no confirmed coding CLI.",
+    "Allowed environment kind/new policy/project binding and dedicated STUDIO_ACP credential references/values plus necessary non-secret endpoint/model configuration.",
+    "Explicit task and allowed side effects; actual CLI initialize/prompt/tool output and runtime blocking permission/form evidence still required."
+  ],
+  "not_executed_or_accepted": [
+    "Real OpenCode/Codex/Claude Code sessions; local OpenCode1.2.20 only static metadata/binary ACP markers.",
+    "Real external model calls, vendor authentication/compatibility and model quality.",
+    "Formal SC-12, M1/M2 or full-goal acceptance; blocked M1 review was not resumed.",
+    "Session load/resume, original task recovery and crash-recovery windows; only graceful pending-peer restart/no-replay was tested.",
+    "Actual-phone acceptance, OS sandbox/strong multi-tenant isolation or production deployment.",
+    "fs/terminal callbacks, URL elicitation and unsupported schema pattern/format branches.",
+    "No dependency/CLI install, Coder workspace lifecycle, image rebuild, m1-b work, public exposure, global/production changes, commit/push or old-data deletion."
+  ],
+  "next_slice": "Environment management and original task recovery under explicit resource/safety limits; total goal remains ongoing.",
+  "documentation_validation": "artifacts/d06/docs-validation.json records commands, exact outputs and final README/ledger/evidence hashes after this evidence is added to SHA256SUMS; kept outside this hash graph to avoid a circular digest.",
+  "source_sha256": {
+    "packages/dsh-agent-studio/acp-backends.mjs": "82db080581731eb01f6e6e0d76cecde1387eed6f284842098067030e78613c78",
+    "packages/dsh-agent-studio/acp-protocol.mjs": "1c6594104a799fb60ae8d9f1e088d954bbaf2e7581d42f2606b0fba73f248668",
+    "packages/dsh-agent-studio/acp-session.mjs": "4e7ce0caf1335a9f09db6356f6cfa5144d1c7970861bd4ed8bee06e2e6132ce1",
+    "packages/dsh-agent-studio/acp-sidebar.mjs": "0045435d326cb968663096151ff9e6afcfeb706c7e79d1699f2fed0d473223c1",
+    "packages/dsh-agent-studio/acp-state.mjs": "972e95cc4922bdceefe6b3cf7da74c5e542baa0b8051dd6616173c2d60d8b60d",
+    "packages/dsh-agent-studio/adapters/acp-launch-v1.py": "46ba8cf1e301537c581019100c7db757e270e682375cdab58461e9acaa5f608f",
+    "packages/dsh-agent-studio/adapters/acp-stdio.mjs": "3a371539f6b46811c89d36e5c6753952bc728933e80cf22e7e6db6a17a0d4c79",
+    "packages/dsh-agent-studio/adapters/agent-terminal.mjs": "4913ef9b254123804f98796e26f7eb0bf580d4966147d889953382f6383d9d6d",
+    "packages/dsh-agent-studio/adapters/agent-tools.mjs": "d12e220447491a373f88ec887b9df109013fa18941b48bbbf693b5fc28543ca3",
+    "packages/dsh-agent-studio/adapters/bound-provider.mjs": "2554df897170e0f82d3825c75595fd51c98fad1fdd34a218791d302939697b7a",
+    "packages/dsh-agent-studio/adapters/bound-reads.mjs": "ae1ef262870711578f3db7028f976737abd8a2d06a3fd8398e573cd3d5266bea",
+    "packages/dsh-agent-studio/adapters/bound-watch.mjs": "c4ff617280c28266128c91077da9c753ec8e8c723b83678751939075de3377ee",
+    "packages/dsh-agent-studio/adapters/coder_broker.py": "ddf026b54c1259aa15818b77a00b08d4bc693f163b3f680789c1ecaeefff0986",
+    "packages/dsh-agent-studio/adapters/helper-channel.mjs": "beb19b7177400f9baee4f2808b1f4398a50592f5b7dddff194a94de3393f327e",
+    "packages/dsh-agent-studio/adapters/host-files.mjs": "e2efb24d13b95654d20f92e4b70cff67690111426da3d275671911acda13bb71",
+    "packages/dsh-agent-studio/adapters/host.mjs": "a82a9c5624b1cccacd42f1e07b16c87ba45aef78523e71de1c70fddce6af991a",
+    "packages/dsh-agent-studio/adapters/local-provider.mjs": "5017ff02230b173b667f89b98963b149a5549b217e0dd623a36f09a23869a543",
+    "packages/dsh-agent-studio/adapters/remote-read.py": "d4f6b6d0829e640aa97b2c763ecba9be068f13f41672681bf1b677a595bbe3f1",
+    "packages/dsh-agent-studio/bindings.mjs": "1ea9f52af66b98248a5bc1f0ce1c645f479f99030ec49e52d441930044d0e5f3",
+    "packages/dsh-agent-studio/credentials.mjs": "df17e7059bc876f7c281bbcb4ef9f57c4a091e1e570aac9d26c2c243e21c2534",
+    "packages/dsh-agent-studio/index.mjs": "8e46fe8d2562913ae644445ed66e36fca84ed874b1ff1b0d146ae6503d138766",
+    "packages/dsh-agent-studio/model-session.mjs": "2a23be65e49a97826b9837825b99a3668c37de78cca62e4aa7e4ae17f0ae3144",
+    "packages/dsh-agent-studio/model-state.mjs": "6183939c1942acc572196b0ebb2162d80fbbe4271b2c4f455ba0e27290e2262b",
+    "packages/dsh-agent-studio/store.mjs": "d2daff22a122d1f1f0d3b643903e75d441dc22e858193027b9745e75c2e9e0f4",
+    "scripts/dev/preview.mjs": "832c3efc1df9a3ece7b39d4c2e9f6004757cd9879ede415dcea4eb8cceaf6d09",
+    "scripts/dev/fence.mjs": "8bc2533e31297f2fbaf5332d733075d374273fe681ab75cfcf1bedbce9276953",
+    "scripts/dev/sidebar-projection.mjs": "eb0453c4afcacba304a80a2a1d423fbe645bd34cefbd4d88df6fa1f5123bbb28",
+    "scripts/dev/acp.peer.py": "700a4dfc6a42f9214d688c097f1d5920fe8fedf3532eb6e6858805b8c2f97849",
+    "scripts/dev/acp.integration.mjs": "beee2a24710a012a41f9577926b9a2b456c4a35e91d0b8c87f8be421ac0e5520",
+    "scripts/dev/acp.remote.mjs": "b60b2cac067970f55ada749eb6f9bc241667de1a516d08eddd8375a3628aff64",
+    "scripts/dev/acp.browser.py": "f42a8cfb719a8911c3ade3339d1c582e15c137ee60192f7e93fa9b7cd9dc300c",
+    "scripts/dev/store.test.mjs": "84a88b9e50acdaa055fe5bc3630e25dba1684428701028c6156f704b9564c237",
+    "scripts/dev/observe_remote.py": "f2879b088581229d0b16b0d1c4644ccece20732d476e8723184f11001a86fba9",
+    "scripts/dev/core.verify.mjs": "3657fa6aeecd1bc778de80b401fe7d876d55901a5048a8ebba569f49f70312e4",
+    "scripts/dev/model.integration.mjs": "88968ff134203608ec626e0c7082689701c417fa81ea403067bfb0e5f82e1701",
+    "scripts/dev/model.remote.mjs": "ffb08f5bb99729467c949de92ae93abd67173b16d75e52484038e3c374214bbd",
+    "scripts/dev/model.browser.py": "f5703d5e312738f3a5b4d05a7dc3fb4022a4b30f43e14ca044dc2e939fa95bb7",
+    "profiles/agent-studio-preview/sources.lock.json": "8d8aea47e366267ea52753109f481f5650cd24e0385da28682c92da4348cb03f",
+    "profiles/agent-studio-preview/cordis.patch.yml": "84626a3c1881731173a03e6db6e307d5092d8ad0c3e791c86c7bb8ed1b97994c",
+    "profiles/agent-studio-preview/package.json": "185b7825b0c2a39cada29eff56f664f0365057fa0a9155df199c5dbd1254f189"
+  },
+  "historical_d05_evidence_sha256": "c8e17db31490a723c705aa819ee3ec3d1ef7dd1f797ccea8dac5527ef5ff392b"
+}

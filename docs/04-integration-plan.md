@@ -24,7 +24,7 @@ dsh 工具、Host API、文件引用、搜索、侧边栏 Git
 
 | 候选 | 已核对事实 | 本项目用途与限制 |
 |---|---|---|
-| `CrazyShout/dsh-ssh-remote` | GitHub 源码；MIT；系统 OpenSSH、版本化 Python helper；2026-10-30 复核：最新发布为 v0.13.3（2026-10-29），0.13.2／0.13.3 的 release-manifest 中 `dshVersions` 为 0.2.0-rc.2、0.2.1-rc.2、0.2.1-rc.3；TECHNICAL.md 亦称面向 0.2.0-rc.2 与 0.2.1-rc.2 | 优先兼容性验证候选；**rc.4 未列入 manifest 的枚举版本，运行兼容性未知**。固定 tag 的相关 peer 范围更宽，不能据枚举遗漏推断安装必然失败；允许在隔离 profile 测试当前组合，不直接改生产 |
+| `CrazyShout/dsh-ssh-remote` | GitHub 源码；MIT；系统 OpenSSH、版本化 Python helper；2026-10-30 复核：最新发布为 v0.13.3（2026-10-29），0.13.2／0.13.3 的 release-manifest 中 `dshVersions` 为 0.2.0-rc.2、0.2.1-rc.2、0.2.1-rc.3；TECHNICAL.md 亦称面向 0.2.0-rc.2 与 0.2.1-rc.2 | 优先兼容性验证候选；**rc.4 未列入 manifest，整体远端兼容仍未验证**。T-103 已通过显式入口的真实隔离文件 profile 启动、禁用／启用与整树卸载；未经包装的 Cordis 注册卸载失败仍保留，原始 bundle 不启用，见[隔离实验](implementation/t103-isolated-load.md)。不能据枚举遗漏推断安装必然失败，也不能以指定 profile 通过宣布完整底座可用；不直接改生产 |
 | `xiray-xia/dsh-remote-vs` | 0.11.1，MIT；2026-10-30 复核 `package.json` 仍要求 dsh ^0.2.2-alpha.2；`src/pool.ts` 使用 ssh2，未处理 ProxyCommand／ProxyJump | 参考路由和侧边栏实现；当前组合须隔离验证，不因依赖差异预告安装必然失败；ssh2 连接不等于支持 OpenSSH ProxyCommand |
 | `jinsiyu/dsh-code-server-app` | 集成 coder/code-server 编辑界面；并非 Coder 工作区控制面插件 | 第二阶段参考 IDE 入口和文件打开桥接，不作为远程执行底座 |
 | Coder | 开源核心（AGPLv3）；控制台、REST、模板、工作区 Agent／SSH／Web 应用访问；外部 provisioner 页面标注 Premium | 管环境与连接；不能假定所有 Premium 能力免费，也不是代码隔离策略的替代物 |
@@ -61,6 +61,8 @@ dsh 工具、Host API、文件引用、搜索、侧边栏 Git
 - 停止及后续获准启用的重建／销毁接口必须经过 FR-14 的授权与确认；未提供的接口服务端拒绝且无平台副作用。已执行动作和外部生命周期变化均同步到绑定、运行任务和待答请求的级联规则。
 
 具体 HTTP 路径、字段和枚举由锁定版本的官方 API／客户端文档确定；本文没有发明通用 `createSandbox()` SDK，也不将 Coder API 当成跨平台统一标准。
+
+T-104 已在用户授权后自行搭建固定 Coder 2.37.8 的本机 TLS 实验控制面、独立 PostgreSQL、lab-v3 模板及两个工作区；登录／API／数据库和实例身份对照通过，详见[部署与实验记录](implementation/t104-coder-lab.md)。Terraform `coder_agent.id` 与 REST Agent ID 实测不同，分别保存 resource reference 与 platformAgentId，再由当前 build resource／数据库关联。marker 属 UID 1000，不防同 UID 篡改；工作区 PID／磁盘限额和完整隔离仍未通过；T-105 的专用实验当前 SSH 通道／helper 门禁已通过独立复核，见[收尾清单](implementation/m1-closeout-tasks.md)。实验 allowlist validator 不冒充 T-202 的产品服务端创建接口。
 
 ### 模板与实例记录
 
@@ -133,7 +135,7 @@ CrazyShout 插件的 `src/ssh-config.ts` 使用 `ssh -G` 获取有效配置，�
 - 后台作业身份、退出事实、取消和中央重启后的重查。
 - ACP／Claude Code SDK／其他编程 CLI 的启动接口、平台载荷、环境变量及权限模式。
 - PTY 的尺寸、信号、前台进程组、断线游标与清理（SC-14）。
-- 同一绑定下的两条执行通道：插件 TECHNICAL.md 说明底层 `SubprocessRuntime.spawn()` 是同步接口、必须立即返回本机 PID，直接使用该 seam 的调用仍走每进程 system SSH 兼容路由，而正常模型 Shell 与终端走 helper。M1 核对当前组合实际存在和启用的路径；每条已启用通道分别验收取消与恢复，未启用路径必须拒绝。候选实现有两条通道不意味着产品必须交付两条。另须按架构的去重契约验证每种操作的安全重传，不能把上游“最多重放一次”直接当作副作用最多执行一次。
+- 同一绑定下的两条执行通道：候选 TECHNICAL.md 描述其同步桥接／本机传输 PID 与每进程 system SSH 兼容路由，正常模型 Shell 与终端走 helper；这不是所有 dsh 版本的句柄契约。本机 rc.4 的 `spawn()` 同步返回普通 `SubprocessHandle`，没有公开 pid；PTY 有独立接口与 pid。接口定位及指纹见[只读执行记录](implementation/m1-readonly-audit.md)，桥接是否兼容仍须隔离加载和真实调用验证。M1 核对当前组合实际存在和启用的路径；每条已启用通道分别验收取消与恢复，未启用路径必须拒绝。候选实现有两条通道不意味着产品必须交付两条。另须按架构的去重契约验证每种操作的安全重传，不能把上游“最多重放一次”直接当作副作用最多执行一次。
 
 若某个已有子代理后端只能使用中央本地 cwd，优先做明确的受管远程运行适配器；不能声称“替换 subprocess 就全都兼容”。首期至少打通一个真实编程 CLI，其余按兼容矩阵开放或明确禁用。远程会话中的通用子代理、本地专用 CLI 和后台任务必须继承主会话的绑定 ID 与版本，否则拒绝启动。首期不提供显式授权后跨绑定委派的例外；另一个环境的任务从其对应会话发起，不能保留一个绕过路由的中央执行入口。
 
@@ -173,7 +175,7 @@ CLI 的“已支持”还必须满足架构文档的会话内交互契约：运�
 
 优先顺序是：公开接口组合 → 候选插件小范围适配／上游协作 → 必要的最小 dsh 核心扩展。只有在来源、兼容和安全验证后才决定是否 fork；记录许可与升级策略，避免维护多个互相分叉的远程协议。
 
-这套方案尚未选定最终第三方版本，也未完成 Coder + SSH 插件实跑。[执行路径与任务拆分](08-execution-plan.md)先按契约、依赖和验收边界分解任务；实际适配粒度及工作量在首个真实兼容性实验后再修订。不沿用“从零实现全部后端”的估算，也不承诺只装一个包就零改动完成。
+实验已固定 SSH 0.13.3 的显式入口和 Coder 2.37.8／lab-v3 组合；T-105 已独立复验官方连接、当前通道身份门禁及真实 helper 0.13.1，但未选定最终生产矩阵，远程项目能力仍未验收。[执行路径与任务拆分](08-execution-plan.md)按契约、依赖和验收边界分解任务；T-106 的最小绑定 helper-RPC 适配层已独立复验通过；[T-107 逐门槛调查](implementation/t107-m1-investigation.md)已交付，NF-07 恢复／时限和实际打开器旁路仍阻断完整 M1，待独立门槛审核，T-201 不放行。不是重新等待 Coder 授权。非 Git 文件名发现和显式命令内容匹配使用经过独立摘要校验的每次运行私有 rg；冻结镜像缺依赖的部署缺口仍在。原生 `ctx.subprocess.spawn` 的本机 SSH PID 不能冒充远端生命周期；本次未完成产品主会话／provider 集成。不沿用“从零实现全部后端”的估算，也不承诺只装一个包就零改动完成。
 
 ## 8. 来源与核对范围
 

@@ -1,0 +1,133 @@
+{
+  "scope": "D02/D03 limited development self-verification; NOT formal T-201/M1/M2 acceptance or release",
+  "date": "2026-10-30",
+  "result": "pass-limited-development",
+  "verified_counts": {
+    "unit": 6,
+    "local_integration": 76,
+    "remote_integration": 25,
+    "managed_restart": 4,
+    "cold_browser_flows": 3,
+    "admission_and_ownership": 24,
+    "esm_syntax": 14,
+    "python_syntax": 4,
+    "frozen_source_files": 29,
+    "preserved_d01_files": 16
+  },
+  "runtime": {
+    "pid": 3827371,
+    "run_id": "97a5a784-e5d1-4865-a659-84da4e0c918b",
+    "origin": "http://127.0.0.1:44681",
+    "auth_file": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio/login.url",
+    "root": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio",
+    "reconciliation": {
+      "bindings_ready": 0,
+      "sessions_ready": 0,
+      "failed": 0
+    }
+  },
+  "binding": {
+    "project_id": "project-9de2a7d5-dafd-4830-97d3-d03d0fabe946",
+    "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+    "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+    "version": 1,
+    "session_id": "session-f8a4a1bc-a782-4728-b84c-66c121d25784",
+    "workspace_id": "26e47f17-846c-44b5-93c4-328050b53b7c",
+    "target_root": "/workspace/agent-studio-binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da-v1"
+  },
+  "verified": [
+    "Same authenticated session/binding routes original sidebar Files, Host workspaceFiles and native TerminalController to existing m1-a",
+    "Current platform record plus strict host key and same SSH process observation/ACK before helper exec",
+    "Remote UTF8/binary write -> independent physical hash -> full read -> list; SQL -> complete operation read -> list",
+    "Strong version conflicts and durable mtime-to-version ambiguity refusal",
+    "argv/cwd/env/stdout/stderr/exit7 and remote PID; PTY input/resize/verified foreground SIGINT/cancel/release",
+    "Owned transport loss -> unknown original identity, no replay, central canary unchanged; bounded test PID independently observed stopped, not claimed cancelled",
+    "Stop live native PTY and command -> independently confirmed stopped/released -> workspace/session/transport close; restart preserves D01/D02 rows and operation identities",
+    "Native session/tab ID maps deterministically to operation ID; same tab after restart cannot allocate a new operation",
+    "Cold browser original editor save and native terminal keyboard/output; screenshots viewed; unexpected JS/console/RPC/HTTP and external requests zero"
+  ],
+  "cleanup": {
+    "local_test_root_stopped": "/tmp/agent-studio-test-integration-hMpZLu",
+    "pending_or_running_operation_records_at_final_check": 0,
+    "remote_business_process_checks": "Exact PID/startTick observations referenced in integration/restart/browser evidence",
+    "retained": "Preview running with verified channel; stable helper HOME/project files and managed helper daemon retained; no claim all remote daemons removed"
+  },
+  "limits": [
+    "Existing m1-a lab-v3 only; no workspace create/stop/update/rebuild, no m1-b load changes",
+    "196608-byte file limit; Git/changes/search/watch/uploads/archive/bulk file operations not implemented",
+    "No model calls, local opener, unadapted Git writes or production/global package/public access changes",
+    "No automatic recovery/replay of unknown tasks; restored native terminal requires explicit new tab",
+    "Trusted single-user preview, not OS/root filesystem sandbox or multi-tenant isolation",
+    "No Docker image/config changes or rebuild; Docker used only for existing CLI transport and independent read-only observations",
+    "Historical failures/log retained; no formal acceptance claim"
+  ],
+  "evidence": {
+    "local_regression": "artifacts/d02/local-regression-1da4d838-fa42-40ba-b6d5-8f380ab89281/integration.json",
+    "remote_integration": "artifacts/d02/integration-3ae1826a-db5f-44c2-a26c-b74108468c0b.json",
+    "restart": "artifacts/d02/restart-35c31a2f-3a9d-432b-a8a8-c591f1960b63.json",
+    "browser": "artifacts/d02/browser-final/browser.json",
+    "admission": "artifacts/d02/final-admission.json",
+    "static": "artifacts/d02/static-checks.json"
+  },
+  "retained_failures": [
+    "artifacts/d02/integration-6d2768fc-7ec9-4913-85fe-f0fc6facc3d5.json",
+    "artifacts/d02/d03-agent-setup-failure.json",
+    "artifacts/d02/browser-1/browser.json",
+    "artifacts/d02/browser-2/browser.json",
+    "artifacts/d02/browser-3/browser.json",
+    "artifacts/d02/static-checks.json"
+  ],
+  "failure_fixes": [
+    "E_NOT_FOUND: use observed lab PATH python3, no fabricated execution",
+    "Pre-publication Cordis strict lookup: inspect installed service non-strict, actual runtime still active-only",
+    "Browser selector corrected from observed New terminal label; native void response parsed without mandatory value",
+    "Cold session history promotion race: publish bound Agent before stock follow activation",
+    "Initial native anchor request: accept only this authenticated binding exact alias after authoritative resolution",
+    "No-index diff status 1 means differences; require no whitespace diagnostics, corrected one validation retry"
+  ],
+  "validation": "artifacts/d02/final-validation.json",
+  "source_sha256": {
+    ".gitignore": "2b0a9f8b6a90a9fbfc0d3e77c8923e0dab39d6c28ff9c708e087fe3ae59a24ac",
+    "README.md": "909c9291aa44006f8778fb1ea3f4323954c1e9f8a42a264a80abcd71bdadf1ae",
+    "docs/implementation/development-ledger.md": "6d5ab4e670f33341317e2c61bcd24807e1b43ac01370af7274fd3b6aa390d894",
+    "packages/dsh-agent-studio/adapters/agent-terminal.mjs": "25fa20c6736257e5058d63612af46946dda1d80cf156ebf1c1fcb38f142d8bc6",
+    "packages/dsh-agent-studio/adapters/bound-provider.mjs": "2d8c28a5d17a9c4750a57d9f90dcef097f894ca5a9ff10c832e5db324f582a9d",
+    "packages/dsh-agent-studio/adapters/coder_broker.py": "e72d810151c7b4b051b5c17a89e64e89e13a7d6498cdecf0afcdb791d1eccc19",
+    "packages/dsh-agent-studio/adapters/helper-channel.mjs": "beb19b7177400f9baee4f2808b1f4398a50592f5b7dddff194a94de3393f327e",
+    "packages/dsh-agent-studio/adapters/host-files.mjs": "73e77581beea609af35d188604f4621c6001ff7ccccfde0e7bfaf350810da078",
+    "packages/dsh-agent-studio/adapters/host.mjs": "0b60dccc6d7245543ab1c0125ffdfc2754dcdb2621f2766133b02143ef6451d9",
+    "packages/dsh-agent-studio/bindings.mjs": "4e992bee8c426e5574706c89bf8c5d281d3b0568e79437d7510c0e4bb7c5a92b",
+    "packages/dsh-agent-studio/index.mjs": "cc2b1046e596ec1c2c1c33ff42ecd49cae29f708e1bae801ec3cd67730c263c2",
+    "packages/dsh-agent-studio/store.mjs": "7e719af7f47fb289dae020de92d5642a0eb013631aa37795c316b18a526bb8a7",
+    "profiles/agent-studio-preview/cordis.patch.yml": "cba1cf7eb5dbb3f80dad722ae23a86ba0b1eda35dc6dc74141c8d9d34c2c5471",
+    "profiles/agent-studio-preview/package.json": "185b7825b0c2a39cada29eff56f664f0365057fa0a9155df199c5dbd1254f189",
+    "profiles/agent-studio-preview/sources.lock.json": "8817f9e561ea91e68c6691973ab0a517a2eafade803cfe1e0347001052c1d126",
+    "scripts/dev/browser.py": "294b8500bf422273635753f427dcb41457781abde33137855fbdfd91cb5b765b",
+    "scripts/dev/fence.mjs": "b17f151fed2e109a17b475438100ca1b53096b07505af8ea9934c3abbbc7ece4",
+    "scripts/dev/integration.mjs": "6c4633ab1b868bbb2785d5a0bebc59d644dc99fc6661a611dce919cb8f83794b",
+    "scripts/dev/observe_remote.py": "68d88f5836078d608047b85740c6a3670d1acd573612e564a8c7333d70bcc6f7",
+    "scripts/dev/preview.mjs": "840055787e7eb21d095997796d223d8da6108784efd6ec9a9809e3b2b4909cd0",
+    "scripts/dev/remote.browser.py": "b2898906aa81cdedcb51bf7097f2cbdf4e5c312c48f8c6f590a65ce9ed9e0801",
+    "scripts/dev/remote.integration.mjs": "f99d9ac074077449545fe0d7994edce50b1d3281c1a61bf8234c27c0590b4f23",
+    "scripts/dev/remote.restart.mjs": "a17fa30da131b32c69520908ee5cac3c143a1b2016745f8a132242f1a15cf043",
+    "scripts/dev/store.test.mjs": "bde9d4f6e7efeee4a613bb1fc8394602685133643957f09d2456ff087ec3af76",
+    "scripts/test_check_docs.py": "18ddadfb8d877e4a8d4064d82a1a777b02b0f72edd6163b04f59cc2a288e7219"
+  },
+  "output_sha256": {
+    "artifacts/d02/local-regression-1da4d838-fa42-40ba-b6d5-8f380ab89281/integration.json": "e19601c025282e88857dccd511a54c9df7ddaa2a6137ab097951ad645f510979",
+    "artifacts/d02/integration-3ae1826a-db5f-44c2-a26c-b74108468c0b.json": "b55cce6d27cdf261cf5ee7e6cb21b4cb44648e2556c8c6178e8ad49c10057116",
+    "artifacts/d02/restart-35c31a2f-3a9d-432b-a8a8-c591f1960b63.json": "d7739833af97cf6441548259aeb83a6931768b1272ec5cb4a925d62e2f73a09b",
+    "artifacts/d02/browser-final/browser.json": "75e59cba8751830fd2db233695f055a0bf8078c7de4ad1120a573f8dbfa9618e",
+    "artifacts/d02/final-admission.json": "efd4fb2e6f46201f746ca687a43c312cf0becd8e8549d9cbaf495c9501f83e3a",
+    "artifacts/d02/static-checks.json": "9f4a117b570b8e6788c6e3e66b045a1d21b99b07ec7baf6a978f5e33e8da5f12",
+    "artifacts/d02/integration-6d2768fc-7ec9-4913-85fe-f0fc6facc3d5.json": "235f3aa8443ee88b386a4488b378f84aa9bb78c622106da05e9e2f407a47f55f",
+    "artifacts/d02/d03-agent-setup-failure.json": "a69d998e65efffb6e75910e624e1d330586709f2bcecd0de17c4c8e2b7207e5e",
+    "artifacts/d02/browser-1/browser.json": "79e07e68bcfd7dc4b214a9164b34ca0359780bb8cfcf4e47a2f11ef4b5f3c742",
+    "artifacts/d02/browser-2/browser.json": "7c888987a0df5d0dc694645ac1f90a8fef035fad73ba6109964b44a011398128",
+    "artifacts/d02/browser-3/browser.json": "b678da47533519012dfb0c33b10a549923141702430653a4f636d468e8447ddd",
+    "artifacts/d02/final-validation.json": "d88b35c25e5891c8005b270929d74811a433abb48a04d47932f06f81dbf67033",
+    "artifacts/d02/browser-final/files.png": "bf7a8c654b68373f80bc6a1d57c02e3837f7a5d6e3640c3f82b2c52dbd60a331",
+    "artifacts/d02/browser-final/terminal.png": "4a39f72b77278c51ac8e36e6d9db685e7cf5310cc5531563fddddf35f95dba3c",
+    "artifacts/d02/d01-baseline/manifest.json": "4dab17caee814559de419105b4d14e44b9fb705fa097e1162b92f9d634fdaa3f"
+  }
+}

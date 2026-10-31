@@ -1,0 +1,905 @@
+{
+  "task": "T-105",
+  "role": "independent-acceptance-controller",
+  "pass": 1,
+  "recordedOn": "2026-10-30",
+  "gate": "pass",
+  "t106Ready": true,
+  "t106Executed": false,
+  "t107Executed": false,
+  "stageM1Passed": false,
+  "productScenariosPassed": [],
+  "findings": [],
+  "summary": "独立重跑连接／身份门禁／helper，补充真实反例与只读超时验证；T-105 专用实验范围通过，仅放行尚未执行的 T-106。未修改实现或基础设施。",
+  "reviewedImplementation": {
+    "path": "docs/implementation/evidence/t105-connection-implementation.json",
+    "sha256": "d51525b1a52eb192f04f5891aeee75a5b22f07bd2edca9cabc5d837bb598a721"
+  },
+  "sourceSha256": {
+    "scripts/m1/t105_connection.py": "4855f897eb1e1804d31c819cdd7303216ac9e6003cbd47d1cbe879c0f19f87e7",
+    "scripts/m1/t105_remote_gate.py": "56b0285abb0a30a1627a346cb80400bd0d5d5fb4bf2778a039b6eee013b81efe",
+    "scripts/m1/t105_candidate.mjs": "45fac62670fbd519a57bdee18f47a7d94170d02498095fd3aa19912071b66a54",
+    "scripts/m1/t105_cleanup.py": "9d218608182e746b6b4d3886b7aa737fa027a513144f7fbd62135bd24a2a1239",
+    "scripts/m1/test_t105_connection.py": "daf764aa5e35d4fd537aa79041da381b56cce523adad8e34857169b8894ccc8b",
+    "scripts/m1/record_t105.py": "16ba6d05002fcf3be350b2a750d9b3acb6bbc3f58ba4877007184057369f4607",
+    "scripts/m1/ssh_remote_entry.mjs": "089d133d31dca7df627111865655b86c9817f14b0becbcfd1251c5f311dc0d6f",
+    "scripts/m1/network_guard.mjs": "a5b1dfcd5a71fef8454a5bfb65c15330812a3cedd4833085b69db674e6750e8f",
+    "scripts/m1/coder_lab.py": "906e345fc616893b6a76a4442139f456492759cfcf75f4a56201b1285f2da3e3",
+    "scripts/m1/coder_template.py": "ade62ffd189f083eec9fa44cb9d64da3c62ddeeafea6fc5ecd3e7d0a27d1ad4e",
+    "scripts/m1/audit_coder_lab.py": "ac0a997ee7832b2d6f60f00ceca104c15e8bacbc69bb3cc6a5f008b957489a67"
+  },
+  "documentationSha256": {
+    "README.md": "d05340b23fe6a259a0be39c4cde55e87a9bf075278105950f49986b05f713e7a",
+    "docs/04-integration-plan.md": "560462ab908da6785e447b5062642c70a6f8f9665942a85bf6aa4cd9de3d6d13",
+    "docs/05-delivery-and-acceptance.md": "fb5bc4d0f3209e7ee7d9fc8d6c95b9f6a72ac0938e3e82ae4f614f79f7f99430",
+    "docs/08-execution-plan.md": "cb9e3ce4b0965680bb2641216a18ebcdf725ff528bfb3925ffb7dc2f8e73cd76",
+    "docs/implementation/m1-closeout-tasks.md": "138460d8ccb6381dab70134879cf62620bd7d2b6ab9206301c393b461fc79cac"
+  },
+  "independentCheckerSha256": {
+    "artifacts/m1/t105/acceptance-pass1-1kf10ots/independent_checks.py": "1a450af2e8c532e94bd3a072a812eaa60b0378b1b58f3601924e9d2c7224c072",
+    "artifacts/m1/t105/acceptance-pass1-1kf10ots/remote_protocol_checks.py": "a3a3916e7fd7e76efccaa091e27f6ee4fbc7f75fb43462f24a2b1702514d01db",
+    "artifacts/m1/t105/acceptance-pass1-1kf10ots/archive_independent.py": "b894678538111b56d7811a5afa04b4b1e36860a152d86de895ea21b4af1bade5"
+  },
+  "officialSource": {
+    "commit": "7ac93cffea828ca2d9514cfc6c0ad6337834aebe",
+    "sha256": {
+      "cli/configssh.go": "25c8949bc20167d37a769d039a16c5b63f982ebda942b71037d66408294927ea",
+      "cli/ssh.go": "7007ab95c29daf0c05a01915112bd1ad7372101fdbe84a7ce2c3300afc150d72",
+      "agent/agentssh/agentssh.go": "84aae0fc7c1d0fda5bfbf645f6f1958b0dfbd7332ff1f2843bfbba715883fcde",
+      "agent/agent.go": "b844f19db6773872808de6ad6b8473c9a67f340ff620f11ba5122745184a4090"
+    }
+  },
+  "runtime": {
+    "path": "artifacts/m1/t105/connection-7txv7h_6/result.json",
+    "sha256": "1908518659a35c4596243571e502e5254bd461bdc54a178a2a24b57fc2b3dc73"
+  },
+  "commands": [
+    {
+      "command": [
+        "docker",
+        "exec",
+        "57b42e34d4d3d20f4457c676b6e3b19c79e4a397e5589171ed697264342d4959",
+        "/opt/coder",
+        "version"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/preflight.json",
+        "sha256": "c7a041e45fcc51f2729e5fb0eb9918e8ee318c636d6e33aa2eb2f644a6c5b90b"
+      }
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "57b42e34d4d3d20f4457c676b6e3b19c79e4a397e5589171ed697264342d4959",
+        "/opt/coder",
+        "ssh",
+        "--help"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/preflight.json",
+        "sha256": "c7a041e45fcc51f2729e5fb0eb9918e8ee318c636d6e33aa2eb2f644a6c5b90b"
+      }
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "57b42e34d4d3d20f4457c676b6e3b19c79e4a397e5589171ed697264342d4959",
+        "/opt/coder",
+        "config-ssh",
+        "--help"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/preflight.json",
+        "sha256": "c7a041e45fcc51f2729e5fb0eb9918e8ee318c636d6e33aa2eb2f644a6c5b90b"
+      }
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "57b42e34d4d3d20f4457c676b6e3b19c79e4a397e5589171ed697264342d4959",
+        "/opt/coder",
+        "--help"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/preflight.json",
+        "sha256": "c7a041e45fcc51f2729e5fb0eb9918e8ee318c636d6e33aa2eb2f644a6c5b90b"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/test_t105_connection.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/test_isolation.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/test_coder_contract.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/check_docs.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/test_check_docs.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t105_candidate.mjs"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/ssh_remote_entry.mjs"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "sha256sum",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/docs/implementation/evidence/SHA256SUMS"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "sha256sum",
+        "--check",
+        "/home/ubuntu/workspace/agent-studio/docs/research/evidence/SHA256SUMS"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/ubuntu/workspace/agent-studio",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/run_candidate.py",
+        "profile",
+        "--candidate-root",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+        "--installed-dsh",
+        "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+        "--timeout-seconds",
+        "120"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/regressions.json",
+        "sha256": "8928b0873efbb232f23e52f70003b99a9d5e022c1017fdbc374fe291cd25afaf"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t105_connection.py",
+        "run"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/runtime-command.json",
+        "sha256": "ceb9db2a40b5e8e9d665f6d8fa20b2229be85a97e4387775f9b82b780c34f328"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/coder_lab.py",
+        "verify"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/lab-checks.json",
+        "sha256": "533709489bffdd05e56f61e3fad6a209298dbe0220c9b706ac189465a5ac894e"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/coder_template.py",
+        "verify"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/lab-checks.json",
+        "sha256": "533709489bffdd05e56f61e3fad6a209298dbe0220c9b706ac189465a5ac894e"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/audit_coder_lab.py"
+      ],
+      "exitCode": 1,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/lab-checks.json",
+        "sha256": "533709489bffdd05e56f61e3fad6a209298dbe0220c9b706ac189465a5ac894e"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/acceptance-pass1-1kf10ots/independent_checks.py",
+        "identity"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/independent-commands.json",
+        "sha256": "c835b9ae058acdf77df424ebf74e3171f3a5842a6af1cd5e885c31b10230a1a8"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/acceptance-pass1-1kf10ots/independent_checks.py",
+        "transport"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/independent-commands.json",
+        "sha256": "c835b9ae058acdf77df424ebf74e3171f3a5842a6af1cd5e885c31b10230a1a8"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/acceptance-pass1-1kf10ots/independent_checks.py",
+        "integrity"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/independent-commands.json",
+        "sha256": "c835b9ae058acdf77df424ebf74e3171f3a5842a6af1cd5e885c31b10230a1a8"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/acceptance-pass1-1kf10ots/independent_checks.py",
+        "logs"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/independent-commands.json",
+        "sha256": "c835b9ae058acdf77df424ebf74e3171f3a5842a6af1cd5e885c31b10230a1a8"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/acceptance-pass1-1kf10ots/remote_protocol_checks.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/protocol-command.json",
+        "sha256": "42d482e8d9924f72221f6cff23a224212e7d8d8218e45885118481e16ad1f2a5"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/audit_coder_lab.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/lab-audit-retry.json",
+        "sha256": "9fb59ceca56b6f00f24f94a61461feca3e7968f4cf58bb13732b88867096ff18"
+      }
+    },
+    {
+      "command": [
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t104/browser-venv/bin/python",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/test_coder_browser.py",
+        "--browser",
+        "/snap/bin/chromium"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/browser-and-final-lab.json",
+        "sha256": "6864bd2e7b356e3ee8628949b40f3b0e8db9e6fe4a2eb0d35a51fdeb07f1a6da"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/coder_lab.py",
+        "cleanup-sessions"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/browser-and-final-lab.json",
+        "sha256": "6864bd2e7b356e3ee8628949b40f3b0e8db9e6fe4a2eb0d35a51fdeb07f1a6da"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/audit_coder_lab.py"
+      ],
+      "exitCode": 0,
+      "transcript": {
+        "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/browser-and-final-lab.json",
+        "sha256": "6864bd2e7b356e3ee8628949b40f3b0e8db9e6fe4a2eb0d35a51fdeb07f1a6da"
+      }
+    }
+  ],
+  "criteria": [
+    {
+      "id": 1,
+      "result": "pass",
+      "facts": [
+        "实际 /opt/coder version 为 v2.37.8+7ac93cf；执行前核对 version、ssh/config-ssh/root help。",
+        "专用 -F 配置／同一 t105.m1-a 别名贯通官方 CLI ProxyCommand、OpenSSH 与真实候选发现及连接；无全局 DNS/hosts/SSH/CA 修改。",
+        "官方 CLI 在既有控制面内访问 canonical URL，显式专用 CA；真实无效凭据和不受信任 TLS 均 exit 1。",
+        "官方默认 config-ssh 忽略 host key，但本实现不启用该默认；在已认证官方通道上显式 scoped accept-new，后续 strict=yes，实际切换 m1-b 触发 host-key 拒绝。"
+      ]
+    },
+    {
+      "id": 2,
+      "result": "pass",
+      "facts": [
+        "预期身份来自认证 API 当前 workspace/latest build/resources，SQL 关联 workspace_agents.resource_id → workspace_resources.job_id → workspace_builds。",
+        "Terraform agentResourceId 与 platformAgentId 分开；当前 build/resource/job/owner、模板源码摘要、镜像和策略均核对。",
+        "每次实际 SSH 进程先只读观察预置 marker、UID/账号、canonical root 及 Coder workspace/agent-name/owner 环境；前后重新读取当前控制面记录，不依赖两个旧缓存。",
+        "中央 ACK 绑定该通道观察摘要；同一远端进程再次观察后才 exec helper。下一次 installer/connector 调用重新核验。",
+        "实际 transport 在安装和连接间切换被拒绝；正确/错误 ACK 与不发送 ACK 的真实只读通道均另行测试。未做停止/重建竞态产品验收。"
+      ]
+    },
+    {
+      "id": 3,
+      "result": "pass",
+      "facts": [
+        "原有 wrong-workspace、wrong-account-uid、wrong-root、stale-generation、stale-build-record 均重跑：Node exit 1、dispatch=false、helper HOME 未创建、两工作区项目及实验进程快照不变。",
+        "过期 generation/build 输入取自真实历史构建 API 并直接 SQL 核对；不是伪造同通道写读身份。",
+        "额外独立反例 platformAgentId、jobId、expectedUser、expectedUid、policyVersion、imageId 分别通过真实候选通道拒绝，无 helper/project 副作用。"
+      ]
+    },
+    {
+      "id": 4,
+      "result": "pass",
+      "facts": [
+        "通过身份检查后才真实部署候选 helper；RPC 版本 0.13.1，直接远端文件全量 SHA-256/217238 字节与 release 按名检索一致。",
+        "部署 SHA-256 c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f；实际 health nonce 读回，保存真实 capabilities。",
+        "复用原字节显式箭头入口保留 disposer；真实 rc.4 FS/subprocess providers，无伪造 provider。原未经包装入口继续禁用。",
+        "helper environment.search.available=false，原因是缺 ripgrep；状态 degraded 不隐瞒，不把 capability 声明当成 T-106 通过。"
+      ]
+    },
+    {
+      "id": 5,
+      "result": "pass",
+      "facts": [
+        "真实 session/close.closed=true，disposer 进入/完成各一次，helper entries/registry/interval 清理检查通过。",
+        "独立观察 daemon 后用原 helper 认证 admin/shutdown；再次直接查 /proc，运行进程和未回收 PID 均为空；部署文件/数据保留。",
+        "只读 gate 缺 ACK 保持 stdin 打开，SSH exit 255、31.868 秒内退出，独立 /proc 观察探针 PID 从 1 个变成 0；错误 ACK exit 78；正确 ACK exit 0。",
+        "官方 CLI/OpenSSH/Node 有有界期限；未以 SSH 退出推断远端终止。平台 agents、服务和持久卷全部保留。"
+      ]
+    },
+    {
+      "id": 6,
+      "result": "pass",
+      "facts": [
+        "T-105 离线 12 项、T-103 8 项/83 网络入口、Coder 契约 13 项、文档回归 37 项通过；真实 T-103 profile 再跑 exit 0。",
+        "五份 Python 源码编译、两份 MJS 语法、298 个候选文件逐字节一致、现有 evidence checksums 与 git diff --check 均通过。",
+        "公开/匿名/无效/有效 API 为 200/401/401/200；owner 与实例 API/SQL/检索一致；浏览器密码反例 401、登录 201、列表 API 200、JS errors=0。",
+        "首次 audit exit 1：负向 host-key 探针导致最近两分钟 SSH EOF warning；已分类保留，静默窗口及浏览器复验后的 audit 均 exit 0，不改写历史警告。",
+        "最终 4 个 lab 容器与 32 个基线容器仍运行；仅撤销新生成浏览器 session，protected runner 仍有效且 owner session 数为 1。"
+      ]
+    }
+  ],
+  "runtimeCases": [
+    {
+      "case": "wrong-workspace",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t105/connection-7txv7h_6/wrong-workspace-aa190b256b4f/case.json",
+        "sha256": "c6aa45836c65df18311dfce0bb1d9f844513033dc6e73779a3cf4481b20dbe0f"
+      },
+      "dispatches": 0,
+      "helperHomeExistsBefore": false,
+      "helperHomeExistsAfter": false,
+      "projectUnchanged": true,
+      "otherWorkspaceUnchanged": true,
+      "remoteProcessesAfterCleanup": []
+    },
+    {
+      "case": "wrong-account-uid",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t105/connection-7txv7h_6/wrong-account-uid-20785c98c784/case.json",
+        "sha256": "ea7b6bce8cd2191a2f2f8ff71e417d33946f4389e106ee5675bb00dfb37509ba"
+      },
+      "dispatches": 0,
+      "helperHomeExistsBefore": false,
+      "helperHomeExistsAfter": false,
+      "projectUnchanged": true,
+      "otherWorkspaceUnchanged": true,
+      "remoteProcessesAfterCleanup": []
+    },
+    {
+      "case": "wrong-root",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t105/connection-7txv7h_6/wrong-root-456e8a8d26a8/case.json",
+        "sha256": "7f17aeee81fc89594001bd1b00ada1f7beb607740bee9ed6701ae37481b84d1e"
+      },
+      "dispatches": 0,
+      "helperHomeExistsBefore": false,
+      "helperHomeExistsAfter": false,
+      "projectUnchanged": true,
+      "otherWorkspaceUnchanged": true,
+      "remoteProcessesAfterCleanup": []
+    },
+    {
+      "case": "stale-generation",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t105/connection-7txv7h_6/stale-generation-7506d58b4533/case.json",
+        "sha256": "f9311b84184357afafb04ca02a2466266544d0490beb51a02e7b52ad7310e643"
+      },
+      "dispatches": 0,
+      "helperHomeExistsBefore": false,
+      "helperHomeExistsAfter": false,
+      "projectUnchanged": true,
+      "otherWorkspaceUnchanged": true,
+      "remoteProcessesAfterCleanup": []
+    },
+    {
+      "case": "stale-build-record",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t105/connection-7txv7h_6/stale-build-record-992f042d2cef/case.json",
+        "sha256": "905b32bac553e50816ebf433f0079a04708801a39460c325721bad94f07a7ed5"
+      },
+      "dispatches": 0,
+      "helperHomeExistsBefore": false,
+      "helperHomeExistsAfter": false,
+      "projectUnchanged": true,
+      "otherWorkspaceUnchanged": true,
+      "remoteProcessesAfterCleanup": []
+    },
+    {
+      "case": "channel-switch",
+      "exitCode": 1,
+      "evidence": {
+        "path": "artifacts/m1/t105/connection-7txv7h_6/channel-switch-5c7c91f4407f/case.json",
+        "sha256": "017814dd4cbe06ef9a14f98bbdaf3fab36ed1ec12ef5a068f854597462c9b605"
+      },
+      "dispatches": 1,
+      "helperHomeExistsBefore": false,
+      "helperHomeExistsAfter": true,
+      "projectUnchanged": true,
+      "otherWorkspaceUnchanged": true,
+      "remoteProcessesAfterCleanup": []
+    },
+    {
+      "case": "positive",
+      "exitCode": 0,
+      "evidence": {
+        "path": "artifacts/m1/t105/connection-7txv7h_6/positive-b1c2300b27cf/case.json",
+        "sha256": "9b41a419e1fd7c75a026c7f1a98284132f3d6f2f63f0ed925b1af9139840c913"
+      },
+      "dispatches": 2,
+      "helperHomeExistsBefore": false,
+      "helperHomeExistsAfter": true,
+      "projectUnchanged": true,
+      "otherWorkspaceUnchanged": true,
+      "remoteProcessesAfterCleanup": []
+    }
+  ],
+  "helper": {
+    "version": "0.13.1",
+    "state": "degraded",
+    "capabilities": {
+      "filesystem": {
+        "confinement": "dirfd-no-follow",
+        "internalSymlinks": false,
+        "strongVersion": "sha256-stat-v1",
+        "readRange": {
+          "version": 1,
+          "maxBytes": 196608,
+          "versionKind": "stat-v1"
+        },
+        "discovery": {
+          "version": 1,
+          "maxEntries": 50000,
+          "maxPathBytes": 8388608,
+          "maxPageBytes": 131072,
+          "deadlineMs": 15000
+        },
+        "chunkedWrite": {
+          "supported": true,
+          "maxBytes": 67108864,
+          "maxChunkBytes": 262144
+        },
+        "guardedWrite": {
+          "helperLinearizable": true,
+          "externalWriterRaceFree": false,
+          "createNoReplace": true,
+          "durableRename": true,
+          "coordinationScope": "daemon"
+        }
+      },
+      "process": {
+        "supported": true,
+        "sandbox": "none",
+        "restrictedFailClosed": true,
+        "cwdConfinement": "dirfd-checked",
+        "sequencedWrite": true,
+        "controlPipe": {
+          "version": 1,
+          "maxChunkBytes": 65536,
+          "maxBufferedBytes": 524288
+        },
+        "ptcBootstrap": {
+          "version": 1,
+          "maxBytes": 524288
+        }
+      },
+      "pty": {
+        "supported": true,
+        "resize": true,
+        "foregroundPgid": "verified",
+        "sequencedResize": true
+      },
+      "session": {
+        "resume": true
+      },
+      "environment": {
+        "check": true,
+        "resolveExecutable": true
+      },
+      "transfers": {
+        "version": 1,
+        "maxBytes": 1099511627776,
+        "maxChunkBytes": 262144,
+        "persistent": true
+      },
+      "shellState": {
+        "version": 1,
+        "channel": "nonblocking-private-pipe",
+        "persistent": false
+      }
+    },
+    "environment": {
+      "search": {
+        "available": false,
+        "error": "ripgrep is not available in the remote login-shell PATH"
+      }
+    },
+    "sha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+    "assetBytes": 217238
+  },
+  "helperDirectReadback": {
+    "project": [],
+    "homeExists": true,
+    "helperExists": true,
+    "helperSha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+    "helperBytes": 217238,
+    "helperReleaseLookup": 1,
+    "processes": [
+      {
+        "pid": 1595,
+        "state": "S",
+        "startTick": "630505962",
+        "kind": "daemon",
+        "ownerTokenPresent": false,
+        "agentTokenPresent": false
+      }
+    ]
+  },
+  "helperCleanup": {
+    "action": "authenticated-admin-shutdown",
+    "acknowledged": true,
+    "before": [
+      {
+        "pid": 1595,
+        "startTick": "630505962",
+        "kind": "daemon"
+      }
+    ],
+    "after": [],
+    "unreaped": [],
+    "releaseRetained": true,
+    "dataDeleted": false
+  },
+  "independentTests": {
+    "identity": {
+      "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/independent-identity.json",
+      "sha256": "6be94fa30281fd0c95f72d61a0d86d67bd4ddd37619d32fa0fe6023793df1de7"
+    },
+    "transport": {
+      "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/independent-transport.json",
+      "sha256": "ae7cf119357dd19d59ec65597f8033a37ab45500a6ebc0bc3440ff0038a33cfd"
+    },
+    "integrity": {
+      "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/independent-integrity.json",
+      "sha256": "a459aff412f83b43f19962005760d445d0c04c2c981046f23b400f3e816b2d94"
+    },
+    "protocol": {
+      "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/remote-protocol.json",
+      "sha256": "ec7469e89cf961a4279a333603174af4aea2e61e7ea4acf98a15f4ef535015b4"
+    },
+    "logClassification": {
+      "path": "artifacts/m1/t105/acceptance-pass1-1kf10ots/independent-log-classification.json",
+      "sha256": "57d4fd46f3723a1667a43b1311e4845f532c9e48bffe6fe75c6dbb44fc3fbd7c"
+    }
+  },
+  "controlPlane": {
+    "evidence": {
+      "path": "artifacts/m1/t104/lab/control-plane-bc0f26be.json",
+      "sha256": "a1654219312dcd25ff29c5060cd0b4599698a81b4a23e1b1f4dfbdbd94d958dc"
+    },
+    "result": {
+      "task": "T-104",
+      "stage": "control-plane",
+      "passed": true,
+      "coderVersion": "v2.37.8+7ac93cf",
+      "coderImage": "ghcr.io/coder/coder@sha256:8514c20c3c7811a9835eb903c5123b0090ba6538dc8bcc8281624d0bdedd9063",
+      "databaseImage": "postgres@sha256:1b92e7a80c021647bf70f5d3eb66066a998e4f5cf43c07bb9dc9f729782cf88e",
+      "publicHealth": 200,
+      "loginPage": 200,
+      "anonymousProtected": 401,
+      "invalidProtected": 401,
+      "authenticatedProtected": 200,
+      "ownerDatabaseReadback": true,
+      "ownerApiReadback": true,
+      "ownerSearch": true,
+      "tlsVerifiedWithDedicatedCA": true,
+      "hostBindingIsLoopbackOnly": true,
+      "preexistingContainersStillRunning": true,
+      "workspaceChecksComplete": false,
+      "browserLoginTested": false,
+      "stageM1Passed": false
+    }
+  },
+  "instances": {
+    "path": "artifacts/m1/t104/lab/instances-626cdd41.json",
+    "sha256": "ee302e2aca1d5e6d203da4ad09d566a3cbf848f009102fc87cd74a53ce3ac88b"
+  },
+  "browser": {
+    "evidence": {
+      "path": "artifacts/m1/t104/lab/browser-bffc23c573554e5aa998a7bfd95a1b2d/browser-login.json",
+      "sha256": "5cbef2e2b42bac2faef858392a3274b0cad3e8780eb32ad6c0cd81d17a01c423"
+    },
+    "result": {
+      "task": "T-104",
+      "stage": "browser-login-to-workspaces",
+      "passed": true,
+      "invalidPasswordStatus": 401,
+      "passwordLoginStatus": 201,
+      "authenticatedWorkspaceApiStatus": 200,
+      "twoWorkspaceEntriesVisible": true,
+      "certificatePinUsed": true,
+      "privateHostnameMappedOnlyInTestBrowser": true,
+      "javascriptErrors": [],
+      "blockedExternalHosts": [],
+      "credentialsCaptured": false,
+      "stageM1Passed": false
+    },
+    "screenshotViewed": true,
+    "screenshot": {
+      "path": "artifacts/m1/t104/lab/browser-bffc23c573554e5aa998a7bfd95a1b2d/workspace-dashboard.png",
+      "sha256": "3486acb87b68fa62eb3d81e5a0b784642b1a98709d6b3403ce6383c873eb5ab1"
+    }
+  },
+  "resourceAudit": {
+    "evidence": {
+      "path": "artifacts/m1/t104/lab/resource-audit-703d29b4.json",
+      "sha256": "8f28d045f4c703dea9d2abcfe7895d7efbd21ea4fcd9d4a3d2563b85be62835a"
+    },
+    "result": {
+      "task": "T-104",
+      "stage": "resource-and-log-audit",
+      "passed": true,
+      "resources": [
+        {
+          "role": "coder",
+          "name": "agent-studio-coder-lab-coder-1",
+          "image": "ghcr.io/coder/coder@sha256:8514c20c3c7811a9835eb903c5123b0090ba6538dc8bcc8281624d0bdedd9063",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 2147483648,
+          "nanoCpus": 2000000000,
+          "pidsLimit": 256,
+          "mountDestinations": [
+            "/var/run/docker.sock",
+            "/home/coder",
+            "/run/lab-tls",
+            "/opt/lab-template"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 362,
+            "lastTwoMinutes": 0
+          }
+        },
+        {
+          "role": "database",
+          "name": "agent-studio-coder-lab-database-1",
+          "image": "postgres@sha256:1b92e7a80c021647bf70f5d3eb66066a998e4f5cf43c07bb9dc9f729782cf88e",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 536870912,
+          "nanoCpus": 500000000,
+          "pidsLimit": 128,
+          "mountDestinations": [
+            "/var/lib/postgresql/data"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 1,
+            "lastTwoMinutes": 0
+          }
+        },
+        {
+          "role": "workspace",
+          "name": "agent-studio-lab-d352009d-cb9b-405b-9d8b-c2405e9b4983",
+          "image": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 268435456,
+          "nanoCpus": 500000000,
+          "pidsLimit": null,
+          "mountDestinations": [
+            "/workspace"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 14,
+            "lastTwoMinutes": 0
+          }
+        },
+        {
+          "role": "workspace",
+          "name": "agent-studio-lab-ff136352-6a92-41d4-9c2c-6cc783cb989b",
+          "image": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 268435456,
+          "nanoCpus": 500000000,
+          "pidsLimit": null,
+          "mountDestinations": [
+            "/workspace"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 4,
+            "lastTwoMinutes": 0
+          }
+        }
+      ],
+      "preexistingRunningContainerCount": 32,
+      "preexistingContainersStillRunning": true,
+      "privateTopLevelFilesChecked": 11,
+      "privatePermissionsChecked": true,
+      "dedicatedCertificateValidBeyondOneDay": true,
+      "workspaceNetworkInternal": true,
+      "remainingOwnerSessionCount": 1,
+      "runnerSessionStillValid": true,
+      "databaseHbaRules": [
+        "local||trust",
+        "host|127.0.0.1|trust",
+        "host|::1|trust",
+        "local||trust",
+        "host|127.0.0.1|trust",
+        "host|::1|trust",
+        "host|all|scram-sha-256"
+      ],
+      "startupLogsEntirelyClean": false,
+      "recentLogWindowSeconds": 120,
+      "recentWarningOrErrorLines": 0,
+      "historicalDiagnostics": [
+        "Telemetry disabled: security notifications unavailable; intentional lab setting.",
+        "coder_agent.dir deprecated; non-HOME dir unsupported by Desktop file sync, which is not enabled.",
+        "PostgreSQL local/socket trust initialization warning; network-wide host rule uses scram-sha-256.",
+        "One workspace retried authentication before its provisioning job completed; current agents connected.",
+        "Agent prebuilt-workspace probe rejected; these workspaces are not prebuilt.",
+        "Userspace networking fakeRouter Up/Set warnings; not a full network-isolation verification."
+      ],
+      "resourcesRetained": true,
+      "persistentDataDeleted": false,
+      "stageM1Passed": false
+    }
+  },
+  "limits": [
+    "T-106 FS/搜索/命令/PTY/取消/断连无中央回退未执行；t106Ready 仅代表该任务前置，不是能力验收。T-107 和完整 M1 仍未通过。",
+    "缺 ripgrep，helper degraded；不修改 lab-v3、镜像、既有工作区或全局依赖。若后继能力需要基础设施变化，返回协调者处理。",
+    "同 UID marker 可改，不是同 UID 防篡改；Docker socket 是管理权限，Node 子进程 broker 不是 OS 沙箱。PID/硬磁盘配额缺失，同机 bridge 不证明完整网络隔离。",
+    "未验证长期产品绑定、平台重建竞态、跨主机、模型调用、侧边栏、本机打开器、业务 PTY/取消/恢复/去重或正式产品场景。",
+    "历史警告及本轮首次审计失败保留；PERM0002 是 --allow-child-process 边界告警，不声称全程零日志错误。",
+    "所有独立检查脚本及详细日志保留在新的 ignored artifacts 路径；可复现的实现用例仍在 scripts/m1。没有提交、推送、发布、删除持久数据或更改基础设施。"
+  ]
+}

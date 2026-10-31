@@ -1,0 +1,1991 @@
+{
+  "task": "T-105",
+  "status": "in-progress-awaiting-independent-verification",
+  "stageM1Passed": false,
+  "t106Accepted": false,
+  "productScenariosPassed": [],
+  "runtime": {
+    "path": "artifacts/m1/t105/connection-6fz2r7ez/result.json",
+    "sha256": "f7b9d00199f9fe376e924ac243d2ac325372c7cf7a0d572f70042ce15e3f21f7",
+    "result": {
+      "task": "T-105",
+      "status": "awaiting-independent-verification",
+      "m1Passed": false,
+      "t106Enabled": false,
+      "cases": [
+        {
+          "case": "wrong-workspace",
+          "path": "artifacts/m1/t105/connection-6fz2r7ez/wrong-workspace-a0912faaedfc",
+          "command": {
+            "command": [
+              "node",
+              "--permission",
+              "--allow-child-process",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime",
+              "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-workspace-a0912faaedfc",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-workspace-a0912faaedfc",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-workspace-a0912faaedfc/*",
+              "/home/ubuntu/workspace/agent-studio/scripts/m1/t105_candidate.mjs",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+              "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-workspace-a0912faaedfc",
+              "t105.m1-b"
+            ],
+            "exitCode": 1
+          },
+          "before": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "after": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "gates": [
+            {
+              "alias": "t105.m1-b",
+              "commandSha256": "89d51130d146b26dae44bb855a1b4276d661e8d06808258fa7b803d741720fdb",
+              "dispatch": false,
+              "observed": {
+                "channel": {
+                  "CODER_WORKSPACE_AGENT_NAME": "main",
+                  "CODER_WORKSPACE_ID": "d352009d-cb9b-405b-9d8b-c2405e9b4983",
+                  "CODER_WORKSPACE_NAME": "m1-b",
+                  "CODER_WORKSPACE_OWNER_NAME": "lab-owner"
+                },
+                "marker": {
+                  "agentResourceId": "d7dbc09e-63b7-4a5b-971d-1ce754e4c331",
+                  "generation": "ada53b10-cf14-f6e3-c15a-2ab5eef36c25",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "d352009d-cb9b-405b-9d8b-c2405e9b4983"
+                },
+                "root": "/workspace",
+                "uid": 1000,
+                "user": "coder"
+              },
+              "checks": {
+                "marker": false,
+                "uid": true,
+                "account": true,
+                "root": true,
+                "channelWorkspace": false,
+                "channelName": false,
+                "channelAgentName": true,
+                "channelOwner": true
+              },
+              "currentBuildBeforeAndAfter": true,
+              "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+              "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d",
+              "failure": "T105_IDENTITY_REJECTED"
+            }
+          ],
+          "candidate": {
+            "task": "T-105",
+            "passed": false,
+            "projectOperationsEnabled": false,
+            "dependencyWriteDenials": 23,
+            "discovery": [
+              {
+                "alias": "t105.m1-b",
+                "user": "coder",
+                "proxyCommand": "/usr/bin/python3 -I /home/ubuntu/workspace/agent-studio/scripts/m1/t105_connection.py proxy /home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-workspace-a0912faaedfc/connection.json %h"
+              }
+            ],
+            "failure": {
+              "type": "RemoteHelperInstallError",
+              "code": null,
+              "message": "failed to upload remote helper"
+            },
+            "disposer": {
+              "entered": 1,
+              "completed": 1,
+              "helpersDisposed": true,
+              "helperEntries": 0
+            },
+            "cleanup": {
+              "errors": [],
+              "registrySize": 0,
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": true
+                }
+              ],
+              "javascriptNetworkAttempts": [],
+              "cordisLogTypes": []
+            },
+            "centralWorkspaceEntries": []
+          },
+          "daemonCleanup": {
+            "before": [],
+            "after": [],
+            "action": "already-exited"
+          },
+          "afterCleanup": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceBefore": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceAfter": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "accepted": true
+        },
+        {
+          "case": "wrong-account-uid",
+          "path": "artifacts/m1/t105/connection-6fz2r7ez/wrong-account-uid-ed9e197fe730",
+          "command": {
+            "command": [
+              "node",
+              "--permission",
+              "--allow-child-process",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime",
+              "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-account-uid-ed9e197fe730",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-account-uid-ed9e197fe730",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-account-uid-ed9e197fe730/*",
+              "/home/ubuntu/workspace/agent-studio/scripts/m1/t105_candidate.mjs",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+              "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-account-uid-ed9e197fe730",
+              "t105.m1-a"
+            ],
+            "exitCode": 1
+          },
+          "before": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "after": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "gates": [
+            {
+              "alias": "t105.m1-a",
+              "commandSha256": "89d51130d146b26dae44bb855a1b4276d661e8d06808258fa7b803d741720fdb",
+              "dispatch": false,
+              "observed": {
+                "channel": {
+                  "CODER_WORKSPACE_AGENT_NAME": "main",
+                  "CODER_WORKSPACE_ID": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+                  "CODER_WORKSPACE_NAME": "m1-a",
+                  "CODER_WORKSPACE_OWNER_NAME": "lab-owner"
+                },
+                "marker": {
+                  "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+                  "generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+                },
+                "root": "/workspace",
+                "uid": 1000,
+                "user": "coder"
+              },
+              "checks": {
+                "marker": true,
+                "uid": false,
+                "account": false,
+                "root": true,
+                "channelWorkspace": true,
+                "channelName": true,
+                "channelAgentName": true,
+                "channelOwner": true
+              },
+              "currentBuildBeforeAndAfter": false,
+              "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+              "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d",
+              "failure": "T105_IDENTITY_REJECTED"
+            }
+          ],
+          "candidate": {
+            "task": "T-105",
+            "passed": false,
+            "projectOperationsEnabled": false,
+            "dependencyWriteDenials": 23,
+            "discovery": [
+              {
+                "alias": "t105.m1-a",
+                "user": "coder",
+                "proxyCommand": "/usr/bin/python3 -I /home/ubuntu/workspace/agent-studio/scripts/m1/t105_connection.py proxy /home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-account-uid-ed9e197fe730/connection.json %h"
+              }
+            ],
+            "failure": {
+              "type": "RemoteHelperInstallError",
+              "code": null,
+              "message": "failed to upload remote helper"
+            },
+            "disposer": {
+              "entered": 1,
+              "completed": 1,
+              "helpersDisposed": true,
+              "helperEntries": 0
+            },
+            "cleanup": {
+              "errors": [],
+              "registrySize": 0,
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": true
+                }
+              ],
+              "javascriptNetworkAttempts": [],
+              "cordisLogTypes": []
+            },
+            "centralWorkspaceEntries": []
+          },
+          "daemonCleanup": {
+            "before": [],
+            "after": [],
+            "action": "already-exited"
+          },
+          "afterCleanup": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceBefore": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceAfter": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "accepted": true
+        },
+        {
+          "case": "wrong-root",
+          "path": "artifacts/m1/t105/connection-6fz2r7ez/wrong-root-e8802e1f1cab",
+          "command": {
+            "command": [
+              "node",
+              "--permission",
+              "--allow-child-process",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime",
+              "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-root-e8802e1f1cab",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-root-e8802e1f1cab",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-root-e8802e1f1cab/*",
+              "/home/ubuntu/workspace/agent-studio/scripts/m1/t105_candidate.mjs",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+              "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-root-e8802e1f1cab",
+              "t105.m1-a"
+            ],
+            "exitCode": 1
+          },
+          "before": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "after": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "gates": [
+            {
+              "alias": "t105.m1-a",
+              "commandSha256": "89d51130d146b26dae44bb855a1b4276d661e8d06808258fa7b803d741720fdb",
+              "dispatch": false,
+              "observed": {
+                "channel": {
+                  "CODER_WORKSPACE_AGENT_NAME": "main",
+                  "CODER_WORKSPACE_ID": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+                  "CODER_WORKSPACE_NAME": "m1-a",
+                  "CODER_WORKSPACE_OWNER_NAME": "lab-owner"
+                },
+                "marker": {
+                  "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+                  "generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+                },
+                "root": "/tmp",
+                "uid": 1000,
+                "user": "coder"
+              },
+              "checks": {
+                "marker": true,
+                "uid": true,
+                "account": true,
+                "root": false,
+                "channelWorkspace": true,
+                "channelName": true,
+                "channelAgentName": true,
+                "channelOwner": true
+              },
+              "currentBuildBeforeAndAfter": false,
+              "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+              "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d",
+              "failure": "T105_IDENTITY_REJECTED"
+            }
+          ],
+          "candidate": {
+            "task": "T-105",
+            "passed": false,
+            "projectOperationsEnabled": false,
+            "dependencyWriteDenials": 23,
+            "discovery": [
+              {
+                "alias": "t105.m1-a",
+                "user": "coder",
+                "proxyCommand": "/usr/bin/python3 -I /home/ubuntu/workspace/agent-studio/scripts/m1/t105_connection.py proxy /home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/wrong-root-e8802e1f1cab/connection.json %h"
+              }
+            ],
+            "failure": {
+              "type": "RemoteHelperInstallError",
+              "code": null,
+              "message": "failed to upload remote helper"
+            },
+            "disposer": {
+              "entered": 1,
+              "completed": 1,
+              "helpersDisposed": true,
+              "helperEntries": 0
+            },
+            "cleanup": {
+              "errors": [],
+              "registrySize": 0,
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": true
+                }
+              ],
+              "javascriptNetworkAttempts": [],
+              "cordisLogTypes": []
+            },
+            "centralWorkspaceEntries": []
+          },
+          "daemonCleanup": {
+            "before": [],
+            "after": [],
+            "action": "already-exited"
+          },
+          "afterCleanup": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceBefore": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceAfter": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "accepted": true
+        },
+        {
+          "case": "stale-generation",
+          "path": "artifacts/m1/t105/connection-6fz2r7ez/stale-generation-efc1457672dc",
+          "command": {
+            "command": [
+              "node",
+              "--permission",
+              "--allow-child-process",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime",
+              "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-generation-efc1457672dc",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-generation-efc1457672dc",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-generation-efc1457672dc/*",
+              "/home/ubuntu/workspace/agent-studio/scripts/m1/t105_candidate.mjs",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+              "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-generation-efc1457672dc",
+              "t105.m1-a"
+            ],
+            "exitCode": 1
+          },
+          "before": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "after": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "gates": [
+            {
+              "alias": "t105.m1-a",
+              "commandSha256": "89d51130d146b26dae44bb855a1b4276d661e8d06808258fa7b803d741720fdb",
+              "dispatch": false,
+              "observed": {
+                "channel": {
+                  "CODER_WORKSPACE_AGENT_NAME": "main",
+                  "CODER_WORKSPACE_ID": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+                  "CODER_WORKSPACE_NAME": "m1-a",
+                  "CODER_WORKSPACE_OWNER_NAME": "lab-owner"
+                },
+                "marker": {
+                  "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+                  "generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+                },
+                "root": "/workspace",
+                "uid": 1000,
+                "user": "coder"
+              },
+              "checks": {
+                "marker": false,
+                "uid": true,
+                "account": true,
+                "root": true,
+                "channelWorkspace": true,
+                "channelName": true,
+                "channelAgentName": true,
+                "channelOwner": true
+              },
+              "currentBuildBeforeAndAfter": false,
+              "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+              "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d",
+              "failure": "T105_IDENTITY_REJECTED"
+            }
+          ],
+          "candidate": {
+            "task": "T-105",
+            "passed": false,
+            "projectOperationsEnabled": false,
+            "dependencyWriteDenials": 23,
+            "discovery": [
+              {
+                "alias": "t105.m1-a",
+                "user": "coder",
+                "proxyCommand": "/usr/bin/python3 -I /home/ubuntu/workspace/agent-studio/scripts/m1/t105_connection.py proxy /home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-generation-efc1457672dc/connection.json %h"
+              }
+            ],
+            "failure": {
+              "type": "RemoteHelperInstallError",
+              "code": null,
+              "message": "failed to upload remote helper"
+            },
+            "disposer": {
+              "entered": 1,
+              "completed": 1,
+              "helpersDisposed": true,
+              "helperEntries": 0
+            },
+            "cleanup": {
+              "errors": [],
+              "registrySize": 0,
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": true
+                }
+              ],
+              "javascriptNetworkAttempts": [],
+              "cordisLogTypes": []
+            },
+            "centralWorkspaceEntries": []
+          },
+          "daemonCleanup": {
+            "before": [],
+            "after": [],
+            "action": "already-exited"
+          },
+          "afterCleanup": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceBefore": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceAfter": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "accepted": true
+        },
+        {
+          "case": "stale-build-record",
+          "path": "artifacts/m1/t105/connection-6fz2r7ez/stale-build-record-7120b37be567",
+          "command": {
+            "command": [
+              "node",
+              "--permission",
+              "--allow-child-process",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime",
+              "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-build-record-7120b37be567",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-build-record-7120b37be567",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-build-record-7120b37be567/*",
+              "/home/ubuntu/workspace/agent-studio/scripts/m1/t105_candidate.mjs",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+              "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-build-record-7120b37be567",
+              "t105.m1-a"
+            ],
+            "exitCode": 1
+          },
+          "before": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "after": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "gates": [
+            {
+              "alias": "t105.m1-a",
+              "commandSha256": "89d51130d146b26dae44bb855a1b4276d661e8d06808258fa7b803d741720fdb",
+              "dispatch": false,
+              "observed": {
+                "channel": {
+                  "CODER_WORKSPACE_AGENT_NAME": "main",
+                  "CODER_WORKSPACE_ID": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+                  "CODER_WORKSPACE_NAME": "m1-a",
+                  "CODER_WORKSPACE_OWNER_NAME": "lab-owner"
+                },
+                "marker": {
+                  "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+                  "generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+                },
+                "root": "/workspace",
+                "uid": 1000,
+                "user": "coder"
+              },
+              "checks": {
+                "marker": true,
+                "uid": true,
+                "account": true,
+                "root": true,
+                "channelWorkspace": true,
+                "channelName": true,
+                "channelAgentName": true,
+                "channelOwner": true
+              },
+              "currentBuildBeforeAndAfter": false,
+              "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+              "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d",
+              "failure": "T105_IDENTITY_REJECTED"
+            }
+          ],
+          "candidate": {
+            "task": "T-105",
+            "passed": false,
+            "projectOperationsEnabled": false,
+            "dependencyWriteDenials": 23,
+            "discovery": [
+              {
+                "alias": "t105.m1-a",
+                "user": "coder",
+                "proxyCommand": "/usr/bin/python3 -I /home/ubuntu/workspace/agent-studio/scripts/m1/t105_connection.py proxy /home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/stale-build-record-7120b37be567/connection.json %h"
+              }
+            ],
+            "failure": {
+              "type": "RemoteHelperInstallError",
+              "code": null,
+              "message": "failed to upload remote helper"
+            },
+            "disposer": {
+              "entered": 1,
+              "completed": 1,
+              "helpersDisposed": true,
+              "helperEntries": 0
+            },
+            "cleanup": {
+              "errors": [],
+              "registrySize": 0,
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": true
+                }
+              ],
+              "javascriptNetworkAttempts": [],
+              "cordisLogTypes": []
+            },
+            "centralWorkspaceEntries": []
+          },
+          "daemonCleanup": {
+            "before": [],
+            "after": [],
+            "action": "already-exited"
+          },
+          "afterCleanup": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceBefore": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceAfter": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "accepted": true
+        },
+        {
+          "case": "channel-switch",
+          "path": "artifacts/m1/t105/connection-6fz2r7ez/channel-switch-53f815020b6f",
+          "command": {
+            "command": [
+              "node",
+              "--permission",
+              "--allow-child-process",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime",
+              "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/channel-switch-53f815020b6f",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/channel-switch-53f815020b6f",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/channel-switch-53f815020b6f/*",
+              "/home/ubuntu/workspace/agent-studio/scripts/m1/t105_candidate.mjs",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+              "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/channel-switch-53f815020b6f",
+              "t105.m1-a"
+            ],
+            "exitCode": 1
+          },
+          "before": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "after": {
+            "project": [],
+            "homeExists": true,
+            "helperExists": true,
+            "helperSha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+            "helperBytes": 217238,
+            "helperReleaseLookup": 1,
+            "processes": []
+          },
+          "gates": [
+            {
+              "alias": "t105.m1-a",
+              "commandSha256": "1bcaf8b7d0fcf60981ac9971ac1a06ce819886d2a666d676628606b92c2f0e21",
+              "dispatch": false,
+              "sshExitCode": 255,
+              "hostKeyRejected": true,
+              "failure": "RuntimeError:T105_PREFLIGHT_TRANSPORT_CLOSED"
+            },
+            {
+              "alias": "t105.m1-a",
+              "commandSha256": "89d51130d146b26dae44bb855a1b4276d661e8d06808258fa7b803d741720fdb",
+              "dispatch": true,
+              "observed": {
+                "channel": {
+                  "CODER_WORKSPACE_AGENT_NAME": "main",
+                  "CODER_WORKSPACE_ID": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+                  "CODER_WORKSPACE_NAME": "m1-a",
+                  "CODER_WORKSPACE_OWNER_NAME": "lab-owner"
+                },
+                "marker": {
+                  "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+                  "generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+                },
+                "root": "/workspace",
+                "uid": 1000,
+                "user": "coder"
+              },
+              "checks": {
+                "marker": true,
+                "uid": true,
+                "account": true,
+                "root": true,
+                "channelWorkspace": true,
+                "channelName": true,
+                "channelAgentName": true,
+                "channelOwner": true
+              },
+              "currentBuildBeforeAndAfter": true,
+              "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+              "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d"
+            }
+          ],
+          "candidate": {
+            "task": "T-105",
+            "passed": false,
+            "projectOperationsEnabled": false,
+            "dependencyWriteDenials": 23,
+            "discovery": [
+              {
+                "alias": "t105.m1-a",
+                "user": "coder",
+                "proxyCommand": "/usr/bin/python3 -I /home/ubuntu/workspace/agent-studio/scripts/m1/t105_connection.py proxy /home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/channel-switch-53f815020b6f/connection.json %h"
+              }
+            ],
+            "failure": {
+              "type": "Error",
+              "code": null,
+              "message": "remote helper stdout ended"
+            },
+            "disposer": {
+              "entered": 1,
+              "completed": 1,
+              "helpersDisposed": true,
+              "helperEntries": 0
+            },
+            "cleanup": {
+              "errors": [],
+              "registrySize": 0,
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": true
+                }
+              ],
+              "javascriptNetworkAttempts": [],
+              "cordisLogTypes": []
+            },
+            "centralWorkspaceEntries": []
+          },
+          "daemonCleanup": {
+            "before": [],
+            "after": [],
+            "action": "already-exited"
+          },
+          "afterCleanup": {
+            "project": [],
+            "homeExists": true,
+            "helperExists": true,
+            "helperSha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+            "helperBytes": 217238,
+            "helperReleaseLookup": 1,
+            "processes": []
+          },
+          "otherWorkspaceBefore": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceAfter": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "accepted": true
+        },
+        {
+          "case": "positive",
+          "path": "artifacts/m1/t105/connection-6fz2r7ez/positive-1b9d76518dac",
+          "command": {
+            "command": [
+              "node",
+              "--permission",
+              "--allow-child-process",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime",
+              "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/positive-1b9d76518dac",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/positive-1b9d76518dac",
+              "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/positive-1b9d76518dac/*",
+              "/home/ubuntu/workspace/agent-studio/scripts/m1/t105_candidate.mjs",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+              "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+              "/home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/positive-1b9d76518dac",
+              "t105.m1-a"
+            ],
+            "exitCode": 0
+          },
+          "before": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "after": {
+            "project": [],
+            "homeExists": true,
+            "helperExists": true,
+            "helperSha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+            "helperBytes": 217238,
+            "helperReleaseLookup": 1,
+            "processes": [
+              {
+                "pid": 1362,
+                "state": "S",
+                "startTick": "630455372",
+                "kind": "daemon",
+                "ownerTokenPresent": false,
+                "agentTokenPresent": false
+              }
+            ]
+          },
+          "gates": [
+            {
+              "alias": "t105.m1-a",
+              "commandSha256": "1bcaf8b7d0fcf60981ac9971ac1a06ce819886d2a666d676628606b92c2f0e21",
+              "dispatch": true,
+              "observed": {
+                "channel": {
+                  "CODER_WORKSPACE_AGENT_NAME": "main",
+                  "CODER_WORKSPACE_ID": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+                  "CODER_WORKSPACE_NAME": "m1-a",
+                  "CODER_WORKSPACE_OWNER_NAME": "lab-owner"
+                },
+                "marker": {
+                  "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+                  "generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+                },
+                "root": "/workspace",
+                "uid": 1000,
+                "user": "coder"
+              },
+              "checks": {
+                "marker": true,
+                "uid": true,
+                "account": true,
+                "root": true,
+                "channelWorkspace": true,
+                "channelName": true,
+                "channelAgentName": true,
+                "channelOwner": true
+              },
+              "currentBuildBeforeAndAfter": true,
+              "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+              "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d"
+            },
+            {
+              "alias": "t105.m1-a",
+              "commandSha256": "89d51130d146b26dae44bb855a1b4276d661e8d06808258fa7b803d741720fdb",
+              "dispatch": true,
+              "observed": {
+                "channel": {
+                  "CODER_WORKSPACE_AGENT_NAME": "main",
+                  "CODER_WORKSPACE_ID": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+                  "CODER_WORKSPACE_NAME": "m1-a",
+                  "CODER_WORKSPACE_OWNER_NAME": "lab-owner"
+                },
+                "marker": {
+                  "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+                  "generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+                },
+                "root": "/workspace",
+                "uid": 1000,
+                "user": "coder"
+              },
+              "checks": {
+                "marker": true,
+                "uid": true,
+                "account": true,
+                "root": true,
+                "channelWorkspace": true,
+                "channelName": true,
+                "channelAgentName": true,
+                "channelOwner": true
+              },
+              "currentBuildBeforeAndAfter": true,
+              "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+              "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d"
+            }
+          ],
+          "candidate": {
+            "task": "T-105",
+            "passed": true,
+            "projectOperationsEnabled": false,
+            "dependencyWriteDenials": 23,
+            "discovery": [
+              {
+                "alias": "t105.m1-a",
+                "user": "coder",
+                "proxyCommand": "/usr/bin/python3 -I /home/ubuntu/workspace/agent-studio/scripts/m1/t105_connection.py proxy /home/ubuntu/workspace/agent-studio/artifacts/m1/t105/connection-6fz2r7ez/positive-1b9d76518dac/connection.json %h"
+              }
+            ],
+            "helper": {
+              "version": "0.13.1",
+              "state": "degraded",
+              "capabilities": {
+                "filesystem": {
+                  "confinement": "dirfd-no-follow",
+                  "internalSymlinks": false,
+                  "strongVersion": "sha256-stat-v1",
+                  "readRange": {
+                    "version": 1,
+                    "maxBytes": 196608,
+                    "versionKind": "stat-v1"
+                  },
+                  "discovery": {
+                    "version": 1,
+                    "maxEntries": 50000,
+                    "maxPathBytes": 8388608,
+                    "maxPageBytes": 131072,
+                    "deadlineMs": 15000
+                  },
+                  "chunkedWrite": {
+                    "supported": true,
+                    "maxBytes": 67108864,
+                    "maxChunkBytes": 262144
+                  },
+                  "guardedWrite": {
+                    "helperLinearizable": true,
+                    "externalWriterRaceFree": false,
+                    "createNoReplace": true,
+                    "durableRename": true,
+                    "coordinationScope": "daemon"
+                  }
+                },
+                "process": {
+                  "supported": true,
+                  "sandbox": "none",
+                  "restrictedFailClosed": true,
+                  "cwdConfinement": "dirfd-checked",
+                  "sequencedWrite": true,
+                  "controlPipe": {
+                    "version": 1,
+                    "maxChunkBytes": 65536,
+                    "maxBufferedBytes": 524288
+                  },
+                  "ptcBootstrap": {
+                    "version": 1,
+                    "maxBytes": 524288
+                  }
+                },
+                "pty": {
+                  "supported": true,
+                  "resize": true,
+                  "foregroundPgid": "verified",
+                  "sequencedResize": true
+                },
+                "session": {
+                  "resume": true
+                },
+                "environment": {
+                  "check": true,
+                  "resolveExecutable": true
+                },
+                "transfers": {
+                  "version": 1,
+                  "maxBytes": 1099511627776,
+                  "maxChunkBytes": 262144,
+                  "persistent": true
+                },
+                "shellState": {
+                  "version": 1,
+                  "channel": "nonblocking-private-pipe",
+                  "persistent": false
+                }
+              },
+              "environment": {
+                "search": {
+                  "available": false,
+                  "error": "ripgrep is not available in the remote login-shell PATH"
+                }
+              },
+              "sha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+              "assetBytes": 217238
+            },
+            "health": {
+              "nonce": "t105-nonsecret-health",
+              "ok": true
+            },
+            "connected": true,
+            "remoteSessionClose": {
+              "closed": true
+            },
+            "disposer": {
+              "entered": 1,
+              "completed": 1,
+              "helpersDisposed": true,
+              "helperEntries": 0
+            },
+            "cleanup": {
+              "errors": [],
+              "registrySize": 0,
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": true
+                }
+              ],
+              "javascriptNetworkAttempts": [],
+              "cordisLogTypes": []
+            },
+            "centralWorkspaceEntries": []
+          },
+          "daemonCleanup": {
+            "action": "authenticated-admin-shutdown",
+            "acknowledged": true,
+            "before": [
+              {
+                "pid": 1362,
+                "startTick": "630455372",
+                "kind": "daemon"
+              }
+            ],
+            "after": [],
+            "unreaped": [],
+            "releaseRetained": true,
+            "dataDeleted": false
+          },
+          "afterCleanup": {
+            "project": [],
+            "homeExists": true,
+            "helperExists": true,
+            "helperSha256": "c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f",
+            "helperBytes": 217238,
+            "helperReleaseLookup": 1,
+            "processes": []
+          },
+          "otherWorkspaceBefore": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "otherWorkspaceAfter": {
+            "project": [],
+            "homeExists": false,
+            "helperExists": false,
+            "helperSha256": null,
+            "helperBytes": null,
+            "helperReleaseLookup": 0,
+            "processes": []
+          },
+          "accepted": true
+        }
+      ],
+      "transportBaseline": {
+        "hostBrokerPids": [],
+        "controlPlaneCliPids": []
+      },
+      "historicalIdentityInput": {
+        "buildId": "6216e4e8-a9af-4de2-8957-83318c1788a0",
+        "jobId": "0d3e21e4-3b4b-4ca1-af47-6ac3e0d30ae1",
+        "templateVersionId": "3ca4b951-351e-4dce-84cc-963118787d1a",
+        "marker": {
+          "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+          "generation": "ddfafed2-7edd-1df2-1f1d-f87db99bf175",
+          "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+          "policyVersion": "lab-v1",
+          "root": "/workspace",
+          "schemaVersion": 1,
+          "templateVersion": "lab-v2",
+          "uid": 1000,
+          "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+        },
+        "source": "authenticated historical build/resources and direct workspace_builds SQL"
+      },
+      "transportAfter": {
+        "hostBrokerPids": [],
+        "controlPlaneCliPids": []
+      },
+      "sources": {
+        "scripts/m1/t105_connection.py": "4855f897eb1e1804d31c819cdd7303216ac9e6003cbd47d1cbe879c0f19f87e7",
+        "scripts/m1/t105_remote_gate.py": "56b0285abb0a30a1627a346cb80400bd0d5d5fb4bf2778a039b6eee013b81efe",
+        "scripts/m1/t105_candidate.mjs": "45fac62670fbd519a57bdee18f47a7d94170d02498095fd3aa19912071b66a54",
+        "scripts/m1/t105_cleanup.py": "9d218608182e746b6b4d3886b7aa737fa027a513144f7fbd62135bd24a2a1239",
+        "scripts/m1/ssh_remote_entry.mjs": "089d133d31dca7df627111865655b86c9817f14b0becbcfd1251c5f311dc0d6f",
+        "scripts/m1/network_guard.mjs": "a5b1dfcd5a71fef8454a5bfb65c15330812a3cedd4833085b69db674e6750e8f",
+        "scripts/m1/coder_lab.py": "906e345fc616893b6a76a4442139f456492759cfcf75f4a56201b1285f2da3e3",
+        "scripts/m1/coder_template.py": "ade62ffd189f083eec9fa44cb9d64da3c62ddeeafea6fc5ecd3e7d0a27d1ad4e"
+      }
+    }
+  },
+  "verification": {
+    "path": "artifacts/m1/t105/verification-final-g_8tlvru/result.json",
+    "sha256": "6acf2ee1bacc604c58439d24f04924f9984f46a7bcb6b1d6f69a52d52dcf296e",
+    "result": {
+      "task": "T-105",
+      "scope": "final sources: offline/build/docs/integrity plus unchanged lab audit; full runtime evidence separate",
+      "commands": [
+        {
+          "command": [
+            "python3",
+            "-I",
+            "-c",
+            "from pathlib import Path; r=Path('scripts/m1'); names=['t105_connection.py','t105_remote_gate.py','t105_cleanup.py','test_t105_connection.py','record_t105.py']; [compile((r/n).read_text(),str(r/n),'exec') for n in names]; print('PASS: 5 Python sources compiled without writing bytecode')"
+          ],
+          "exitCode": 0,
+          "stdout": "PASS: 5 Python sources compiled without writing bytecode\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "node",
+            "--check",
+            "scripts/m1/t105_candidate.mjs"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "node",
+            "--check",
+            "scripts/m1/ssh_remote_entry.mjs"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "python3",
+            "-I",
+            "-c",
+            "from pathlib import Path; import re; paths=list(Path('scripts/m1').glob('t105*'))+[Path('scripts/m1/test_t105_connection.py'),Path('scripts/m1/record_t105.py')]; hits=[str(p) for p in paths if p.is_file() and re.search(r'localhost|127[.]0[.]0[.]1|TODO|FIXME|catch\\s*\\{\\s*\\}',p.read_text())]; assert not hits,hits; print('PASS: no hardcoded loopback/ports or core placeholders in new sources; runtime lab config checked by unchanged audit')"
+          ],
+          "exitCode": 0,
+          "stdout": "PASS: no hardcoded loopback/ports or core placeholders in new sources; runtime lab config checked by unchanged audit\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "python3",
+            "-I",
+            "-c",
+            "import tarfile,hashlib; from pathlib import Path; r=Path('artifacts/m1/t103'); want='cab6fa53954dc1272dfde9ec8a8fd3928fd79232c78b658cb1b434fb0644b162'; matches=[p for p in (r/'downloads').glob('*/*.tgz') if hashlib.sha256(p.read_bytes()).hexdigest()==want]; assert matches; root=r/'fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote'; archive=tarfile.open(matches[0]); files=[m for m in archive if m.isfile()]; assert len(files)==298; assert all((root/m.name.removeprefix('package/')).read_bytes()==archive.extractfile(m).read() for m in files); print('PASS: 298 candidate files equal frozen release byte-for-byte; archive SHA-256 matched')"
+          ],
+          "exitCode": 0,
+          "stdout": "PASS: 298 candidate files equal frozen release byte-for-byte; archive SHA-256 matched\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "python3",
+            "-I",
+            "scripts/m1/test_t105_connection.py"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": "test_each_observation_field_is_enforced (__main__.T105Tests.test_each_observation_field_is_enforced) ... ok\ntest_environment_does_not_inherit_credentials (__main__.T105Tests.test_environment_does_not_inherit_credentials) ... ok\ntest_full_current_channel_observation (__main__.T105Tests.test_full_current_channel_observation) ... ok\ntest_missing_channel_fails_closed (__main__.T105Tests.test_missing_channel_fails_closed) ... ok\ntest_preflight_output_bounded (__main__.T105Tests.test_preflight_output_bounded) ... ok\ntest_preflight_read_leaves_rpc_bytes_untouched (__main__.T105Tests.test_preflight_read_leaves_rpc_bytes_untouched) ... ok\ntest_preflight_timeout_and_eof (__main__.T105Tests.test_preflight_timeout_and_eof) ... ok\ntest_remote_gate_eof_ack_never_dispatches (__main__.T105Tests.test_remote_gate_eof_ack_never_dispatches) ... ok\ntest_ssh_config_strict_no_global_writes (__main__.T105Tests.test_ssh_config_strict_no_global_writes) ... ok\ntest_stale_marker_not_a_valid_channel (__main__.T105Tests.test_stale_marker_not_a_valid_channel) ... ok\ntest_uid_boolean_not_integer (__main__.T105Tests.test_uid_boolean_not_integer) ... ok\ntest_unknown_ssh_shape_rejected_before_subprocess (__main__.T105Tests.test_unknown_ssh_shape_rejected_before_subprocess) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.094s\n\nOK\n"
+        },
+        {
+          "command": [
+            "python3",
+            "-I",
+            "scripts/m1/test_isolation.py"
+          ],
+          "exitCode": 0,
+          "stdout": "REGRESSION_REPORT /home/ubuntu/workspace/agent-studio/artifacts/m1/t103/regression-ypqzh8sw/regression-result.json\nPASS: 8 offline regressions; 83 guarded API calls; no real network\n",
+          "stderr": "test_clean_environment_does_not_copy_parent (__main__.IsolationTests.test_clean_environment_does_not_copy_parent) ... ok\ntest_existing_symlink_root_rejected (__main__.IsolationTests.test_existing_symlink_root_rejected) ... ok\ntest_extra_alias_grant_rejected (__main__.IsolationTests.test_extra_alias_grant_rejected) ... ok\ntest_inherited_environment_rejected (__main__.IsolationTests.test_inherited_environment_rejected) ... ok\ntest_narrow_grant_denies_direct_and_alias_writes (__main__.IsolationTests.test_narrow_grant_denies_direct_and_alias_writes) ... ok\ntest_network_apis_offline (__main__.IsolationTests.test_network_apis_offline) ... ok\ntest_old_broad_grant_rejected_before_profile_load (__main__.IsolationTests.test_old_broad_grant_rejected_before_profile_load) ... ok\ntest_timeout_kills_offline_process (__main__.IsolationTests.test_timeout_kills_offline_process) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.551s\n\nOK\n"
+        },
+        {
+          "command": [
+            "python3",
+            "-I",
+            "scripts/m1/test_coder_contract.py"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.004s\n\nOK\n"
+        },
+        {
+          "command": [
+            "python3",
+            "-I",
+            "scripts/check_docs.py"
+          ],
+          "exitCode": 0,
+          "stdout": "PASS: 18 documents, 14 requirements, 8 non-functional requirements, 17 scenarios, 14 acceptance rows, 125 local links\nMappings: 75 declared, 75 in matrix; 8 non-functional mappings, 3 checkpoints\nExecution plan: 31 tasks; dependencies and phase boundaries checked\nExternal links counted, not re-fetched: 45\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "python3",
+            "-I",
+            "scripts/test_check_docs.py"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ".....................................\n----------------------------------------------------------------------\nRan 37 tests in 3.478s\n\nOK\n"
+        },
+        {
+          "command": [
+            "sha256sum",
+            "--check",
+            "docs/implementation/evidence/SHA256SUMS"
+          ],
+          "exitCode": 0,
+          "stdout": "docs/implementation/evidence/t101-installed-inventory.json: OK\ndocs/implementation/evidence/t101-candidate-metadata.json: OK\ndocs/implementation/evidence/t103-isolated-experiment.json: OK\ndocs/implementation/evidence/t103-profile-experiment.json: OK\ndocs/implementation/evidence/t103-isolation-correction.json: OK\ndocs/implementation/evidence/t104-coder-lab.json: OK\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "sha256sum",
+            "--check",
+            "docs/research/evidence/SHA256SUMS"
+          ],
+          "exitCode": 0,
+          "stdout": "docs/research/evidence/historical-research-excerpts.txt: OK\ndocs/research/evidence/prototype-readme.txt: OK\ndocs/research/evidence/preparation.json: OK\ndocs/research/evidence/isolation.json: OK\ndocs/research/evidence/management.json: OK\ndocs/research/evidence/acp-probe.json: OK\ndocs/research/evidence/composition.json: OK\ndocs/research/evidence/e2e-verification.json: OK\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "python3",
+            "-I",
+            "scripts/m1/audit_coder_lab.py"
+          ],
+          "exitCode": 0,
+          "stdout": "PASS: 4 running lab containers; private config, limits, TLS, database auth and retained session checked\nHistorical startup diagnostics retained; recent 120-second warning/error count: 0\nEvidence: artifacts/m1/t104/lab/resource-audit-c93189cc.json\n",
+          "stderr": ""
+        }
+      ],
+      "sourceSha256": {
+        "scripts/m1/t105_candidate.mjs": "45fac62670fbd519a57bdee18f47a7d94170d02498095fd3aa19912071b66a54",
+        "scripts/m1/t105_cleanup.py": "9d218608182e746b6b4d3886b7aa737fa027a513144f7fbd62135bd24a2a1239",
+        "scripts/m1/t105_connection.py": "4855f897eb1e1804d31c819cdd7303216ac9e6003cbd47d1cbe879c0f19f87e7",
+        "scripts/m1/t105_remote_gate.py": "56b0285abb0a30a1627a346cb80400bd0d5d5fb4bf2778a039b6eee013b81efe",
+        "scripts/m1/test_t105_connection.py": "daf764aa5e35d4fd537aa79041da381b56cce523adad8e34857169b8894ccc8b",
+        "scripts/m1/record_t105.py": "16ba6d05002fcf3be350b2a750d9b3acb6bbc3f58ba4877007184057369f4607",
+        "docs/implementation/m1-closeout-tasks.md": "d3750cb485d1b3e83cb066d6451afec01e84e7ec8b4aea7d3cd80a5054e4db40",
+        "docs/05-delivery-and-acceptance.md": "e000cf1aa4fe021135e29d4aea46122bc39d2d21817d6661d0c4cc9cf66c0552",
+        "docs/08-execution-plan.md": "d3be2e4ef07670ce901011d9e2f427bfa814e2435be583d0428c51d80f2aad8d"
+      },
+      "supportingEvidence": [
+        {
+          "path": "artifacts/m1/t105/cli-evidence-9o8y8jpt/result.json",
+          "sha256": "0a99a8b3f833f2096dda4a3d99f61d0b954fdabc686df72f068b100e0f5d952e",
+          "result": {
+            "task": "T-105",
+            "commands": [
+              {
+                "command": [
+                  "/opt/coder",
+                  "version"
+                ],
+                "exitCode": 0,
+                "path": "artifacts/m1/t105/cli-evidence-9o8y8jpt/version.txt",
+                "sha256": "5443194b1e727748b3542c2d9372a133686c417ee5f5f16feb7f318227f83322"
+              },
+              {
+                "command": [
+                  "/opt/coder",
+                  "--help"
+                ],
+                "exitCode": 0,
+                "path": "artifacts/m1/t105/cli-evidence-9o8y8jpt/global-help.txt",
+                "sha256": "7d2efb944e1d85c80b551943a7749d22a692071d9959ea1db1de845e041cc8f1"
+              },
+              {
+                "command": [
+                  "/opt/coder",
+                  "ssh",
+                  "--help"
+                ],
+                "exitCode": 0,
+                "path": "artifacts/m1/t105/cli-evidence-9o8y8jpt/ssh-help.txt",
+                "sha256": "d0fa21d0ac2da7017869c4eaf8fe124b5a250640c77f75074746c9c46b2b6271"
+              },
+              {
+                "command": [
+                  "/opt/coder",
+                  "config-ssh",
+                  "--help"
+                ],
+                "exitCode": 0,
+                "path": "artifacts/m1/t105/cli-evidence-9o8y8jpt/config-ssh-help.txt",
+                "sha256": "aab001b12cecd316b6a467e5f790ee6b22f50090f850c7a3d4c6ccd1c3ee5c02"
+              },
+              {
+                "command": [
+                  "/opt/coder",
+                  "config-ssh",
+                  "--dry-run",
+                  "--no-wildcard",
+                  "--disable-autostart",
+                  "--ssh-config-file",
+                  "/tmp/agent-studio-t105-unused-config",
+                  "--ssh-host-prefix",
+                  "t105.",
+                  "--yes"
+                ],
+                "exitCode": 0,
+                "path": "artifacts/m1/t105/cli-evidence-9o8y8jpt/config-preview.txt",
+                "sha256": "4e15706e13364f4e850d2644f4ccece0478e43221191849a7982c84c52899383"
+              }
+            ],
+            "openssh": "OpenSSH_9.6p1 Ubuntu-3ubuntu13.20, OpenSSL 3.0.13 30 Jan 2024",
+            "node": "v24.22.1",
+            "coderServer": "v2.37.8+7ac93cf",
+            "dsh": "0.2.1-rc.4"
+          }
+        },
+        {
+          "path": "artifacts/m1/t105/connection-v1u8zoxb/failure.json",
+          "sha256": "3ec1484f1fc01a86863101b37a59ae2517ff3974a7d1d19a4335806b7d252c8d",
+          "result": {
+            "task": "T-105",
+            "status": "blocked-at-enrollment",
+            "failureId": "T105-BUSYBOX-TIMEOUT",
+            "exitCode": 255,
+            "diagnostic": "timeout: unrecognized option: signal=TERM",
+            "mechanism": "The existing Coder container uses BusyBox timeout; GNU long option is unsupported.",
+            "helperBootstrapDispatched": false,
+            "reasonedFix": "Use BusyBox-supported -s TERM -k 5 90. Preserve the timeout and TLS/identity checks."
+          }
+        },
+        {
+          "path": "artifacts/m1/t105/connection-m7gjyfrb/log-classification.json",
+          "sha256": "bb4e5acac9bf5e4da0df4b09f07c27ab8c983da36aa001d164ce73fd6b24daca",
+          "result": {
+            "task": "T-105",
+            "auditFailure": "unchanged audit_coder_lab.py rejected one warning in its 120-second window",
+            "warningLines": [
+              {
+                "workspaceId": "d352009d-cb9b-405b-9d8b-c2405e9b4983",
+                "line": "2026-10-30 12:01:13.487 [warn]  ssh-server: ssh connection failed  remote_addr=[fd7a:115c:a1e0:4a42:8652:2d7b:b1b4:60f6]:27619  local_addr=[fd7a:115c:a1e0:4db6:b0a9:8c63:a5a4:766f]:1  error=EOF"
+              },
+              {
+                "workspaceId": "d352009d-cb9b-405b-9d8b-c2405e9b4983",
+                "line": "2026-10-30 12:04:33.069 [warn]  ssh-server: ssh connection failed  remote_addr=[fd7a:115c:a1e0:4cb3:b3d0:d69:8e87:d385]:53735  local_addr=[fd7a:115c:a1e0:4db6:b0a9:8c63:a5a4:766f]:1  error=EOF"
+              }
+            ],
+            "historicalLogsPreserved": true
+          }
+        },
+        {
+          "path": "artifacts/m1/t103/fixture-9teakpr5/runtime/t103-profile-978d78f06cf94b198ea156d70fb3c0ad/profile-result.json",
+          "sha256": "de0f2f39e586eaa64fb5423d9b56fb2ec055fa90772ea0e2c95c4b54b61951c3",
+          "result": {
+            "task": "T-103",
+            "stage": "file-backed-profile-boot",
+            "nodeVersion": "24.22.1",
+            "isolation": {
+              "writeRoot": "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/t103-profile-978d78f06cf94b198ea156d70fb3c0ad",
+              "writeGrantCount": 2,
+              "dependencyDirectoriesNotWritable": true,
+              "candidateWriteDenied": "ERR_ACCESS_DENIED",
+              "peerWriteDenials": [
+                {
+                  "name": "@deepseek-ai/cordis",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-atomic-write",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-fs",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-home-paths",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-sandbox",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-sandbox-policy",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-scope",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-shell",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-subprocess",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-terminal",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                },
+                {
+                  "name": "@deepseek-ai/dsh-typert-protocol",
+                  "direct": "ERR_ACCESS_DENIED",
+                  "alias": "ERR_ACCESS_DENIED"
+                }
+              ],
+              "childProcessDenied": true,
+              "environmentAllowlisted": true,
+              "brandNewRunRoot": true,
+              "osSandbox": false
+            },
+            "passed": true,
+            "startup": {
+              "configuredEntries": [
+                {
+                  "id": "t103-fs",
+                  "state": 2
+                },
+                {
+                  "id": "t103-subprocess",
+                  "state": 2
+                },
+                {
+                  "id": "t103-ssh-remote",
+                  "state": 2
+                }
+              ],
+              "entryIsConstructor": false,
+              "helperEntries": 0,
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": false
+                }
+              ],
+              "localFsReadAndLookup": true
+            },
+            "disabled": {
+              "persistedDisabled": true,
+              "serviceAbsent": true,
+              "helperDisposed": true,
+              "helperDisposeCalls": 1,
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": true
+                }
+              ],
+              "localFsReadAndLookup": true
+            },
+            "reenabled": {
+              "persistedDisabled": false,
+              "state": 2,
+              "freshHelper": true,
+              "localFsReadAndLookup": true
+            },
+            "shutdown": {
+              "helperStates": [
+                {
+                  "disposed": true,
+                  "disposeCalls": 1
+                },
+                {
+                  "disposed": true,
+                  "disposeCalls": 1
+                }
+              ],
+              "intervals": [
+                {
+                  "delay": 5000,
+                  "cleared": true
+                },
+                {
+                  "delay": 5000,
+                  "cleared": true
+                }
+              ],
+              "registryCount": 0,
+              "exitListenerBaseline": 1,
+              "exitListenersAfter": 1,
+              "configRemainsEnabled": true,
+              "configFullReadback": true
+            },
+            "checks": {
+              "allHelpersDisposedExactlyOnce": true,
+              "allIntervalsCleared": true,
+              "registryEmpty": true,
+              "providerExitListenerRemoved": true,
+              "configWriteReadbackIntact": true,
+              "entrySourceUnchanged": true,
+              "noNetworkAttempts": true,
+              "noCordisErrors": true,
+              "isolatedHomeUnchanged": true,
+              "workspaceOnlyContainsMarker": true
+            },
+            "cordisErrors": [],
+            "cordisWarnings": [],
+            "networkAttempts": [],
+            "forcedCleanup": [],
+            "profileEntrySha256": "089d133d31dca7df627111865655b86c9817f14b0becbcfd1251c5f311dc0d6f"
+          }
+        },
+        {
+          "path": "artifacts/m1/t104/lab/control-plane-6882fe83.json",
+          "sha256": "a1654219312dcd25ff29c5060cd0b4599698a81b4a23e1b1f4dfbdbd94d958dc",
+          "result": {
+            "task": "T-104",
+            "stage": "control-plane",
+            "passed": true,
+            "coderVersion": "v2.37.8+7ac93cf",
+            "coderImage": "ghcr.io/coder/coder@sha256:8514c20c3c7811a9835eb903c5123b0090ba6538dc8bcc8281624d0bdedd9063",
+            "databaseImage": "postgres@sha256:1b92e7a80c021647bf70f5d3eb66066a998e4f5cf43c07bb9dc9f729782cf88e",
+            "publicHealth": 200,
+            "loginPage": 200,
+            "anonymousProtected": 401,
+            "invalidProtected": 401,
+            "authenticatedProtected": 200,
+            "ownerDatabaseReadback": true,
+            "ownerApiReadback": true,
+            "ownerSearch": true,
+            "tlsVerifiedWithDedicatedCA": true,
+            "hostBindingIsLoopbackOnly": true,
+            "preexistingContainersStillRunning": true,
+            "workspaceChecksComplete": false,
+            "browserLoginTested": false,
+            "stageM1Passed": false
+          }
+        },
+        {
+          "path": "artifacts/m1/t104/lab/instances-b3553ef3.json",
+          "sha256": "ee302e2aca1d5e6d203da4ad09d566a3cbf848f009102fc87cd74a53ce3ac88b",
+          "result": {
+            "task": "T-104",
+            "stage": "template-and-independent-instances",
+            "passed": true,
+            "templateSha256": "82407d4d87947d437e7b9e8ecc78b144e1229d098b25394c92b87fd3a68aefdb",
+            "records": [
+              {
+                "name": "m1-a",
+                "buildId": "ff1224ba-06ee-4e64-b2b1-52a264cd39c0",
+                "templateVersionId": "7621affa-b880-476f-91eb-74855d529702",
+                "platformAgentId": "be94e5b4-d193-4c9d-aa34-98d9b072d59d",
+                "agentBuildAssociationReadback": true,
+                "record": {
+                  "agentResourceId": "ba62917c-5d4a-4352-b56c-0ab5f6e20d82",
+                  "generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+                },
+                "agentConnected": true,
+                "databaseReadback": true,
+                "independentContainerReadback": true,
+                "runtimePolicyChecked": true,
+                "markerOwner": 1000,
+                "markerMode": "0o444",
+                "markerTamperProofAgainstWorkspaceUser": false
+              },
+              {
+                "name": "m1-b",
+                "buildId": "2018bb75-2f83-4fad-98e1-7e11bb157fa5",
+                "templateVersionId": "7621affa-b880-476f-91eb-74855d529702",
+                "platformAgentId": "65019df5-cd66-4db6-b0a9-8c63a5a4766f",
+                "agentBuildAssociationReadback": true,
+                "record": {
+                  "agentResourceId": "d7dbc09e-63b7-4a5b-971d-1ce754e4c331",
+                  "generation": "ada53b10-cf14-f6e3-c15a-2ab5eef36c25",
+                  "imageId": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+                  "policyVersion": "lab-v1",
+                  "root": "/workspace",
+                  "schemaVersion": 1,
+                  "templateVersion": "lab-v3",
+                  "uid": 1000,
+                  "workspaceId": "d352009d-cb9b-405b-9d8b-c2405e9b4983"
+                },
+                "agentConnected": true,
+                "databaseReadback": true,
+                "independentContainerReadback": true,
+                "runtimePolicyChecked": true,
+                "markerOwner": 1000,
+                "markerMode": "0o444",
+                "markerTamperProofAgainstWorkspaceUser": false
+              }
+            ],
+            "rejectedProbeCases": [
+              "unknown-version",
+              "wrong-template",
+              "outside-root",
+              "revoked-version",
+              "missing-record",
+              "wrong-instance",
+              "forged-generation"
+            ],
+            "approvedOlderVersionAcceptedByProbe": true,
+            "negativeProbesCreatedNoWorkspaces": true,
+            "productCreateApiTested": false,
+            "sshHelperTested": false,
+            "crossHostTested": false,
+            "stageM1Passed": false,
+            "limits": [
+              "same-host Docker, not VM isolation",
+              "marker owner can chmod it; marker is not a trust boundary",
+              "internal bridge is not full egress security proof",
+              "workspace writable image layer has no hard disk quota",
+              "no per-workspace PID cgroup limit yet",
+              "older-version acceptance is an offline policy probe, not a deployed rollback"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resourceAudit": {
+    "path": "artifacts/m1/t104/lab/resource-audit-c93189cc.json",
+    "sha256": "69397de34d689239df28ca1d867efedd81be521a3d99b9c73cd163352958c01c",
+    "result": {
+      "task": "T-104",
+      "stage": "resource-and-log-audit",
+      "passed": true,
+      "resources": [
+        {
+          "role": "coder",
+          "name": "agent-studio-coder-lab-coder-1",
+          "image": "ghcr.io/coder/coder@sha256:8514c20c3c7811a9835eb903c5123b0090ba6538dc8bcc8281624d0bdedd9063",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 2147483648,
+          "nanoCpus": 2000000000,
+          "pidsLimit": 256,
+          "mountDestinations": [
+            "/home/coder",
+            "/run/lab-tls",
+            "/opt/lab-template",
+            "/var/run/docker.sock"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 362,
+            "lastTwoMinutes": 0
+          }
+        },
+        {
+          "role": "database",
+          "name": "agent-studio-coder-lab-database-1",
+          "image": "postgres@sha256:1b92e7a80c021647bf70f5d3eb66066a998e4f5cf43c07bb9dc9f729782cf88e",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 536870912,
+          "nanoCpus": 500000000,
+          "pidsLimit": 128,
+          "mountDestinations": [
+            "/var/lib/postgresql/data"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 1,
+            "lastTwoMinutes": 0
+          }
+        },
+        {
+          "role": "workspace",
+          "name": "agent-studio-lab-d352009d-cb9b-405b-9d8b-c2405e9b4983",
+          "image": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 268435456,
+          "nanoCpus": 500000000,
+          "pidsLimit": null,
+          "mountDestinations": [
+            "/workspace"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 13,
+            "lastTwoMinutes": 0
+          }
+        },
+        {
+          "role": "workspace",
+          "name": "agent-studio-lab-ff136352-6a92-41d4-9c2c-6cc783cb989b",
+          "image": "sha256:35749aeb9ddb29fa2e5213a531d81f8827d8d29ea4348488d2155a27a95a40b5",
+          "running": true,
+          "restartCount": 0,
+          "memoryBytes": 268435456,
+          "nanoCpus": 500000000,
+          "pidsLimit": null,
+          "mountDestinations": [
+            "/workspace"
+          ],
+          "warningOrErrorLineCounts": {
+            "sinceCreation": 4,
+            "lastTwoMinutes": 0
+          }
+        }
+      ],
+      "preexistingRunningContainerCount": 32,
+      "preexistingContainersStillRunning": true,
+      "privateTopLevelFilesChecked": 11,
+      "privatePermissionsChecked": true,
+      "dedicatedCertificateValidBeyondOneDay": true,
+      "workspaceNetworkInternal": true,
+      "remainingOwnerSessionCount": 1,
+      "runnerSessionStillValid": true,
+      "databaseHbaRules": [
+        "local||trust",
+        "host|127.0.0.1|trust",
+        "host|::1|trust",
+        "local||trust",
+        "host|127.0.0.1|trust",
+        "host|::1|trust",
+        "host|all|scram-sha-256"
+      ],
+      "startupLogsEntirelyClean": false,
+      "recentLogWindowSeconds": 120,
+      "recentWarningOrErrorLines": 0,
+      "historicalDiagnostics": [
+        "Telemetry disabled: security notifications unavailable; intentional lab setting.",
+        "coder_agent.dir deprecated; non-HOME dir unsupported by Desktop file sync, which is not enabled.",
+        "PostgreSQL local/socket trust initialization warning; network-wide host rule uses scram-sha-256.",
+        "One workspace retried authentication before its provisioning job completed; current agents connected.",
+        "Agent prebuilt-workspace probe rejected; these workspaces are not prebuilt.",
+        "Userspace networking fakeRouter Up/Set warnings; not a full network-isolation verification."
+      ],
+      "resourcesRetained": true,
+      "persistentDataDeleted": false,
+      "stageM1Passed": false
+    }
+  },
+  "sourceSha256": {
+    "scripts/m1/t105_connection.py": "4855f897eb1e1804d31c819cdd7303216ac9e6003cbd47d1cbe879c0f19f87e7",
+    "scripts/m1/t105_remote_gate.py": "56b0285abb0a30a1627a346cb80400bd0d5d5fb4bf2778a039b6eee013b81efe",
+    "scripts/m1/t105_candidate.mjs": "45fac62670fbd519a57bdee18f47a7d94170d02498095fd3aa19912071b66a54",
+    "scripts/m1/t105_cleanup.py": "9d218608182e746b6b4d3886b7aa737fa027a513144f7fbd62135bd24a2a1239",
+    "scripts/m1/test_t105_connection.py": "daf764aa5e35d4fd537aa79041da381b56cce523adad8e34857169b8894ccc8b",
+    "scripts/m1/record_t105.py": "16ba6d05002fcf3be350b2a750d9b3acb6bbc3f58ba4877007184057369f4607",
+    "scripts/m1/ssh_remote_entry.mjs": "089d133d31dca7df627111865655b86c9817f14b0becbcfd1251c5f311dc0d6f",
+    "scripts/m1/network_guard.mjs": "a5b1dfcd5a71fef8454a5bfb65c15330812a3cedd4833085b69db674e6750e8f",
+    "scripts/m1/coder_lab.py": "906e345fc616893b6a76a4442139f456492759cfcf75f4a56201b1285f2da3e3",
+    "scripts/m1/coder_template.py": "ade62ffd189f083eec9fa44cb9d64da3c62ddeeafea6fc5ecd3e7d0a27d1ad4e",
+    "scripts/m1/audit_coder_lab.py": "ac0a997ee7832b2d6f60f00ceca104c15e8bacbc69bb3cc6a5f008b957489a67"
+  },
+  "officialSource": {
+    "commit": "7ac93cffea828ca2d9514cfc6c0ad6337834aebe",
+    "sha256": {
+      "cli/configssh.go": "25c8949bc20167d37a769d039a16c5b63f982ebda942b71037d66408294927ea",
+      "cli/ssh.go": "7007ab95c29daf0c05a01915112bd1ad7372101fdbe84a7ce2c3300afc150d72",
+      "agent/agentssh/agentssh.go": "84aae0fc7c1d0fda5bfbf645f6f1958b0dfbd7332ff1f2843bfbba715883fcde",
+      "agent/agent.go": "b844f19db6773872808de6ad6b8473c9a67f340ff620f11ba5122745184a4090"
+    }
+  },
+  "connectionDesign": [
+    "中央 OpenSSH 使用专用 -F 配置；ProxyCommand 由中央受限入口读取 runner 引用，以环境传入既有控制面容器内 /opt/coder。未给工作区 owner token。",
+    "Coder CLI 与 Server 固定 v2.37.8+7ac93cf；canonical coder DNS 与专用 CA 在既有控制面内使用，宿主 DNS/hosts/全局 CA/SSH 配置未变。",
+    "官方 config-ssh 默认 StrictHostKeyChecking=no；官方信任基础是 TLS 认证控制面、Agent 认证及按 platformAgentId 建立的 tailnet。该默认配置仅作已保存的对照，不直接启用。",
+    "首次仅在官方认证通道上显式 accept-new 登记专用 known_hosts，读当前预置身份并前后重查 build；后续 strict=yes。真实目标切换触发 host-key 拒绝。主机密钥是附加连续性检查，不声称独立硬件证明。",
+    "预期记录来自当前 API/build metadata，SQL 将 workspace_agents.resource_id 经 workspace_resources.job_id 关联当前 workspace_builds；Terraform agentResourceId 与 platformAgentId 分开。",
+    "每次安装、连接及重连均在实际 SSH 命令进程内先只读观察 marker、UID、账号、canonical root 与 Coder channel workspace/name/owner/agent-name；中央再重查当前 build/agent，比较后发绑定观察摘要的 ACK。",
+    "同一 SSH 远端进程第二次检查观察不变才 exec helper；此处不能重新解析别名或建立新通道。每次新调用都重新核验，不沿用上次通过缓存。未实现长期产品绑定或重建竞态全量验收。",
+    "复用原字节 ssh_remote_entry.mjs 箭头入口；registerHooks 仅将该入口包名解析到固定候选，不修改 SDK、候选或 writable peer symlink。真实 fs/subprocess providers，没有伪造 provider。",
+    "helper 安装真实写入专用 /tmp/t105-*/home；独立 Docker 全文件 SHA-256/字节数读回、release 按名检索以及真实 RPC version/capabilities/health 交叉验证。未执行 T-106 项目 FS/命令/PTY。",
+    "真实 session/close ACK 与 Cordis disposer 各完成一次；另用原 helper 的认证 admin/shutdown 关闭该实验独有、默认会保留 600 秒的 daemon，独立查 /proc 确认无运行及未回收进程。保留部署文件与数据。"
+  ],
+  "negativeCoverage": [
+    "wrong-workspace (actual m1-b transport)",
+    "wrong-account-and-UID (expected root/0 vs actual coder/1000)",
+    "wrong-root (actual /tmp canonical probe)",
+    "stale-generation",
+    "stale-current-build-record",
+    "actual alias transport switch after installer dispatch, before connector"
+  ],
+  "limits": [
+    "本项实现待独立复核；M1 未通过，T-106/T-107 与产品场景未验收。",
+    "helper 返回 degraded：镜像缺 ripgrep；不修改 lab-v3 或安装依赖掩盖，不把返回 capabilities 当作 FS/命令/PTY/恢复验收。",
+    "同 UID 可修改 marker、控制状态及项目；不是同 UID 防篡改、OS 沙箱、完整网络隔离或跨主机实验。工作区 PID/硬磁盘配额仍缺。",
+    "Node --allow-child-process 产生 PERM0002；Node 写授权只覆盖 run root，23 项候选/peer直接与别名拒写及 JS 网络 guard 均实际检查，但子进程与管理 broker 仍有宿主管理权限。",
+    "有界期限：身份读回25秒、远端ACK30秒、OpenSSH连接15秒、官方CLI90秒加5秒终止宽限、Node80秒；不是产品 NF-07 的最终窗口。",
+    "继承的历史启动警告保留；本轮真实 host-key 负向测试造成 Agent SSH EOF warning，严格近期日志审计曾失败，已分类并在后续静默窗口重验，绝不声称整个运行历史零错误。",
+    "首次代理使用 GNU timeout 选项被 BusyBox 拒绝；失败证据保留，改为已核对的 -s TERM -k 5 90 后重跑。",
+    "未重建镜像/数据库/工作区，未创建第三工作区，未删除卷或持久数据，未调用模型API，未改生产profile/全局包，未提交/推送/发布。"
+  ]
+}

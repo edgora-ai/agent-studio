@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "task": "T-107",
+  "revision": "repair1",
+  "role": "implementation-selftest-only",
+  "gate": "blocked-pending-independent-review",
+  "m1Passed": false,
+  "t201Ready": false,
+  "independentAcceptance": false,
+  "matrix": {
+    "path": "docs/implementation/t107-repair1-matrix.json",
+    "sha256": "61227e3656ead273b9d6539ebbb70c98062a7702a217f81c0ea4a217b41eb705"
+  },
+  "completeRun": {
+    "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/result.json",
+    "sha256": "78bfd1d0b6998d2ef0c690284d2edb8f43d2f44f8531aa633d2a10708e16551f"
+  },
+  "sourceSha256": {
+    "scripts/m1/t107_repair.test.mjs": "d9ab4a9baa34a9cc679a760421161509556c6f209865e07c69b06d0b2ab2e95c",
+    "scripts/m1/t107_repair_entrypoints.mjs": "5a2b28ef419a05e5d35d07f1e6d4be0dcaf3117e7491794ad071e63fc2f8f537",
+    "scripts/m1/t107_repair_guard.mjs": "78130e6cf17c5cf2a64a2632812a0bcaa108c273c103ca88a2bc11aa383bfafa",
+    "scripts/m1/t107_repair_policy.mjs": "35de788bece19e0855bc5837a1781ed415213f843989b1fb659e84bbfca9eb42",
+    "scripts/m1/t107_repair_recovery.mjs": "40d9d7d8545e4f02eeb0dc0c20b9de76e23abe070021d11be3320fe33a520756",
+    "scripts/m1/t107_repair_run.py": "67793eb3e1787c22be2f06dddb8e04f1cfad028941e66722c1cde15f5303114e",
+    "scripts/m1/t107_repair_runtime.mjs": "b47af018b40ddc853cf2f79d92e9fbabee854b44e53584a50b9cf457d4311e2e"
+  },
+  "historicalSourcesPreserved": {
+    "path": "artifacts/m1/t107/repair1-baseline-4_y_l8u5/manifest.json",
+    "sha256": "5f097eb32a1f3ced8b0b56a5217dd4c53d3a2646b5b58e120a28c1d751495d99"
+  },
+  "findings": [
+    {
+      "id": "T107-IA-01",
+      "selftestStatus": "pass-pending-independent-review",
+      "evidence": {
+        "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/recovery.json",
+        "sha256": "74bb8b81beee00661a82d4d0b86c48aeefd8de293921541dd1cbd914670fc342"
+      },
+      "windowMs": 30000,
+      "recoveryMs": 4568,
+      "original": {
+        "pid": 10178,
+        "startTick": "632134795",
+        "operationId": "03a441bf-6355-4f88-b8d1-45f4288680d2",
+        "processId": "6d75d277-316c-40d1-ae95-799e2b4e5509",
+        "workspaceId": "c888500c-4046-4578-a575-3fb974d39cc3",
+        "sessionId": "9b05d9b11ccddcc7883efdab8ac1f938",
+        "serverEpoch": "ad6dfddf2647af4ba4feacc53fe752f1",
+        "argvSha256": "64be512f3a8316bda79ce345202678ebc540a55048db5cd3fdc37799f8dec02e",
+        "startParamsSha256": "c4931974363ab9634035c95eeaf80db982ef517f05efeb46798972af380b0507"
+      },
+      "effects": 1,
+      "actualFreshIdentityGates": 3,
+      "cancelState": "expired-cancelled",
+      "finalProcessState": "gone",
+      "focusedRegressions": 23
+    },
+    {
+      "id": "T107-IA-02",
+      "selftestStatus": "pass-pending-independent-review",
+      "evidence": {
+        "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/entrypoints/entrypoints.json",
+        "sha256": "2a2901140eb589450dca38e1f169db4706462c4f5813c7662d3f4c6a6a6ddb24"
+      },
+      "negativeZeroEffectCases": 42,
+      "localPositiveCases": 7,
+      "installedSources": {
+        "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/lib/index.js": "871e8d02a7b37ea487308d8516d839d51fedfe46f1c3ed50d99435acc984c7e1",
+        "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/client/api.ts": "f04af9246b2f34bc63af2b42e1e3cb6dd39359adf7f1cb43b1e8102a72b4e98c",
+        "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/client/open-with.ts": "07eed2621c0182c3753a7d179253b68b6ccf26536260062e9bcf0e99e890edbf",
+        "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-api-session-controller/lib/index.js": "a9801acb577b03053c5d5a3191ff555c5f1d791d0acddec113bea4511e33b386",
+        "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-host-open-in-app/lib/index.js": "b1d17a0c2646389b27eefab2e1e22576a693b11c61c76884fc049aff54e00d96",
+        "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-client-ui-open-in-app/lib/client.js": "7a3adda611ea8318322e474294cba4c5a36be30f879c98dc52a41b57363cd6dc",
+        "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/src/open-external.ts": "535a4d38c5ac2e4c33fc68b83b1c24ef1e1a4dacbbe7541f6098cc86fe0b10bf",
+        "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/LICENSE": "f4d265194e0824721af0592462a71fe750c04db3565c23c5d6c65fdee25fb4b0"
+      },
+      "upstreamPatched": false
+    },
+    {
+      "id": "T107-IA-03",
+      "selftestStatus": "corrected-current-contract",
+      "evidence": {
+        "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/counterexample/discovery-budget.json",
+        "sha256": "df9fee17e84e35a170437f5a33d582ed567fac7db19325c53b9604622735fc68"
+      },
+      "hardDeadlineAdded": false,
+      "virtualElapsedMs": 28800,
+      "remoteMeasurement": false
+    },
+    {
+      "id": "T107-OBS-01",
+      "selftestStatus": "current-prose-updated",
+      "paths": [
+        "docs/06-decisions-and-risks.md",
+        "docs/implementation/m1-closeout-tasks.md"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "scripts/m1/t107_repair_run.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "node",
+        "--test",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_repair.test.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "node",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair1-9b640045076f74b30289faf9/counterexample/discovery_budget.mjs"
+      ],
+      "exitCode": 0,
+      "unchangedSourceSha256": "41226ca6c8379a3d30d532c2f01eb676ae9bf4f37a2246b36fcf6ffd3deecdc3"
+    },
+    {
+      "args": [
+        "node",
+        "--permission",
+        "--allow-child-process",
+        "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+        "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime",
+        "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+        "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair1-9b640045076f74b30289faf9",
+        "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair1-9b640045076f74b30289faf9",
+        "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair1-9b640045076f74b30289faf9/*",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_repair_runtime.mjs",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t103/fixture-9teakpr5/runtime/node_modules/dsh-ssh-remote",
+        "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair1-9b640045076f74b30289faf9",
+        "t105.m1-a"
+      ],
+      "exitCode": 0,
+      "observerRequests": 4
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "--experimental-transform-types",
+        "--permission",
+        "--allow-child-process",
+        "--allow-fs-read=/home/ubuntu/workspace/agent-studio/scripts/m1",
+        "--allow-fs-read=/home/ubuntu/.dsh/profiles/web/node_modules",
+        "--allow-fs-read=/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+        "--allow-fs-read=/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair1-9b640045076f74b30289faf9/entrypoints",
+        "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair1-9b640045076f74b30289faf9/entrypoints",
+        "--allow-fs-write=/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair1-9b640045076f74b30289faf9/entrypoints/*",
+        "/home/ubuntu/workspace/agent-studio/scripts/m1/t107_repair_entrypoints.mjs",
+        "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar",
+        "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh",
+        "/home/ubuntu/workspace/agent-studio/artifacts/m1/t107/repair1-9b640045076f74b30289faf9/entrypoints"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "failureHistory": [
+    {
+      "id": "T107R1-CLEANUP-CROSS-WORKSPACE-TRACKED",
+      "evidence": {
+        "path": "artifacts/m1/t107/repair1-e0a6b7e3cea45b5824fd3c99/result.json",
+        "sha256": "2faeecc168a6dcd06399390b61f7a8945eb1a1fc5891ddd468494f1ec9efadb5"
+      },
+      "exitCode": 1,
+      "cause": "m1-a tracked PID array was also supplied to m1-b; then full m1-b result wrongly compared against empty-tracked baseline",
+      "actualCleanupSucceeded": true,
+      "correction": "send owned tracked identities only to m1-a; leave exact baseline equality assertion intact",
+      "correctedCompleteRetryCount": 1,
+      "notUsedAsPassingRun": true
+    }
+  ],
+  "intentionalTransportClosures": [
+    {
+      "pid": 2995699,
+      "ended": true,
+      "exit": {
+        "code": 78,
+        "signal": null
+      },
+      "stderrBytes": 34
+    },
+    {
+      "pid": 2996521,
+      "ended": true,
+      "exit": {
+        "code": 78,
+        "signal": null
+      },
+      "stderrBytes": 34
+    }
+  ],
+  "transportMeaning": "Both owned wrappers exited 78 when deliberately disconnected. Preserved as expected transport termination, never evidence of task cancellation; cancellation proven by original process status and independent PID/startTick.",
+  "dataFlow": {
+    "directStorageFirst": true,
+    "fullReadback": true,
+    "nameLookup": [
+      "effect.jsonl",
+      "probe.py"
+    ],
+    "operationLookup": "03a441bf-6355-4f88-b8d1-45f4288680d2",
+    "effects": 1
+  },
+  "resources": {
+    "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/final-resources.json",
+    "sha256": "5f89eead362d18a36b299b599918d28ce996a30aab9de53571f1693a78597c62"
+  },
+  "resourceSummary": {
+    "containers": 36,
+    "lab": 4,
+    "originalBaseline": 32,
+    "exactIdsMatchIndependentReview": true,
+    "noOwnedProcesses": true,
+    "noTransport": true,
+    "recorderPidsGone": [
+      2998766,
+      2998765,
+      2998746,
+      2998754,
+      2998747
+    ],
+    "dataDeleted": false
+  },
+  "history": [
+    {
+      "path": "docs/implementation/t107-m1-matrix.json",
+      "sha256": "726beb6993b0e21700b4ff19cab32c04984f62142ca58bd927a7ea9b15ae0cd3"
+    },
+    {
+      "path": "docs/implementation/evidence/t107-independent-review1.json",
+      "sha256": "12a41656352865abb60aca88e3fcca4b7a93355db9ae68b2480821256c0b8427"
+    },
+    {
+      "path": "docs/implementation/evidence/t107-independent-review1-validation.json",
+      "sha256": "109f08ab900d1df8b742553bf57b1a22b8d83a1bd8400cd7957d0a330cf3be64"
+    },
+    {
+      "path": "docs/implementation/evidence/t107-investigation1.json",
+      "sha256": "57870ea6f612e67f276f33f9a0a3645fb1915f35e68ddb708b7327df572fca6d"
+    },
+    {
+      "path": "docs/implementation/evidence/t106-independent-acceptance-review2.json",
+      "sha256": "337762b014323b85d24aec9978451f60bdbfe24b2c0393045c56c261a12bbb9f"
+    },
+    {
+      "path": "docs/implementation/evidence/t105-independent-acceptance-pass1.json",
+      "sha256": "954b1d098aac6bebbb1df6d6959aa31153b19b279a16ed959394b51bdc7740bc"
+    }
+  ],
+  "notExecuted": [
+    "product binding persistence",
+    "browser authentication rerun",
+    "DOM keyboard dispatch",
+    "native desktop launch",
+    "daemon restart recovery",
+    "PTY/output cursor recovery",
+    "mutation replay/fault matrix",
+    "full M2/M3",
+    "deployment/template rebuild",
+    "T201",
+    "U03 infrastructure changes"
+  ],
+  "handoff": "Coordinator independent re-review only; do not start T201 or sign M1 pass."
+}

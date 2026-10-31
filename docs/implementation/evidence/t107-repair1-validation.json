@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "task": "T-107",
+  "revision": "repair1",
+  "kind": "implementation-post-write-validation-not-independent-acceptance",
+  "gate": "blocked-pending-independent-review",
+  "m1Passed": false,
+  "t201Ready": false,
+  "independentAcceptance": false,
+  "matrix": {
+    "path": "docs/implementation/t107-repair1-matrix.json",
+    "sha256": "61227e3656ead273b9d6539ebbb70c98062a7702a217f81c0ea4a217b41eb705"
+  },
+  "selftest": {
+    "path": "docs/implementation/evidence/t107-repair1-selftest.json",
+    "sha256": "243f1980a1d8055755c54eb2c6a8d60e9c0cd2be6e7377cea0e3b0201b38942e"
+  },
+  "commands": {
+    "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/post-run-validation-commands.json",
+    "sha256": "f2e168aa11b959a2d497404a8173482e6bab2903bacb6a25eecbc82c0a6003f7"
+  },
+  "completeFinalSourceRun": {
+    "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/result.json",
+    "sha256": "78bfd1d0b6998d2ef0c690284d2edb8f43d2f44f8531aa633d2a10708e16551f"
+  },
+  "finalResources": {
+    "path": "artifacts/m1/t107/repair1-9b640045076f74b30289faf9/final-resources.json",
+    "sha256": "5f89eead362d18a36b299b599918d28ce996a30aab9de53571f1693a78597c62"
+  },
+  "storedMatrixBytes": 13355,
+  "storedSelftestBytes": 11553,
+  "fullStoredBytesReadAndJsonRoundTrip": true,
+  "taskLookup": "T-107",
+  "gateLookup": {
+    "M1-01": {
+      "lastIndependent": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass"
+    },
+    "M1-02": {
+      "lastIndependent": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass"
+    },
+    "M1-03": {
+      "lastIndependent": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass"
+    },
+    "M1-04": {
+      "lastIndependent": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass"
+    },
+    "M1-05": {
+      "lastIndependent": "fail",
+      "currentCandidate": "selftest-pass-pending-independent-review"
+    },
+    "M1-06": {
+      "lastIndependent": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass"
+    },
+    "M1-07": {
+      "lastIndependent": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass"
+    },
+    "M1-08": {
+      "lastIndependent": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass"
+    },
+    "M1-09": {
+      "lastIndependent": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass"
+    },
+    "M1-10": {
+      "lastIndependent": "fail",
+      "currentCandidate": "selftest-pass-pending-independent-review"
+    },
+    "M1-11": {
+      "lastIndependent": "pass",
+      "currentCandidate": "reuse-unchanged-independent-pass"
+    }
+  },
+  "findingLookupIds": [
+    "T107-IA-01",
+    "T107-IA-02",
+    "T107-IA-03",
+    "T107-OBS-01"
+  ],
+  "sourceSha256": {
+    "scripts/m1/t107_repair.test.mjs": "d9ab4a9baa34a9cc679a760421161509556c6f209865e07c69b06d0b2ab2e95c",
+    "scripts/m1/t107_repair_entrypoints.mjs": "5a2b28ef419a05e5d35d07f1e6d4be0dcaf3117e7491794ad071e63fc2f8f537",
+    "scripts/m1/t107_repair_guard.mjs": "78130e6cf17c5cf2a64a2632812a0bcaa108c273c103ca88a2bc11aa383bfafa",
+    "scripts/m1/t107_repair_policy.mjs": "35de788bece19e0855bc5837a1781ed415213f843989b1fb659e84bbfca9eb42",
+    "scripts/m1/t107_repair_recovery.mjs": "40d9d7d8545e4f02eeb0dc0c20b9de76e23abe070021d11be3320fe33a520756",
+    "scripts/m1/t107_repair_run.py": "67793eb3e1787c22be2f06dddb8e04f1cfad028941e66722c1cde15f5303114e",
+    "scripts/m1/t107_repair_runtime.mjs": "b47af018b40ddc853cf2f79d92e9fbabee854b44e53584a50b9cf457d4311e2e"
+  },
+  "currentFocusedTests": 23,
+  "historicalOriginalFocusedTests": 7,
+  "documentationTests": 37,
+  "documentsChecked": 19,
+  "localLinksChecked": 165,
+  "sourceAndInventory": {
+    "historicalSources": 36,
+    "historicalT107Sources": 5,
+    "candidateMatchingFiles": 298,
+    "installedInventoryFiles": 26,
+    "verifiedReferences": 16
+  },
+  "oldChecksumRowsBytePreserved": 20,
+  "implementationChecksumRowsAtRecordedCheck": 22,
+  "researchChecksumRows": 8,
+  "thisValidationWillBeAppendedAsNextChecksumRow": true,
+  "allRecordedCommandsPassed": true,
+  "secretValueScan": {
+    "secretValuesChecked": 3,
+    "secretScanFiles": 56,
+    "secretHits": 0
+  },
+  "syntax": {
+    "sixJavaScriptFiles": true,
+    "pythonAst": true,
+    "configurationChanged": false,
+    "noInfrastructureRebuild": true
+  },
+  "statusDocuments": [
+    {
+      "path": "docs/implementation/m1-closeout-tasks.md",
+      "sha256": "dacefa5192a27f79f9e918bcd72cb88573762d06ddb3008fb6e14ec72dbfbca7"
+    },
+    {
+      "path": "docs/06-decisions-and-risks.md",
+      "sha256": "dceb8708008e0e509ade1d87e8961f17cfb31e0c151544d015fda031fd8595a7"
+    }
+  ],
+  "historyPreserved": true,
+  "frozenRuntimeSourcesUnchanged": true,
+  "historicalT107GeneratorAndFocusedTestsUnchanged": true,
+  "newSourceMatchesSingleFinalCompleteRun": true,
+  "noAdditionalRemoteWorkAfterFinalResourceObservation": true,
+  "limits": [
+    "implementation self-test, not coordinator independent review",
+    "no authentication/infrastructure changes; accepted evidence reused by hashes",
+    "no product binding persistence, DOM keyboard, native desktop, PTY cursor recovery, daemon restart, mutation replay or U03 infrastructure work"
+  ]
+}
