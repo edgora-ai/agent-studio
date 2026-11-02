@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "task": "T-201",
+  "kind": "product-rpc-acceptance-slice",
+  "dateUTC": "2026-11-02",
+  "status": "product RPC surface exercised for T-201 chain; T-201 not complete",
+  "method": "Authenticated /agent-studio-rpc requests against the already-running local rc.5 preview (loopback only). No restart, remote channel, Coder action, model/CLI or network outside loopback.",
+  "artifact": {
+    "path": "artifacts/t201/t201-rpc-slice-2026-11-02T14-18-54-517Z.json",
+    "sha256": "0b8659be5c9a914fff060529d45a579290a813a522556999d5653724641b22cd",
+    "run": "72ba8094-0a4e-4604-9c69-babc999a22c6",
+    "result": "pass",
+    "checks": 3
+  },
+  "checks": [
+    {
+      "name": "product RPC project.create/environment.register/binding.create/session.create reach a ready versioned binding and session",
+      "project_id": "project-cf713e5d-9ce5-403e-a0b7-aa0036d017fd",
+      "environment_id": "environment-582a4fe5-e961-4599-a20e-5d0293cb17b8",
+      "binding_id": "binding-b856330c-2b35-4136-adf6-2f3543837c8d",
+      "version": 1,
+      "session_id": "session-2fcbba1c-e1fe-4366-a467-0b98a9735643",
+      "anchor_path": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio/anchors/binding-b856330c-2b35-4136-adf6-2f3543837c8d-v1"
+    },
+    {
+      "name": "write through RPC -> direct read-only SQL -> product RPC by ID/list return the same immutable rows",
+      "project_id": "project-cf713e5d-9ce5-403e-a0b7-aa0036d017fd",
+      "binding_id": "binding-b856330c-2b35-4136-adf6-2f3543837c8d",
+      "session_id": "session-2fcbba1c-e1fe-4366-a467-0b98a9735643"
+    },
+    {
+      "name": "product RPC dispatch guard rejects version mismatch and a stale/unknown binding version, while metadata.read stays non-executing",
+      "eligible": true,
+      "executed": false
+    }
+  ],
+  "createdTestRecords": "New project/environment/binding/session rows were created through the product RPC in the private preview DB as acceptance fixtures (immutable audit; no delete API). They are test data, not historical rows, and were not used to rewrite any prior evidence.",
+  "closedGap": "The earlier offline matrix cited that the product RPC switch in index.mjs was not directly exercised; this slice closes that gap by creating and reading the T-201 relation through the authenticated RPC surface.",
+  "remainingGaps": [
+    "generation-change end-to-end through the product RPC (the offline EnvironmentManager cascade is cited from environment.test, not driven through RPC)",
+    "formal T-201 acceptance packaging and sign-off",
+    "T-202/T-203/T-204 adapters and T-205/T-207 UI"
+  ],
+  "limitations": [
+    "Local preview only: no remote/Coder/SSH/model/CLI.",
+    "Uses the existing persistent preview DB and creates test fixtures; no historical/unknown rows were modified.",
+    "Does not claim T-201 completion, M2, or formal release."
+  ]
+}

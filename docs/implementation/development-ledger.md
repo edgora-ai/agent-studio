@@ -468,7 +468,9 @@ T-201 已启动，但**尚未交付／验收**。差距分析：现有 D-01–D0
 
 **离线验收矩阵已组装（2026-11-02）**：新的[T-201 验收矩阵](evidence/t201-acceptance-matrix-2026-11-02.json)把 T-201 验收依据映射到实际通过的命令——store.test 32/32、environment.test 13/13（含“同/新世代级联且不擦除身份”）、t201 离线切片 6/6；覆盖项目／环境／绑定／会话持久化、统一派发守卫与逐次 live 通道核验、anchor 与公开 cwd、换代新建不可变绑定版本／会话、写入→直接存储→API 按 ID 回读、旧缓存不能授权新通道。
 
-仍不是 T-201 完成：**产品 RPC 面（index.mjs 的 RPC switch）未被该离线矩阵直接驱动**（由 D-01–D08 预览证据间接覆盖）；世代级联引用自 environment.test 的离线 manager fixture，未在 t201 切片中重复；T-202／T-203／T-204 适配器与 T-205／T-207 UI 未开始。下一步：用产品 RPC 包装做一条真正经过 `index.mjs` 的 T-201 验收链，或按依赖开始 T-202／T-203／T-204。
+**产品 RPC 面切片已通过（2026-11-02）**：[t201.rpc.acceptance.mjs](../../scripts/dev/t201.rpc.acceptance.mjs) 对已运行的本地 rc.5 预览发认证 `/agent-studio-rpc` 请求（仅回环、不重启、不连远端）：project.create／environment.register／binding.create／session.create 到达 ready 版本化绑定与会话；写入→直接只读 SQL→RPC 按 ID／list 返回相同不可变行；RPC dispatch guard 拒绝版本不匹配，metadata.read 仅非执行判定。证据见[T-201 RPC 验收](evidence/t201-rpc-acceptance-2026-11-02.json)。该切片在私有预览 DB 新建了项目／环境／绑定／会话测试夹具（不可变审计，无删除 API），未改写任何历史／unknown 行。
+
+仍不是 T-201 完成：**世代变化端到端尚未通过产品 RPC 驱动**（现引 environment.test 离线 manager fixture 覆盖）；正式 T-201 验收打包／签署、T-202／T-203／T-204 适配器与 T-205／T-207 UI 未开始。
 
 ### 仍未验证与下一步授权边界
 
