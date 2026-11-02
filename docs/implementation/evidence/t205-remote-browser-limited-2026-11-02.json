@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "task": "T-205",
+  "kind": "remote-browser-limited-check",
+  "dateUTC": "2026-11-02",
+  "result": "limited: DOM loaded and Files/search controls present with no JS/console/HTTP errors, but 0 search hits because the browser restored the duplicate D02 workspace bound to the other v5 binding whose root lacks the fixture.",
+  "observed": {
+    "workspaceLabel": "'D02 Remote Project · v5'",
+    "searchInputs": 1,
+    "hits": 0,
+    "jsErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [],
+    "external": []
+  },
+  "artifact": {
+    "json": {
+      "path": "artifacts/t205/t205-remote-browser.json",
+      "sha256": "56420ca9629aa5dbe25a459ef01c7f0d162d97318863cc5e3ed3a38f03e92d72"
+    },
+    "screenshot": {
+      "path": "artifacts/t205/t205-remote-browser.png",
+      "sha256": "dc447c8a44001a0ab5672bc0f9836266c5764359e7b5a9be0619b0c74c4fb2d2"
+    }
+  },
+  "finding": {
+    "id": "T205-F1",
+    "summary": "Two m1-a bindings for the same D02 project share the display name \"D02 Remote Project · v5\"; the shell restored/selected the binding whose remote root did not contain the T-205 fixture, so the browser search returned zero hits even though server-side search/reference passed on the connected binding.",
+    "implication": "Browser-level remote sidebar acceptance needs a deterministic workspace/binding selection (distinct display names or removal of the duplicate binding, which would require a delete operation that is outside the standing constraints)."
+  },
+  "notClaimed": [
+    "T-205 remote browser pass",
+    "remote Git/watch UI",
+    "native desktop",
+    "complete M2"
+  ],
+  "state": {
+    "policy": "read_only:true actions:[]",
+    "unknownOperations": 22
+  }
+}
