@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "tasks": [
+    "T-203",
+    "T-204"
+  ],
+  "kind": "local-declared-scope-acceptance",
+  "dateUTC": "2026-11-02",
+  "decision": "accepted-within-local-declared-scope",
+  "decidedBy": "coordinator delegated continuous milestone work; local-only evidence reviewed against the T-203/T-204 stated acceptance basis",
+  "commands": [
+    {
+      "args": [
+        "node",
+        "scripts/dev/local.integration.mjs"
+      ],
+      "exitCode": 0,
+      "checks": 10,
+      "failures": 0,
+      "artifact": {
+        "path": "artifacts/d04/integration-a736b713-c19f-47b3-8951-6312a781caa8.json",
+        "sha256": "6ddd15ee2a2a039156b690355e1808561c7ae2d60bc8afe7c3e4d33345eeed67",
+        "result": "pass-limited-development"
+      }
+    },
+    {
+      "args": [
+        "node",
+        "--test",
+        "scripts/dev/child-boundary.test.mjs",
+        "scripts/dev/recovery.test.mjs"
+      ],
+      "exitCode": 0,
+      "tests": 74,
+      "pass": 74,
+      "fail": 0
+    }
+  ],
+  "localRunChecks": [
+    "schema v8 preserves every prior column/row; local records SQL -> full API -> list",
+    "public 200; missing and wrong auth 401 on all local product routes",
+    "mkdir/write real disk bytes and SHA -> full read -> list",
+    "real SDK command: cwd, exact env, local PID/startTick SQL identity, stop and release",
+    "independent execute env policy; path, symlink, binding and version failures closed",
+    "same provider: search line, Git status/two diffs, named local snapshot and actual bytes",
+    "strong CAS and original sidebar timestamp bridge reject external-change overwrite",
+    "original watch socket: explicit local bounded polling, external write and cleanup",
+    "real local PTY input/output, resize, physical file, PID/startTick, cancel/release and no replay",
+    "original D01 local metadata-only policy is unchanged"
+  ],
+  "criteriaMapping": {
+    "T-203 file/search/watch/version-CAS (SC-03, SC-05, SC-15, CK-02)": [
+      "mkdir/write real disk bytes and SHA -> full read -> list",
+      "same provider: search line, Git status/two diffs, named local snapshot and actual bytes",
+      "strong CAS and original sidebar timestamp bridge reject external-change overwrite",
+      "original watch socket: explicit local bounded polling, external write and cleanup",
+      "independent execute env policy; path, symlink, binding and version failures closed"
+    ],
+    "T-204 command/PTY identity/cancel/release (SC-04, SC-07, SC-14)": [
+      "real SDK command: cwd, exact env, local PID/startTick SQL identity, stop and release",
+      "real local PTY input/output, resize, physical file, PID/startTick, cancel/release and no replay",
+      "offline 74/74 child-boundary/recovery tests for bounded stdio, TERM/KILL settlement, uncertain close and cancel/release semantics"
+    ]
+  },
+  "preservation": {
+    "unknownBefore": 22,
+    "unknownAfter": 22,
+    "historicalUnknown": 13,
+    "note": "No new unknown row was produced by this local run; historical failures and rows untouched."
+  },
+  "scopeLimits": [
+    "Local D04 binding/session only; remote T-203/T-204 behavior is not claimed.",
+    "External direct-writer/final-commit race is not claimed for arbitrary writers (only the tested managed/managed and managed/external cases).",
+    "Product UI T-205/T-207, real CLI T-206 and T-202 remote lifecycle are not included; full M2 is not claimed."
+  ],
+  "nextMilestones": [
+    "T-202 requires explicit remote Coder resource/lifecycle authorization before execution",
+    "remote T-203/T-204 and T-205/T-207 later; T-206 needs a real coding CLI"
+  ],
+  "notClaimed": [
+    "complete M2",
+    "remote file/process acceptance",
+    "T-202 Coder create/start/stop",
+    "real model/CLI",
+    "M3"
+  ]
+}

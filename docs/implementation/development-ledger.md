@@ -480,6 +480,14 @@ T-201 已启动，但**尚未交付／验收**。差距分析：现有 D-01–D0
 
 下一里程碑：T-203 本地文件/搜索/watch/版本 CAS 与 T-204 本地命令/PTY/取消/release 的验收矩阵（仅本地、不重启预览、无远端生命周期动作）；T-202 需要显式远端资源授权后才推进。
 
+### T-203／T-204 本地声明范围验收（2026-11-02）
+
+按协调者“连续推进里程碑”的授权，用现有本地预览跑[local.integration](../../scripts/dev/local.integration.mjs)：exit 0、**10/10** 通过，覆盖真实字节/hash 读写→完整回读、搜索/Git status 与双 diff/命名快照、**strong CAS 与时间戳桥拒绝外部覆盖**、真实 watch 轮询与清理、真实 SDK 命令的 cwd/env/PID/startTick/stop/release、真实本地 PTY 的输入输出/resize/物理文件/PID/startTick/cancel/release 且不重放；另有 child-boundary／recovery 离线回归 **74/74**（有界 stdio、TERM/KILL 收敛、unknown close、取消/release 语义）。综合记录见[T-203／T-204 本地验收](evidence/t203-t204-local-acceptance-2026-11-02.json)。结论：**T-203（文件/搜索/watch/版本 CAS）与 T-204（命令/PTY/取消/release）在本地声明范围验收通过**；运行前后 unknown 均 22（13 历史 + 9 远端中断），未新增、未改写。
+
+限制：仅本地 D04；远端 T-203/T-204、外部任意写入者最终提交竞争、T-202 生命周期、T-205/T-207 UI、T-206 真实 CLI 均未验，不构成完整 M2。
+
+下一里程碑：T-202 需要显式远端 Coder 资源/生命周期授权；收到授权前不推进。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
