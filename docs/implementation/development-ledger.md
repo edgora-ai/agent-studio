@@ -558,6 +558,12 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 限制：单一 binding/session，不含多绑定并发、跨绑定子任务矩阵、真实编程 CLI／模型轮次或远端后台任务。下一轮：逐条 renew/connect 其余绑定（间隔、单通道纪律），再准备远端 T-205 侧边栏前置与 T-206 真实 CLI 前置。
 
+### 逐条恢复剩余绑定（2026-11-02，部分成功）
+
+按单通道纪律逐条 renew/connect 其余 m1-a 绑定并间隔 4–5 秒检查 agent：**D05（1dfc57ad…→v4）、D06（7b85475c…→v4）成功连接**，`model-remote-demo.json`／`acp-remote-demo.json` 已更新到 v4；D07（6113…）connect 遇 `channel-disconnected`，第二个 D02（47f8…）renew 遇 `helper-install-failed`。完成两条额外通道后 agent 再次 `disconnected`（所有 v4 binding ready 但 channel 断开），进一步支持“通道数／突发容量敏感”的相关性观察。证据见[剩余绑定恢复记录](evidence/t202-remaining-binding-restore-partial-2026-11-02.json)。
+
+策略调整：日常远端验收只保留 **一条** 所需通道（D02 v4）；其他绑定保持 ready 不长期连接，需要时单独连接并在用完后断开。当前 agent disconnected，需再次受控 stop/start 才能继续远端工作。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

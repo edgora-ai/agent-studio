@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "remaining-binding-restore-partial",
+  "dateUTC": "2026-11-02",
+  "scope": "One-at-a-time product renew/connect of remaining m1-a bindings with agent checks between each; no lifecycle/create/delete.",
+  "artifact": {
+    "path": "artifacts/t202/t202-restore-remaining-2026-11-02T17-08-00-824Z.json",
+    "sha256": "bc24c59965848a57f36f347deb70c1a111b5c37d1b6e2a6a2b4bba12fe1edde9",
+    "result": "partial",
+    "agent_final": "disconnected"
+  },
+  "restored": [
+    {
+      "binding_id": "binding-1dfc57ad-ea10-4432-91f4-d017baf52c90",
+      "version": 4,
+      "session_id": "session-4b9fbc0c-90b2-4521-a38e-56752fba1c54",
+      "file": "model-remote-demo.json",
+      "agent_after": "connected"
+    },
+    {
+      "binding_id": "binding-7b85475c-6da8-47e1-8c5d-80e5fd0aa9cc",
+      "version": 4,
+      "session_id": "session-dbdf0429-feda-4046-bffb-4ab6bbd352d2",
+      "file": "acp-remote-demo.json",
+      "agent_after": "connected"
+    }
+  ],
+  "failures": [
+    {
+      "binding_id": "binding-6113005c-b396-4807-b48a-90f697c1395e",
+      "error": "Error",
+      "message": "{\"result\":\"fail\",\"code\":\"ERR_ASSERTION\",\"message\":\"channel-disconnected\\n\\n'failed' !== 'ready'\\n\"}\n"
+    },
+    {
+      "binding_id": "binding-47f844e0-172f-4e60-a97c-15bd4a712290",
+      "error": "Error",
+      "message": "{\"result\":\"fail\",\"code\":\"ERR_ASSERTION\",\"message\":\"helper-install-failed\\n\\n'failed' !== 'ready'\\n\"}\n"
+    }
+  ],
+  "summary": "D05 and D06 renewed to v4 and reconnected with demo files updated; D07 (6113) failed channel-disconnected during connect and the second D02 binding (47f8) failed helper-install-failed during renew/connect. Each step was spaced and followed by an agent check; the agent stayed connected after the two successful restorations.",
+  "unknownOperations": 22,
+  "policy": "read_only:true actions:[] byte-identical",
+  "limits": [
+    "Partial restoration: two bindings remain unrecovered; no multi-binding concurrency claim.",
+    "Remote T-205 sidebar integration and T-206 real CLI are not included."
+  ],
+  "next": [
+    "Retry D07 and the second D02 binding individually with longer spacing; if agent drops again, stop and record as burst sensitivity.",
+    "Then remote T-205 prerequisites and T-206 groundwork."
+  ]
+}
