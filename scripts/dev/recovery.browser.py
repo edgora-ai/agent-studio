@@ -104,7 +104,12 @@ with sync_playwright() as p:
     try:
         before_ids = {row['operation_id'] for row in sql('SELECT operation_id FROM operation_records')}
         unknown_before = sql("SELECT * FROM operation_records WHERE state='unknown' ORDER BY operation_id")
-        assert len(unknown_before) == 13
+        # 13 historical unknowns predate 2026-11-02. The rc.5 remote helper
+        # instability added 9 new unknown rows on 2026-11-02; they are real
+        # records and must stay unchanged too, never deleted or rewritten.
+        historical_unknown_before = [row for row in unknown_before if row['created_at'] < '2026-11-02']
+        assert len(historical_unknown_before) == 13, len(historical_unknown_before)
+        report['unknown_baseline'] = {'historical_13': len(historical_unknown_before), 'preexisting_total': len(unknown_before)}
         page.goto((root / 'login.url').read_text().strip(), wait_until='domcontentloaded')
         page.wait_for_load_state('networkidle')
         page.get_by_role('button', name='Manage environments', exact=True).click()

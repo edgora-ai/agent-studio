@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "task": "D-08",
+  "kind": "single-task-same-host-original-ui-recovery-selftest",
+  "dateUTC": "2026-11-02",
+  "role": "bounded-development-selftest-not-independent-acceptance",
+  "result": "pass-single-task-same-host",
+  "run": "2c282d16-255b-463b-a175-c939dd2a2344",
+  "scope": "One bounded synthetic original native terminal task on the existing m1-a binding/session, started through the original UI, one explicit own-transport detach, same-Host recovery within the fixed deadline, original output continuation, exactly one business start and one side-effect file, UI cancel + native close/release, independent readonly observer. No replay, replacement process, model/CLI, cross-Host, restart/crash or ACP resume.",
+  "artifactDir": "artifacts/d08/ui-rc5-run1",
+  "artifactSha256": {
+    "browser.json": "6cbfd3a920b2216ad8f16c2b320746d6f1d512e57adc6b48211027423ba86cbb",
+    "original-task-disconnected.png": "588a976d50c753a7d4e4ce2b296041c7b5137da649033e219aea80d16a6c5bd8",
+    "original-task-recovered.png": "e38360f8edb005118a0fb6566b1391383d4454b4c49bc422670b4f06673c7405",
+    "original-task-released.png": "d30dad8fe55df4510f00c656a08ead927524d35d90493ba8c3d131bca5aecc3f",
+    "original-task-running.png": "05ec7398db4165f06d0b3c7dee7163a78199d9ed57d270548291edd1d45faa28",
+    "recovery-authentication-error.png": "2d40c9591b90eaa7fe6b691cc72819556a8c5c5623be99f44db0ab39ff61bae4"
+  },
+  "identity": {
+    "operation_id": "terminal-ade0393f873a2c189913b2f986e3e38357d98ee02e34c452115fd9d5cd43e3f1",
+    "session_id": "session-e5dea400-7d8d-4f76-8296-4269325fdf30",
+    "binding_id": "binding-6113005c-b396-4807-b48a-90f697c1395e",
+    "version": 1,
+    "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+    "instance_generation": "608b0e32-1322-4b86-dd99-49b50172d8e8",
+    "target_root": "/workspace/agent-studio-binding-6113005c-b396-4807-b48a-90f697c1395e-v1",
+    "startup_channel_id": "0845c705-c016-4482-91e6-2bfd3e8947da",
+    "recovered_transport_id": "eb135275-5d65-4a9c-bb06-55ad323db249",
+    "helper_session_id": "a8a890c297d1580bde9eb2d11d3284f2",
+    "server_epoch": "80e4dc186768e409136a59196bc86c3f",
+    "remote_process_id": "a923701e-a720-4806-803d-7e0be66b9c07",
+    "remote_pid": 46117,
+    "start_ticks": "656970403",
+    "recovery_id": "1f87c8c3-fff7-4bb9-85cb-ad97b58f15a7",
+    "request_sha256": "a845a8378192408fe706d7d46bb9307c03ac4d421b649ade5a38045787d229b4"
+  },
+  "checks": [
+    {
+      "id": "one-pty-identity-side-effect",
+      "passed": true
+    },
+    {
+      "id": "same-host-recovery-output-continuation",
+      "passed": true,
+      "output_after_cursor": "6",
+      "next_seq": "43",
+      "output_sha256": "ccf332a3a95dd1582a8710a2b62cc55babaf9fb5fcfd738ceb5962eed60d5791",
+      "no_duplicate_tick": true
+    },
+    {
+      "id": "cancel-close-release-independent-verification",
+      "passed": true,
+      "status_signal": "SIGTERM",
+      "final_operation_state": "released",
+      "independent_file_sha256": "f0b32c852dc7e7d37298d6a35b319be458080b442e1022232ba474060411c23d",
+      "independent_file_bytes": 37,
+      "process_pid_exists": false,
+      "side_effect_count": 1
+    },
+    {
+      "id": "sql-api-list-and-unknown-preservation",
+      "passed": true,
+      "new_starts": 1,
+      "recovery_requests": 1,
+      "recovery_events": 6,
+      "historical_unknown_unchanged": 13,
+      "preexisting_unknown_total": 22,
+      "environment_requests": 0
+    },
+    {
+      "id": "explicit-401-no-retry",
+      "passed": true
+    }
+  ],
+  "preservation": {
+    "historicalUnknownBefore": 13,
+    "historicalUnknownUnchanged": 13,
+    "preexistingUnknownTotalBefore": 22,
+    "preexistingUnknownTotalAfter": 22,
+    "note": "Nine additional unknown rows dated 2026-11-02 came from earlier rc.5 remote helper instability; they are real records and were neither deleted nor rewritten. The one D08 task itself completed released with no new unknown."
+  },
+  "upstream": {
+    "sdk": "0.2.1-rc.5",
+    "hostRunId": "5f2f36e6-06c0-4b8d-89ce-045b669b68eb"
+  },
+  "notVerified": [
+    "cross-Host or crash persistence",
+    "server/helper restart or generation change",
+    "ACP business-protocol resume",
+    "replacement-task avoidance under operator error beyond this controlled run",
+    "real model/CLI or full M2/M3",
+    "formal M1 or release acceptance",
+    "D07 SSH255/helper EOF root cause"
+  ],
+  "handoff": "This closes only the bounded same-Host single-task D08 development self-test. D07 root cause, cross-Host recovery, restart/crash windows and formal acceptance remain open; no historical failure or unknown row was rewritten."
+}

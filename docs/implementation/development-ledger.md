@@ -423,8 +423,8 @@ operation timeout 与清理预算必须分开：默认 TERM 宽限 15 秒、最�
 - **D04 local**：通过 11 项（证据 `artifacts/d04/ui-rc5-regression-9/browser.json`）。适配：同一 m1-a 绑定可有多个 ready 会话，远端身份断言改为精确 `kind=remote`＋绑定，不写死演示会话 ID；切换工作区后只点击可见 right-pane tab；rc.5 侧边栏导轨会覆盖原生加号按钮，终端步骤直接派发真实按钮 click；失败报告保留类型与 traceback。中间失败目录 `ui-rc5-regression-2..8` 未删除。
 - **D05**：通过 7 项（证据 `artifacts/d05/ui-rc5-regression-2/browser.json`）。离线 fixture 重启后端口与合成凭据轮换，用产品 `credentials/set` 与 `model.describe/configure` 把持久路由更新到新 `baseURL`（模型配置 revision 11），harness 等待 provider 列表加载；仍是显式离线协议 fixture，不是真实 LLM。
 - **D06**：通过 7 项（证据 `artifacts/d06/ui-rc5-run2/browser.json`）。本地 ACP peer 全流程通过；远端需重启后显式 `acp-remote-demo` 重连，首次失败 `ui-rc5-run1` 保留。
-- **D02／D03 remote**：未通过，当前远端 helper 报 `helper-call-disconnect`（证据 `artifacts/d03/ui-rc5-regression-2/browser.json`），与 D07 历史 SSH255／helper EOF 同属外部不稳定边界；不以本地通过回写远端结论，未重放或伪造。
-- **D08 真实恢复**：未执行。远端通道当前不可用，无法安全获得原 helper／process 身份；不重发命令／输入／审批，不以新任务冒充恢复，13 条 unknown 不变。2026-11-02T13:19 复查：broker 连接 `exit_code 255`、`helper-stdout-ended`、channel lost；两条长连接分别约 29／32 分钟后失败，与 D07 历史 SSH255 同类，未据此重试或改写历史。
+- **D02／D03 remote**：最初未通过，远端 helper 报 `helper-call-disconnect`（证据 `artifacts/d03/ui-rc5-regression-2/browser.json`），与 D07 历史 SSH255／helper EOF 同属外部不稳定边界。远端恢复后重跑 D03 远端原 UI **8 项通过**（证据 `artifacts/d03/ui-rc5-run2/browser.json`）；先前失败记录保留，不以新成功抹去旧失败。
+- **D08 真实恢复（当时未执行）**：远端通道当时不可用，无法安全获得原 helper／process 身份；不重发命令／输入／审批，不以新任务冒充恢复，13 条历史 unknown 不变。2026-11-02T13:19 复查：broker 连接 `exit_code 255`、`helper-stdout-ended`、channel lost；两条长连接分别约 29／32 分钟后失败，与 D07 历史 SSH255 同类。随后远端恢复，D08 已按授权执行一次，结果见下节；当时未执行状态如实保留。
 - 本轮源码适配：`browser.py`（D01）、`core.browser.py`（D04／D03）、`model.browser.py`（D05）为测试 harness；`adapters/local-provider.mjs` 新增有界失败审计消息；未改 Gateway／sidebar／native 投影语义。DB 新增 D05 远端会话与模型配置 revision 11，均为测试数据；历史 evidence 未改。
 - 以上是开发预览回归，不是 M1、D07、D08 或发布验收。
 
@@ -434,8 +434,18 @@ repair2 已把 `scripts/m1/t107_repair_guard.mjs` 的动作分类改为与安装
 
 独立记录见[复验证据](evidence/t107-repair2-independent-validation.json)。非阻断观察：guard 与安装实现的 body/错误码差异均为更严格拒绝；fixture 的 socket／准入仍是 stub；按声明范围未跑真实 controller／远端／DOM。历史 review2 归档保持不完整且未改写。
 
+### D08 单任务同 Host 真实恢复（2026-11-02，通过）
+
+远端通道恢复后，按授权用[原 UI 恢复 harness](../../scripts/dev/recovery.browser.py) 在既有 m1-a binding `binding-6113005c-b396-4807-b48a-90f697c1395e@1`／session `session-e5dea400-7d8d-4f76-8296-4269325fdf30` 上执行**一次**受限的真实恢复：原 UI 建一个原生 PTY，写入一个 90 秒截止的合成程序（每 0.2 秒输出 tick 并只写一次文件），记录完整不可变身份后显式 detach 自有 transport，再在原 UI 点击一次恢复，随后取消、关闭并 release。
+
+- 结果 **pass-single-task-same-host**，exit 0，5/5 检查通过：只启动一个 PTY（operation `terminal-ade0393f…`，remote PID `46117`、process `a923701e…`、startTick `656970403`、helper session `a8a890c2…`、server epoch `80e4dc18…`）；恢复后 transport 由 `0845c705…` 变为 `eb135275…`，而 helper session／process／PID／startTick 与 operation 完全一致；输出从 cursor `6` 续到 `43`，继续出现 `D08_ORIGINAL_TICK … COUNT 1` 且无重复/无缺口；取消后 `running:false`、`SIGTERM`，native close/release 最终为 `released`；独立只读 observer 确认副作用文件 37 字节 SHA256 `f0b32c85…` 且原 PID `46117` 已不存在；SQL→API→list 的 1 次恢复请求、6 个事件与快照一致；原 UI 401 面板不重试。
+
+- 保留：13 条历史 unknown 全部不变；另有 9 条 2026-11-02 远端 helper 不稳期间产生的 unknown 记录也保持原样，未删除或改写；D08 本任务自身无新 unknown。环境 request 仍为 0，仅一次业务 `pty.open`。
+
+- 边界：这是**单任务、同 Host、合成程序**的开发自测通过；不是跨 Host／崩溃／restart 窗口恢复，不含 ACP 业务 resume、真实模型／CLI、完整 M2／M3 或 D07 SSH255 根因，也不构成正式 M1／发布验收。历史首轮 D08 UI 失败仍是有效失败记录。证据与截图摘要见[D08 单任务恢复证据](evidence/d08-single-task-recovery-2026-11-02.json)。
+
 ### 仍未验证与下一步授权边界
 
-本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；源码中的单行输入／原生 Terminal 接线即使离线通过，也不构成真实同 Host 恢复验收。真实实验仍需另行确认，然后只运行一个有截止时间的原任务，核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
+本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
 
 正式 M1 仍未有最终放行决定：[review2](evidence/t107-independent-review2.json) 记录 `repair-required`、`m1Passed=false`，归档仍缺最终 validation，不能称为完整独立验收归档；M1-05 只在声明技术范围通过。repair2 对 T107-R2-IA-04 的 URL 归一化修复已由[独立复验](evidence/t107-repair2-independent-validation.json)在本机声明技术范围关闭：28 项单测、实际入口 51 负例／10 本地正例、8 个 recorder 全回收、0 旁路、安装源码哈希匹配。正式 M1 放行与 T-201、真实外部模型／CLI、生命周期、多机／手机、完整 M2／M3 与发布门槛均未因本轮修复而通过。

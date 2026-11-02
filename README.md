@@ -2,13 +2,13 @@
 
 以会话为中心、统一管理本地与远程隔离开发环境的工作台。
 
-**当前状态：已按授权完成 SDK／Gateway `0.2.1-rc.5` 来源基线迁移与可重复升级入口，并把开发预览重启到 rc.5；D01／D04／D05／D06 原 UI 回归通过，D02／D03 远端回归因 helper 断连未通过，D08 真实恢复未执行。仍为 WIP，非验收／发布。D07 最终两次综合实跑失败、根因未全定位；D08 历史首轮 UI 失败，真实 transport 断连／原任务恢复尚未执行。13 条历史 unknown 不改写；M1-10 归一化旁路已由独立复验在声明技术范围关闭，但 M1 正式放行仍未执行。**
+**当前状态：已按授权完成 SDK／Gateway `0.2.1-rc.5` 来源基线迁移与可重复升级入口，并把开发预览重启到 rc.5；D01／D04／D05／D06 原 UI 通过，D02／D03 远端原 UI 在通道恢复后通过；D08 单任务同 Host 真实恢复执行一次并通过（合成程序、单次 detach/recover、无重放）。仍为 WIP，非验收／发布。D07 最终两次综合实跑失败、根因未全定位；跨 Host／崩溃／restart 窗口恢复未验证。13 条历史 unknown（及其后 9 条远端不稳新增记录）不改写；M1-10 归一化旁路已由独立复验在声明技术范围关闭，但 M1 正式放行仍未执行。**
 
 2026-10-30 开发例外：按可运行优先完成限定实现验证，**不是 T-201、M1、完整 M2 或发布的正式验收通过，M1 仍未通过**。当前能力与延期项见[开发账本](docs/implementation/development-ledger.md)，下文既有 M1 进度和测试数字保留为历史记录。
 
 上一轮处理三项本地收口：broker／transport 的超时、输出与最终清理边界；当前验证脚本的 schema 版本漂移；D08 合成命令的单行安全传输及实际原生 Terminal tab 接线。实现与离线结果见[开发账本第 15 节](docs/implementation/development-ledger.md#15-继续推进后的本地收口未部署未重跑真实恢复)。该轮未运行会重启预览或派发远端任务的 integration／browser 脚本，未提交／推送改动。
 
-**rc.5 运行态与 UI 回归**：本轮先把 WIP 快照本地提交（未推送），在随机临时根验证 launcher `prepare` 的 rc.5 全链路投影（幂等、临时根已删），随后重启现有开发预览到 rc.5。运行预览必须在不限制 `/dev/ptmx` 的环境中启动；在受限文件沙箱内启动会使原生终端 `forkpty` 失败，这是启动环境限制，不是产品缺陷。原 UI 回归：**D01 通过；D04 local 11 项通过；D05 7 项通过（显式离线协议 fixture，非真实 LLM）；D06 7 项通过**；D02／D03 远端因当前 `helper-call-disconnect` 未通过，D08 真实恢复未执行，均保留失败／未执行状态，详见[账本同节](docs/implementation/development-ledger.md#rc5-运行时原-ui-回归2026-11-02未验收)。
+**rc.5 运行态与 UI 回归**：本轮先把 WIP 快照本地提交（未推送），在随机临时根验证 launcher `prepare` 的 rc.5 全链路投影（幂等、临时根已删），随后重启现有开发预览到 rc.5。运行预览必须在不限制 `/dev/ptmx` 的环境中启动；在受限文件沙箱内启动会使原生终端 `forkpty` 失败，这是启动环境限制，不是产品缺陷。原 UI 回归：**D01 通过；D04 local 11 项通过；D05 7 项通过（显式离线协议 fixture，非真实 LLM）；D06 7 项通过**；最初 D02／D03 远端因 `helper-call-disconnect` 未通过、D08 未执行，失败记录保留；随后远端恢复，D02／D03 远端原 UI 与 D08 单任务同 Host 恢复均执行并通过，详见[账本同节](docs/implementation/development-ledger.md#rc5-运行时原-ui-回归2026-11-02未验收)。
 
 **SDK 持续升级基线**：按后续授权，已将 SDK／Gateway 的[来源锁](profiles/agent-studio-preview/sources.lock.json)迁移到当前安装的 `0.2.1-rc.5`，并复核更新 3 份 package manifest 摘要；**98/98 个受控资产、6 个包版本及原生 Terminal stock patch 均匹配，上一轮 rc.4／rc.5 的来源一致性阻断已解除**。锁记录的是可持续更新的兼容快照，不要求 DSH 永久停留在历史版本；其他包独立记录版本，不强行与根 SDK 同号。来源一致不等于完整兼容、部署或恢复验收；本轮没有安装依赖、执行 prepare／start 或重启预览。
 
