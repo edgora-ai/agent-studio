@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "authorization-preflight",
+  "dateUTC": "2026-11-02",
+  "currentPolicy": {
+    "version": 1,
+    "transport": "coder-lab-v1",
+    "read_only": true,
+    "actions": [],
+    "workspace_ids": [
+      "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+    ],
+    "template_version": "lab-v3",
+    "template_version_id": "7621affa-b880-476f-91eb-74855d529702",
+    "observation_ttl_ms": 30000,
+    "action_timeout_ms": 180000
+  },
+  "offlineChecks": {
+    "currentReadOnly": true,
+    "currentActionsEmpty": true,
+    "noPendingEnvironmentRequests": true,
+    "minimalPolicyValid": true
+  },
+  "proposals": {
+    "s_start_stop_existing": {
+      "description": "authorize start/stop for the existing m1-a workspace only; no create/rebuild/delete/credential action",
+      "policyPatch": {
+        "read_only": false,
+        "actions": [
+          "start",
+          "stop"
+        ]
+      },
+      "valid": true,
+      "error": null
+    },
+    "c_one_controlled_create": {
+      "description": "separately authorize one create from the frozen lab-v3 template with fixed name and resource bounds, then a stop; no delete/rebuild",
+      "policyPatch": {
+        "read_only": false,
+        "actions": [
+          "create",
+          "start",
+          "stop"
+        ]
+      },
+      "requires": "additional explicit create authorization and target name/resource confirmation"
+    }
+  },
+  "execution": {
+    "blocked": true,
+    "reason": "Coder lifecycle actions require explicit human authorization; current policy remains read-only and was not modified"
+  },
+  "authorizationNeeded": [
+    "Explicit approval to set environment-policy read_only=false and actions at least [\"start\",\"stop\"] for the existing m1-a workspace.",
+    "For create: explicit target create name, template lab-v3 confirmation, resource bounds and that stop leaves the workspace/data retained; no delete/rebuild/credential action.",
+    "Approval to run the bounded T-202 request/poll acceptance (prepare -> confirm phrase -> submit -> poll) and record evidence."
+  ],
+  "boundaries": [
+    "No action is taken by this preflight: policy file not written, no Coder/SSH/network call, no workspace lifecycle action.",
+    "Current policy remains read_only:true/actions:[]; no pending environment requests.",
+    "T-202 acceptance will not claim delete/rebuild, third workspace, production migration or M3."
+  ],
+  "preflightOutput": {
+    "sha256": "48f0bc63d9d00f69745ecc41e2e1cf1e2910b51e41c59a681279857e2429b6d6",
+    "report": {
+      "kind": "t202-authorization-preflight",
+      "current": {
+        "version": 1,
+        "transport": "coder-lab-v1",
+        "read_only": true,
+        "actions": [],
+        "workspace_ids": [
+          "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+        ],
+        "template_version": "lab-v3",
+        "template_version_id": "7621affa-b880-476f-91eb-74855d529702",
+        "observation_ttl_ms": 30000,
+        "action_timeout_ms": 180000
+      },
+      "environment_requests": 0,
+      "proposals": {
+        "s_start_stop_existing": {
+          "description": "authorize start/stop for the existing m1-a workspace only; no create/rebuild/delete/credential action",
+          "policyPatch": {
+            "read_only": false,
+            "actions": [
+              "start",
+              "stop"
+            ]
+          },
+          "valid": true,
+          "error": null
+        },
+        "c_one_controlled_create": {
+          "description": "separately authorize one create from the frozen lab-v3 template with fixed name and resource bounds, then a stop; no delete/rebuild",
+          "policyPatch": {
+            "read_only": false,
+            "actions": [
+              "create",
+              "start",
+              "stop"
+            ]
+          },
+          "requires": "additional explicit create authorization and target name/resource confirmation"
+        }
+      },
+      "offlineChecks": {
+        "currentReadOnly": true,
+        "currentActionsEmpty": true,
+        "noPendingEnvironmentRequests": true,
+        "minimalPolicyValid": true
+      },
+      "execution": {
+        "blocked": true,
+        "reason": "Coder lifecycle actions require explicit human authorization; current policy remains read-only and was not modified"
+      },
+      "nonActions": [
+        "no policy file write",
+        "no Coder/SSH connection",
+        "no workspace create/start/stop",
+        "no credential read",
+        "no service restart"
+      ]
+    }
+  }
+}

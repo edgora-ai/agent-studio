@@ -496,6 +496,12 @@ T-201 已启动，但**尚未交付／验收**。差距分析：现有 D-01–D0
 
 下一里程碑：T-202 需显式远端 Coder 资源/生命周期授权；远端 T-203/T-204/T-205、T-206 与 T-207 依赖相应授权与外部输入。
 
+### T-202 授权预检（2026-11-02，待人工授权）
+
+T-202 需要远端 Coder 生命周期动作，而当前私有环境策略仍是 **`read_only:true, actions:[]`**，`environment_requests` 为 0。新增[只读预检](../../scripts/dev/t202.preflight.mjs)：不写策略、不连 Coder/SSH/网络，只校验当前策略、无待处理 request，并离线验证最小授权补丁（`read_only:false, actions:["start","stop"]`，仅现有 m1-a）schema 合法；可选 create 方案单独列出。记录见[T-202 授权预检](evidence/t202-authorization-preflight-2026-11-02.json)。
+
+执行 T-202 需要明确授权：① 将策略改为 `read_only:false` 且至少允许 `["start","stop"]`（现有 m1-a，不含 create/rebuild/delete/凭据）；② 若需 `create`，另给固定 create name、lab-v3 模板确认、资源上限、stop 后保留数据；③ 允许运行有界 prepare→confirm→submit→poll 验收并记录证据。未授权前 T-202 保持未执行。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
