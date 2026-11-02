@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "task": "T-205",
+  "kind": "remote-sidebar-prerequisites",
+  "dateUTC": "2026-11-02",
+  "decision": "remote sidebar server-route prerequisites accepted on the single D02 v5 channel",
+  "scope": "Original sidebar HTTP routes against the bound remote v5 root: content search, bound reference identity, save-bridge stale-mtime conflict keeping remote bytes, and local-opener route rejection. Server routes only; no browser DOM/native desktop.",
+  "artifact": {
+    "path": "artifacts/t205/t205-remote-prereq-2026-11-02T17-12-28-587Z.json",
+    "sha256": "2279dae744f6f747262942f199612e9f0ba4f5424fa459bf150a225c741def96",
+    "result": "pass",
+    "checks": 3
+  },
+  "checks": [
+    {
+      "name": "remote sidebar search/reference act on the bound v5 root with remote identity",
+      "dir": "t205-remote-63d233b5-6a8b-47ba-8952-061825385d00",
+      "identity": {
+        "session_id": "session-441a2ef0-5d52-4537-b99e-71b59d7a4188",
+        "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+        "version": 5,
+        "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+        "generation": "82c6a008-5d11-cab1-8745-5708737fc132",
+        "target_root": "/workspace/agent-studio-binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da-v5",
+        "kind": "remote",
+        "provider": "coder-helper"
+      },
+      "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da"
+    },
+    {
+      "name": "original sidebar save bridge rejects a stale mtime with 409 and keeps remote bytes",
+      "status": 409,
+      "sha256": "97ec7ba9f8deb753d8ee73c7e979b9b1808b6bfe7af7a2f253bccaa143521584"
+    },
+    {
+      "name": "remote session local-opener route is rejected instead of dispatching on the central host",
+      "code": "agent-studio/provider-unavailable"
+    }
+  ],
+  "agentAfterRun": "connected",
+  "workspaceLifecycle": "running",
+  "unknownOperations": 22,
+  "limits": [
+    "No browser/DOM/native desktop, remote Git/watch UI or full sidebar rendering in this slice.",
+    "Single binding/channel only; no multi-binding concurrency.",
+    "M1-10 opener evidence remains the isolated local fixture; this slice confirms the remote session route is rejected."
+  ],
+  "next": [
+    "Browser-level remote sidebar check when a DOM run is warranted; renew/connect other bindings only individually.",
+    "T-206 real CLI groundwork and T-207 integration remain."
+  ]
+}
