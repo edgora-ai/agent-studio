@@ -450,6 +450,14 @@ repair2 已把 `scripts/m1/t107_repair_guard.mjs` 的动作分类改为与安装
 
 影响：当天新增 **9 条** unknown（12:52:41 / 12:54:01 / 13:19:05 各 3 条 `helper-stdout-ended`／`helper-call-timeout`），与 13 条历史 unknown 一并保留，未删除或改写。结论：**2026-11-02 的中断是远端 Coder agent 连接丢失，本地 broker exit 255、helper EOF 与 unknown 是下游症状，不是本地 broker/helper/投影缺陷的证据**。只读观测无法给出 agent 断开的初始原因（需要 Coder agent／控制面日志）；观测历史从 2026-10-31T02:56 才开始，**历史 D07 两次综合失败仍不能据此回溯定性**。证据见[远端中断分析](evidence/d07-remote-agent-outage-2026-11-02.json)，无基础设施或远端负载动作。
 
+### M1 放行准备（2026-11-02，待协调者决定）
+
+证据层面：review2 的 11 个门禁中 10 个为 `pass`，唯一 `fail` 的 **M1-10** 已由 repair2 修复并经[独立复验](evidence/t107-repair2-independent-validation.json)关闭 `T107-R2-IA-04`（28 项单测、实际入口 51 负例／10 本地正例、27 行独立探针 0 旁路）。review2 的 finding disposition：IA-01、IA-03、OBS-01 已关闭；**IA-02 记录的唯一未闭合阻断就是 R2-IA-04**，后者独立关闭后，若协调者接受这一映射，IA-02 在声明技术范围内可视为关闭（仍保留“非完整产品 UI 集成”范围限制）。因此**本机声明技术范围内 11/11 门禁均有通过记录**。
+
+仍不能自动放行的原因：① review2 归档本身不完整（两次 HTTP 400 中断、缺最终 validation，不能称为完整 review3）；② M1-05 的通过只覆盖 healthy same-instance acknowledged non-PTY 任务，**重启／世代故障矩阵与 PTY 输出游标恢复未验**（本轮 D08 只完成同 Host 单任务恢复）；③ U-03 的隔离／PID／硬磁盘配额与镜像 rg 仍是已知缺口；④ 真实外部模型／CLI、跨 Host 恢复、D07 历史两次综合失败根因仍未验证；⑤ review2 明确要求协调者决定后才可启动 T-201。
+
+可选决策：**A** 在声明技术范围放行 M1 并启动 T-201（保留上述范围限制）；**B** 保持未放行，先补重启／世代故障矩阵与 PTY 输出游标恢复；**C** 等 Coder agent／控制面日志继续追 D07 初始原因；**D** 先做跨 Host／崩溃恢复设计。建议 A 或 B 由协调者明确选择，不默认启动 T-201。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
