@@ -490,7 +490,7 @@ T-201 已启动，但**尚未交付／验收**。差距分析：现有 D-01–D0
 
 ### T-205 本地声明范围验收（2026-11-02）
 
-复用既有本地证据打包 T-205（现侧边栏文件/搜索/保存/引用/Git/watch 与本机打开器/scheme/快捷键拦截）的本地声明范围验收：[D04 本地原 UI 回归](../../artifacts/d04/ui-rc5-regression-9/browser.json) 11 项（本地部分：搜索→原编辑器、保存物理字节/hash→完整 API、引用快照、Git status 与双 diff 保持绑定、终端外部修改 polling/CAS 冲突）、[local.integration](../../scripts/dev/local.integration.mjs) 10/10（文件/搜索/Git/快照/watch/CAS/PTY）、[M1-10 独立复验](evidence/t107-repair2-independent-validation.json)（本机打开器/Host API/scheme/快捷键：本地正例与 remote/absent/forged 拒绝、非法拼写零副作用）。D04 UI 无 JS 错误、无未预期 RPC/HTTP、无外部请求。综合记录见[T-205 本地验收](evidence/t205-local-acceptance-2026-11-02.json)。结论：**T-205 本地声明范围验收通过**；本里程碑仅复用已记录运行，未新增远端生命周期、未产生新 unknown。
+复用既有本地证据打包 T-205（现侧边栏文件/搜索/保存/引用/Git/watch 与本机打开器/scheme/快捷键拦截）的本地声明范围验收：D04 本地原 UI 回归 `artifacts/d04/ui-rc5-regression-9/browser.json` 11 项（本地部分：搜索→原编辑器、保存物理字节/hash→完整 API、引用快照、Git status 与双 diff 保持绑定、终端外部修改 polling/CAS 冲突）、[local.integration](../../scripts/dev/local.integration.mjs) 10/10（文件/搜索/Git/快照/watch/CAS/PTY）、[M1-10 独立复验](evidence/t107-repair2-independent-validation.json)（本机打开器/Host API/scheme/快捷键：本地正例与 remote/absent/forged 拒绝、非法拼写零副作用）。D04 UI 无 JS 错误、无未预期 RPC/HTTP、无外部请求。综合记录见[T-205 本地验收](evidence/t205-local-acceptance-2026-11-02.json)。结论：**T-205 本地声明范围验收通过**；本里程碑仅复用已记录运行，未新增远端生命周期、未产生新 unknown。
 
 限制：不含同一 D04 跑批中的跨绑定/远端检查；M1-10 打开器证据来自隔离自有 fixture，不是用户桌面或完整产品 UI；远端侧边栏/打开器、T-202、T-206、T-207 与完整 M2 未验。
 
