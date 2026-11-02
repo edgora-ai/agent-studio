@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "task": "T-107",
+  "kind": "m1-release-decision",
+  "dateUTC": "2026-11-02",
+  "decision": "released-within-declared-technical-scope",
+  "decidedBy": "coordinator/user explicit choice (release M1 in declared scope and start T-201)",
+  "basis": [
+    "review2 recorded 10 pass / M1-10 fail; its archive remains incomplete and is not rewritten.",
+    "M1-10 T107-R2-IA-04 repair was independently validated (28 focused tests, 51 actual negatives / 10 local positives, 27-row probe, zero bypass), see t107-repair2-independent-validation.json.",
+    "IA-01, IA-03 and OBS-01 were closed by review2; IA-02's only recorded open blocker was R2-IA-04, which is now independently closed, so the declared-scope mapping is complete if the coordinator accepts it.",
+    "Readiness summary is recorded in the development ledger M1 section."
+  ],
+  "scopeLimits": [
+    "review2 archive is incomplete (two upstream HTTP400 blocks, no final validation); this release is not a completed independent review3.",
+    "M1-05 remains scoped: restart/generation fault matrix and PTY output-cursor recovery are not covered; D08 covers only one same-Host single task.",
+    "U-03 isolation/PID/disk quota/frozen-image rg gaps remain deployment/security gaps, not released capabilities.",
+    "Real external model/CLI, cross-Host recovery and historical D07 two-run root cause are not verified.",
+    "Release covers M1 evidence only; M2/M3/M4/M5 and release acceptance are not implied."
+  ],
+  "t201": {
+    "started": true,
+    "status": "started with gap analysis; no T-201 deliverable or acceptance yet",
+    "existingImplementation": [
+      "schema v8 project/environment/instance/binding/session/anchor persistence with immutable snapshots and CAS",
+      "unified dispatch guard via bindings.check/resolve and provider.authorized",
+      "current channel identity verification per dispatch",
+      "internal anchor dev/ino/realpath registration and public cwd containment",
+      "generation change creates a new immutable binding version and session"
+    ],
+    "acceptanceGaps": [
+      "consolidated T-201 acceptance evidence for write -> direct store -> API readback -> ID lookup",
+      "explicit named regression that stale cached equality cannot authorize a new channel",
+      "formal T-201 acceptance packaging distinct from D-01 preview evidence; product UI work stays T-205/T-207"
+    ],
+    "nextSlice": "offline T-201 acceptance harness on a fresh temp root; no remote or UI changes"
+  },
+  "preserved": [
+    "review2 archive unchanged",
+    "all historical failures and unknown rows unchanged",
+    "D07 incident analysis unchanged"
+  ],
+  "notVerified": [
+    "T-201 completion/acceptance",
+    "M2/M3/M4/M5",
+    "formal release acceptance"
+  ]
+}
