@@ -538,6 +538,14 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 把 open 的笼统 `environment-selection-changed` 拆成可行动原因：当前/选择观测不 ready 时返回 `environment-not-ready`（带 lifecycle/job/agent 状态提示），只有稳定身份 generation+record 真正变化才返回 `environment-selection-changed`。离线回归加入（environment.test **19/19**），已部署到预览；当前 agent disconnected 时 connect 现在会得到 `agent-studio/environment-not-ready`，便于区分远端未就绪与选择竞态。
 
+### m1-a 单通道恢复与通道突发观察（2026-11-02）
+
+连续多轮 agent disconnected 后，按最小 start/stop 授权再做一次受控恢复：stop→start 重建 agent（lifecycle acceptance **5/5** 通过，策略字节恢复只读）；只 renew **D02** 绑定 v3→v4（新 session `session-e15a3d67…`，target root `…-v4`），只建立一条通道（ready/connected），并通过产品 `fs.write`／`fs.read` 写入并读回 seed 文件（54 bytes，SHA `27abcd0a…`）；8 秒后 agent 仍 connected。
+
+观察（**相关性，未证明根因**）：此前连续 5 条 SSH/helper 通道的 renew/connect 突发之后，Coder agent 反复 `disconnected`／`helper-stdout-ended`；而单通道受控路径保持稳定。指向冻结 lab 的 SSH session／agent 容量或突发敏感性。证据见[单通道恢复记录](evidence/m1a-single-channel-recovery-2026-11-02.json)。
+
+状态：D02 v4 可用；D05/D06/D07 与第二个 D02 绑定仍是最新世代下的 invalid v3，需逐条 renew/connect。策略只读、22 unknown 未变、无 create/delete、未推送。下一轮在 D02 通道上恢复远端 T-203/T-204/T-205 验收，并逐条恢复其余绑定。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

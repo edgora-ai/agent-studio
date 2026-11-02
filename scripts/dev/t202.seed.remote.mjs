@@ -6,7 +6,8 @@ import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {authenticate,requestRpc,DEFAULT_ROOT as root} from './preview.mjs';
 const auth=await authenticate(root),rpc=(m,p={})=>requestRpc(auth,m,p);
-const files=['remote-demo.json','model-remote-demo.json','acp-remote-demo.json'];
+const only=process.argv.slice(2);
+const files=['remote-demo.json','model-remote-demo.json','acp-remote-demo.json'].filter(file=>only.length===0||only.includes(file));
 const results=[];
 for(const file of files){
  const ids=JSON.parse(await readFile(join(root,file),'utf8'));

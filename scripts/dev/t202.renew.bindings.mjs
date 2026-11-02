@@ -11,13 +11,14 @@ import {authenticate,requestRpc,DEFAULT_ROOT as root,repo} from './preview.mjs';
 const dbPath=join(root,'bindings.sqlite');
 const sql=query=>{const db=new DatabaseSync(dbPath,{readOnly:true});try{return db.prepare(query).all();}finally{db.close();}};
 const auth=await authenticate(root);const rpc=(m,p={})=>requestRpc(auth,m,p);
+const only=process.argv.slice(2);
 const results=[];
 const describe=await rpc('environment.discover');
 const workspace=describe.workspaces.find(row=>row.workspace_id==='ff136352-6a92-41d4-9c2c-6cc783cb989b');
 assert.ok(workspace && workspace.status.identity?.verified, 'm1-a observation not verified');
 assert.equal(workspace.status.lifecycle,'running');
 const observationId=workspace.observation_id;
-const invalid=sql("SELECT binding_id,version,environment_id,project_id,state,error_code,target_root FROM project_bindings p WHERE state='invalid' AND target_root LIKE '/workspace/agent-studio-binding-%' AND NOT EXISTS (SELECT 1 FROM project_bindings n WHERE n.binding_id=p.binding_id AND n.version>p.version AND n.state='ready') ORDER BY binding_id");
+const invalid=sql("SELECT binding_id,version,environment_id,project_id,state,error_code,target_root FROM project_bindings p WHERE state='invalid' AND target_root LIKE '/workspace/agent-studio-binding-%' AND p.version=(SELECT max(version) FROM project_bindings m WHERE m.binding_id=p.binding_id) ORDER BY binding_id").filter(row=>only.length===0||only.includes(row.binding_id));
 try{
   for(const binding of invalid){
     let opened=null,lastError=null;

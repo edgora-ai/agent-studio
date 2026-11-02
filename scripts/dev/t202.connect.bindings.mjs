@@ -11,7 +11,8 @@ await rpc('environment.discover');
 const described=await rpc('environment.describe');
 const ws=described.workspaces.find(row=>row.workspace_id===workspaceId);
 const observationId=ws.observation_id;
-const bindings=described.workspaces.find(row=>row.workspace_id===workspaceId).bindings.filter(row=>row.state==='ready'&&row.target_root.startsWith('/workspace/')&&row.channel?.connected!==true);
+const bindings=described.workspaces.find(row=>row.workspace_id===workspaceId).bindings.filter(row=>row.state==='ready'&&row.target_root.startsWith('/workspace/')&&row.channel?.connected!==true&&(only.length===0||only.includes(row.binding_id)));
+const only=process.argv.slice(2);
 const sessions=(await rpc('session.list')).filter(row=>row.state==='ready');
 const results=[];
 try{

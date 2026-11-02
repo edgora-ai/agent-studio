@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "single-channel-recovery-and-burst-observation",
+  "dateUTC": "2026-11-02",
+  "summary": "After several stop/start cycles and repeated remote disconnects during multi-channel renewal bursts, a controlled recovery was performed: stop/start rebuilt the agent; only the D02 binding was renewed (v3->v4) and one channel connected; a seed file was written and read back through the product fs RPC; the agent stayed connected.",
+  "steps": {
+    "lifecycle": {
+      "artifact": "artifacts/t202/t202-lifecycle-2026-11-02T17-02-47-830Z.json",
+      "sha256": "793635e44d8e5350213a62697488d977989b26ac729d5ebf6b62a1cdf144f833",
+      "checks": 5,
+      "result": "pass"
+    },
+    "renew": {
+      "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+      "from_version": 3,
+      "to_version": 4,
+      "session_id": "session-e15a3d67-8af2-435c-ac18-d4d223891067",
+      "target_root": "/workspace/agent-studio-binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da-v4"
+    },
+    "channel": {
+      "connected": true,
+      "state": "ready"
+    },
+    "seed": {
+      "file": "remote-demo.json",
+      "path": "t202-seed-e3ef3455-487e-4729-b370-d1784d505c6b.txt",
+      "bytes": 54,
+      "sha256": "27abcd0ac09a51bc7bcc7a971e26e846e5888a713bb4e5119d7b23300b3d5f83",
+      "readback": "pass"
+    }
+  },
+  "finding": {
+    "id": "T202-F5",
+    "severity": "observed-correlation-not-proven-root-cause",
+    "summary": "Repeated bursts of 5 sequential SSH/helper channel renewals were followed by Coder agent disconnects (helper-stdout-ended), while one controlled single-channel renew/connect/seed kept the agent connected and responsive. This suggests SSH-session/agent capacity or burst sensitivity in the frozen lab; it is a correlation, not a proven root cause."
+  },
+  "state": {
+    "policy": "read_only:true actions:[] byte-identical",
+    "workspace": "m1-a running, agent connected",
+    "unknownOperations": 22,
+    "otherBindings": "D05/D06/D07 and the second D02 binding remain invalid v3 due the latest generation change; renew one at a time before reconnecting."
+  },
+  "next": [
+    "Renew/connect remaining bindings one at a time with spacing; avoid multi-channel bursts.",
+    "Resume remote T-203/T-204/T-205 acceptance on the D02 v4 channel (read-only/limited) while watching agent stability.",
+    "Record burst capacity finding for the frozen lab/infrastructure review; no infrastructure change attempted."
+  ]
+}
