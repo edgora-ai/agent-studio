@@ -1,12 +1,12 @@
 # 开发决策与账本
 
-更新日期：2026-10-31。**截至 2026-10-31 暂停快照（WIP）**：`/goal clear` 后已安全暂停自动持续开发；本次仅按“更新状态落入文档，提交代码并推送”准备版本快照，不恢复 D08 或连续开发。此前“连续完成剩余开发任务，遗留问题可以先记录并跳过，尽快可以跑起来”是历史开发安排，不再作为当前自动执行指令。暂停事实与后续待办见第 14 节。
+基线日期：2026-10-31 暂停快照（WIP）。收到后续“继续推进”后，仅恢复一轮有界的本地可靠性、schema 验证与 D08 UI／harness 源码修复；**不重新部署／重启预览，不执行远端负载、Coder 生命周期或真实断连／恢复，不改写 13 条 unknown**。此前 `/goal clear` 的暂停事实保留在第 14 节；本轮范围与本地验证另记第 15 节，不能用新源码或离线通过覆盖旧失败，也不自动恢复此前无限连续开发安排。
 
 ## 1. 开发预览与正式验收分开
 
 采用可运行优先的**隔离开发次序例外**：M1 独立审核中断与已登记遗留项暂缓处理，不再阻止 T-201 及后续隔离开发。**D-01／T-201 的限定开发实现已验证，正式 T-201／M1 仍未验收通过。** 开发预览／实现验证只说明实际运行过的限定能力，不等于正式阶段验收或发布；[执行计划](../08-execution-plan.md)的任务编号、依赖及正式完成条件和[验收标准](../05-delivery-and-acceptance.md)保持不变。
 
-此前按“持久绑定 → 远程文件／命令／PTY → 现有侧边栏 → local provider → 原生模型 → ACP → 环境管理”推进。D-01 至 D06已做各自限定验证；D07阶段结论仍为**环境发现及新UI链路有通过证据，最终综合两次实跑未通过，根因未全定位**。之后 D08 初版已部署并完成只读预检，但唯一真实 UI 尝试失败，尚未执行 transport 断连／恢复，现已暂停。离线 fixture 不是实际 LLM 或外部 CLI；全项目及正式门禁未通过。生产、全局配置、额外资源或基础设施变更仍须对应授权。
+此前按“持久绑定 → 远程文件／命令／PTY → 现有侧边栏 → local provider → 原生模型 → ACP → 环境管理”推进。D-01 至 D06已做各自限定验证；D07阶段结论仍为**环境发现及新UI链路有通过证据，最终综合两次实跑未通过，根因未全定位**。之后 D08 初版已部署并完成只读预检，但唯一真实 UI 尝试失败，尚未执行 transport 断连／恢复；该真实实验仍保持暂停，本轮只做第 15 节的本地源码修复与离线回归。离线 fixture 不是实际 LLM 或外部 CLI；全项目及正式门禁未通过。生产、全局配置、额外资源或基础设施变更仍须对应授权。
 
 ## 2. 当前开发切片
 
@@ -19,7 +19,7 @@
 | D05-model-session：原生模型会话与绑定工具 | **限定开发验证通过**，显式离线协议 fixture；非真实 LLM 验收 | 原 Models／picker／Send／Stop／审批／问答 UI、真实本地及 m1-a 六工具、SQL／JSONL／重启；21 单测 + 10 本地 + 4 远端 + 7 原 UI + 6 最终检查，见第 10 节 |
 | D06-ACP-client | 限定桥接／离线协议验证通过 | 真实installed SDK、local/m1-a stdio、原审批／问答／取消／持久历史；不是真实CLI或SC-12通过，见第11节 |
 | D07-environment，含 T-202 | **阶段交接，最终综合实跑未通过** | 真实只读发现、原环境UI、一次性生命周期executor和世代失效有分层证据；历史SSH255／TTL／helper timeout五条unknown保留，见第12节 |
-| D08：同 Host 原任务恢复，含 T-206 | **初版 WIP 已暂停；未完成真实恢复闭环** | 定向离线36项／observer4项、只读预检6项有通过证据；唯一UI尝试输入换行丢失、SyntaxError退出1并released，无断连恢复或UI重试；实际原terminal tab入口未补，见第13、14节 |
+| D08：同 Host 原任务恢复，含 T-206 | **WIP；本轮仅本地源码修复，真实恢复仍暂停** | 历史离线36项／observer4项、只读预检6项有通过证据；唯一UI尝试输入换行丢失、SyntaxError退出1并released，无断连恢复或UI重试；本轮修复单行输入与实际原terminal tab入口但未部署，离线范围见第15节，历史记录见第13、14节 |
 
 ## 3. 延期问题与保留门槛
 
@@ -48,7 +48,7 @@
 - **持久数据**：原生 SQLite schema v1、WAL／事务／外键／不可变快照触发器；项目、环境、实例记录、绑定版本、会话与审计真实落盘。owner 来源是已认证 dsh peer，绑定根及凭据引用来自私有 operator catalog，不接收客户端路径／秘密。
 - **原生会话**：真正 Agent factory → 显式 flush → native persistence/inspect → Workspace attach → SQLite ready；跨存储先 pending，重启协调同一 ID，10 分钟过期置失败。ready anchor 不重建，inode／dev／空目录／native cwd／Workspace 归属核对；旧版本不可派发，历史会话仍可读。
 - **边界**：`POST /agent-studio-rpc/<method>` 使用原认证与 envelope。`dispatch.check` 只判定 local metadata，不执行。未核验 remote、FS、命令、PTY 均拒绝。Gateway owner/unary/stream 守卫与 sidebar HTTP／升级守卫覆盖服务端旁路；原 UI 选择／创建会话转到同一绑定服务。只有精确的原生欢迎确认允许配置元数据写，其余配置变更和所有模型入口禁用。
-- **复用来源**：dsh 0.2.1-rc.4、原侧边栏 0.28.2，来源 hash／许可证及确切改动列于 [sources.lock.json](../../profiles/agent-studio-preview/sources.lock.json)。私有 Gateway 投影只改守卫 seam，并保留原 dual-face manifest/client；侧边栏保留原 manifest、client chunks、locale、LICENSE，只替换 Host wrapper；未挂载候选 SSH 整包。
+- **复用来源**：初轮基线为 dsh 0.2.1-rc.4、原侧边栏 0.28.2，来源 hash／许可证及确切改动列于 [sources.lock.json](../../profiles/agent-studio-preview/sources.lock.json)；当前 SDK／Gateway 基线已按后续授权迁移到 0.2.1-rc.5，见第 15 节。私有 Gateway 投影只改守卫 seam，并保留原 dual-face manifest/client；侧边栏保留原 manifest、client chunks、locale、LICENSE，只替换 Host wrapper；未挂载候选 SSH 整包。
 - **真实验证**：8 个 ESM 文件语法通过；3 项 Store 单测；[集成测试](../../scripts/dev/integration.mjs) 76 项（新随机根，测试后仅停止自有进程）；另对持久 `.preview/agent-studio` 完整 SQL→RPC→list 及重启前后逐字段相等验证，`PRAGMA integrity_check=ok`。有效认证成功，公开 health 200，受保护页面／接口缺失和无效认证 401，错误 Origin 403，HTTP 200 的失败 RPC 被识别。
 - **浏览器**：[Playwright](../../scripts/dev/browser.py) 使用已有 Python/Chromium 登录新 profile，显示 `D01 Preview Project · v1`、原 blank session 和原 Files 面板；截图已查看。pageerror 0、非预期 console/RPC 错误 0、外部浏览器请求 0。FS/Git 409、fs-watch 403、skills/list disabled 如实保留。模型路由为空、进程 network/subprocess/generation 拦截计数为 0，拒绝操作前后 JSONL 不变、目标项目目录为空；这是无模型集成，不是实际模型对话验证。
 - **隔离限定**：私有持久根 0700、敏感文件 0600；子进程环境精确白名单，不继承 canary；动态回环地址；新测试根两次启动日志为空。进程内防护和依赖 symlink **不等于 OS 沙箱或强制只读挂载**，不承诺恶意代码／多租户隔离。持久日志仍保留早期失败，不能声称历史全绿。
@@ -355,3 +355,64 @@ D07阶段结果已由协调器核验，仍不是完整验收。D08 开发期间�
 2. 补真实local SDK同Host句柄闭环及缺句柄／换Host拒绝，实际SQL→完整API→列表与新增请求／事件读回。
 3. 另外安排跨Host持久恢复、ACP业务resume和传输未定位故障调查；不把新成功回写D07两次失败或13条unknown。
 4. 真实生命周期、外部模型／CLI、强隔离、多机／手机及正式门禁仍各需相应授权和独立证据；WIP提交／推送不代表验收通过。
+
+## 15. 继续推进后的本地收口（未部署、未重跑真实恢复）
+
+收到“继续推进”后，在原暂停源码基线上恢复有限本地开发。只使用临时测试目录、受控本地子进程和显式离线协议 fixture；不启动新预览／服务，不调用 Coder、SSH 或真实模型／CLI，不变更运行数据库、13 条 unknown 或历史证据。工作树改动未提交／推送。
+
+### 当前 schema 门禁
+
+[Store](../../packages/dsh-agent-studio/store.mjs) 导出 `CURRENT_SCHEMA_VERSION=8`，四个当前运行验证脚本 [local](../../scripts/dev/local.integration.mjs)、[ACP](../../scripts/dev/acp.integration.mjs)、[environment](../../scripts/dev/environment.integration.mjs)、[core](../../scripts/dev/core.verify.mjs) 的版本断言和当前报告元数据统一引用它。编号迁移 1–8、历史迁移 fixture 及 [recovery preflight](../../scripts/dev/recovery.preflight.mjs) 的 schema7→8 基线断言保持不变。
+
+新增 [schema 回归](../../scripts/dev/schema-version.test.mjs) 验证新库完整迁移序列、重开后 principal／迁移历史保持及四个脚本的静态门禁；**只读脚本源码，不 import／执行这些有部署或负载副作用的入口**。该 6 项与既有 Store／environment／recovery 的 69 项合计 75 项通过。
+
+### broker／transport 的有限收口
+
+新增 [child boundary](../../packages/dsh-agent-studio/adapters/child-boundary.mjs)，由 [EnvironmentBroker](../../packages/dsh-agent-studio/adapters/environment-broker.mjs) 与 [helper channel](../../packages/dsh-agent-studio/adapters/helper-channel.mjs) 共同使用。只托管本次固定 launcher 返回的原 child，不接管 PID、不操作远端任务或平台 daemon；超时先 TERM、再 KILL、最后独立截止。真实 `close` 才确认 transport 关闭；`exit`、发出信号、`.killed` 或最终 unref 都不能证明业务停止。没有 close 时返回 uncertain／unknown，提交响应丢失不重放。
+
+stdout／proof 在解码前按字节固定容量收集，首次超限后停止收集；Environment stdout 上限 1 MiB、stderr 末尾 4 KiB，helper read 64 KiB、proof 8 KiB，helper stderr 只增量记录字节数／摘要。安装只上传经双重摘要核对的原样完整 bundled helper asset，不再与另一个 installer 生命周期竞争。初始化保留真实 RPC 的原始 stdio；detach 幂等且只关闭 transport，不调用业务 cancel／release。终态清除活动监听与定时器、销毁自有本地管道；每个 emitter 仅留一个共享无闭包的 error sink 防御已排队迟到错误，原有监听保留。
+
+operation timeout 与清理预算必须分开：默认 TERM 宽限 15 秒、最终等待 1 秒；Environment 为 80+16 秒，helper check 20+16 秒、initialize 60+16 秒、install 120+16 秒（之后才进入 connect／initialize），detach 默认另有 1 秒 EOF grace。它们依赖 Node event loop 调度，不是 OS 硬实时保证；KILL 后缺少 close 仍不确认远端取消或释放。[新增 50 项回归](../../scripts/dev/child-boundary.test.mjs)覆盖永不 close、信号失败、输出与 proof、安装／初始化／detach、迟到错误与资源清理，并用两只本次自有短寿命 Node child 验证真实 close／TERM→KILL。
+
+### 原生 Terminal 与合成输入
+
+[单行 command helper](../../scripts/dev/recovery_command.py)将完整 Python 源码字节 base64 编码后放入一行 `exec python3 -I -u -c` 命令，规避 textarea 移除源码换行；仍是原 shell 的 exec，不重发命令或创建替代恢复任务。[离线 Python 回归](../../scripts/dev/test_recovery_command.py)验证多行／Unicode／引号／CRLF 字节，以及仅在自有临时目录执行一次短合成计数任务。[真实 browser harness](../../scripts/dev/recovery.browser.py)已引用该 pure helper，但未执行。
+
+[原生投影](../../scripts/dev/sidebar-projection.mjs)实际接入 SDK 的 `TerminalBody`，不把 better-sidebar bottom view 误当作原生 tab。采用真实 `model.sessionId`／`model.id`，以 `terminal-SHA256(sessionId + NUL + model.id)` 对齐 Host 原 operation，不使用 tab／content ID。保留原 model、xterm 生命周期、输出 frame／ACK；初始关闭输入，输入回调也核对当前可写／可见 gate。恢复 panel 对原 session／operation／kind 和当前 view generation 做 fail-closed 检查；失联、动作进行中、身份／可见性变化及迟到响应不能沿用旧输入授权，A→B→A 也不能复用旧 proof。
+
+[profile patch](../../profiles/agent-studio-preview/cordis.patch.yml)禁用准确 stock plugin `ui-sidebar-terminal`、只插入一个 profile-local native-terminal Host；[launcher](../../scripts/dev/preview.mjs)在受控私有目录投影，保留原 manifest、Host、client factory、locale、许可证及类型，不写穿 SDK namespace symlink。新来源锁与唯一 seam 均需通过；[UI 离线回归](../../scripts/dev/recovery-ui.test.mjs)测试当前安装 Registry 的 Host→本地 manifest→原 client lazy factory→投影 chunk 解析和实际 model 分配身份，但不启动插件／服务或浏览器，不构成完整兼容基线或真实恢复 E2E 验证。
+
+### 最终合并复查与纯本地检查
+
+两路实现停止写入后复查合并差异；新增的三组 Node 回归共 73 项、Python 回归 3 项。最终执行：
+
+- `node --test scripts/dev/schema-version.test.mjs scripts/dev/store.test.mjs scripts/dev/environment.test.mjs scripts/dev/recovery.test.mjs scripts/dev/child-boundary.test.mjs scripts/dev/recovery-ui.test.mjs`：**142/142**，无失败／跳过／取消。
+- `python3 -I -B scripts/dev/test_environment_broker.py`：5/5；`python3 -I -B scripts/dev/test_task_observe.py`：4/4；`python3 -I -B scripts/dev/test_recovery_command.py`：3/3，合计 **12/12**。`-B` 避免产生 bytecode 文件。
+- `scripts/` 与 `packages/` 范围：**74 个 MJS** 通过 `node --check`、**45 个 Python** 通过源码 `compile`；没有 import／执行 integration、browser 或其他 operational 入口。
+- `python3 -I -B scripts/check_docs.py` 与 `python3 -I -B scripts/test_check_docs.py`：20 份文档结构校验与 **39/39** 回归通过；45 条外链只计数、不联网逐一核验。
+- 两份历史 `SHA256SUMS`：8 项调研 + 34 项实施证据共 **42/42** 通过；没有重写旧证据或改成新的验收结论。
+- `git diff --check` 通过；变更仅限源码／测试／受控 profile／状态文档，未提交／推送。
+
+### 部署前来源一致性阻断（上一轮观察，已由下文迁移解除）
+
+最终只读审计按[来源锁](../../profiles/agent-studio-preview/sources.lock.json)检查 **98 个资产，95 个匹配、3 个不匹配**；native Terminal 的全部 23 项及单独的 stock patch 均匹配。SDK／Gateway 安装为 `0.2.1-rc.5`，锁仍要求 `0.2.1-rc.4`；不匹配清单为 Gateway、local filesystem、local subprocess 的 package manifest。sidebar `0.28.2`、native UI `0.2.1-rc.5` 与本地 helper artifact `0.13.3` 的各自版本锁匹配，不能抵消根 SDK／Gateway 不一致，也不能把本地 artifact 版本当成当前远端 helper 版本。
+
+来源准入检查为 **fail（exit 1）**，与上面的离线回归通过分别报告；当时 launcher 会拒绝该组合，也未执行 prepare／start。该阻断保留为上一轮观察，后续按明确授权迁移基线（见下）解除；它不构成真实验收结论。
+
+### rc.5 基线迁移与持续升级入口（未部署）
+
+按“升级到 `0.2.1-rc.5`、版本会持续更新”的授权，把根 SDK／Gateway 兼容基线从 `0.2.1-rc.4` 提升到本机实际安装的 `0.2.1-rc.5`。改动限定在[来源锁](../../profiles/agent-studio-preview/sources.lock.json)：两个版本字段、Gateway 与 local filesystem／subprocess 的两份 package manifest 摘要，以及把 native Terminal 的 `change` 文案从“根锁保持 rc.4”改为“独立可升级基线”。全部实现文件摘要、sidebar `0.28.2`、native Terminal `0.2.1-rc.5`、ACP `1.4.0`、helper artifact `0.13.3` 与唯一 Gateway seam 均未改；没有安装／升级依赖、修改上游安装、执行 prepare／start 或重启预览。
+
+新增[来源核对／候选工具](../../scripts/dev/source-lock.mjs)：默认 `--check` 完全只读，逐项输出 6 个包版本、98 个受控资产及单独的 stock patch，漂移 exit 1，`--json` 供自动化读取；`--candidate --sdk-version VERSION` 要求目标与实际安装一致，只向 stdout 输出结构化候选，stderr 标记 **UNVERIFIED**，不覆盖当前锁。缺失／不可读／无效 JSON／包名不符的源不能进入候选；源码路径必须是来源根内相对路径；重复的 Gateway 来源摘要必须一致；每个绝对路径只读取并复制一次，版本与摘要取同一字节快照，避免并发替换 manifest 时混合旧版本与新摘要；所有已锁定 `package.json`（不只 6 个版本根）都要通过 JSON、包名与有效版本校验。候选仍只是字节记录，代码／接缝／helper 变化必须另行适配复核。
+
+[launcher](../../scripts/dev/preview.mjs) 的 SDK 版本错误改为 `Unverified dsh baseline`，明确差异代表基线待复核而非新版永不受支持；包身份与完整摘要检查仍失败关闭。[UI 回归](../../scripts/dev/recovery-ui.test.mjs) 不再写死 rc.4／rc.5 数字，断言当前锁与真实安装一致、未知漂移与错误包名被拒，并保留原生 Terminal 23 项资产摘要、唯一 stock seam 与私有投影检查。
+
+最终离线复核（未部署）：7 个 Node 文件 **157/157** 通过（新增[来源工具回归](../../scripts/dev/source-lock.test.mjs) 15 项，含未来版本候选、混合字节快照、无效 manifest、路径越界与 CLI 不写锁）；Python 环境／观察／命令 **12/12**；`scripts/` 与 `packages/` 范围内 **76 个 MJS** 通过 `node --check`、**45 个 Python** 通过源码 `compile`；两份历史 `SHA256SUMS` 共 **42/42**；`git diff --check` 通过。来源审计实跑 **98/98 资产、6/6 包版本、stock patch 匹配**。另一路独立只读复核确认“版本与摘要混合快照”“非版本根 manifest 未校验”两项 P2 已闭合、无其他阻断，未改文件、未运行 UI／合并测试或任何服务；跨文件字节不属于原子系统快照的边界已在工具中显式声明。以上是离线兼容与来源核对，不是真实部署、D07／D08 恢复或 M1 验收。
+
+历史 M1 实验脚本（`scripts/m1/install_candidate.py` 的 rc.4 peer 断言、`t107_matrix.py` 的 rc.4 组合描述）仍绑定 T-103／T-107 当时的运行事实，**不是当前 launcher 来源门禁，也不应直接重跑并当作 rc.5 兼容证明**；若要复跑实验，须另按新基线显式调整并重新取证，不能改写原实验记录。
+
+### 仍未验证与下一步授权边界
+
+本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；源码中的单行输入／原生 Terminal 接线即使离线通过，也不构成真实同 Host 恢复验收。真实实验仍需另行确认，然后只运行一个有截止时间的原任务，核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
+
+正式 M1 仍未通过：[review2](evidence/t107-independent-review2.json) 已记录 `repair-required`、`m1Passed=false`，但归档曾被两次 HTTP 400 中断，缺少最终 validation，不能称为完整独立验收归档。M1-05 只在声明技术范围通过，M1-10 路由归一化旁路仍失败，repair2 的独立复验未闭合。真实外部模型／CLI、生命周期、多机／手机、完整 M2／M3 与发布门槛没有因本轮本地修复而通过。

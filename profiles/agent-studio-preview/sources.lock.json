@@ -1,11 +1,11 @@
 {
-  "sdk": {"package": "@deepseek-ai/dsh", "version": "0.2.1-rc.4"},
+  "sdk": {"package": "@deepseek-ai/dsh", "version": "0.2.1-rc.5"},
   "gateway": {
-    "package": "@deepseek-ai/dsh-api-gateway", "version": "0.2.1-rc.4",
+    "package": "@deepseek-ai/dsh-api-gateway", "version": "0.2.1-rc.5",
     "source": "lib/index.js", "sha256": "4fbe460fec585ebc2cf2887261f6c33f024081a539d9fb5d6557a9002324b23f",
     "license": "MIT; Copyright (c) 2026 DeepSeek",
     "files": {
-      "package.json": "9c69107b4885445acc286514379fbefb86617ab70460a9ca93f91089e186112f",
+      "package.json": "3725d68f7996e6011101133b3b4e57bbf7d8e10ad6c4c212728a4c64e3eff3d7",
       "LICENSE": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be",
       "lib/client.browser.js": "3043de82334846a3a5654b7317830c5403f90e9aeca692d3c15e30e01d16505d",
       "lib/client.node.js": "aca973689c3ee34524c8bd7de9c901f5a839e29bc15d4816a6dc5e2fb0e64e9f"
@@ -16,7 +16,7 @@
     "package": "dsh-better-sidebar", "version": "0.28.2",
     "source": "https://github.com/omdsh-dev/DSH-better-sidebar",
     "license": "MIT; Copyright (c) 2026 dsh-external",
-    "change": "Verify all original bytes before projection. Keep installed upstream unchanged. Rename original lib/index.js to upstream-host.js; use the scoped Host admission facade. Apply scripts/dev/sidebar-projection.mjs only to private client.js, client-registry.js and client-editor.js: bounded search labels/scope, snapshot references, read-only Git controls, exact empty diff side, editor binding-typed local/remote polling/conflict. Record projected hashes in private projection.json. No dependency installation or client rebuild.",
+    "change": "Verify all original bytes before projection. Keep installed upstream unchanged. Rename original lib/index.js to upstream-host.js; use the scoped Host admission facade. Apply scripts/dev/sidebar-projection.mjs only to private client.js, client-registry.js, client-editor.js and client-terminal.js (identity-bound recovery panel and fail-closed input gate): bounded search labels/scope, snapshot references, read-only Git controls, exact empty diff side, editor binding-typed local/remote polling/conflict. Record projected hashes in private projection.json. No dependency installation or client rebuild.",
     "files": {
       "package.json": "5f78a2cb9cd70515fe575b46a01e4c2c9e4e4f21e58e43a0d9b0c6f972f9974c",
       "cordis.patch.yml": "ec25fc02f0d283e913014bb2cbdef92a17ea360c92f2503d5104b4f8f5e7c064",
@@ -33,12 +33,43 @@
       "locale/zh.json": "2a12195111442a74fa98de0cdedd54b2c3a076a37d0c542560a716628f087f5c"
     }
   },
+  "native_terminal": {
+    "package": "@deepseek-ai/dsh-client-ui-sidebar-terminal", "version": "0.2.1-rc.5",
+    "stock_plugin_id": "ui-sidebar-terminal",
+    "stock_patch": {"file": "@deepseek-ai/dsh-web-app/cordis.patch.yml", "sha256": "cdceb423fc34c31ceb9c47ef2117a88eeda6fd9cc21f94d58cfd21e7c3e035de"},
+    "change": "SDK and native UI versions are independent, upgradeable compatibility baselines. Each upgrade refreshes reviewed source hashes and runs projection regressions rather than requiring the historical SDK release. Disable its stock plugin and insert the profile-local native-terminal/lib/index.js. Preserve manifest, host, client factory, locales, license, documentation and type declarations byte-for-byte. Project only the exact TerminalBody in lib/client.terminal.js with RecoveryPanel and identity-bound writable gating. Native model.sessionId/model.id retain the original operation, frame ACKs and lifetime; no command/input/approval replay. Never write inside the SDK namespace symlink.",
+    "files": {
+      "package.json": "15889ac4414150f121a06b77bdb8edc21cfb10417bdfa0ef6139ae3734d9f455",
+      "lib/index.js": "816de42ccab6e02df23cc8a40f6daba171bca0c861b860c7539e7a3adeeb1147",
+      "lib/client.js": "999adc8712854da63dd62944c51af1bf57fd9bdfcb65e7ad0d8c196f6e979b73",
+      "lib/client.terminal.js": "0821b155ce820424ff788474fedea3e6f606d95cea6ebe03b580660e7701eb6f",
+      "LICENSE": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be",
+      "README.i18n.yaml": "dfe4d19e2803b4a9a4a0fa5864297d382d1514d743d4a7af5176ac4d3b70091a",
+      "README.md": "d3283902c734550309ea52dace3bdc0af551e5a22c37c747de277dc5c36d7e33",
+      "README.zh.md": "58b375dd526f67ca239b5d5981a40d6e609d786194bc7934343f03575e1dbd3e",
+      "lib/types/index.d.ts": "4535a2128009f5b8852f65440a4e1be121a70fdb0080f02d927ab9cf6eb22996",
+      "lib/types/client/face.d.ts": "98d211c2fa3a9780fa35db8672a7ccae1d23296ee369ae1d3f5e7103d589d13c",
+      "lib/types/client/index.d.ts": "086c66a63e745c22de266a8aab8bbcf9e32a730f989aea1f875f3d04eeb4cd29",
+      "lib/types/client/LazyTerminalBody.d.ts": "c6ebd53332b36956fd4efcee327d2ea03d1c24be6731b25fc084fdcefb91ae5c",
+      "lib/types/client/locales.d.ts": "dc5871da2ae7ab4a6f154f437b48a317c8cd0d76a3709a327831a79c1be8e7a0",
+      "lib/types/client/terminal-cursor.d.ts": "e37fdcec33c86c759d615be29243a2801d2f0e6f03fa0f40be638e69eedfba4b",
+      "lib/types/client/terminal-theme.d.ts": "ed749dc2e6c54c9003b5e5743ccc58a51e4d1fb8ce37d2e47fc120502c5854de",
+      "lib/types/client/terminal.d.ts": "1e0f377a0cfcd903bd7bfc6e0c43ad919836222795b7d55dd936ebbe2cce54fb",
+      "lib/types/client/TerminalCleanup.d.ts": "e9b687783e72234cba2d1951eeccf441164b6fa6145d65994fc2607192ea08a7",
+      "lib/types/client/TerminalGuide.d.ts": "530c01d8629d66e59fcc21b2a089b3f1e9e46742c9f754cea163aafe4e482947",
+      "lib/types/client/TerminalIcon.d.ts": "339fd19eaf5b010fbeea30afc42da633ef4d983465e304fb48836fcebc34bfc2",
+      "lib/types/client/TerminalRecovery.d.ts": "fafe82f0a1f16f7cdeffddbf68114ffc0f402b7055aa219c60793f0f49438783",
+      "lib/types/client/TerminalTitle.d.ts": "0682c52c6d6efd5a9ef95fbcb600976c675867bcea687ae3433f69f662a2af08",
+      "locale/en.json": "9c64c05e7d558c87fecda1ef1a813560da21cfafc926bbdd13641dc8cf0bf2f4",
+      "locale/zh.json": "104a3df8003db2fb3c976294445c46fc17a640fa5f5c3c4c0da3c6a3f1317719"
+    }
+  },
   "local_sdk": {
     "change": "Installed local providers and Linux PTY bytes, verified before private deployment; no global changes or dependency installation.",
     "files": {
-      "@deepseek-ai/dsh-fs-local/package.json": "57dee8dcea7fcd1ad84ad34145d9c12ed805d8d88929f28f1228d09f01b4ec98",
+      "@deepseek-ai/dsh-fs-local/package.json": "5941249f520d7f2fe8dfd71db707303723d197431da88eb837a5e00ddb718574",
       "@deepseek-ai/dsh-fs-local/lib/index.js": "63fbb41d2c33e07111884b798be507e68c2752acab8249c821c20ade436e894f",
-      "@deepseek-ai/dsh-subprocess-local/package.json": "894a8c205f15a36c8b5c3a552acb2cf4b1cc9ea47f9b20b7745dbee5db223c90",
+      "@deepseek-ai/dsh-subprocess-local/package.json": "9939c33f156b21f11bdd49e3aa959157e1538fd1acfa634b4c7f53565ff5c75d",
       "@deepseek-ai/dsh-subprocess-local/lib/index.js": "2964d94d6aa735f79e5cd5f54035a9d73b371e8060dda7e3bf666593428c04f4",
       "@deepseek-ai/dsh-subprocess-local/lib/runner-launch-B2zsQ1Dz.js": "6df08adc4a27f278878a5f4cde8b551b51e647b922ac7d6591fd62d272ced153",
       "@deepseek-ai/dsh-subprocess-local/lib/output.js": "4f77ef6da608d36df168c99177e9b527e7145df1418845eba567635e64a4c2a3",

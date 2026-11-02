@@ -4,6 +4,7 @@ import {join} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {randomUUID} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
+import {CURRENT_SCHEMA_VERSION} from '../../packages/dsh-agent-studio/store.mjs';
 import {authenticate,requestRpc,DEFAULT_ROOT,repo,start,stop} from './preview.mjs';
 
 const root=DEFAULT_ROOT,run=randomUUID(),out=join(repo,'artifacts/d07/integration-'+run+'.json'),report={scope:'D07 real approved Coder READ ONLY + persistent product data; no platform mutation, no real model or external CLI',run,checks:[]};
@@ -14,7 +15,7 @@ try {
  const endpoints=['environment.describe','environment.discover','environment.observations','environment.open','environment.link','environment.prepare','environment.confirm','environment.request','environment.poll'];
  for(const method of endpoints) for(const cookie of ['', 'invalid']) {const response=await fetch(auth.origin+'/agent-studio-rpc/'+method,{method:'POST',headers:{'content-type':'application/json',origin:auth.origin,...(cookie?{cookie}:{})},body:JSON.stringify({type:'client-request',rpcId:randomUUID(),method,payload:{}})});assert.equal(response.status,401);}
  pass('public health 200; protected root and all new endpoints absent/wrong auth 401',{health:200,protected:18});
- assert.equal(sql('PRAGMA user_version')[0].user_version,7);assert.equal(sql('PRAGMA integrity_check')[0].integrity_check,'ok');
+ assert.equal(sql('PRAGMA user_version')[0].user_version,CURRENT_SCHEMA_VERSION);assert.equal(sql('PRAGMA integrity_check')[0].integrity_check,'ok');
  const baseline=JSON.parse(await readFile(join(repo,'artifacts/d07/pre-migration-snapshot.json'),'utf8')),preserved={},normalPromptTimestamps=[];
  for(const [table,rows] of Object.entries(baseline.tables)) {
   const serialized=row=>JSON.stringify(Object.entries(row).sort(([a],[b])=>a.localeCompare(b))),available=new Map();
@@ -31,7 +32,7 @@ try {
    } else {assert.ok(count>0,'Original complete row missing or changed in '+table);available.set(key,count-1);}
   }preserved[table]=rows.length;
  }
- pass(normalPromptTimestamps.length?'schema6 identities/data preserved; only ordinary new-Send selection timestamps changed and matched to new requests':'schema6 baseline preserved byte-for-field across schema7 migration',{schema:7,integrity:'ok',preserved,normalPromptTimestamps});
+ pass(normalPromptTimestamps.length?'schema6 identities/data preserved; only ordinary new-Send selection timestamps changed and matched to new requests':`schema6 baseline preserved byte-for-field at current schema${CURRENT_SCHEMA_VERSION}`,{schema:CURRENT_SCHEMA_VERSION,integrity:'ok',preserved,normalPromptTimestamps});
  const directory=await rpc('environment.discover');assert.equal(directory.read_only,true);assert.deepEqual(directory.actions,[]);assert.equal(directory.workspaces.length,1);
  const observed=directory.workspaces[0],status=observed.status;assert.equal(status.workspace_id,'ff136352-6a92-41d4-9c2c-6cc783cb989b');assert.equal(status.lifecycle,'running');assert.equal(status.agent.status,'connected');assert.ok(status.database_consistent);assert.ok(status.identity.verified);
  const row=sql('SELECT * FROM environment_observations WHERE observation_id=?',observed.observation_id)[0];assert.deepEqual(JSON.parse(row.status_json),status);assert.deepEqual((await rpc('environment.observations',{workspace_id:row.workspace_id})).find(item=>item.observation_id===row.observation_id),row);assert.equal((await rpc('environment.describe')).workspaces[0].observation_id,row.observation_id);

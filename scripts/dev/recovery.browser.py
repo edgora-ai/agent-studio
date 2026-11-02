@@ -8,7 +8,15 @@ import hashlib
 import json
 from pathlib import Path
 import re
-import shlex
+import importlib.util
+
+# Resolve only this pure sibling, independent of cwd/sys.path (including -I).
+_spec = importlib.util.spec_from_file_location('recovery_command', Path(__file__).resolve().with_name('recovery_command.py'))
+assert _spec is not None and _spec.loader is not None
+_helper = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_helper)
+single_line_python_command = _helper.single_line_python_command
+synthetic_program = _helper.synthetic_program
 import sqlite3
 import subprocess
 import time
@@ -131,9 +139,9 @@ with sync_playwright() as p:
         identity = json.loads(snapshot['identity_json'])
         assert identity['pid'] == operation['remote_pid'] and identity['process_id'] == operation['remote_process_id']
         filename = '.d08-single-' + run + '.txt'
-        synthetic = "import os,time,pathlib\np=pathlib.Path(" + repr(filename) + ")\nwith p.open('a') as f: f.write(" + repr(run + '\n') + ")\nprint('D08_ORIGINAL_READY',os.getpid(),flush=True)\nend=time.monotonic()+90\ni=0\nwhile time.monotonic()<end:\n print('D08_ORIGINAL_TICK',i,'COUNT',len(p.read_text().splitlines()),flush=True);i+=1;time.sleep(0.2)\n"
+        synthetic = synthetic_program(filename, run)
         terminal.focus()
-        page.keyboard.insert_text('exec ' + shlex.join(['python3', '-I', '-u', '-c', synthetic]))
+        page.keyboard.insert_text(single_line_python_command(synthetic))
         page.keyboard.press('Enter')
         for _ in range(30):
             first = rpc('task.read', {**task, 'after_seq': '0'})

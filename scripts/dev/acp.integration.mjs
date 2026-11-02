@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir,lstat,access} from 'node:fs/promises';
 import {randomUUID,createHash} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
+import {CURRENT_SCHEMA_VERSION} from '../../packages/dsh-agent-studio/store.mjs';
 import {setTimeout as delay} from 'node:timers/promises';
 import {enableAcpPeer,start,stop,authenticate,requestRpc,acpDemo,demo,repo} from './preview.mjs';
 
@@ -48,13 +49,13 @@ async function finish(task,answer) {
 try {
  await mkdir(repo+'/artifacts/d06',{recursive:true});
  await enableAcpPeer(root);report.runtime=await start(root,'127.0.0.1');auth=await authenticate(root);ids=await acpDemo(root);
- assert.equal(sql('PRAGMA user_version')[0].user_version,6);
+ assert.equal(sql('PRAGMA user_version')[0].user_version,CURRENT_SCHEMA_VERSION);
  assert.equal((await rpc('acp.describe',scope())).backends[0].configured,false);
  const credential='synthetic-acp-'+randomUUID();await native('credentials/set',{ref:'STUDIO_ACP_OFFLINE_PEER',value:credential});
  assert.equal((await native('credentials/describe',{refs:['STUDIO_ACP_OFFLINE_PEER']})).STUDIO_ACP_OFFLINE_PEER.configured,true);
  assert.equal((await rpc('acp.describe',scope())).backends[0].configured,true);
  const vault=JSON.parse(await readFile(root+'/model-credentials.json','utf8'));assert.equal(vault.references.STUDIO_ACP_OFFLINE_PEER,credential);assert.equal((await lstat(root+'/model-credentials.json')).mode&0o077,0);
- pass('new schema6/policy; dedicated ACP reference write -> private vault -> native describe -> backend readiness',{ids});
+ pass(`current schema${CURRENT_SCHEMA_VERSION}/policy; dedicated ACP reference write -> private vault -> native describe -> backend readiness`,{schema:CURRENT_SCHEMA_VERSION,ids});
  for(const method of ['acp.describe','acp.start','acp.cancel','acp.reply','acp.tasks','acp.controls','acp.get','acp.events']) for(const cookie of [undefined,'invalid=synthetic']) {
   const response=await fetch(auth.origin+'/agent-studio-rpc/'+method,{method:'POST',headers:{'content-type':'application/json',origin:auth.origin,...(cookie?{cookie}:{})},body:'{}'});assert.equal(response.status,401);
  }

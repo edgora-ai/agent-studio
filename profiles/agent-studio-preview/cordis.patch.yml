@@ -3,7 +3,12 @@
 # In dsh patches, `name` is an assertion, not a replacement. Disable + insert.
 - id: typert-gateway
   disabled: true
-# rc.4 rpc.handle retains Connection's owner Context for physical registration.
+# Stock native ID is asserted against the locked web-app patch during prepare.
+# SDK/Gateway and native UI versions are recorded independently in sources.lock.json.
+# Never write through the installed SDK namespace symlink.
+- id: ui-sidebar-terminal
+  disabled: true
+# The reviewed rpc.handle retains Connection's owner Context for physical registration.
 - id: connection
   inject: [webStartup, webServer]
 - id: web-runtime
@@ -18,6 +23,8 @@
   config:
     default: preview
 - insert:
+    - id: studio-native-terminal
+      name: './native-terminal/lib/index.js'
     - id: studio-typert-gateway
       name: './gateway/lib/index.js'
     - id: preset-preview

@@ -7,6 +7,9 @@ import {ACP_SCHEMA,acpOperationContext} from './acp-state.mjs';
 import {ENVIRONMENT_SCHEMA} from './environment-state.mjs';
 import {RECOVERY_SCHEMA} from './recovery-state.mjs';
 
+// Current-runtime gates share this value; numbered migration steps remain historical.
+export const CURRENT_SCHEMA_VERSION = 8;
+
 export class StudioError extends Error {
   constructor(code, message = code) { super(message); this.code = code; }
 }
@@ -80,7 +83,7 @@ export class Store {
     chmodSync(this.path, 0o600);
     this.db.exec('PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA busy_timeout=5000;');
     const version = this.db.prepare('PRAGMA user_version').get().user_version;
-    requireThat(version <= 8, 'newer-database');
+    requireThat(version <= CURRENT_SCHEMA_VERSION, 'newer-database');
     if (version === 0) this.transaction(() => {
       this.db.exec(migration);
       this.db.prepare('INSERT INTO schema_migrations VALUES(1,?)').run(now());

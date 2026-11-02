@@ -4,26 +4,26 @@
 
 ## 1. 当前交付状态
 
-当前交付包括需求与架构文档、设计评审记录、文档静态校验脚本，以及范围明确的 M1 实验记录。下列产品运行功能均尚未实现／验收。此前在现有 dsh 中完成的本机容器实验只证明一条独立容器委派路径可运行，不能代替 Coder、多主机、侧边栏、模板或会话绑定验收。
+当前交付除需求与架构、设计评审、静态校验和 M1 实验记录外，已有 D-01 至 D08 初版的隔离开发源码及限定运行证据；**不能再将这些功能统称为“尚未实现”，也不能将预览实现视为正式验收完成**。D-01 至 D06 只在各自声明范围验证，D07 最终两次综合实跑失败，D08 真实断连／原任务恢复尚未执行；收到“继续推进”后仅恢复本地可靠性与 UI／harness 修复，未重新部署。当前源码、历史失败和本轮验证范围以[开发账本](implementation/development-ledger.md)及 [README](../README.md)为准。此前本机容器实验也不能代替 Coder、多主机、侧边栏、模板或会话绑定验收。
 
 | 阶段 | 内容 | 当前状态 |
 |---|---|---|
 | M0 | 需求、场景、架构边界、候选集成与验收标准 | v0.4 草案已修订；文档验证记录见 README；待用户审阅，产品运行功能未验收 |
-| M1 | 版本门、模板契约、固定版本组合、隔离 profile、Coder + SSH + helper 最小实验 | 进行中；T-101／T-102 只读范围、T-103 修正后 profile、T-104 本机 Coder／模板／两实例范围已验证；原生未经包装入口仍禁用；T-105 专用实验连接／身份门禁／helper 已独立验证，T-106 限定实验范围已独立验证（IA-01／IA-02 已复验；同一新 run 的 11 项完整默认检查通过，controller／Node exit 0；首轮 repair-required 及两次 exit 1 保留），T-107 已交付[逐门槛调查](implementation/t107-m1-investigation.md)，M1-05／M1-10 阻断，待独立审核，M1 未通过；见[隔离实验](implementation/t103-isolated-load.md)与[Coder 实验](implementation/t104-coder-lab.md) |
-| M2 | 单远程环境的绑定、文件、执行、PTY 和现有侧边栏适配 | 未实施 |
-| M3 | 两个远程目标、隔离、生命周期、并发、故障、持久化和移动端闭环 | 未实施 |
+| M1 | 版本门、模板契约、固定版本组合、隔离 profile、Coder + SSH + helper 最小实验 | 进行中；T-101／T-102 只读范围、T-103 修正后 profile、T-104 本机 Coder／模板／两实例范围已验证；原生未经包装入口仍禁用；T-105 专用实验连接／身份门禁／helper 已独立验证，T-106 限定实验范围已独立验证（IA-01／IA-02 已复验；同一新 run 的 11 项完整默认检查通过，controller／Node exit 0；首轮 repair-required 及两次 exit 1 保留），T-107 已交付[逐门槛调查](implementation/t107-m1-investigation.md)，[review2](implementation/evidence/t107-independent-review2.json) 中 M1-05 限定技术范围通过、M1-10 路由归一化旁路失败；repair2 仅有本地自测、独立复验未闭合，M1 未通过；见[隔离实验](implementation/t103-isolated-load.md)与[Coder 实验](implementation/t104-coder-lab.md) |
+| M2 | 单远程环境的绑定、文件、执行、PTY 和现有侧边栏适配 | 已有分层隔离预览实现及限定验证；真实 CLI、完整闭环和正式 M2 未验收 |
+| M3 | 两个远程目标、隔离、生命周期、并发、故障、持久化和移动端闭环 | 仅有环境管理／恢复的部分预览实现；真实多机、故障、手机闭环及正式 M3 未验收 |
 | M4 | 第一阶段可用版本、回归、升级／回滚说明 | 未实施 |
 | M5 | 中央单份 code-server 远程研发可行性与集成 | 第二阶段，未实施 |
 
 本项目不在文档阶段隐式安装插件、升级生产 dsh、配置真实控制台凭据或创建云资源。
 
-实施顺序与交接边界见[执行路径与任务拆分](08-execution-plan.md)：M1–M5 共 31 项任务，每项列出前置、产物和验收依据；本文件仍是完整阶段门槛与 FR／NF 验收的唯一分配表，任务摘要不能缩减这些条件。当前 T-101／T-102 的只读范围、T-103 的修正后隔离 profile、T-104 的本机模板／实例实验及 T-105 的专用实验连接／身份门禁／helper 已验证；T-105 的[独立验收证据](implementation/evidence/t105-independent-acceptance-pass1.json)仅放行 T-106 开发／验收；T-106 历史[最终源码完整默认实现自测](implementation/evidence/t106-final-implementation-selftest.json) exit 0 与[首轮独立验收](implementation/evidence/t106-independent-acceptance-review1.json) repair-required 均保留：当时两次新目录完整默认运行均 exit 1，分别在 A／B 读取半写观察 JSON 时失败，工具缓存的目录／manifest 链接反例也未拒绝。[两项修复自测](implementation/evidence/t106-repair1-selftest.json)之后，[本轮独立复验](implementation/evidence/t106-independent-acceptance-review2.json)实际验证真实发布器／consumer、并发与失败发布、原工具反例及新增链接／替换／读取中篡改／不可变 staging 边界；同一新 run 的 11 项完整默认检查达到预期，controller／Node exit 0，并独立读盘和核对进程回收。当前限定实验 gate=pass、t107Ready=true，不改写首轮失败结论。T-107 已交付[逐门槛调查](implementation/t107-m1-investigation.md)，M1-05／M1-10 阻断，待独立审核，其余 24 项任务未开始，M1 未通过。历史分阶段自测及 exit 1 记录不改写。冻结镜像缺 ripgrep，初始 helper 返回 degraded；每次运行私有且独立校验的 rg 已实测非 Git 文件名发现与显式命令内容匹配，另有 Git 文件名证据，三者不混同，也不代表镜像部署缺口或产品搜索已修复。原生 SSH subprocess 通道仍禁用。不扩大成生产组合、产品主会话文件／命令／PTY、安全策略或产品功能验收。T-104 准入负向用例由独立实验探针完成，产品服务端及完整 SC-02 仍须 T-202／T-208 实现验收；具体命令与后继产物见[收尾清单](implementation/m1-closeout-tasks.md)。
+实施顺序与交接边界见[执行路径与任务拆分](08-execution-plan.md)：M1–M5 共 31 项任务，每项列出前置、产物和验收依据；本文件仍是完整阶段门槛与 FR／NF 验收的唯一分配表，任务摘要不能缩减这些条件。当前 T-101／T-102 的只读范围、T-103 的修正后隔离 profile、T-104 的本机模板／实例实验及 T-105 的专用实验连接／身份门禁／helper 已验证；T-105 的[独立验收证据](implementation/evidence/t105-independent-acceptance-pass1.json)仅放行 T-106 开发／验收；T-106 历史[最终源码完整默认实现自测](implementation/evidence/t106-final-implementation-selftest.json) exit 0 与[首轮独立验收](implementation/evidence/t106-independent-acceptance-review1.json) repair-required 均保留：当时两次新目录完整默认运行均 exit 1，分别在 A／B 读取半写观察 JSON 时失败，工具缓存的目录／manifest 链接反例也未拒绝。[两项修复自测](implementation/evidence/t106-repair1-selftest.json)之后，[本轮独立复验](implementation/evidence/t106-independent-acceptance-review2.json)实际验证真实发布器／consumer、并发与失败发布、原工具反例及新增链接／替换／读取中篡改／不可变 staging 边界；同一新 run 的 11 项完整默认检查达到预期，controller／Node exit 0，并独立读盘和核对进程回收。当前限定实验 gate=pass、t107Ready=true，不改写首轮失败结论。T-107 已交付[逐门槛调查](implementation/t107-m1-investigation.md)，[review2](implementation/evidence/t107-independent-review2.json) 中 M1-05 限定技术范围通过、M1-10 路由归一化旁路失败；repair2 仅有本地自测、独立复验未闭合，其余正式任务未验收完成；预览开发已有 D-01 至 D08 初版，不沿用“24 项未开始”描述当前源码进展，M1 未通过。历史分阶段自测及 exit 1 记录不改写。冻结镜像缺 ripgrep，初始 helper 返回 degraded；每次运行私有且独立校验的 rg 已实测非 Git 文件名发现与显式命令内容匹配，另有 Git 文件名证据，三者不混同，也不代表镜像部署缺口或产品搜索已修复。原生 SSH subprocess 通道仍禁用。不扩大成生产组合、产品主会话文件／命令／PTY、安全策略或产品功能验收。T-104 准入负向用例由独立实验探针完成，产品服务端及完整 SC-02 仍须 T-202／T-208 实现验收；具体命令与后继产物见[收尾清单](implementation/m1-closeout-tasks.md)。
 
 ## 2. 阶段门槛
 
 ### M1：先消除兼容性与平台不确定性
 
-- 执行版本门：分别记录 manifest 枚举版本、peer 约束和安装产物，在隔离测试实例验证当前组合。rc.4 未列入候选 manifest 不证明不兼容；无需预先升级或改生产。仅在具体依赖／接口错误出现后评估升级、适配或更换候选，不假定 rc.5 自动兼容。
+- 执行版本门：分别记录 manifest 枚举版本、peer 约束和安装产物，在隔离测试实例验证当前组合。当前源码基线为 dsh／Gateway `0.2.1-rc.5`，以[来源锁](../profiles/agent-studio-preview/sources.lock.json)为准；DSH 会持续发布，后续升级用[来源核对工具](../scripts/dev/source-lock.mjs)列出差异、显式复核实现与投影回归后更新快照，不永久固定历史版本。候选 manifest 的 `dshVersions` 枚举不含某版本不证明运行不兼容；也不假定未复核的新版自动兼容。生产升级与部署仍单独授权，不在本文档阶段隐式执行。
 - 锁定 dsh、侧边栏、远程插件、helper、Coder CLI／Server、模板／镜像版本及来源。
 - 验证目标插件不是 npm 同名的另一个项目；保存发布清单与完整性结果。
 - 冻结一份模板契约：隔离、资源、允许根目录、运行账号、网络策略与实例标记生成方式；完成 SC-17 的模板交付检查。

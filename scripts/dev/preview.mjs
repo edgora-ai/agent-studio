@@ -6,7 +6,7 @@ import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
-import {projectSidebar} from './sidebar-projection.mjs';
+import {projectSidebar,projectNativeTerminal} from './sidebar-projection.mjs';
 
 export const repo = resolve(dirname(fileURLToPath(import.meta.url)),'../..');
 export const DEFAULT_ROOT = join(repo,'.preview/agent-studio');
@@ -52,10 +52,59 @@ async function ownedProcess(root) {
     return processInfo;
   } catch (error) { if (error.code === 'ENOENT') return undefined; throw error; }
 }
+// Pure admission checks, also exercised without invoking prepare or starting DSH.
+export function verifySdkVersion(manifest,lock) {
+  if(manifest.name!==lock.sdk.package)throw new Error('Unexpected dsh package: expected '+lock.sdk.package+', installed '+manifest.name);
+  if(manifest.version!==lock.sdk.version)throw new Error('Unverified dsh baseline: recorded '+lock.sdk.version+', installed '+manifest.version+'. Run node scripts/dev/source-lock.mjs and review an updated compatibility snapshot; the historical release is not a permanent version requirement.');
+}
+export function verifyNativeTerminalPatch(stockBytes,patchBytes,lock) {
+  if(digest(stockBytes)!==lock.stock_patch.sha256)throw new Error('Native stock patch hash mismatch');
+  const {parse}=createRequire(join(SDK,'package.json'))('yaml');
+  const parsePatch=bytes=>parse(bytes.toString(),{customTags:[{tag:'tag:yaml.org,2002:js',resolve:value=>value}]});
+  const rows=value=>Array.isArray(value)?value.flatMap(rows):value&&typeof value==='object'?[value,...Object.values(value).flatMap(rows)]:[];
+  const stock=rows(parsePatch(stockBytes)).filter(row=>row.id===lock.stock_plugin_id);
+  if(stock.length!==1||stock[0].name!==lock.package)throw new Error('Native stock plugin identity mismatch');
+  const patch=rows(parsePatch(patchBytes)),disabled=patch.filter(row=>row.id===lock.stock_plugin_id),replacement=patch.filter(row=>row.id==='studio-native-terminal');
+  if(disabled.length!==1||disabled[0].disabled!==true||disabled[0].name!==undefined||replacement.length!==1||replacement[0].name!=='./native-terminal/lib/index.js'||replacement[0].disabled||patch.some(row=>row.name===lock.package)||patch.filter(row=>row.name==='./native-terminal/lib/index.js').length!==1)throw new Error('Native private plugin replacement mismatch');
+}
+
+// This target is outside node_modules/@deepseek-ai, which remains an untouched
+// SDK namespace symlink. Refuse unfamiliar paths, symlinks and hardlinked files.
+export async function writeNativeTerminalProjection(profile,assets) {
+  async function directory(path,create=false) {
+    if(create&&await absent(path))await mkdir(path,{mode:0o700});
+    const info=await lstat(path);
+    if(!info.isDirectory()||info.isSymbolicLink()||info.uid!==process.getuid()||await realpath(path)!==path)throw new Error('Unsafe native projection directory: '+path);
+  }
+  profile=resolve(profile);await directory(profile);
+  const target=join(profile,'native-terminal'),marker=join(target,'.agent-studio-native-terminal');
+  if(await absent(target)) {await directory(target,true);await privateWrite(marker,'agent-studio-native-terminal-v1\n');}
+  else {
+    await directory(target);
+    if(await absent(marker)||!(await lstat(marker)).isFile()||(await lstat(marker)).isSymbolicLink()||(await lstat(marker)).nlink!==1||(await lstat(marker)).uid!==process.getuid()||await readFile(marker,'utf8')!=='agent-studio-native-terminal-v1\n')throw new Error('Unrecognized native projection directory');
+  }
+  const allowed=new Set(['package.json','LICENSE','README.i18n.yaml','README.md','README.zh.md','lib/index.js','lib/client.js','lib/client.terminal.js','locale/en.json','locale/zh.json','lib/types/index.d.ts',...'face index LazyTerminalBody locales terminal-cursor terminal-theme terminal TerminalCleanup TerminalGuide TerminalIcon TerminalRecovery TerminalTitle'.split(' ').map(name=>'lib/types/client/'+name+'.d.ts')]);
+  const entries=Object.entries(assets),hashes={};
+  if(entries.length!==allowed.size||entries.some(([file])=>!allowed.has(file)))throw new Error('Unexpected native projection assets');
+  // Validate every existing destination before replacing any package bytes.
+  for(const [file] of entries) {
+    let parent=target;for(const part of file.split('/').slice(0,-1)){parent=join(parent,part);await directory(parent,true);}
+    const output=join(target,file);
+    if(!await absent(output)) {const info=await lstat(output);if(!info.isFile()||info.isSymbolicLink()||info.nlink!==1||info.uid!==process.getuid())throw new Error('Unsafe native projection output');}
+  }
+  for(const [file,bytes] of entries) {await privateWrite(join(target,file),bytes);hashes[file]=digest(bytes);}
+  return hashes;
+}
+
 export async function prepare(root) {
   await rootDirectory(root);
   const lock = await json(join(template,'sources.lock.json'));
-  if ((await json(join(SDK,'package.json'))).version !== lock.sdk.version) throw new Error('Unsupported dsh version');
+  verifySdkVersion(await json(join(SDK,'package.json')),lock);
+  const nativeSource=join(SDK,'node_modules',lock.native_terminal.package),nativeAssets={};
+  if((await json(join(nativeSource,'package.json'))).version!==lock.native_terminal.version)throw new Error('Unsupported native terminal UI version');
+  verifyNativeTerminalPatch(await readFile(join(SDK,'node_modules',lock.native_terminal.stock_patch.file)),await readFile(join(template,'cordis.patch.yml')),lock.native_terminal);
+  // Validate every source and seam before any private native-terminal file write.
+  for(const file of Object.keys(lock.native_terminal.files))nativeAssets[file]=projectNativeTerminal(file,await readFile(join(nativeSource,file)));
   const profile = join(root,'dsh/profiles/agent-studio-preview');
   for (const dir of ['home','cwd','xdg/config','xdg/cache','xdg/data','tmp','anchors','projects/local','runtime', 'dsh/profiles/agent-studio-preview/node_modules']) await mkdir(join(root,dir),{ recursive: true, mode: 0o700 });
   await privateWrite(join(profile,'package.json'),await readFile(join(template,'package.json')));
@@ -77,7 +126,7 @@ export async function prepare(root) {
   await privateWrite(patchFile,(await readFile(join(template,'cordis.patch.yml'),'utf8')) + acknowledgement);
   await privateWrite(join(root,'runtime/fence.mjs'),await readFile(join(repo,'scripts/dev/fence.mjs')));
   const studioSource = join(repo,'packages/dsh-agent-studio');
-  for (const file of ['index.mjs','store.mjs','bindings.mjs','adapters/host.mjs','adapters/helper-channel.mjs','adapters/bound-provider.mjs','adapters/host-files.mjs','adapters/agent-terminal.mjs','adapters/bound-reads.mjs','adapters/bound-watch.mjs','adapters/remote-read.py','adapters/local-provider.mjs','model-state.mjs','model-session.mjs','credentials.mjs','adapters/agent-tools.mjs','acp-state.mjs','acp-protocol.mjs','acp-backends.mjs','acp-session.mjs','acp-sidebar.mjs','environment-state.mjs','environment-manager.mjs','environment-sidebar.mjs','adapters/environment-broker.mjs','adapters/acp-stdio.mjs','adapters/acp-launch-v1.py','recovery-state.mjs','task-recovery.mjs','recovery-sidebar.mjs']) await privateWrite(join(profile,'studio',file),await readFile(join(studioSource,file)));
+  for (const file of ['index.mjs','store.mjs','bindings.mjs','adapters/host.mjs','adapters/helper-channel.mjs','adapters/child-boundary.mjs','adapters/bound-provider.mjs','adapters/host-files.mjs','adapters/agent-terminal.mjs','adapters/bound-reads.mjs','adapters/bound-watch.mjs','adapters/remote-read.py','adapters/local-provider.mjs','model-state.mjs','model-session.mjs','credentials.mjs','adapters/agent-tools.mjs','acp-state.mjs','acp-protocol.mjs','acp-backends.mjs','acp-session.mjs','acp-sidebar.mjs','environment-state.mjs','environment-manager.mjs','environment-sidebar.mjs','adapters/environment-broker.mjs','adapters/acp-stdio.mjs','adapters/acp-launch-v1.py','recovery-state.mjs','task-recovery.mjs','recovery-sidebar.mjs']) await privateWrite(join(profile,'studio',file),await readFile(join(studioSource,file)));
   for(const [file,hash] of Object.entries({...lock.local_sdk.files,...lock.model_sdk.files,...lock.acp_sdk.files})) {
     if(digest(await readFile(join(SDK,'node_modules',file)))!==hash) throw new Error(`Installed SDK source mismatch: ${file}`);
   }
@@ -122,6 +171,7 @@ export async function prepare(root) {
   }
   const wrapper = `import * as upstream from './upstream-host.js';\nimport { mountSidebar } from '../../../studio/adapters/host.mjs';\nexport { Config, name } from './upstream-host.js';\nexport const inject = [...upstream.inject, 'agentStudio'];\nexport function apply(ctx, config) { mountSidebar(ctx, upstream, config); }\n`;
   await privateWrite(join(sidebarTarget,'lib/index.js'),wrapper);
+  const projectedNativeTerminal=await writeNativeTerminalProjection(profile,nativeAssets);
   // Resolve installed SDK dependencies without copying or modifying them.
   // Symlinks are NOT OS-enforced read-only mounts: this trusted-code preview only
   // disables runtime package mutation and fences process/network APIs.
@@ -143,7 +193,7 @@ export async function prepare(root) {
         policy_version: 'd01-remote-disabled-v1', template_version: 'synthetic-v1', credential_ref: null },
     ],null,2));
   }
-  await privateWrite(join(root,'projection.json'),JSON.stringify({ sdk: lock.sdk, gateway: { source: lock.gateway.sha256, projected: digest(patched), change: lock.gateway.change }, sidebar: {...lock.sidebar,projected_files:projectedSidebar,projector_sha256:digest(await readFile(join(repo,'scripts/dev/sidebar-projection.mjs')))} },null,2));
+  await privateWrite(join(root,'projection.json'),JSON.stringify({ sdk: lock.sdk, gateway: { source: lock.gateway.sha256, projected: digest(patched), change: lock.gateway.change }, native_terminal: {...lock.native_terminal,projected_files:projectedNativeTerminal}, sidebar: {...lock.sidebar,projected_files:projectedSidebar,projector_sha256:digest(await readFile(join(repo,'scripts/dev/sidebar-projection.mjs')))} },null,2));
   return profile;
 }
 export async function start(root = DEFAULT_ROOT, host) {

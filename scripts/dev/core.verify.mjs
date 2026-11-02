@@ -6,6 +6,7 @@ import {readFile,writeFile,lstat,readdir} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import {createRequire} from 'node:module';
 import {DatabaseSync} from 'node:sqlite';
+import {CURRENT_SCHEMA_VERSION} from '../../packages/dsh-agent-studio/store.mjs';
 import {spawnSync} from 'node:child_process';
 import {authenticate,requestRpc,DEFAULT_ROOT as root,repo,start,stop,demo,modelDemo,acpDemo} from './preview.mjs';
 const json=async p=>JSON.parse(await readFile(p,'utf8'));
@@ -51,7 +52,7 @@ try {
   pass('public health 200; four new reads 401/200; anonymous watch 401',{statuses,watchUnauth});
   db=new DatabaseSync(root+'/bindings.sqlite',{readOnly:true});
   assert.equal(db.prepare('PRAGMA integrity_check').get().integrity_check,'ok');
-  assert.equal(db.prepare('PRAGMA user_version').get().user_version,7);
+  assert.equal(db.prepare('PRAGMA user_version').get().user_version,CURRENT_SCHEMA_VERSION);
   for(const [table,key,method] of [['projects','project_id','project'],['environments','environment_id','environment'],['project_bindings','binding_id','binding']]) {
     const list=await rpc(method+'.list');
     for(const raw of db.prepare('SELECT * FROM '+table).all()) {
@@ -94,7 +95,7 @@ try {
     assert.ok(models.routableProviders.every(provider=>Object.hasOwn(current.providers,provider)));
     assert.deepEqual(JSON.parse(db.prepare("SELECT config_json FROM model_configurations WHERE state='active' ORDER BY revision DESC LIMIT 1").get().config_json).providers,current.providers);
   } else assert.deepEqual(models.routableProviders,[]);
-  pass('all stored identities/operations -> complete APIs -> ID/list; no active tasks or polls',{operations:operations.length,pending,watch,pty_observations:processes,local_observations:localProcesses,schema:7,integrity:'ok',operation_states:db.prepare('SELECT state,count(*) n FROM operation_records GROUP BY state').all()});
+  pass('all stored identities/operations -> complete APIs -> ID/list; no active tasks or polls',{operations:operations.length,pending,watch,pty_observations:processes,local_observations:localProcesses,schema:CURRENT_SCHEMA_VERSION,integrity:'ok',operation_states:db.prepare('SELECT state,count(*) n FROM operation_records GROUP BY state').all()});
   if(modelsMode) {
     const baseline=await json(repo+'/artifacts/d05/pre-migration-snapshot.json'),preserved={};
     for(const [table,rows] of Object.entries(baseline.tables)) {const current=db.prepare('SELECT * FROM '+table+' ORDER BY rowid LIMIT ?').all(rows.length).map(row=>({...row}));assert.deepEqual(current,rows,table+' prior rows changed');preserved[table]=rows.length;}

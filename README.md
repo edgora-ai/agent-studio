@@ -2,11 +2,15 @@
 
 以会话为中心、统一管理本地与远程隔离开发环境的工作台。
 
-**当前状态：截至 2026-10-31 暂停快照（WIP，非验收／发布）。需求与架构草案 v0.4 + D-01 至 D08 初版隔离开发代码已保留；`/goal clear` 后已安全暂停，不自动接续开发。D07 环境／API／原 UI 部分路径通过，但最终综合两次实跑均失败，根因未全定位；D08 初版已部署、只读预检通过，但首轮 UI 测试失败，尚未执行 transport 断连／原任务恢复。13 条历史 unknown 仍未知，正式门禁未通过。**
+**当前状态：在限定的本地源码修复之后，又按授权完成 SDK／Gateway `0.2.1-rc.5` 来源基线迁移与可重复升级入口；仍为 WIP，非验收／发布。现有预览未重新部署／重启，不能把工作树的改动当成已上线。D07 最终两次综合实跑失败、根因未全定位；D08 历史首轮 UI 失败，真实 transport 断连／原任务恢复尚未执行。13 条历史 unknown 不改写，正式门禁未通过。**
 
 2026-10-30 开发例外：按可运行优先完成限定实现验证，**不是 T-201、M1、完整 M2 或发布的正式验收通过，M1 仍未通过**。当前能力与延期项见[开发账本](docs/implementation/development-ledger.md)，下文既有 M1 进度和测试数字保留为历史记录。
 
-## 截至 2026-10-31 暂停快照
+本轮处理三项本地收口：broker／transport 的超时、输出与最终清理边界；当前验证脚本的 schema 版本漂移；D08 合成命令的单行安全传输及实际原生 Terminal tab 接线。实现与离线结果见[开发账本第 15 节](docs/implementation/development-ledger.md#15-继续推进后的本地收口未部署未重跑真实恢复)。**本轮未运行会重启预览或派发远端任务的 integration／browser 脚本，未提交／推送改动。**
+
+**SDK 持续升级基线**：按后续授权，已将 SDK／Gateway 的[来源锁](profiles/agent-studio-preview/sources.lock.json)迁移到当前安装的 `0.2.1-rc.5`，并复核更新 3 份 package manifest 摘要；**98/98 个受控资产、6 个包版本及原生 Terminal stock patch 均匹配，上一轮 rc.4／rc.5 的来源一致性阻断已解除**。锁记录的是可持续更新的兼容快照，不要求 DSH 永久停留在历史版本；其他包独立记录版本，不强行与根 SDK 同号。来源一致不等于完整兼容、部署或恢复验收；本轮没有安装依赖、执行 prepare／start 或重启预览。
+
+## 截至 2026-10-31 暂停快照（历史，以下不是本轮执行指令）
 
 - **暂停范围**：已清除自动持续开发目标。本次只更新状态、准备源码／测试／受控 profile／infra 与脱敏文档证据的 WIP 版本快照；不修 D08、不启动 UI 重试／新远端负载／断连实验，不重启预览或 D05 常驻 fixture。下文运行命令是已有实现的手动参考，**不是当前自动执行指令**。
 - **D07**：真实只读发现、环境 API 与原 UI 新连接有通过证据；最终综合检查及唯一一次复测都失败，均未完成首项检查。历史 SSH255 与 helper timeout/EOF 的根因未全定位，TTL 守卫离线通过不能回写旧失败。[D07 阶段证据](docs/implementation/evidence/d07-environment-stage-selftest.json)不变。
@@ -60,13 +64,26 @@
 
 特别注意：code-server 官方 FAQ 列出 Microsoft Remote Extensions 不可用。因此“中央 code-server 通过扩展打开远端工作区”是第二阶段的独立可行性验证，不是当前已经成立的能力；也不能退回到每个环境运行一个 code-server 来冒充完成。
 
-优先评估的社区插件 manifest 未枚举本机 dsh 0.2.1-rc.4，但不能据此认定安装会失败。获准的隔离实验已实际通过固定 SSH 0.13.3 的归档／helper 摘要、依赖安装与模块导入；显式非构造器入口现已通过真实文件 profile 的启动、禁用／启用与整树卸载；未经包装的 Cordis 注册卸载失败仍保留，其原始 bundle 不启用。生产 CLI／web 的远端能力与完整侧边栏组合未验，不直接改生产。
+优先评估的社区插件 manifest 未枚举当时核查的 dsh 0.2.1-rc.4，但不能据此认定安装会失败。获准的隔离实验已实际通过固定 SSH 0.13.3 的归档／helper 摘要、依赖安装与模块导入；显式非构造器入口现已通过真实文件 profile 的启动、禁用／启用与整树卸载；未经包装的 Cordis 注册卸载失败仍保留，其原始 bundle 不启用。生产 CLI／web 的远端能力与完整侧边栏组合未验，不直接改生产。
 
-## 隔离开发预览参考（D-01 至 D08 初版，当前已暂停）
+## 隔离开发预览参考（D-01 至 D08 初版；真实实验仍暂停）
+
+### DSH 持续升级
+
+DSH 可以按正常发布节奏升级；[来源锁](profiles/agent-studio-preview/sources.lock.json)是本项目最近复核的兼容快照，不是永久版本限制。**版本不同表示基线待更新，不等于已经证实新版不兼容，也不要求回退旧版。** 使用[来源核对工具](scripts/dev/source-lock.mjs)定位版本／文件差异，再生成候选快照；以后将示例参数替换成实际安装的新版本：
+
+```bash
+node scripts/dev/source-lock.mjs --check
+node scripts/dev/source-lock.mjs --candidate --sdk-version 0.2.1-rc.5
+```
+
+默认核对完全只读，差异退出码为 1；`--json` 可供自动化读取。候选模式也只向 stdout 输出 JSON，stderr 明确标为 **UNVERIFIED**，不覆盖当前锁、不安装依赖、不部署／启动服务。缺失文件、包身份不符或目标版本与实际安装不符时拒绝生成候选。复核 manifest、实际代码与投影接缝差异后再采用；遇到代码变化先适配，不能只刷新摘要就宣称兼容。保留已知文件清单，文件更名／新增依赖须人工补审，不自动扩大信任范围。不同包可以有各自版本，不强行跟随根 SDK 同号；helper bundle 身份也不能靠通用摘要刷新自动升级。
+
+采用后重跑来源核对及离线回归（[来源工具测试](scripts/dev/source-lock.test.mjs)与[实际终端投影测试](scripts/dev/recovery-ui.test.mjs)均不写死发行版本）；部署和真实恢复验收仍单独安排。该流程不会因每次发布而要求永久停留旧版，也不会把“记录了新字节”误当成“新代码已通过兼容验证”。
 
 ### 启动与停止
 
-实测依赖为 Node **24.22.1**（原生 ESM、`node:sqlite`），本机已有 dsh **0.2.1-rc.4** 和 dsh-better-sidebar **0.28.2**；不需要 `npm install` 或前端重编译。当前 launcher 固定读取 `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh` 和 `/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar` 的受控包文件，并逐项核对[来源锁](profiles/agent-studio-preview/sources.lock.json)；不读取原 profile 配置／凭据。换机器须显式调整来源并重新核验，不能跳过摘要检查。
+当前源码兼容基线为 Node **24.22.1**（原生 ESM、`node:sqlite`）、dsh／Gateway **0.2.1-rc.5** 和 dsh-better-sidebar **0.28.2**；历史 rc.4 观察保留在原审计和账本中。当前 launcher 固定读取 `/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh` 和 `/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar` 的受控包文件，并逐项核对[来源锁](profiles/agent-studio-preview/sources.lock.json)；不读取原 profile 配置／凭据。**来源一致性检查已通过，但以下手动参考不是部署／真实恢复通过保证或本轮执行指令。** 本轮没有运行 `npm install`、前端构建或这些服务命令，没有重启现有预览。换机器仍须显式调整来源并重新核验，不能跳过摘要与接缝检查。
 
 ```bash
 cd /home/ubuntu/workspace/agent-studio
@@ -101,7 +118,7 @@ node scripts/dev/preview.mjs stop
 
 ### 实际接口与禁用范围
 
-新增认证 RPC 为 `POST /agent-studio-rpc/<method>`，不是 stock `/api`。rc.4 channel 必须为单段，不能注册原建议的 `/agent-studio/api`。请求体为 `{type:"client-request", rpcId, method, payload}`，URL method 必须相符，HTTP 200 后仍要检查 `result.ok`。
+新增认证 RPC 为 `POST /agent-studio-rpc/<method>`，不是 stock `/api`。当前已锁定的 Gateway channel 必须为单段，不能注册原建议的 `/agent-studio/api`。请求体为 `{type:"client-request", rpcId, method, payload}`，URL method 必须相符，HTTP 200 后仍要检查 `result.ok`。
 
 元数据接口包括 `project.create/get/list`、`environment.register/get/list`、`binding.create/get/list`、`session.create/get/list`、`dispatch.check` 和 `preview.status`。主体取自已认证 owner 并映射为稳定服务端 Principal；`session_id` 决定绑定，传入 binding/version 仅用于一致性断言。`dispatch.check` 始终是 `executed:false` 的**纯判定接口**，远端能力还须当前平台记录和活通道校验。
 

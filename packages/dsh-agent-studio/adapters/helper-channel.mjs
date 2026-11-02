@@ -3,6 +3,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { requireThat, StudioError } from '../store.mjs';
+import {spawnBrokerChild,brokerChildBoundary,boundedBytes,requireBrokerClose} from './child-boundary.mjs';
 
 export const HELPER_SHA='c853353b330d790813fdd2a2d641c9a4738c6b96f50b53c2f4aa53acec31901f';
 const alias='t105.m1-a';
@@ -26,75 +27,109 @@ async function loadModules(root) {
   }
   return modules;
 }
-function spawnBroker(mode,binding,operationId,onDiagnostic=()=>{}) {
+const validTimeout=ms=>requireThat(Number.isSafeInteger(ms)&&ms>0&&ms<=2147483647,'broker-deadline-invalid');
+const diagnostic=(fn,data)=>{try {fn?.(data);} catch(error) { /* diagnostics cannot strand a broker */ }};
+function spawnBroker(mode,binding,operationId,onDiagnostic,childBoundary) {
   const spawn=globalThis[Symbol.for('agent-studio.broker-spawn')];
   requireThat(typeof spawn==='function','broker-not-enabled');
-  const child=spawn(mode,binding.binding_id,binding.version,operationId),started=Date.now();
+  const boundary=spawnBrokerChild(spawn,[mode,binding.binding_id,binding.version,operationId],childBoundary),{child}=boundary,started=Date.now();
   const hash=createHash('sha256');let bytes=0;
-  child.stderr.on('data',data=>{hash.update(data);bytes+=data.length;});
-  child.exited=new Promise(resolve=>child.once('close',(exit,signal)=>{
-    onDiagnostic({layer:'broker',mode,started_at_ms:started,finished_at_ms:Date.now(),duration_ms:Date.now()-started,broker_pid:child.pid,exit_code:exit,signal,stderr_bytes:bytes,stderr_sha256:hash.digest('hex')});resolve({code:exit,signal});
-  }));
+  boundary.listen(child.stderr,'data',data=>{hash.update(data);bytes+=data.length;});
+  child.exited=boundary.settled;
+  boundary.onSettled(result=>diagnostic(onDiagnostic,{layer:'broker',mode,started_at_ms:started,finished_at_ms:Date.now(),duration_ms:Date.now()-started,broker_pid:child.pid,exit_code:result.code,signal:result.signal,close_observed:result.closeObserved,stderr_bytes:bytes,stderr_sha256:hash.digest('hex'),...(!result.closeObserved?{error_code:'broker-close-unconfirmed'}:result.failure?{error_code:transportCode(result.failure)}:{})}));
   child.verified=new Promise((resolve,reject)=>{
-    let buffer='',done=false;
-    child.once('error',()=>reject(new StudioError('broker-start-failed')));
-    child.stdio[3].on('data',data=>{
-      if(done) return;buffer+=data.toString();
-      if(buffer.length>8192) {done=true;reject(new StudioError('broker-proof-too-large'));child.kill('SIGTERM');return;}
-      if(buffer.includes('\n')) {
-        done=true;
-        try {const proof=JSON.parse(buffer.trim());
+    const buffer=boundedBytes(8192);let done=false,remove=()=>{};
+    const fail=error=>{if(done) return;done=true;remove();reject(error);boundary.stop(error);};
+    if(!child.stdio?.[3]) {fail(new StudioError('broker-proof-unavailable'));return;}
+    remove=boundary.listen(child.stdio[3],'data',data=>{
+      if(done) return;
+      if(!buffer.push(data)) {fail(new StudioError('broker-proof-too-large'));return;}
+      if(buffer.text().includes('\n')) {
+        try {const proof=JSON.parse(buffer.text().trim());
           requireThat(proof.dispatch===true && proof.binding_id===binding.binding_id && proof.version===binding.version && proof.generation===binding.instance_generation,'channel-identity-mismatch');
-          onDiagnostic({layer:'ssh',mode,stage:'same-channel-proof',channel_id:proof.channel_id,started_at_ms:started,finished_at_ms:Date.now(),duration_ms:Date.now()-started});resolve(proof);
-        } catch(error) {reject(error instanceof StudioError?error:new StudioError('broker-proof-invalid'));}
+          done=true;remove();diagnostic(onDiagnostic,{layer:'ssh',mode,stage:'same-channel-proof',channel_id:proof.channel_id,started_at_ms:started,finished_at_ms:Date.now(),duration_ms:Date.now()-started});resolve(proof);
+        } catch(error) {fail(error instanceof StudioError?error:new StudioError('broker-proof-invalid'));}
       }
     });
-    child.once('close',()=>reject(new StudioError('broker-closed-before-verification')));
+    boundary.onSettled(result=>{if(!done) {done=true;remove();reject(result.failure??new StudioError(result.closeObserved?'broker-closed-before-verification':'broker-close-unconfirmed'));}});
   });
   child.verified.catch(error=>{child.proofError=transportCode(error);});
-  return child;
+  return boundary;
 }
-async function brokerRead(mode,binding,{operationId,timeoutMs=20000,onDiagnostic}={}) {
-  const child=spawnBroker(mode,binding,operationId,onDiagnostic);let output='',overflow=false;
-  child.stdin.end();child.stdout.on('data',data=>{if(output.length+data.length>65536){overflow=true;child.kill('SIGTERM');}else output+=data.toString();});
-  const timer=setTimeout(()=>child.kill('SIGTERM'),timeoutMs);
-  try {const result=await child.exited;requireThat(!overflow && result.code===0,mode==='check'?'channel-current-identity-unavailable':'task-identity-probe-unavailable');
-    let observed;try{observed=JSON.parse(output);}catch(error){throw new StudioError('broker-response-invalid');}
-    requireThat(observed.generation===binding.instance_generation,'instance-changed');
-    if(mode==='observe-task') await child.verified;
-    return observed;
-  } finally {clearTimeout(timer);}
+async function brokerRead(mode,binding,{operationId,timeoutMs=20000,onDiagnostic,childBoundary}={}) {
+  validTimeout(timeoutMs);
+  const boundary=spawnBroker(mode,binding,operationId,onDiagnostic,childBoundary),{child}=boundary,output=boundedBytes(65536);
+  boundary.deadline(timeoutMs,'broker-read-timeout');
+  boundary.listen(child.stdout,'data',data=>{if(!boundary.stopping&&!output.push(data)) boundary.stop(new StudioError('broker-output-limit'));});
+  try {child.stdin.end();} catch(error) {boundary.stop(new StudioError('broker-stdio-failed'));}
+  const result=requireBrokerClose(await child.exited);
+  requireThat(result.code===0,mode==='check'?'channel-current-identity-unavailable':'task-identity-probe-unavailable');
+  let observed;try {observed=JSON.parse(output.text());} catch(error) {throw new StudioError('broker-response-invalid');}
+  requireThat(observed.generation===binding.instance_generation,'instance-changed');
+  if(mode==='observe-task') await child.verified;
+  return observed;
 }
 export function checkCurrent(binding,options={}) {return brokerRead('check',binding,options);}
 export function observeTask(binding,operationId,options={}) {return brokerRead('observe-task',binding,{...options,operationId});}
-export async function openChannel(root,binding,{resume,install=true,retentionMs=30000,timeoutMs=60000,onDiagnostic=()=>{}}={}) {
-  const mod=await loadModules(root);let installChild;
+export async function openChannel(root,binding,{resume,install=true,retentionMs=30000,timeoutMs=60000,onDiagnostic,childBoundary}={}) {
+  validTimeout(timeoutMs);const mod=await loadModules(root);
   if(install && !resume) {
-    const installer=new mod.RemoteHelperInstaller({sshBinary:'d02-bound-broker',timeoutMs:120000,capabilities:mod.MODERN_SSH_CAPABILITIES,
-      spawnProcess(_binary,args){requireThat(args.at(-2)===alias,'broker-alias-mismatch');installChild=spawnBroker('install',binding,undefined,onDiagnostic);return installChild;}});
-    try {await installer.install(alias);await installChild.verified;}
-    catch(error){throw new StudioError('helper-install-failed',`Bound helper installation failed (${transportCode(error)})`);}
+    let boundary;
+    try {
+      // The fixed broker owns the install command. Only the exact hash-checked
+      // asset bytes cross stdin; avoid a second uploader's timers/signals.
+      const asset=mod.loadHelperAsset();
+      requireThat(Buffer.isBuffer(asset.content)&&asset.content.length<=2097152&&asset.sha256===HELPER_SHA&&createHash('sha256').update(asset.content).digest('hex')===HELPER_SHA,'helper-digest-mismatch');
+      boundary=spawnBroker('install',binding,undefined,onDiagnostic,childBoundary);const {child}=boundary;
+      boundary.deadline(120000,'helper-install-timeout');
+      boundary.listen(child.stdout,'data',()=>{});
+      try {child.stdin.end(asset.content);} catch(error) {boundary.stop(new StudioError('broker-stdio-failed'));}
+      requireThat(requireBrokerClose(await child.exited).code===0,'helper-install-broker-failed');
+      await child.verified;
+    } catch(error) {
+      let uncertain=false;
+      if(boundary) {const result=await boundary.stop(error);uncertain=!result.closeObserved;if(uncertain) error=new StudioError('broker-close-unconfirmed');}
+      const failure=new StudioError('helper-install-failed',`Bound helper installation failed (${transportCode(error)})`);
+      if(uncertain) failure.uncertain=true;throw failure;
+    }
   }
   const args=mod.buildSystemSshArgs(alias,mod.buildHelperConnectCommand(HELPER_SHA));requireThat(args.at(-2)===alias,'broker-alias-mismatch');
-  const child=spawnBroker('connect',binding,undefined,onDiagnostic),started=Date.now();
-  const client=new mod.RemoteHelperRpcClient({readable:child.stdout,writable:child.stdin,closeTransport:()=>child.stdin.end(),helloTimeoutMs:timeoutMs});
-  child.once('close',()=>client.transportClosed(new StudioError('helper-transport-closed')));
+  const boundary=spawnBroker('connect',binding,undefined,onDiagnostic,childBoundary),{child}=boundary,started=Date.now();
+  const clearDeadline=boundary.deadline(timeoutMs,'helper-initialize-timeout');let client;
   try {
-    await client.initialize({clientId:resume?.clientId??randomUUID(),clientName:'agent-studio-bound-preview',clientVersion:'d08',retentionMs,...(resume?{resumeToken:resume.token}:{})},{timeoutMs});
-    const proof=await child.verified;
+    client=new mod.RemoteHelperRpcClient({readable:child.stdout,writable:child.stdin,closeTransport:()=>child.stdin.end(),helloTimeoutMs:timeoutMs});
+    boundary.onSettled(result=>client.transportClosed(new StudioError(result.closeObserved?'helper-transport-closed':'broker-close-unconfirmed')));
+    client.onClose(()=>boundary.stop(undefined,{graceMs:1000}));
+    const [_,proof]=await Promise.race([
+      Promise.all([client.initialize({clientId:resume?.clientId??randomUUID(),clientName:'agent-studio-bound-preview',clientVersion:'d08',retentionMs,...(resume?{resumeToken:resume.token}:{})},{timeoutMs}),child.verified]),
+      child.exited.then(result=>{requireBrokerClose(result);throw new StudioError('helper-transport-closed');}),
+    ]);
+    if(boundary.stopping||boundary.finished) throw boundary.failure??new StudioError('helper-transport-closed');
     requireThat(client.hello.helperVersion==='0.13.1' && client.sessionId,'helper-protocol-mismatch');
-    onDiagnostic({layer:'helper-rpc',stage:'initialize',channel_id:proof.channel_id,started_at_ms:started,finished_at_ms:Date.now(),duration_ms:Date.now()-started,resumed:client.session.resumed,retention_ms:client.session.retentionMs});
+    diagnostic(onDiagnostic,{layer:'helper-rpc',stage:'initialize',channel_id:proof.channel_id,started_at_ms:started,finished_at_ms:Date.now(),duration_ms:Date.now()-started,resumed:client.session.resumed,retention_ms:client.session.retentionMs});
     return {client,child,proof,connected:true};
   } catch(error) {
-    onDiagnostic({layer:'helper-rpc',stage:'initialize',started_at_ms:started,finished_at_ms:Date.now(),duration_ms:Date.now()-started,error_code:transportCode(error)});
-    client.close('initialize failed');child.kill('SIGTERM');await child.exited;
-    throw new StudioError(transportCode(error));
-  }
+    const stopped=boundary.stop(error);
+    try {client?.close('initialize failed');} catch(closeError) { /* bounded stop is already armed */ }
+    const result=await stopped;
+    error=result.closeObserved?(result.failure??error):new StudioError('broker-close-unconfirmed');
+    diagnostic(onDiagnostic,{layer:'helper-rpc',stage:'initialize',started_at_ms:started,finished_at_ms:Date.now(),duration_ms:Date.now()-started,error_code:transportCode(error)});
+    const failure=new StudioError(transportCode(error));if(!result.closeObserved) failure.uncertain=true;throw failure;
+  } finally {clearDeadline();}
 }
-// Transport-only detach. Never session/close, workspace/close, or daemon signals.
-export async function closeChannel(channel) {
-  channel.connected=false;channel.client.close('bound transport detached');
-  const timer=setTimeout(()=>{if(channel.child.exitCode===null) channel.child.kill('SIGTERM');},1000);
-  try {const result=await channel.child.exited;requireThat(result.code===0 || result.signal==='SIGTERM' || result.code===78,'transport-close-unconfirmed');return result;}
-  finally {clearTimeout(timer);}
+const closing=new WeakMap();
+// Transport-only detach. No session/workspace close, task signals or release.
+// Unknown children are never adopted, and absent close never means success.
+export function closeChannel(channel,{graceMs=1000}={}) {
+  requireThat(Number.isSafeInteger(graceMs)&&graceMs>=0,'broker-deadline-invalid');
+  const boundary=brokerChildBoundary(channel.child);requireThat(boundary,'transport-child-not-owned');
+  channel.connected=false;
+  if(!closing.has(channel.child)) closing.set(channel.child,Promise.resolve().then(async()=>{
+    const stopped=boundary.stop(undefined,{graceMs});let closeFailed=false;
+    try {channel.client.close('bound transport detached');} catch(error) {closeFailed=true;}
+    const result=requireBrokerClose(await stopped,'transport-close-unconfirmed');
+    requireThat(!closeFailed&&(result.code===0||result.code===78||['SIGTERM','SIGKILL'].includes(result.signal)),'transport-close-unconfirmed');
+    return result;
+  }));
+  return closing.get(channel.child);
 }

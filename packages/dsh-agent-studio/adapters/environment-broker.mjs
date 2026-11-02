@@ -1,22 +1,27 @@
 import {requireThat,StudioError} from '../store.mjs';
+import {spawnBrokerChild,boundedBytes,requireBrokerClose} from './child-boundary.mjs';
 
 // Only fixed server-owned modes and durable request IDs cross this boundary.
-// There is no browser-provided URL, executable, credentials, argv or policy.
+// Timing overrides are server/test configuration, never browser spawn authority.
 export class EnvironmentBroker {
- call(mode,requestId) {
+ constructor({timeoutMs=80000,termGraceMs=15000,killWaitMs=1000}={}) {this.timing={timeoutMs,termGraceMs,killWaitMs};}
+ async call(mode,requestId) {
   const spawn=globalThis[Symbol.for('agent-studio.environment-broker')];requireThat(typeof spawn==='function','environment-broker-disabled');
-  return new Promise((resolve,reject)=>{
-   const child=spawn(mode,requestId);let output='',errors='',failure;
-   const stop=code=>{failure=new StudioError(code);child.kill('SIGTERM');};
-   const timer=setTimeout(()=>stop('environment-broker-timeout'),80000);
-   child.stdin.end();child.stdout.on('data',data=>{output+=data.toString();if(Buffer.byteLength(output)>1048576) stop('environment-broker-output-limit');});
-   child.stderr.on('data',data=>{errors=(errors+data.toString()).slice(-4096);});
-   child.once('error',()=>{clearTimeout(timer);reject(new StudioError('environment-broker-start-failed'));});
-   child.once('close',code=>{clearTimeout(timer);if(failure) return reject(failure);if(code!==0) {
-    let reason;try {reason=JSON.parse(errors).error;} catch(error) {reason='environment-broker-failed';}
-    return reject(new StudioError(typeof reason==='string' && /^D07_[A-Z_]+$/.test(reason)?reason:'environment-broker-failed'));
-   }try {resolve(JSON.parse(output));} catch(error) {reject(new StudioError('environment-broker-response-invalid'));}});
-  });
+  requireThat(Number.isSafeInteger(this.timing.timeoutMs)&&this.timing.timeoutMs>0&&this.timing.timeoutMs<=2147483647,'broker-deadline-invalid');
+  const boundary=spawnBrokerChild(spawn,[mode,requestId],{...this.timing,startCode:'environment-broker-start-failed',ioCode:'environment-broker-stdio-failed'}),{child}=boundary;
+  const output=boundedBytes(1048576),errors=boundedBytes(4096,{tail:true});
+  boundary.deadline(this.timing.timeoutMs,'environment-broker-timeout');
+  boundary.listen(child.stdout,'data',data=>{if(!boundary.stopping&&!output.push(data)) boundary.stop(new StudioError('environment-broker-output-limit'));});
+  boundary.listen(child.stderr,'data',data=>errors.push(data));
+  try {child.stdin.end();} catch(error) {boundary.stop(new StudioError('environment-broker-stdio-failed'));}
+  // The operation timeout starts termination; final settlement has a separate
+  // finite TERM/KILL budget. Signal delivery alone never confirms an outcome.
+  const result=requireBrokerClose(await boundary.settled,'environment-broker-close-unconfirmed');
+  if(result.code!==0) {
+   let reason;try {reason=JSON.parse(errors.text()).error;} catch(error) {reason='environment-broker-failed';}
+   throw new StudioError(typeof reason==='string'&&/^D07_[A-Z_]+$/.test(reason)?reason:'environment-broker-failed');
+  }
+  try {return JSON.parse(output.text());} catch(error) {throw new StudioError('environment-broker-response-invalid');}
  }
  discover() {return this.call('environment-discover');}
  submit(requestId) {return this.call('environment-submit',requestId);}

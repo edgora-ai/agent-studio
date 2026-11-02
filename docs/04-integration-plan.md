@@ -28,7 +28,7 @@ dsh 工具、Host API、文件引用、搜索、侧边栏 Git
 | `xiray-xia/dsh-remote-vs` | 0.11.1，MIT；2026-10-30 复核 `package.json` 仍要求 dsh ^0.2.2-alpha.2；`src/pool.ts` 使用 ssh2，未处理 ProxyCommand／ProxyJump | 参考路由和侧边栏实现；当前组合须隔离验证，不因依赖差异预告安装必然失败；ssh2 连接不等于支持 OpenSSH ProxyCommand |
 | `jinsiyu/dsh-code-server-app` | 集成 coder/code-server 编辑界面；并非 Coder 工作区控制面插件 | 第二阶段参考 IDE 入口和文件打开桥接，不作为远程执行底座 |
 | Coder | 开源核心（AGPLv3）；控制台、REST、模板、工作区 Agent／SSH／Web 应用访问；外部 provisioner 页面标注 Premium | 管环境与连接；不能假定所有 Premium 能力免费，也不是代码隔离策略的替代物 |
-| dsh | 本机安装 0.2.1-rc.4；2026-10-30 复核 npm 最新为 0.2.1-rc.5（2026-10-29 发布），alpha 通道为 0.2.2-alpha.2 | 版本升级不是本轮决定；候选插件与 dsh 的版本组合必须在 M1 明确锁定 |
+| dsh | 首轮审计时安装 0.2.1-rc.4；2026-10-30 复核 npm 最新为 0.2.1-rc.5（2026-10-29 发布），alpha 通道为 0.2.2-alpha.2；后续已授权将本项目源码基线迁移到本机安装的 0.2.1-rc.5 | 按持续发布维护兼容快照，不永久停留历史版本；当前组合见[来源锁](../profiles/agent-studio-preview/sources.lock.json)，用[只读核对／候选工具](../scripts/dev/source-lock.mjs)列出差异，复核实现与投影回归后更新；不以元数据对齐代替真实兼容验收 |
 | better-sidebar | 本机 0.28.2；`src/fs-tree.ts`、`src/fs-watch.ts`、`src/git.ts` 直接使用 Node FS、`fs.watch` 与本地 `git`；另有 `src/open-external.ts` 在本机 spawn 打开器 | 需改造或显式禁用远程模式入口 |
 | OpenSandbox | Apache-2.0；生命周期／执行 API，Docker 和 K8s；主分支有基础 Console | 可作为未来平台适配器；不进入第一阶段双平台实现 |
 
@@ -112,9 +112,9 @@ CrazyShout 插件的 `src/ssh-config.ts` 使用 `ssh -G` 获取有效配置，�
 
 ### 5.1 版本契约先行
 
-当前已有环境为 dsh 0.2.1-rc.4，但它的安装类型与检出源码不是完全一致：FS 有 watch／字节范围能力，subprocess 的句柄与控制接口也存在差异。源仓库 E2B POC 只能作设计参考，不可直接认定兼容。
+首轮审计时环境为 dsh 0.2.1-rc.4，当时发现安装类型与检出源码并非完全一致：FS 有 watch／字节范围能力，subprocess 的句柄与控制接口也存在差异。这是历史接口观察，不是永久要求保持 rc.4；源仓库 E2B POC 仍只能作设计参考，不可直接认定兼容。
 
-先在隔离 profile 对照安装产物，列出接口覆盖表。优先保持当前版本；如果候选必须升级 dsh，先报告必要性和迁移回归范围，不在本次文档工作中升级。候选插件的声明范围若不包含当前版本，按第 2 节版本门处理。
+当前已按后续授权将源码兼容快照迁移到 `0.2.1-rc.5`，以[来源锁](../profiles/agent-studio-preview/sources.lock.json)、实际安装接口及离线回归为依据，未重新安装或部署。后续正常跟进 DSH 发布：先用[来源核对工具](../scripts/dev/source-lock.mjs)检查版本与字节差异，再显式生成未验证候选、复核接缝和依赖变化并运行回归，最后更新快照；不把任何一个历史版本永久固化。新代码的来源对齐仍不等于运行兼容或 M1 验收。候选插件的声明范围若不包含实际版本，按第 2 节版本门区分声明与运行结果，不据列表遗漏宣称必然不兼容。
 
 ### 5.2 环境绑定和服务解析
 

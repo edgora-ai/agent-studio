@@ -1,6 +1,14 @@
 import {AcpPanel} from '../../packages/dsh-agent-studio/acp-sidebar.mjs';
 import {EnvironmentPanel,EnvironmentEntry} from '../../packages/dsh-agent-studio/environment-sidebar.mjs';
-import {RecoveryPanel} from '../../packages/dsh-agent-studio/recovery-sidebar.mjs';
+import {RecoveryPanel,terminalRecoveryIdentity,terminalRecoveryWritable} from '../../packages/dsh-agent-studio/recovery-sidebar.mjs';
+import {createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
+const sourceLock=JSON.parse(readFileSync(new URL('../../profiles/agent-studio-preview/sources.lock.json',import.meta.url)));
+function verified(file,bytes,lock) {
+  if(!lock.files[file]||createHash('sha256').update(bytes).digest('hex')!==lock.files[file])throw new Error('Projection source hash mismatch: '+file);
+  return bytes.toString();
+}
+const terminalPrelude=()=>`const StudioTerminalRecovery = ${RecoveryPanel.toString()};\nconst StudioTerminalIdentity = ${terminalRecoveryIdentity.toString()};\nconst StudioTerminalWritable = ${terminalRecoveryWritable.toString()};\nconst StudioTerminalOwner=(ref,identity,visible,ready)=>{if(!ref.current||ref.current.sessionId!==identity.sessionId||ref.current.terminalId!==identity.terminalId||ref.current.visible!==visible||ref.current.ready!==ready)ref.current={...identity,visible,ready};return ref.current;};\n`;
 // Small, uniqueness-checked edits to the hash-locked 0.28.2 client projection.
 // The installed upstream package remains untouched. No new UI/server or build tool.
 function once(source,oldText,newText) {
@@ -14,7 +22,7 @@ function section(source,start,end,replacement) {
   return source.slice(0,at)+replacement+source.slice(finish);
 }
 export function projectSidebar(file,bytes) {
-  let source=bytes.toString();
+  let source=verified(file,bytes,sourceLock.sidebar);
   if(['lib/client.js','lib/client-registry.js'].includes(file)) {
     source=once(source,'function builtinTabs(ctx) {',`const StudioRecoveryPanel = ${RecoveryPanel.toString()};\nconst StudioAcpPanel = ${AcpPanel.toString()};\nconst StudioEnvironmentPanel = ${EnvironmentPanel.toString()};\nconst StudioEnvironmentEntry = ${EnvironmentEntry.toString()};\nfunction builtinTabs(ctx) {`);
     source=once(source,'function Sidebar(props) {',`function Sidebar(props) {
@@ -105,9 +113,30 @@ export function projectSidebar(file,bytes) {
     source=once(source,'error.code === "fs-conflict"','(error.code === "fs-conflict" || error.code === "conflict")');
   }
   if(file==='lib/client-terminal.js') {
-    source=once(source,'function TerminalBottomView({ ctx, scope, tab, visible }) {',`const StudioTerminalRecovery = ${RecoveryPanel.toString()};\nfunction TerminalBottomView({ ctx, scope, tab, visible }) {\n const [studioRecovery,setStudioRecovery]=(0,react.useState)({writable:false});`);
-    source=once(source,'children: [\n\t\t\t\tstatus !== void 0',`children: [\n (0,react.createElement)(StudioTerminalRecovery,{scope,visible,terminalId:state.info?.id??model.id,React:react,onState:setStudioRecovery}),\n\t\t\t\tstatus !== void 0`);
-    source=once(source,'state,\n\t\t\t\t\tvisible,\n\t\t\t\t\tscheme,','state:{...state,writable:state.writable&&studioRecovery.writable},\n\t\t\t\t\tvisible,\n\t\t\t\t\tscheme,');
+    source=once(source,'function TerminalBottomView({ ctx, scope, tab, visible }) {',`${terminalPrelude()}function TerminalBottomView({ ctx, scope, tab, visible }) {\n const [studioRecovery,setStudioRecovery]=(0,react.useState)({writable:false});\n const studioCurrent=(0,react.useRef)();`);
+    source=once(source,'const scheme = (0, react.useSyncExternalStore)(subscribeColorScheme, isDarkScheme);','const scheme = (0, react.useSyncExternalStore)(subscribeColorScheme, isDarkScheme);\n const studioIdentity=StudioTerminalIdentity(sessionId,model,state);\n const studioOwner=StudioTerminalOwner(studioCurrent,studioIdentity,visible,state?.writable===true);');
+    source=once(source,'children: [\n\t\t\t\tstatus !== void 0',`children: [\n (0,react.createElement)(StudioTerminalRecovery,{key:sessionId+'\\0'+studioIdentity.terminalId,scope,visible,terminalId:studioIdentity.terminalId,generation:studioOwner,React:react,onState:value=>{if(studioCurrent.current===studioOwner)setStudioRecovery({...value,owner:studioOwner});}}),\n\t\t\t\tstatus !== void 0`);
+    source=once(source,'state,\n\t\t\t\t\tvisible,\n\t\t\t\t\tscheme,','state:{...state,writable:visible===true&&state.writable===true&&studioRecovery.owner===studioOwner&&StudioTerminalWritable(studioRecovery,studioIdentity)},\n\t\t\t\t\tvisible,\n\t\t\t\t\tscheme,');
+    source=once(source,'const xterm = new import_xterm.Terminal({','const xterm = new import_xterm.Terminal({\n disableStdin: true,');
+    source=once(source,'model.write(data);','if(current.current.visible===true&&current.current.state.writable===true)model.write(data);');
+  }
+  return Buffer.from(source);
+}
+
+// Actual DSH native right-sidebar terminal, not better-sidebar's bottom view.
+// All other native package bytes (including its client factory) stay unchanged.
+export function projectNativeTerminal(file,bytes) {
+  let source=verified(file,bytes,sourceLock.native_terminal);
+  if(file==='lib/client.terminal.js') {
+    source=once(source,'function TerminalBody({ useTabInfo, useTerminal, useTheme, view, t }) {',`${terminalPrelude()}function TerminalBody({ useTabInfo, useTerminal, useTheme, view, t }) {\n const [studioRecovery,setStudioRecovery]=(0,react.useState)({writable:false});\n const studioCurrent=(0,react.useRef)();`);
+    source=once(source,'const state = useTerminal(tab.id);','const nativeState = useTerminal(tab.id);\n const studioIdentity=StudioTerminalIdentity(model.sessionId,model,nativeState);\n const studioOwner=StudioTerminalOwner(studioCurrent,studioIdentity,tab.visible,nativeState?.writable===true);\n const state=nativeState===undefined?undefined:{...nativeState,writable:tab.visible===true&&nativeState.writable===true&&studioRecovery.owner===studioOwner&&StudioTerminalWritable(studioRecovery,studioIdentity)};\n const studioPanel=(0,react.createElement)(StudioTerminalRecovery,{key:studioIdentity.sessionId+"\\0"+studioIdentity.terminalId,scope:{sessionId:studioIdentity.sessionId},visible:tab.visible,terminalId:studioIdentity.terminalId,generation:studioOwner,React:react,onState:value=>{if(studioCurrent.current===studioOwner)setStudioRecovery({...value,owner:studioOwner});}});');
+    source=once(source,'children: [\n\t\t\t\t\t(status !== void 0',`children: [\n studioPanel,\n\t\t\t\t\t(status !== void 0`);
+    source=once(source,'if (state.issue === "missingTerminal") return (0, react_jsx_runtime.jsx)("section", {','if (state.issue === "missingTerminal") return (0,react.createElement)(react.Fragment,null,studioPanel,(0,react_jsx_runtime.jsx)("section", {');
+    source=once(source,'\n\t\t\t});\n\t\t\tconst error =','\n\t\t\t}));\n\t\t\tconst error =');
+    source=once(source,'const xterm = new import_xterm.Terminal({','const xterm = new import_xterm.Terminal({\n disableStdin: true,');
+    source=once(source,'model.write(data);','if(current.current.visible===true&&current.current.state.writable===true)model.write(data);');
+    // Do not offer the native take-control button as a substitute for verification.
+    source=once(source,'const readOnly = state.phase === "connected" && state.info?.state === "running" && !state.writable;','const readOnly = nativeState.phase === "connected" && nativeState.info?.state === "running" && !nativeState.writable;');
   }
   return Buffer.from(source);
 }

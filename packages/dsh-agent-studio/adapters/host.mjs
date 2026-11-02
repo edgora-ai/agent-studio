@@ -1,7 +1,7 @@
 import { StudioError, requireThat } from '../store.mjs';
 import {nativeTerminalAllocation} from './agent-terminal.mjs';
 
-// Explicit rc.4 allowlist. Unknown methods fail closed, including future stock methods.
+// Explicit reviewed allowlist. Unknown methods fail closed, including future stock methods.
 const GLOBAL_READS = new Set([
   'session/list','session/search','session/control','session/modelCatalog','session/canOpenWorkspacePath',
   'workspace/follow','settings/describe','pluginInventory/list','pluginManager/list',

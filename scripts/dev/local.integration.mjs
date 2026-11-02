@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir,symlink,lstat} from 'node:fs/promises';
 import {randomUUID,createHash} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
+import {CURRENT_SCHEMA_VERSION} from '../../packages/dsh-agent-studio/store.mjs';
 import {setTimeout as delay} from 'node:timers/promises';
 import {createRequire} from 'node:module';
 import {authenticate,requestRpc,DEFAULT_ROOT as root,repo} from './preview.mjs';
@@ -38,14 +39,14 @@ async function operation(operation_id) {
 }
 try {
  const baseline=JSON.parse(await readFile(repo+'/artifacts/d04/pre-migration.json','utf8')),db=new DatabaseSync(root+'/bindings.sqlite',{readOnly:true});
- assert.equal(db.prepare('PRAGMA user_version').get().user_version,5);assert.equal(db.prepare('PRAGMA integrity_check').get().integrity_check,'ok');
+ assert.equal(db.prepare('PRAGMA user_version').get().user_version,CURRENT_SCHEMA_VERSION);assert.equal(db.prepare('PRAGMA integrity_check').get().integrity_check,'ok');
  for(const [table,prior] of Object.entries(baseline.rows)) assert.equal(hash(JSON.stringify(db.prepare(`SELECT ${prior.columns.join(',')} FROM ${table} ORDER BY rowid LIMIT ?`).all(prior.count))),prior.sha256,table);
  for(const [table,key,method] of [['projects','project_id','project'],['environments','environment_id','environment'],['project_bindings','binding_id','binding'],['session_bindings','session_id','session']]) {
   const row={...db.prepare(`SELECT * FROM ${table} WHERE ${key}=?`).get(ids[key])},input={[key]:ids[key],...(method==='binding'?{version:ids.version}:{})};
   const read=await rpc(method+'.get',input);if(method==='session') delete read.native;
   assert.deepEqual(read,row);assert.ok((await rpc(method+'.list')).some(r=>r[key]===row[key]));
  }
- db.close();pass('schema v5 preserves every prior column/row; local records SQL -> full API -> list');
+ db.close();pass(`schema v${CURRENT_SCHEMA_VERSION} preserves every prior column/row; local records SQL -> full API -> list`,{schema:CURRENT_SCHEMA_VERSION});
  assert.equal((await fetch(auth.origin+'/agent-studio/health')).status,200);
  for(const endpoint of ['/agent-studio-rpc/fs.list','/sidebar/api/fs.tree','/sidebar/api/fs.search','/sidebar/api/git.status','/sidebar/api/reference.create']) for(const cookie of ['', 'dsh_auth=invalid']) {
   const response=await fetch(auth.origin+endpoint,{method:'POST',headers:{'content-type':'application/json',cookie,origin:auth.origin},body:JSON.stringify({sessionId:ids.session_id})});assert.equal(response.status,401);
