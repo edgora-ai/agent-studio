@@ -444,8 +444,14 @@ repair2 已把 `scripts/m1/t107_repair_guard.mjs` 的动作分类改为与安装
 
 - 边界：这是**单任务、同 Host、合成程序**的开发自测通过；不是跨 Host／崩溃／restart 窗口恢复，不含 ACP 业务 resume、真实模型／CLI、完整 M2／M3 或 D07 SSH255 根因，也不构成正式 M1／发布验收。历史首轮 D08 UI 失败仍是有效失败记录。证据与截图摘要见[D08 单任务恢复证据](evidence/d08-single-task-recovery-2026-11-02.json)。
 
+### 远端通道中断复盘（2026-11-02）
+
+当天远端曾两次中断：12:54:20 仅 4.6 秒后恢复；13:19:25 断开至 13:50:27 才恢复，持续约 **31 分 2 秒**。用新增的[只读诊断工具](../../scripts/dev/remote-diagnostics.mjs)对已持久化的 Coder 控制面观测、审计与 operation 记录做关联（不新建通道、不连 SSH、不写 DB）：长中断窗口前后有 10 条 precursor channel loss、窗口内 8 条 channel loss、1 条 precursor／2 条窗口内 broker connect `exit_code 255`；窗口内 workspace `lifecycle=running`、build `running`（未重建、未停止）。中断期间所有绑定环境 `environment.unavailable` 并保留恢复身份；本地按 fail-closed 记录 unknown，没有重放或伪造取消。agent 恢复后，D03 远端原 UI **8/8**、D08 单任务恢复 **5/5** 均在当天通过。
+
+影响：当天新增 **9 条** unknown（12:52:41 / 12:54:01 / 13:19:05 各 3 条 `helper-stdout-ended`／`helper-call-timeout`），与 13 条历史 unknown 一并保留，未删除或改写。结论：**2026-11-02 的中断是远端 Coder agent 连接丢失，本地 broker exit 255、helper EOF 与 unknown 是下游症状，不是本地 broker/helper/投影缺陷的证据**。只读观测无法给出 agent 断开的初始原因（需要 Coder agent／控制面日志）；观测历史从 2026-10-31T02:56 才开始，**历史 D07 两次综合失败仍不能据此回溯定性**。证据见[远端中断分析](evidence/d07-remote-agent-outage-2026-11-02.json)，无基础设施或远端负载动作。
+
 ### 仍未验证与下一步授权边界
 
-本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
+本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
 
 正式 M1 仍未有最终放行决定：[review2](evidence/t107-independent-review2.json) 记录 `repair-required`、`m1Passed=false`，归档仍缺最终 validation，不能称为完整独立验收归档；M1-05 只在声明技术范围通过。repair2 对 T107-R2-IA-04 的 URL 归一化修复已由[独立复验](evidence/t107-repair2-independent-validation.json)在本机声明技术范围关闭：28 项单测、实际入口 51 负例／10 本地正例、8 个 recorder 全回收、0 旁路、安装源码哈希匹配。正式 M1 放行与 T-201、真实外部模型／CLI、生命周期、多机／手机、完整 M2／M3 与发布门槛均未因本轮修复而通过。

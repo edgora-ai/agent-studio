@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "task": "D-07",
+  "kind": "remote-agent-connectivity-outage-analysis",
+  "dateUTC": "2026-11-02",
+  "role": "bounded-read-only-analysis-not-acceptance",
+  "method": "Read-only correlation of the private preview store: authenticated Coder control-plane observations already persisted by environment discovery, local audit events, and operation records. No new channel, SSH, Coder mutation, task or replay.",
+  "tool": {
+    "path": "scripts/dev/remote-diagnostics.mjs",
+    "sha256": "376f660f5edfe10e30cdc0b814a0132eb94fed26a3eb9db61679587ffcaf45f5",
+    "mode": "default read-only; --json/--db only; never connects or writes"
+  },
+  "tests": {
+    "path": "scripts/dev/remote-diagnostics.test.mjs",
+    "sha256": "1be0a4bde0c0d89de53de4bf621d0dd1754629e81178731a7e1f4c41fb79d53c",
+    "count": 8,
+    "status": "pass"
+  },
+  "artifact": {
+    "path": "artifacts/d07/remote-diagnostics-20261102T140223Z.json",
+    "sha256": "0fe6b6f02d215d2f8ca5ea7eb6f1162185ad5203922581159da22a849919f717",
+    "text": {
+      "path": "artifacts/d07/remote-diagnostics-20261102T140223Z.txt",
+      "sha256": "df7ff0c3fadfe6bfc4e4ab5b41b3c9d68e64a8ae91dfb0cbe9b8de75f09119b0"
+    }
+  },
+  "observationSpan": {
+    "first": "2026-10-31T02:56:12.634Z",
+    "last": "2026-11-02T14:02:17.772Z",
+    "rows": 12627
+  },
+  "outages": [
+    {
+      "disconnected_at": "2026-10-31T03:02:20.084425Z",
+      "recovered_at": "2026-10-31T03:02:44.809051Z",
+      "duration_ms": 24725,
+      "recovered": true
+    },
+    {
+      "disconnected_at": "2026-11-02T12:54:20.435098Z",
+      "recovered_at": "2026-11-02T12:54:24.994262Z",
+      "duration_ms": 4559,
+      "recovered": true
+    },
+    {
+      "disconnected_at": "2026-11-02T13:19:25.011609Z",
+      "recovered_at": "2026-11-02T13:50:27.556786Z",
+      "duration_ms": 1862545,
+      "recovered": true,
+      "lifecycle": "running",
+      "build_status": "running",
+      "precursor_channel_losses": 10,
+      "channel_losses_in_window": 8,
+      "precursor_broker_failures": 1,
+      "broker_failures_in_window": 2
+    }
+  ],
+  "impact": {
+    "brokenRemoteRuns": "D02/D03 remote UI and D08 attempts during 12:52-13:50: helper-call-timeout/helper-stdout-ended, broker connect exit_code 255, all bound environments paused with recovery identity preserved.",
+    "newUnknownOperations": 9,
+    "newUnknownDetail": [
+      {
+        "created_at": "2026-11-02T12:52:41.258Z",
+        "count": 3,
+        "error": "helper-stdout-ended"
+      },
+      {
+        "created_at": "2026-11-02T12:54:01.069Z",
+        "count": 3,
+        "error": "helper-call-timeout"
+      },
+      {
+        "created_at": "2026-11-02T13:19:05.188Z",
+        "count": 3,
+        "error": "helper-call-timeout"
+      }
+    ],
+    "preservedHistoricalUnknown": 13,
+    "preexistingUnknownTotal": 22,
+    "recoveryAfterAgentReconnect": "Remote search works again after agent reconnect; D03 remote UI 8/8 passed at 13:47-14:00 and D08 single-task recovery 5/5 passed at 13:54. No replay or replacement task was used."
+  },
+  "conclusion": "The 2026-11-02 remote failures, including the long outage that blocked D02/D03 and the first D08 attempt, coincide exactly with the Coder workspace agent losing connectivity at 13:19:25Z and reconnecting at 13:50:27Z; the workspace lifecycle/build stayed running (no rebuild or stop). Local broker exit 255, helper EOF and fail-closed unknown states are downstream symptoms, not evidence of local broker/helper or projection defects. No product code change is supported by this incident.",
+  "limits": [
+    "The read-only observations do not expose the Coder agent process logs or control-plane event that caused the disconnect; the initiating cause remains unknown.",
+    "Observation coverage starts 2026-10-31T02:56; the earlier D07 SSH255/helper EOF windows lack control-plane observations and are not retroactively explained or rewritten.",
+    "No infrastructure action, workspace lifecycle action, rebuild, daemon restart or remote workload was performed.",
+    "This analysis is not D07 acceptance, D08 cross-Host/crash validation, or a claim that remote instability is fixed."
+  ],
+  "preserved": [
+    "13 historical unknown rows unchanged",
+    "9 new unknown rows from this incident preserved (not cancelled or retried)",
+    "historical D07 failures and evidence untouched"
+  ],
+  "notVerified": [
+    "Coder agent disconnect root cause",
+    "D07 historical SSH255 root cause",
+    "automatic retry/recovery policy",
+    "cross-Host/crash recovery",
+    "formal M1 or release acceptance"
+  ]
+}
