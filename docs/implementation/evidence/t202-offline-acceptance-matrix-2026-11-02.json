@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "offline-acceptance-matrix",
+  "dateUTC": "2026-11-02",
+  "status": "offline pre-acceptance complete; real Coder lifecycle run still requires explicit authorization",
+  "commands": [
+    {
+      "args": [
+        "node",
+        "--test",
+        "scripts/dev/environment.test.mjs"
+      ],
+      "exitCode": 0,
+      "tests": 13,
+      "pass": 13,
+      "fail": 0
+    }
+  ],
+  "preflight": {
+    "path": "docs/implementation/evidence/t202-authorization-preflight-2026-11-02.json",
+    "sha256": "82bbee3efca0f8ab568ea4ab370139762fe8a4a037d0545778c10026b816aab5",
+    "current": {
+      "version": 1,
+      "transport": "coder-lab-v1",
+      "read_only": true,
+      "actions": [],
+      "workspace_ids": [
+        "ff136352-6a92-41d4-9c2c-6cc783cb989b"
+      ],
+      "template_version": "lab-v3",
+      "template_version_id": "7621affa-b880-476f-91eb-74855d529702",
+      "observation_ttl_ms": 30000,
+      "action_timeout_ms": 180000
+    },
+    "execution": {
+      "blocked": true,
+      "reason": "Coder lifecycle actions require explicit human authorization; current policy remains read-only and was not modified"
+    }
+  },
+  "matrix": {
+    "SC-02 create/start branches and authorized target": [
+      "D07 OFFLINE manager create/start/stop uses durable attempt -> accepted -> build/agent ready, direct SQL/read/list",
+      "D07 OFFLINE response loss never resubmits, same target locks persist after restart and unknown is not ready",
+      "D07 OFFLINE build failure, deadline, and state race are distinct; accepted is never reported ready"
+    ],
+    "SC-07 lifecycle failure/loss/restart without replay or false ready": [
+      "D07 confirmation identity/deadline/one consumption, same/different id and target concurrency",
+      "D07 restart does not resubmit accepted/unknown jobs and invalidates pending confirmations",
+      "D07 durable submit attempt is consumed once, survives restart, and cannot pass deadline",
+      "D07 OFFLINE response loss never resubmits, same target locks persist after restart and unknown is not ready",
+      "D07 OFFLINE build failure, deadline, and state race are distinct; accepted is never reported ready"
+    ],
+    "SC-16 owner/template/target/negative controls and bounded policy": [
+      "D07 read-only/owner/template/target/extra fields rejected without any lifecycle record",
+      "D07 policies have bounded fixed templates/parameters, no browser-configurable privilege escalation",
+      "D07 temporary stop/same generation preserves dispatch identity; new generation or stale source rejects"
+    ]
+  },
+  "offlineSuite": [
+    "D07 read-only/owner/template/target/extra fields rejected without any lifecycle record",
+    "D07 confirmation identity/deadline/one consumption, same/different id and target concurrency",
+    "D07 restart does not resubmit accepted/unknown jobs and invalidates pending confirmations",
+    "D07 durable submit attempt is consumed once, survives restart, and cannot pass deadline",
+    "D07 policies have bounded fixed templates/parameters, no browser-configurable privilege escalation",
+    "D07 OFFLINE manager create/start/stop uses durable attempt -> accepted -> build/agent ready, direct SQL/read/list",
+    "D07 OFFLINE response loss never resubmits, same target locks persist after restart and unknown is not ready",
+    "D07 OFFLINE build failure, deadline, and state race are distinct; accepted is never reported ready",
+    "D07 temporary stop/same generation preserves dispatch identity; new generation or stale source rejects",
+    "D07 OFFLINE directory loss and same/new generation cascade across model, ACP and tasks without erasing identity"
+  ],
+  "remainingAuthorizedRun": [
+    "Invert the private policy only after explicit approval (read_only:false, actions at least start/stop for the existing m1-a)",
+    "Run one bounded prepare -> confirm phrase -> submit -> poll -> evidence flow against the real Coder lab, with no create/rebuild/delete unless separately authorized",
+    "Record actual platform responses, poll identity/build/agent/lifecycle and no-side-effect negatives; do not claim deletion or M3"
+  ],
+  "notListed": [
+    "real Coder lifecycle execution",
+    "policy modification",
+    "credentials read",
+    "workspace create/rebuild/delete",
+    "complete M2/M3"
+  ]
+}

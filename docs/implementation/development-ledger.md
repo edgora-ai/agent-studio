@@ -500,7 +500,9 @@ T-201 已启动，但**尚未交付／验收**。差距分析：现有 D-01–D0
 
 T-202 需要远端 Coder 生命周期动作，而当前私有环境策略仍是 **`read_only:true, actions:[]`**，`environment_requests` 为 0。新增[只读预检](../../scripts/dev/t202.preflight.mjs)：不写策略、不连 Coder/SSH/网络，只校验当前策略、无待处理 request，并离线验证最小授权补丁（`read_only:false, actions:["start","stop"]`，仅现有 m1-a）schema 合法；可选 create 方案单独列出。记录见[T-202 授权预检](evidence/t202-authorization-preflight-2026-11-02.json)。
 
-执行 T-202 需要明确授权：① 将策略改为 `read_only:false` 且至少允许 `["start","stop"]`（现有 m1-a，不含 create/rebuild/delete/凭据）；② 若需 `create`，另给固定 create name、lab-v3 模板确认、资源上限、stop 后保留数据；③ 允许运行有界 prepare→confirm→submit→poll 验收并记录证据。未授权前 T-202 保持未执行。
+**离线预验收矩阵已组装（2026-11-02）**：[T-202 离线矩阵](evidence/t202-offline-acceptance-matrix-2026-11-02.json) 把 SC-02／SC-07／SC-16 映射到 environment.test **13/13** 通过用例（读只读策略/owner/template/target 负例、confirmation 一次性与并发、response-loss 不重提、build-failure/deadline/state-race、restart 不重提、同/新世代与级联、create/start/stop 状态机、policy 有界固定模板）；预检记录当前策略只读、无 pending request。**授权后只剩一次真实受限运行**：改策略（read_only:false，actions 至少 start/stop，仅现有 m1-a）、prepare→confirm→submit→poll、记录真实平台响应与无副作用负例；不声称 create/rebuild/delete 或 M3。
+
+执行 T-202 仍需明确授权：① 将策略改为 `read_only:false` 且至少允许 `["start","stop"]`（现有 m1-a，不含 create/rebuild/delete/凭据）；② 若需 `create`，另给固定 create name、lab-v3 模板确认、资源上限、stop 后保留数据；③ 允许运行有界 prepare→confirm→submit→poll 验收并记录证据。未授权前 T-202 保持未执行。
 
 ### 仍未验证与下一步授权边界
 
