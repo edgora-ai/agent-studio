@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "task": "T-107",
+  "revision": "repair2",
+  "kind": "independent-validation-of-m1-10-guard-normalization-repair",
+  "role": "independent-verification-not-implementation",
+  "reviewer": "fresh independent agent; read-only against repository; new private fixture only",
+  "dateUTC": "2026-11-02",
+  "finding": {
+    "id": "T107-R2-IA-04",
+    "status": "closed-within-declared-technical-scope",
+    "expected": "Every spelling the installed sidebar handler dispatches as open.external must reject remote/unknown/forged context before delegation and produce zero recorder effects.",
+    "actual": "Guard now classifies with the identical URL(req.url ?? \"/\", \"http://dsh.internal\").pathname parser and base as the installed handler. Canonical, dot, encoded-dot and equivalent dot-segment spellings reached 403 with zero delegation/effects for remote, absent and forged contexts; local controls stayed 200 with one effect. No bypass was found in 27 independent probe rows.",
+    "classificationSourceOfTruth": "installed sidebar lib/index.js: pathname = new URL(req.url ?? \"/\", \"http://dsh.internal\").pathname; method = pathname.slice(13) when pathname.startsWith(\"/sidebar/api/\"); dispatch set for open.external is exactly pathname === \"/sidebar/api/open.external\"."
+  },
+  "gate": {
+    "m110": "pass-within-declared-technical-scope",
+    "m1Passed": false,
+    "m1FormalRelease": "not executed; coordinator decision required",
+    "t201Ready": false,
+    "t201Executed": false,
+    "independentAcceptance": true
+  },
+  "reviewedArtifacts": {
+    "repair2Selftest": {
+      "path": "docs/implementation/evidence/t107-repair2-selftest.json",
+      "sha256": "f4ac6bcfb35c5edd77d6f187fc9da8b636768f1ed7809d89ab975b3ef8c7d3cf"
+    },
+    "review2Archive": {
+      "path": "docs/implementation/evidence/t107-independent-review2.json",
+      "sha256": "0520128e8b52f46e3bbc1277ea64791acdea0a33878c6da9efca753eeb2ccc6a",
+      "note": "archive remains incomplete and unchanged; this receipt does not rewrite it"
+    },
+    "guard": {
+      "path": "scripts/m1/t107_repair_guard.mjs",
+      "sha256": "49796acd5f42060bc105bdc3d9a798bfc85d8601eaf8945021df39918b06afc8"
+    },
+    "entrypointsHarness": {
+      "path": "scripts/m1/t107_repair_entrypoints.mjs",
+      "sha256": "612fcb911e1be37556c820edb3b55ba37bcf3a10f6c127c2ceaaff4f47bb547f"
+    },
+    "focusedTests": {
+      "path": "scripts/m1/t107_repair.test.mjs",
+      "sha256": "4d534ced9ac5970d5e94a265f263aac6f6e21bc9d228c777a62f2bb0e3b7b027"
+    },
+    "installedSidebar": {
+      "path": "/home/ubuntu/.dsh/profiles/web/node_modules/dsh-better-sidebar/lib/index.js",
+      "sha256": "871e8d02a7b37ea487308d8516d839d51fedfe46f1c3ed50d99435acc984c7e1"
+    },
+    "installedHostOpenInApp": {
+      "path": "/home/ubuntu/.npm-global/lib/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-host-open-in-app/lib/index.js",
+      "sha256": "b1d17a0c2646389b27eefab2e1e22576a693b11c61c76884fc049aff54e00d96"
+    }
+  },
+  "commands": [
+    {
+      "args": [
+        "node",
+        "--test",
+        "scripts/m1/t107_repair.test.mjs"
+      ],
+      "exitCode": 0,
+      "tests": 28,
+      "pass": 28,
+      "fail": 0
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "--experimental-transform-types",
+        "--permission",
+        "--allow-child-process",
+        "--allow-fs-read=scripts/m1",
+        "--allow-fs-read=<installed sidebar root>",
+        "--allow-fs-read=<installed dsh root>",
+        "--allow-fs-read=<fixture>/entrypoints",
+        "--allow-fs-write=<fixture>/entrypoints",
+        "--allow-fs-write=<fixture>/entrypoints/*",
+        "scripts/m1/t107_repair_entrypoints.mjs",
+        "<installed sidebar root>",
+        "<installed dsh root>",
+        "<fixture>/entrypoints"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"passed\":true,\"negatives\":51,\"positives\":10}",
+      "stderr": "PERM0002 SecurityWarning and ExperimentalWarning only",
+      "layoutNote": "run directory is <fixture>/entrypoints and contains home/bin/actions; HOME=<run>/home and PATH=<run>/bin satisfy the harness assertion HOME === join(run,\"home\")."
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "<fixture>/entrypoints/independent-probe.mjs"
+      ],
+      "exitCode": 0,
+      "rows": 27,
+      "failures": 0,
+      "bypasses": 0
+    }
+  ],
+  "actualResults": {
+    "entrypoints": {
+      "passed": true,
+      "negativeCases": 51,
+      "positiveCases": 10,
+      "nonActionControls": [
+        {
+          "id": "directory-read",
+          "target": "/sidebar/api/fs.tree",
+          "status": 200,
+          "entries": 0
+        },
+        {
+          "id": "application-catalog",
+          "target": "/open-in-app/apps",
+          "status": 200
+        }
+      ],
+      "cases": 61,
+      "actions": 8,
+      "actionCommands": {
+        "code": 2,
+        "xdg-open": 6
+      },
+      "routesRemaining": 0,
+      "listenersRemaining": 0,
+      "networkAttempts": 0,
+      "sourceUnchanged": true,
+      "cleanupErrors": [],
+      "failure": null
+    },
+    "recorders": {
+      "pids": [
+        3214939,
+        3214940,
+        3214946,
+        3214957,
+        3214958,
+        3214969,
+        3214975,
+        3214981
+      ],
+      "allGone": true,
+      "checkedVia": "/proc and ps"
+    },
+    "independentProbe": {
+      "rowCount": 27,
+      "requiredActionTargets": 8,
+      "requiredNonActionTargets": 3,
+      "exploratoryTargets": 16,
+      "noDispatchSpellingsZeroEffects": true,
+      "dispatchSpellings": "remote/absent/forged 403 and delegate 0; local 200 and delegate 1",
+      "bypasses": [],
+      "parseFailures": [
+        {
+          "target": "http://[",
+          "context": "local",
+          "status": 403,
+          "delegated": 0,
+          "error": "T107_CONTEXT_TARGET_INVALID"
+        },
+        {
+          "target": "http://[",
+          "context": "absent",
+          "status": 403,
+          "delegated": 0,
+          "error": "T107_CONTEXT_TARGET_INVALID"
+        },
+        {
+          "target": "http://%",
+          "context": "local",
+          "status": 403,
+          "delegated": 0,
+          "error": "T107_CONTEXT_TARGET_INVALID"
+        },
+        {
+          "target": "http://%",
+          "context": "absent",
+          "status": 403,
+          "delegated": 0,
+          "error": "T107_CONTEXT_TARGET_INVALID"
+        }
+      ],
+      "claimChecks": [
+        {
+          "name": "forged-binding",
+          "status": 403,
+          "delegated": 0,
+          "error": "T107_UNTRUSTED_BINDING_CLAIM"
+        },
+        {
+          "name": "claim-mismatch",
+          "status": 403,
+          "delegated": 0,
+          "error": "T107_CONTEXT_MISMATCH"
+        }
+      ]
+    },
+    "nonBlockingObservations": [
+      "Guard and installed handler use the same WHATWG URL parser and base; installed dispatch set for open.external is exactly pathname === \"/sidebar/api/open.external\".",
+      "Spellings whose normalized pathname is not that exact value (//open.external, \\open.external, encoded-slash variants) are delegated and then rejected by the installed method derivation (slice(13) + includes(\"/\") -> 404); this is static coupling to installed source, not a current bypass.",
+      "Pre-existing over-denial differences were not introduced by repair2: body cap 64KiB vs installed 1MiB, bad JSON 403 vs 400, empty body 403 vs {}, parse failure 403 vs installed throw, authorize before method check. All deny more strictly; none grants authority.",
+      "Fixture webServer/connection admission and forwarded bare Readable are stubs; real socket routing, browser authentication, DOM keyboard, native desktop and production binding persistence were not exercised."
+    ]
+  },
+  "evidence": [
+    {
+      "path": "artifacts/m1/t107/independent-m1-10-809d5726fe10/entrypoints/entrypoints.json",
+      "sha256": "87255121c107d7f21a50688e1e36807e9e06a1ba1b19cd1fdf320ae5fc0c29e9"
+    },
+    {
+      "path": "artifacts/m1/t107/independent-m1-10-809d5726fe10/entrypoints/stdout.txt",
+      "sha256": "525ca88feb6a9089ddfd7f28bbbfb23aed3cc099f83c23ed7a0fc2779161fdc4"
+    },
+    {
+      "path": "artifacts/m1/t107/independent-m1-10-809d5726fe10/entrypoints/stderr.txt",
+      "sha256": "4e564c48eac251163515034e0ae14e7a7982b98df6816a8693e7e02a2ca9a7ec"
+    },
+    {
+      "path": "artifacts/m1/t107/independent-m1-10-809d5726fe10/entrypoints/independent-probe.mjs",
+      "sha256": "c4032afc502ace49bd2c5770b07283823eced0c3d6b35682fd9fb3a98fdafce4"
+    },
+    {
+      "path": "artifacts/m1/t107/independent-m1-10-809d5726fe10/entrypoints/independent-probe.json",
+      "sha256": "84f32964d3143e486104dbc0ae880214e1b69619ce9ad07803c185c2970d46cc"
+    },
+    {
+      "path": "artifacts/m1/t107/independent-m1-10-809d5726fe10/entrypoints/readback.json",
+      "sha256": "1d2f344c360c1fcaca63dae48cb9b13a9a1a10825e3cdcf9bac4984110082018"
+    },
+    {
+      "path": "artifacts/m1/t107/independent-m1-10-809d5726fe10/entrypoints/command.json",
+      "sha256": "15b1d0c4b863d04e6c06713d60526fc0aa84f8e4fb1e69dd402dce87f13ef70d"
+    },
+    {
+      "path": "artifacts/m1/t107/independent-m1-10-809d5726fe10/entrypoints/unit-tests.txt",
+      "sha256": "e0a67ec119c7e822ec2cf39170508cc3252cc2cb66c059e195cf44f45c210e7e"
+    }
+  ],
+  "coordinatorCrossCheck": {
+    "role": "Lead cross-check, separate fresh fixture",
+    "runDir": "artifacts/m1/t107/lead-independent-1793624824-9927",
+    "entrypoints": {
+      "path": "artifacts/m1/t107/lead-independent-1793624824-9927/entrypoints/entrypoints.json",
+      "sha256": "77b4cfe0f40769b21c82b14d7427b213e727d10557efeb027b30c0df4c397450",
+      "passed": true,
+      "negativeCases": 51,
+      "positiveCases": 10,
+      "actions": 8,
+      "routesRemaining": 0,
+      "listenersRemaining": 0,
+      "allRecorderPidsGone": true
+    },
+    "urlProbe": {
+      "path": "artifacts/m1/t107/lead-independent-1793624824-9927/lead-url-probe.json",
+      "sha256": "cfb31abe3ff2005079fa1771084375db8ab48793b6249b8706ae3619d01ccd7a",
+      "rows": 13,
+      "parseRows": 6,
+      "failures": 0
+    }
+  },
+  "scope": "Local isolated verification only: actual installed sidebar/host registration-level route fixture plus offline probes under Node --permission. No repository source or historical evidence was edited by the reviewer; no network, install, service, Docker, remote recovery, full controller, browser authentication, DOM keyboard, native desktop, product binding persistence or T-201 execution. Historical failure records and the incomplete review2 archive remain unchanged.",
+  "notReverified": [
+    "remote recovery",
+    "full repair controller",
+    "existing services or Docker",
+    "discovery clock counterexample rerun",
+    "browser authentication",
+    "DOM keyboard",
+    "native desktop",
+    "product binding persistence",
+    "formal M1 release",
+    "T-201"
+  ],
+  "handoff": "M1-10 guard-normalization repair is independently validated within the declared technical scope and T107-R2-IA-04 can be treated as closed for the repair2 matrix. Formal M1 release and T-201 remain a coordinator decision; no product binding persistence or browser/DOM scope is implied. The incomplete review2 archive must not be rewritten as a complete independent review."
+}

@@ -428,8 +428,14 @@ operation timeout 与清理预算必须分开：默认 TERM 宽限 15 秒、最�
 - 本轮源码适配：`browser.py`（D01）、`core.browser.py`（D04／D03）、`model.browser.py`（D05）为测试 harness；`adapters/local-provider.mjs` 新增有界失败审计消息；未改 Gateway／sidebar／native 投影语义。DB 新增 D05 远端会话与模型配置 revision 11，均为测试数据；历史 evidence 未改。
 - 以上是开发预览回归，不是 M1、D07、D08 或发布验收。
 
+### M1-10 归一化旁路独立复验（2026-11-02）
+
+repair2 已把 `scripts/m1/t107_repair_guard.mjs` 的动作分类改为与安装 sidebar 完全同源的 `new URL(req.url ?? "/", "http://dsh.internal").pathname`；剩余工作是独立验证，而不是再改代码。本轮由独立代理在全新私有夹具中复跑：28/28 聚焦单测通过；实际安装 sidebar／host 注册入口的受限 Node 探针 exit 0，**51 个负例零副作用、10 个本地正例各一次真实效果、8 个 recorder 全部回收、routes/listeners 残留 0、networkAttempts 0、sourceUnchanged true**。独立自写探针覆盖 27 个 target（canonical、`./`、`%2e`、`%2E`、`foo/../`、query/fragment、绝对／协议相对／无前导斜杠、编码斜杠、反斜杠等）：凡安装语义会派发 `open.external` 的拼写，remote／absent／forged 均为 **403 且 delegate 0**，local 为 200 且 delegate 1；其余拼写按安装语义 delegate，无旁路。parse failure 与 forged binding／claim mismatch 均 403、delegate 0。源码与安装哈希全部匹配（guard `49796a…`、入口 `612fcb…`、测试 `4d534c…`、sidebar `871e8d…`、host-open-in-app `b1d17a…`）。
+
+独立记录见[复验证据](evidence/t107-repair2-independent-validation.json)。非阻断观察：guard 与安装实现的 body/错误码差异均为更严格拒绝；fixture 的 socket／准入仍是 stub；按声明范围未跑真实 controller／远端／DOM。历史 review2 归档保持不完整且未改写。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；源码中的单行输入／原生 Terminal 接线即使离线通过，也不构成真实同 Host 恢复验收。真实实验仍需另行确认，然后只运行一个有截止时间的原任务，核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
 
-正式 M1 仍未通过：[review2](evidence/t107-independent-review2.json) 已记录 `repair-required`、`m1Passed=false`，但归档曾被两次 HTTP 400 中断，缺少最终 validation，不能称为完整独立验收归档。M1-05 只在声明技术范围通过，M1-10 路由归一化旁路仍失败，repair2 的独立复验未闭合。真实外部模型／CLI、生命周期、多机／手机、完整 M2／M3 与发布门槛没有因本轮本地修复而通过。
+正式 M1 仍未有最终放行决定：[review2](evidence/t107-independent-review2.json) 记录 `repair-required`、`m1Passed=false`，归档仍缺最终 validation，不能称为完整独立验收归档；M1-05 只在声明技术范围通过。repair2 对 T107-R2-IA-04 的 URL 归一化修复已由[独立复验](evidence/t107-repair2-independent-validation.json)在本机声明技术范围关闭：28 项单测、实际入口 51 负例／10 本地正例、8 个 recorder 全回收、0 旁路、安装源码哈希匹配。正式 M1 放行与 T-201、真实外部模型／CLI、生命周期、多机／手机、完整 M2／M3 与发布门槛均未因本轮修复而通过。
