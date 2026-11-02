@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "task": "T-204",
+  "kind": "remote-acceptance-slice",
+  "dateUTC": "2026-11-02",
+  "decision": "remote T-204 command/PTY slice accepted on single connected binding",
+  "scope": "Product/stock APIs on the D02 v4 single channel: one bash command through command.start/task.read/task.status/task.release; one stock /api/terminal/create PTY with task.input/task.read/task.cancel and terminal close. Bounded, same channel, no lifecycle/create/delete.",
+  "artifact": {
+    "path": "artifacts/t204/t204-remote-2026-11-02T17-05-50-892Z.json",
+    "sha256": "34d60b3bf8aed467f25d0bff52cf92fa4e9ba2175c06e122c38dbd725d9e5d2e",
+    "result": "pass",
+    "checks": 2
+  },
+  "checks": [
+    {
+      "name": "remote command exec streams the marker and releases with a real provider operation",
+      "operation_id": "t204-cmd-f7f01bf8-0026-4a8a-9880-79871485be06",
+      "status": {
+        "processId": "ee4d8150-0824-49de-a5a6-823249717682",
+        "pid": 115,
+        "pgid": 115,
+        "tty": false,
+        "running": false,
+        "exitCode": 0,
+        "signal": null,
+        "latestSeq": "1"
+      },
+      "text_sha256": "15b6b2865157ea9a8b377435b3ce38e6bfa93a051228fa32f410000b2c4e3c04"
+    },
+    {
+      "name": "remote PTY accepts input, streams output, cancels and releases on the same single channel",
+      "terminal_id": "f7b0b7b9-4188-4f3d-b225-6c05515215fc",
+      "operation_id": "terminal-0fa384a78bdd5cae2bc0aa52cba13e24ede721d62489377196f8ce968492de74",
+      "final_state": "released",
+      "output_sha256": "804a3b8e6dd3a532975f63f3663f682f4411f563eb75880e20b07baa150cb62d"
+    }
+  ],
+  "agentAfterRun": "connected",
+  "workspaceLifecycle": "running",
+  "unknownOperations": 22,
+  "limits": [
+    "One remote binding/session only; no multi-binding concurrency or cross-binding subtask matrix in this slice.",
+    "No real coding CLI, model turn or background task claim.",
+    "Signal/process-group details covered offline and locally; remote unexpected-kill matrix not repeated here."
+  ],
+  "next": [
+    "Renew/connect remaining bindings one at a time (D06, D05, D07 and second D02 binding) while watching agent stability.",
+    "Then remote T-205 sidebar prerequisites and T-206 real-CLI groundwork; keep single-channel discipline."
+  ]
+}

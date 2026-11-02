@@ -552,6 +552,12 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 限制：单一 remote binding／路径；不含外部直接写入者竞争、多连接并发、Git／watch 远端 UI、上传或真实 CLI。单通道是当前必要手段（burst 会触发 agent 断连，见 T202-F5）。下一轮：同一通道上做 T-204 远端命令/PTY/cancel/release，再逐条恢复其余绑定。
 
+### T-204 远端验收切片（2026-11-02）
+
+同一**单通道** D02 v4 上完成 T-204 远端切片 **2/2**：远程 bash 命令经 `command.start`／`task.read` 流式取回 marker，`task.status`／`task.release` 正常；stock `/api/terminal/create` 建立远程 PTY，`task.input` 写入后 `task.read` 取回 marker，`task.cancel`＋terminal close 后 operation 落到 released/completed/cancelled。全程有界、单通道、无 lifecycle/create/delete。证据见[T-204 远端验收](evidence/t204-remote-acceptance-2026-11-02.json)。
+
+限制：单一 binding/session，不含多绑定并发、跨绑定子任务矩阵、真实编程 CLI／模型轮次或远端后台任务。下一轮：逐条 renew/connect 其余绑定（间隔、单通道纪律），再准备远端 T-205 侧边栏前置与 T-206 真实 CLI 前置。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
