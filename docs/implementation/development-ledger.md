@@ -606,6 +606,10 @@ T205-F1 已在产品侧修复：`bindings.mjs` materializeBinding 的 workspace 
 
 交付时核对发现 unknown operation 总数为 **25**：22 条既有（13 历史＋9 条 2026-11-02 远端中断）保持不变，另有 **3 条新记录**于 17:21:42–43Z 在 47f8 D02 v5 绑定上因重复 workspace 浏览器尝试触发 `helper-stdout-ended` 而产生（kind `command.exec`）。未删除、未改写、未 resolve 任何行；历史证据与校验和保持。已更新 README／交付清单并新增[unknown 追加说明](evidence/m2-unknown-operations-addendum-2026-11-02.json)。这 3 条不影响 T-203／T-204／T-205 已接受的切片，但作为可见残留如实携带。
 
+### 交付后审查与优化第 1 轮（2026-11-02）
+
+独立复核交付物与运行态，修复 4 项：① `environment.open` renew 增加 ready 门禁，agent/lifecycle 未就绪时在创建 link/binding 前直接 `environment-not-ready`，杜绝历史出现的 orphan binding 版本；离线回归断言 renew 失败后 binding 仍只有 1 行、无 link 行。② `environment.resolve` 对 malformed／非对象 `result_json` 安全回退，避免解析异常。③ 清理 connect 脚本未使用变量。④ 新增可复现交付审计 [verify_delivery.mjs](../../scripts/dev/verify_delivery.mjs)：manifest 7 个证据哈希、SHA256SUMS、只读策略、DB unknown/pending/最新绑定、`--runtime` 单通道/agent 检查，首次运行 **6/6 通过**。审查同时确认 25 条 unknown 分类（13＋9＋3）与数据库一致、交付清单哈希全部匹配。证据见[交付后审查第 1 轮](evidence/delivery-review-round1-2026-11-02.json)。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

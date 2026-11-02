@@ -154,6 +154,9 @@ test('D07 open reports not-ready instead of selection-changed when the agent is 
  await manager.refresh(principal,{});const described=await manager.describe(principal,{});const selected=described.workspaces.find(row=>row.workspace_id===ids.workspace).observation_id;
  setCurrent(observation({identity:{verified:true,generation:'fixture-generation-b',record:{marker}},agent:{id:ids.agent,status:'disconnected'}}));
  await assert.rejects(()=>manager.open(principal,{request_id:'open-notready-01',workspace_id:ids.workspace,observation_id:selected,environment_id:env.environment_id,binding_id:binding.binding_id,expected_version:1}),{code:'environment-not-ready'});
+ await assert.rejects(()=>manager.open(principal,{request_id:'renew-notready-01',workspace_id:ids.workspace,observation_id:selected,environment_id:env.environment_id,binding_id:binding.binding_id,expected_version:1,renew:true}),{code:'environment-not-ready'});
+ assert.equal(manager.db.prepare('SELECT count(*) n FROM project_bindings WHERE binding_id=?').get(binding.binding_id).n,1);
+ assert.equal(manager.db.prepare("SELECT count(*) n FROM environment_links WHERE request_id='renew-notready-01'").get().n,0);
 })));
 
 test('D07 policies have bounded fixed templates/parameters, no browser-configurable privilege escalation',()=>{

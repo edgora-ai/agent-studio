@@ -73,6 +73,8 @@
     "cross-Host/crash recovery and M3"
   ],
   "addenda": [
-    "docs/implementation/evidence/m2-unknown-operations-addendum-2026-11-02.json"
-  ]
+    "docs/implementation/evidence/m2-unknown-operations-addendum-2026-11-02.json",
+    "docs/implementation/evidence/delivery-review-round1-2026-11-02.json"
+  ],
+  "verification": "node scripts/dev/verify_delivery.mjs --runtime (6/6 checks)"
 }

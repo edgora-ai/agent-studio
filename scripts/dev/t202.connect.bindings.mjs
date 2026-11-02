@@ -9,8 +9,6 @@ const auth=await authenticate(root),rpc=(m,p={})=>requestRpc(auth,m,p);
 const workspaceId='ff136352-6a92-41d4-9c2c-6cc783cb989b';
 await rpc('environment.discover');
 const described=await rpc('environment.describe');
-const ws=described.workspaces.find(row=>row.workspace_id===workspaceId);
-const observationId=ws.observation_id;
 const only=process.argv.slice(2);
 const bindings=described.workspaces.find(row=>row.workspace_id===workspaceId).bindings.filter(row=>row.state==='ready'&&row.target_root.startsWith('/workspace/')&&row.channel?.connected!==true&&(only.length===0||only.includes(row.binding_id)));
 

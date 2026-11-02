@@ -179,8 +179,10 @@ export class EnvironmentManager {
   const resolution={resolved_from:row.state,verified_observation_id:current.row.observation_id,verified_build_id:row.build_id,
     verified_lifecycle:status.lifecycle,verified_agent:status.agent?.status??null,
     verified_job:status.job?.status??null};
+  let previous={};
+  try{const parsed=JSON.parse(row.result_json??'{}');if(parsed&&typeof parsed==='object'&&!Array.isArray(parsed))previous=parsed;}catch{/* keep the resolution as the only payload */ }
   const updated=this.state.update(principal,row.request_id,{state:'succeeded',error_code:null,
-    result_json:canonical({...JSON.parse(row.result_json??'{}'),resolution})});
+    result_json:canonical({...previous,resolution})});
   this.store.audit(principal,'environment.resolve',row.request_id,'resolved',resolution);
   return updated;
  }
@@ -205,6 +207,12 @@ export class EnvironmentManager {
   if(previous) {requireThat(previous.principal_id===principal && previous.input_json===serialized,'environment-link-conflict');return plain(previous);}
   requireThat(!this.db.prepare("SELECT 1 FROM environment_links WHERE principal_id=? AND state='opening'").get(principal),'environment-link-busy');
   await this.refresh(principal,{});const current=this.state.fresh(principal,input.workspace_id);
+  // Both ordinary opens and renewals need a ready workspace. Without this, a
+  // renewal during an agent/lifecycle outage would fabricate a new ready
+  // binding/session and only fail later at provider connect, leaving an
+  // unusable orphan version behind.
+  const readiness=status=>'lifecycle='+(status.lifecycle??'unknown')+',job='+(status.job?.status??'unknown')+',agent='+(status.agent?.status??'unknown');
+  requireThat(ready(current.status),'environment-not-ready',readiness(current.status));
   // Renewal binds the CURRENT generation, so a caller-selected observation that
   // was captured before refresh must not pin a stale identity. Normal opens keep
   // the strict selection/identity pinning.
@@ -215,8 +223,6 @@ export class EnvironmentManager {
    const selectedStatus=JSON.parse(selected.status_json);
    // Distinguish an external not-ready workspace (agent/lifecycle) from a real
    // selection identity change so reconnects report an actionable reason.
-   const readiness=status=>'lifecycle='+(status.lifecycle??'unknown')+',job='+(status.job?.status??'unknown')+',agent='+(status.agent?.status??'unknown');
-   requireThat(ready(current.status),'environment-not-ready',readiness(current.status));
    requireThat(ready(selectedStatus),'environment-not-ready',readiness(selectedStatus));
    // Connection timestamps make the whole identity bloom change on every
    // refresh; selection pinning must compare the stable generation/record.

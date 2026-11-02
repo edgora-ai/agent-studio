@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "kind": "delivery-review-round1",
+  "dateUTC": "2026-11-02",
+  "headBeforeReview": "e821879",
+  "scope": "Independent review/verification/optimization round 1 of the delivered M2 work.",
+  "audit": {
+    "manifestEvidenceHashes": "7/7 match",
+    "sha256Sums": "all entries match",
+    "policy": "read_only:true actions:[]",
+    "databaseUnknown": 25,
+    "pendingLifecycle": 0,
+    "latestBindings": "5 ready at v5",
+    "liveRuntime": "agent connected, lifecycle running, exactly one channel"
+  },
+  "findingsFixed": [
+    {
+      "id": "R1-1",
+      "severity": "medium",
+      "finding": "environment.open renew path did not require a ready current observation; during an agent outage it could create a ready binding/session and only fail at provider connect, leaving an orphan binding version (observed historically as v2 orphans).",
+      "fix": "Ready gate now applies to renew and normal opens before the link/binding transaction; renewal during not-ready fails environment-not-ready with no binding or link rows. Offline regression asserts exactly one binding row and no link row.",
+      "evidence": "scripts/dev/environment.test.mjs"
+    },
+    {
+      "id": "R1-2",
+      "severity": "low",
+      "finding": "environment.resolve did not guard against malformed or non-object result_json before spreading it into the resolution payload.",
+      "fix": "Safe parse with object fallback; resolution remains the only payload on malformed input."
+    },
+    {
+      "id": "R1-3",
+      "severity": "low",
+      "finding": "t202.connect.bindings.mjs carried unused workspace/observation variables after filtering was added.",
+      "fix": "Removed dead variables; syntax and connect flow retested."
+    },
+    {
+      "id": "R1-4",
+      "severity": "medium",
+      "finding": "Delivery verification was manual and not reproducible from the repo.",
+      "fix": "Added scripts/dev/verify_delivery.mjs (offline manifest/checksum/invariant audit plus --runtime channel/agent check); baseline run passed 6/6."
+    }
+  ],
+  "tests": {
+    "environment": "19/19",
+    "store": "33/33",
+    "main": "164/164",
+    "diagnostics": "8/8",
+    "m110": "28/28",
+    "python": "12/12",
+    "syntax": "89 MJS / 45 Python",
+    "docs": "20 docs, 293 links, 39 regressions",
+    "sums": "pass",
+    "diff": "pass"
+  },
+  "residual": [
+    "Existing duplicate D02 workspace names keep the old shared label; only newly materialized workspaces get the binding suffix.",
+    "unknown operation rows total 25 (13 historical + 9 outage + 3 T-205 attempt) and remain visible/unresolved by design.",
+    "Remote Git/watch UI, native desktop, T-206 real CLI, real create, cross-Host/M3 remain out of scope."
+  ],
+  "artifacts": {
+    "auditCommand": "node scripts/dev/verify_delivery.mjs --runtime"
+  }
+}
