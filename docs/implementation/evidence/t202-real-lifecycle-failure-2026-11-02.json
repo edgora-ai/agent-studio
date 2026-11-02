@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "real-lifecycle-attempt-failure-and-findings",
+  "dateUTC": "2026-11-02",
+  "decision": "not-accepted; real run exposed product gaps",
+  "authorization": "coordinator delegated continuous work; executed narrowest scope: start/stop existing m1-a only, no create/rebuild/delete/credential; temporary policy restored byte-identical",
+  "attempted": {
+    "stop": {
+      "request_id": "t202-stop-240f11aa-d0ea-49db-9d34-07182e1bfa79",
+      "actual": "Coder accepted and executed stop; build e02868cd-1180-41cf-b0ae-a29b6624d446 job succeeded, lifecycle stopped",
+      "recorded": "request initially unknown environment-broker-failed because environment.poll broker call failed; later resolved to succeeded by verified control-plane observation with audit environment.manual-resolution"
+    },
+    "startRecovery": {
+      "request_id": "t202-recover-start-5f3f6d21-8cc4-4e28-8656-8d0cbbd2c5f3",
+      "actual": "Coder start accepted and workspace verified running with agent connected",
+      "recorded": "poll again returned unknown environment-broker-failed; lifecycle verified via environment.discover/describe"
+    }
+  },
+  "findings": [
+    {
+      "id": "T202-F1",
+      "severity": "blocking-T-202",
+      "summary": "Environment broker poll fails with environment-broker-failed after an accepted submit, so a real successful lifecycle transition is recorded as unknown.",
+      "impact": "T-202 cannot be accepted; automated poll state is not trustworthy for lifecycle completion."
+    },
+    {
+      "id": "T202-F2",
+      "severity": "fixed-in-this-round",
+      "summary": "prepare(start) rejected a fresh stopped observation carrying environment-identity-unavailable, making recovery impossible after a real stop.",
+      "fix": "environment-state.mjs now allows start from a fresh stopped observation with identity unavailable while keeping owner/template checks; stop still requires ordinary fresh running observation; offline regression added (environment.test 14/14)."
+    },
+    {
+      "id": "T202-F3",
+      "severity": "blocking-recovery",
+      "summary": "An unknown stop keeps the durable target lock (DB unique index environment_workspace_lock). No product API can resolve a verified unknown stop, so start is blocked until an operator resolves the request row.",
+      "impact": "A transient poll failure can strand a workspace under a durable lock; this attempt required manual verified resolution (documented audit)."
+    },
+    {
+      "id": "T202-F4",
+      "severity": "expected-product-cascade",
+      "summary": "Stop/start produced a new Coder agent generation; all existing m1-a bindings were revoked as environment-generation-changed (product-correct), so old D02/D05/D06/D07 sessions cannot reconnect until new binding versions/sessions are created via environment.open renew/new-generation flow."
+    }
+  ],
+  "restoration": {
+    "policy": "byte-identical original read_only:true/actions:[] restored and a post-restore start prepare refused before Coder call",
+    "workspace": "m1-a lifecycle running, build job succeeded, agent connected (verified by environment.discover/describe)",
+    "unknownOperations": 22,
+    "environmentRequests": [
+      "stop request resolved to succeeded based on verified observation and audit event environment.manual-resolution",
+      "recover-start request remains unknown"
+    ]
+  },
+  "artifacts": {
+    "acceptanceRunArtifact": {
+      "path": "artifacts/t202/t202-lifecycle-2026-11-02T15-12-56-459Z.json",
+      "sha256": "21d7aee43780b2a840e2b0dea44da80e7f523f98478129950f8961be66511651"
+    },
+    "logs": {
+      "artifacts/t202/t202-acceptance-run.log": "dc9b9fba92b0106004d942c0b5141d57dd4bcba5a73d52adbd5fc240fc05ab1d",
+      "artifacts/t202/t202-recovery-run.log": "4b3ed17e26cb26b9ca247afd85ecbeaf72aaca5b77e7365eb360dadc5b5b6d98"
+    }
+  },
+  "scopeLimits": [
+    "No create/rebuild/delete/credential action; no third workspace.",
+    "T-202 is not accepted; F1 poll failure must be diagnosed and F3 needs a product resolution path or stricter lock semantics before retrying.",
+    "Binding revocation is expected generation cascade, not a silent migration; renewing bindings is a separate product operation."
+  ],
+  "nextSteps": [
+    "Diagnose environment-broker poll failure with bounded diagnostics (broker stderr currently generic).",
+    "Design explicit operator/verified resolution for unknown lifecycle requests or a safe stale-lock policy.",
+    "After fixes, retry T-202; then renew m1-a bindings via environment.open new-generation flow before remote D02/D05/D06/D07 acceptance."
+  ]
+}

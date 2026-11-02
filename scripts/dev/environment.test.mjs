@@ -84,6 +84,15 @@ test('D07 durable submit attempt is consumed once, survives restart, and cannot 
  assert.ok(state.requests(principal).some(item=>item.request_id===row.request_id && item.attempted_at===claimed.attempted_at));
 }));
 
+test('D07 start prepare accepts a fresh stopped observation whose agent identity is unavailable',()=>fixture(({state,principal})=>{
+ const p=policy();
+ const stopped={...observation(),lifecycle:'stopped',identity:{verified:false,generation:'fixture-generation-a'},agent:{id:ids.agent,status:'not-observed'}};
+ state.observe(principal,stopped,'OFFLINE-in-process','environment-identity-unavailable');
+ const start=state.prepare(principal,{request_id:'fixture-start-stopped-01',action:'start',workspace_id:ids.workspace,template_version_id:ids.version},p);
+ assert.equal(start.state,'prepared');assert.equal(start.action,'start');
+ assert.throws(()=>state.prepare(principal,{request_id:'fixture-stop-stopped-01',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version},p),{code:'environment-observation-stale'});
+}));
+
 test('D07 policies have bounded fixed templates/parameters, no browser-configurable privilege escalation',()=>{
  const p=policy();assert.equal(digest(p),digest(JSON.parse(canonical(p))));
  assert.throws(()=>validateEnvironmentPolicy({...p,transport:'http://untrusted'}));

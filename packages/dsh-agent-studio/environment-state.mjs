@@ -89,16 +89,27 @@ export class EnvironmentState {
   if(previous) {requireThat(previous.principal_id===principal && previous.parameters_sha256===hash,'environment-request-conflict');return plain(previous);}
   requireThat(!policy.read_only && policy.actions.includes(input.action),'environment-read-only');
   const template=policy.templates.find(row=>row.version_id===input.template_version_id);requireThat(template,'environment-template-denied');
-  let target,name,workspaceId=null;
+  let target,name,workspaceId=null,stoppedStart=false;
   if(input.action==='create') {requireThat(input.workspace_id===undefined && template.create_names.includes(input.name),'environment-create-target-denied');name=input.name;target='name:'+policy.owner_id+':'+name;}
   else {
    requireThat(uuid(input.workspace_id) && input.name===undefined && (policy.workspace_ids.includes(input.workspace_id) || this.db.prepare("SELECT 1 FROM environment_requests WHERE principal_id=? AND action='create' AND state='succeeded' AND submitted_workspace_id=?").get(principal,input.workspace_id)),'environment-target-denied');
-   const {status}=this.fresh(principal,input.workspace_id);
+   // A stopped workspace has no live agent identity, so discovery records
+   // environment-identity-unavailable. Start does not need that identity: it
+   // needs a fresh observation that the target is stopped with the expected
+   // owner/template. Stop still requires an ordinary fresh running observation.
+   const row=this.latest(principal,input.workspace_id);
+   const stopped=row && row.expires_at_ms>this.clock()?JSON.parse(row.status_json):null;
+   stoppedStart=input.action==='start' && row?.error_code==='environment-identity-unavailable' && stopped?.lifecycle==='stopped';
+   const {status}=stoppedStart?{status:stopped}:this.fresh(principal,input.workspace_id);
    requireThat(status.owner_id===policy.owner_id && status.template_id===template.template_id && status.template_version_id===template.version_id,'environment-target-changed');
    requireThat(input.action==='start'?status.lifecycle==='stopped':status.lifecycle==='running','environment-action-state');
    workspaceId=input.workspace_id;name=status.name;target='workspace:'+workspaceId;
   }
-  this.expire();requireThat(!this.db.prepare("SELECT 1 FROM environment_requests WHERE principal_id=? AND (target_key=? OR COALESCE(workspace_id,submitted_workspace_id)=?) AND state IN ('prepared','submitting','accepted','unknown','timed-out')").get(principal,target,workspaceId),'environment-target-busy');
+  this.expire();
+  // An unknown stop keeps the durable workspace lock (also enforced by the DB
+  // unique index). Recovery therefore needs an explicit operator resolution of
+  // that request; this guard does not silently replace it. See T-202 findings.
+  requireThat(!this.db.prepare("SELECT 1 FROM environment_requests WHERE principal_id=? AND (target_key=? OR COALESCE(workspace_id,submitted_workspace_id)=?) AND state IN ('prepared','submitting','accepted','unknown','timed-out')").get(principal,target,workspaceId),'environment-target-busy');
   const timestamp=now(),deadline=this.clock()+Math.min(60000,policy.action_timeout_ms);
   const confirmation={action:input.action,target:name,workspace_id:workspaceId,template_version_id:template.version_id,parameters_sha256:hash,expires_at_ms:deadline,phrase:input.action.toUpperCase()+' '+name,effects:input.action==='create'?'Create one approved workspace and its persistent resources.':input.action==='start'?'Start the named workspace; resources may be allocated.':'Stop the named workspace and its running tasks. Do not delete its persistent volume or workspace record.'};
   const row={request_id:input.request_id,principal_id:principal,run_id:this.runId,action:input.action,target_key:target,workspace_id:workspaceId,template_version_id:template.version_id,parameters_json:serialized,parameters_sha256:hash,policy_sha256:digest(policy),confirmation_json:canonical(confirmation),confirmation_deadline_ms:deadline,deadline_ms:this.clock()+policy.action_timeout_ms,state:'prepared',submitted_workspace_id:null,build_id:null,result_json:null,error_code:null,attempted_at:null,created_at:timestamp,updated_at:timestamp};
