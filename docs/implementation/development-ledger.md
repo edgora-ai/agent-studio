@@ -576,6 +576,14 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 状态：D02 v5 单通道为工作通道；D07 v5 ready 但不保持连接；第二个 D02（47f844e0）未恢复；策略只读、22 unknown 未变。
 
+### M2 里程碑状态与证据索引（2026-11-02）
+
+T-201 声明后端范围验收；T-203／T-204 本地与远端单通道切片验收；T-205 本地验收与远端服务端前置验收；T-202 start/stop 最小真实验收通过、create 仅离线。产品修复包括 renew-open 当前观测、稳定身份选择、poll 有界重试、unknown lifecycle 的 verified resolve。证据索引与前置清单见[M2 状态与证据索引](evidence/m2-status-and-evidence-index-2026-11-02.json)。
+
+T-206 未开始，需要批准的真实编程 CLI（可执行文件／版本／hash、ACP 协议 argv、专用凭据 ref、policy/kind、项目绑定、允许任务与副作用、时限）；T-207 依赖 T-202／T-203／T-205／T-206，UI 覆盖项目选择、会话目标标识、侧边栏布局、保存冲突与审批 UI、草稿保留；真实设备验收另计。
+
+当前运行态：m1-a running／agent connected；仅 D02 v5 单通道连接；D07 v5 ready 不连接；D05／D06／第二个 D02 为上一世代 invalid。策略只读、22 unknown 未变；通道突发与 agent 断连的相关性保留（未证明根因）。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

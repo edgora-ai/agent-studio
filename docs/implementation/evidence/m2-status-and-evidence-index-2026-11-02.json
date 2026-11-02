@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "kind": "m2-status-and-evidence-index",
+  "dateUTC": "2026-11-02",
+  "decisions": "Long-running autonomous M2 work; hard constraints retained (no create/rebuild/delete, no credential read, no push, policy restored read-only every round, historical failures/22 unknown unchanged).",
+  "tasks": {
+    "T-201": "accepted within declared backend scope: offline slice 6/6, acceptance matrix (store 32/32, environment 13/13), product-RPC slice 3/3; generation cascade cited from offline EnvironmentManager fixture, not RPC-driven; UI excluded.",
+    "T-202": "start/stop real minimal acceptance passed 5/5 on m1-a (policy temporarily widened then restored byte-identically); create branch accepted offline only (18/18) because real create is forbidden by standing constraints; product fixes landed: renew-open uses refreshed observation, stable-identity selection, bounded poll retry, verified lifecycle resolve; transient poll and unknown-lock gaps recorded.",
+    "T-203": "local accepted (local.integration 10/10) and remote single-channel slice accepted 3/3 (write/readback/CAS/search/reference on D02 v4 then current v5); one-binding/path limits.",
+    "T-204": "local accepted (local.integration 10/10 + offline 74/74) and remote single-channel slice accepted 2/2 (command exec and PTY input/output/cancel/release); one-binding/session limits.",
+    "T-205": "local accepted (D04 UI 11 checks + local integration + M1-10 opener evidence); remote sidebar server prerequisites accepted 3/3 (search/reference/save-CAS 409/opener rejection). Browser DOM/native desktop/remote Git-watch UI untested.",
+    "T-206": "not started; needs approved real coding CLI (executable/version/hash, ACP argv/backend manifest, dedicated credential ref, policy/kind, project binding, allowed tasks/effects, deadlines).",
+    "T-207": "not startable yet: depends on T-202/203/205/206; UI work covers project selection, session target identity, sidebar layout, save conflict, approval UI, draft retention; desktop/mock-phone protocol loop only, real device acceptance separate."
+  },
+  "currentRuntime": {
+    "workspace": "m1-a running, Coder agent connected",
+    "channels": "single connected channel: D02 binding-ec5ddf7b...@5 session-441a2ef0...",
+    "readyNotConnected": "D07 binding-6113005c...@5 ready; D05 1dfc57ad@4, D06 7b85475c@4 and second D02 47f844e0@4 invalid after the last generation change",
+    "policy": "read_only:true, actions:[]",
+    "unknownOperations": 22
+  },
+  "infrastructureFindings": [
+    "Multiple-channel renew/connect bursts correlated with Coder agent disconnects/helper-stdout-ended; single-channel paths stayed stable (T202-F5; correlation, root cause not proven).",
+    "2026-11-02 long outage coincided with Coder agent disconnected_at 13:19:25Z -> last_connected_at 13:50:27Z; workspace lifecycle/build stayed running."
+  ],
+  "preservation": [
+    "13 historical unknown operation rows plus 9 remote-outage rows remain unchanged.",
+    "Historical D07/D08 failures, review2 incomplete archive and prior evidence untouched."
+  ],
+  "remaining": [
+    "Real T-202 create branch (explicit authorization required).",
+    "T-206 real CLI acceptance input.",
+    "T-207 integrated UI and T-208 real-session acceptance.",
+    "Browser-level remote sidebar and remote Git/watch UI.",
+    "Cross-Host/crash recovery and M3."
+  ],
+  "autonomousNext": "Round 12: final consistency check, docs/status consolidation and report; leave goal complete with explicit remaining items instead of claiming M2 completion."
+}
