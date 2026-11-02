@@ -58,6 +58,13 @@ with sync_playwright() as playwright:
         if notice.count():
             notice.click()
             notice.wait_for(state='hidden', timeout=10000)
+        # The shell restores the last selected workspace; pin D01 explicitly so
+        # this regression does not depend on previous manual/test selections.
+        chooser = page.get_by_role('button', name='Choose workspace', exact=True)
+        if chooser.count() and 'D01 Preview Project' not in (chooser.first.inner_text() or ''):
+            chooser.first.click()
+            page.get_by_role('menu').get_by_text('D01 Preview Project · v1', exact=True).click()
+            page.wait_for_timeout(1000)
         toggle = page.get_by_role('button', name='Open right sidebar', exact=True)
         if toggle.count():
             toggle.click()
@@ -79,8 +86,11 @@ with sync_playwright() as playwright:
         unexpected_console = [message for message in console_errors if not (
             message == 'Failed to load resource: the server responded with a status of 409 (Conflict)' or
             ('/sidebar/ws/fs-watch?' in message and 'Unexpected response code: 403' in message))]
-        unexpected_rpc = [failure for failure in rpc_failures if failure != {
-            'path': '/api/skills/list', 'code': 'agent-studio/disabled'}]
+        # Stock UI probes that the explicit Studio allowlist keeps fail-closed;
+        # schedule/catalog is requested by the rc.5 shell and must stay disabled.
+        disabled_reads = ['/api/skills/list', '/api/schedule/catalog']
+        unexpected_rpc = [failure for failure in rpc_failures if not (
+            failure['path'] in disabled_reads and failure['code'] == 'agent-studio/disabled')]
         report = {'origin': origin, 'network_idle': idle, 'body': text[:12000], 'js_errors': errors,
                   'unexpected_console_errors': unexpected_console, 'unexpected_rpc_failures': unexpected_rpc,
                   'console_errors': console_errors, 'http_failures': failures, 'rpc_failures': rpc_failures,
@@ -97,7 +107,11 @@ with sync_playwright() as playwright:
             assert 'D01 Preview Project' in text, 'Workspace not visible'
             assert native_session['sessionId'], 'Native session not loaded'
             assert plugin_loaded, 'Original sidebar client not loaded'
-            assert 'D01 preview: project I/O, generation and local openers are disabled' in text, 'Expected disabled Files state not visible'
+            # D01 metadata-only policy: the native Files entry stays in the
+            # provider-unavailable state and its tree request is refused with 409.
+            assert 'provider-unavailable' in text, 'Expected disabled Files state not visible'
+            assert any(failure['path'] == '/sidebar/api/fs.trees' and failure.get('status') == 409
+                       for failure in failures), 'D01 Files request was not denied with 409'
             assert not outside, 'Unexpected external browser request'
             assert all(failure.get('status') == 409 and failure['path'].startswith('/sidebar/') for failure in failures), 'Unexpected HTTP failure'
     except Exception as error:

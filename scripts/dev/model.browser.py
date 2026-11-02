@@ -136,6 +136,10 @@ with sync_playwright() as p:
         page.get_by_role('button', name='Account menu', exact=True).click(timeout=30000)
         page.get_by_role('menuitem', name='Settings', exact=True).click()
         page.get_by_role('button', name='Models', exact=True).click()
+        # rc.5 renders the provider list asynchronously; wait for the loaded
+        # list before deciding whether the fixture provider already exists.
+        page.get_by_role('button', name='Add model provider', exact=True).wait_for(state='visible', timeout=30000)
+        page.wait_for_timeout(500)
         if not page.get_by_role('button', name='Edit Offline Browser Protocol Fixture (studio-model-browser)', exact=True).count():
             page.get_by_role('button', name='Add model provider', exact=True).click()
             page.get_by_role('tab', name='Custom model API', exact=True).click()

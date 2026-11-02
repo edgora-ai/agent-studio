@@ -411,6 +411,23 @@ operation timeout 与清理预算必须分开：默认 TERM 宽限 15 秒、最�
 
 历史 M1 实验脚本（`scripts/m1/install_candidate.py` 的 rc.4 peer 断言、`t107_matrix.py` 的 rc.4 组合描述）仍绑定 T-103／T-107 当时的运行事实，**不是当前 launcher 来源门禁，也不应直接重跑并当作 rc.5 兼容证明**；若要复跑实验，须另按新基线显式调整并重新取证，不能改写原实验记录。
 
+### rc.5 运行时原 UI 回归（2026-11-02，未验收）
+
+在 WIP 快照本地 commit `afa9e13`（未推送）后推进运行态验证。先在随机 `/tmp/agent-studio-test-*` 根执行 launcher `prepare`：rc.5 投影成功（`sdk 0.2.1-rc.5`、原生 Terminal 23 资产、sidebar 13、helper 12、studio 文件复制、stock patch 禁用一次＋native 插入一次）；二次 prepare 幂等；临时根已删除，仓库与上游安装未变。
+
+随后把现有开发预览重启到 rc.5（旧 PID `1914320` 停止）。初次重启由受限文件沙箱内的 shell 启动，导致 `/dev/ptmx` 被拒、`forkpty(3) failed` 与 `local-provider-error`；独立 Python `pty.fork` 同样失败，确认这是**启动环境限制而非 rc.5 或产品缺陷**。以完整权限重启后 PTY 正常（真实 bash、PID／startTick、输出可读）。**运行预览须在不限制设备访问的环境中启动**，不能让预览继承文件沙箱。
+
+原 UI 回归结果（成功与失败目录均保留）：
+
+- **D01**：通过（证据 `artifacts/d01/ui-rc5-regression-4/browser.json`）。适配：rc.5 外壳新增 `schedule/catalog` 探测保持 Studio 明确禁用；harness 显式选择 D01 工作区；禁用 Files 断言改为当前 `provider-unavailable` 状态，并继续要求 `/sidebar/api/fs.trees` 409。
+- **D04 local**：通过 11 项（证据 `artifacts/d04/ui-rc5-regression-9/browser.json`）。适配：同一 m1-a 绑定可有多个 ready 会话，远端身份断言改为精确 `kind=remote`＋绑定，不写死演示会话 ID；切换工作区后只点击可见 right-pane tab；rc.5 侧边栏导轨会覆盖原生加号按钮，终端步骤直接派发真实按钮 click；失败报告保留类型与 traceback。中间失败目录 `ui-rc5-regression-2..8` 未删除。
+- **D05**：通过 7 项（证据 `artifacts/d05/ui-rc5-regression-2/browser.json`）。离线 fixture 重启后端口与合成凭据轮换，用产品 `credentials/set` 与 `model.describe/configure` 把持久路由更新到新 `baseURL`（模型配置 revision 11），harness 等待 provider 列表加载；仍是显式离线协议 fixture，不是真实 LLM。
+- **D06**：通过 7 项（证据 `artifacts/d06/ui-rc5-run2/browser.json`）。本地 ACP peer 全流程通过；远端需重启后显式 `acp-remote-demo` 重连，首次失败 `ui-rc5-run1` 保留。
+- **D02／D03 remote**：未通过，当前远端 helper 报 `helper-call-disconnect`（证据 `artifacts/d03/ui-rc5-regression-2/browser.json`），与 D07 历史 SSH255／helper EOF 同属外部不稳定边界；不以本地通过回写远端结论，未重放或伪造。
+- **D08 真实恢复**：未执行。远端通道当前不可用，无法安全获得原 helper／process 身份；不重发命令／输入／审批，不以新任务冒充恢复，13 条 unknown 不变。
+- 本轮源码适配：`browser.py`（D01）、`core.browser.py`（D04／D03）、`model.browser.py`（D05）为测试 harness；`adapters/local-provider.mjs` 新增有界失败审计消息；未改 Gateway／sidebar／native 投影语义。DB 新增 D05 远端会话与模型配置 revision 11，均为测试数据；历史 evidence 未改。
+- 以上是开发预览回归，不是 M1、D07、D08 或发布验收。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；源码中的单行输入／原生 Terminal 接线即使离线通过，也不构成真实同 Host 恢复验收。真实实验仍需另行确认，然后只运行一个有截止时间的原任务，核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

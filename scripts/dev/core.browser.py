@@ -9,6 +9,7 @@ import re
 import shlex
 import sqlite3
 import subprocess
+import traceback
 from urllib.parse import urlsplit
 from uuid import uuid4
 from playwright.sync_api import sync_playwright, expect, TimeoutError as PlaywrightTimeout
@@ -112,7 +113,7 @@ with sync_playwright() as p:
             expect(page.locator('[data-studio-watch]')).to_contain_text('Local polling',timeout=30000)
             page.screenshot(path=str(out/'local-save.png'),full_page=True)
             pass_check('original local Files Save -> physical UTF8/hash -> full API',sha256=hashlib.sha256(content.encode()).hexdigest())
-        page.locator('[data-slot="sidebar.right.pane.tab.title"]').filter(has_text=re.compile('^Files$')).click()
+        page.locator('[data-slot="sidebar.right.pane.tab.title"]:visible').filter(has_text=re.compile('^Files$')).click()
         with page.expect_response(lambda r:urlsplit(r.url).path=='/sidebar/api/reference.create',timeout=30000) as referenced:
             hit.get_by_role('button',name='Reference bound file snapshot',exact=True).click()
         reference=referenced.value.json()['value'];assert reference['identity']['session_id']==session
@@ -167,7 +168,12 @@ with sync_playwright() as p:
             expect(editor).to_contain_text('REMOTE_D04_'+f['runId'],timeout=30000)
             assert f['needle'] not in editor.inner_text()
             remote_result=next(v for v in reversed(replies) if v['path']=='/sidebar/api/fs.search' and v['body'].get('ok'))['body']['value']
-            assert remote_result['identity']['kind']=='remote' and remote_result['identity']['session_id']==other['session_id']
+            # The m1-a binding legitimately owns several ready native sessions
+            # (D02 demo and the D07 environment session); the shell restores the
+            # last active one. Cross-binding safety needs exact remote kind and
+            # binding, not a hardcoded session id from the demo file.
+            assert remote_result['identity']['kind']=='remote'
+            assert remote_result['identity']['binding_id']==json.loads((root/'remote-demo.json').read_text())['binding_id']
             assert remote_result['hits'][0]['path'].endswith('/'+f['path'])
             page.screenshot(path=str(out/'remote-same-file.png'),full_page=True)
             rpc('terminal/close',{'args':{'agentId':session,'id':held_terminal['id']}},'/api');terminals.remove(held_terminal)
@@ -183,7 +189,13 @@ with sync_playwright() as p:
         # Wait for its real tab bar, not the transient pre-restoration toggle.
         expect(page.get_by_role('button',name='New tab',exact=True).first).to_be_visible(timeout=20000)
         if args.local and not args.inspect:
-            page.locator('[data-slot="sidebar.right.pane.tab.title"]').filter(has_text=re.compile('^中文 file.txt$')).first.click()
+            # The shell may restore the workspace with a collapsed right pane;
+            # reopen the Files pane before asserting the restored local tab.
+            open_right=page.get_by_role('button',name='Open right sidebar',exact=True)
+            if open_right.count(): open_right.first.click(); page.wait_for_timeout(1000)
+            files_entry=page.get_by_role('button',name='Files',exact=True)
+            if files_entry.count(): files_entry.first.click(); page.wait_for_timeout(1000)
+            page.locator('[data-slot="sidebar.right.pane.tab.title"]:visible').filter(has_text=re.compile('^中文 file.txt$')).first.click()
             expect(editor).to_contain_text(f['needle'],timeout=30000)
             assert 'REMOTE_D04_' not in editor.inner_text()
             page.screenshot(path=str(out/'local-restored-file.png'),full_page=True)
@@ -204,7 +216,7 @@ with sync_playwright() as p:
             assert page.get_by_role('button',name='Stage',exact=True).first.is_disabled()
             assert page.get_by_role('button',name='Commit',exact=True).is_disabled()
             for staged,index in [(True,0),(False,1)]:
-                page.locator('[data-slot="sidebar.right.pane.tab.title"]').filter(has_text=re.compile('^Git$')).click()
+                page.locator('[data-slot="sidebar.right.pane.tab.title"]:visible').filter(has_text=re.compile('^Git$')).click()
                 with page.expect_response(lambda r:urlsplit(r.url).path=='/sidebar/api/git.diff' and r.request.post_data_json.get('staged')==staged,timeout=45000) as diff_response:
                     row.nth(index).click()
                 diff=diff_response.value.json()['value']
@@ -216,7 +228,7 @@ with sync_playwright() as p:
                 expect(page.locator('body')).to_contain_text(phrase,timeout=30000)
                 page.screenshot(path=str(out/('git-index.png' if staged else 'git-worktree.png')),full_page=True)
                 pass_check('original Changes -> '+('staged' if staged else 'worktree')+' Diff',identity=diff['identity'],repo_id=diff['repo_id'])
-            page.locator('[data-slot="sidebar.right.pane.tab.title"]').filter(has_text=re.compile('^Git$')).click()
+            page.locator('[data-slot="sidebar.right.pane.tab.title"]:visible').filter(has_text=re.compile('^Git$')).click()
             row.nth(1).click(button='right')
             page.get_by_text('Open editor',exact=True).click()
             editor.wait_for(state='visible',timeout=30000)
@@ -224,7 +236,10 @@ with sync_playwright() as p:
             pass_check('original Git/Diff context -> original file editor keeps binding')
             db=sqlite3.connect('file:'+str(root/'bindings.sqlite')+'?mode=ro',uri=True);db.row_factory=sqlite3.Row
             def terminal_write(content,tag):
-                page.get_by_role('button',name='New tab',exact=True).first.click()
+                # rc.5 stacks the better-sidebar guide rail above the native
+                # right-pane tab bar; dispatch the real add-tab click directly
+                # instead of failing actionability on the covering entry.
+                page.get_by_role('button',name='New tab',exact=True).first.evaluate('node=>node.click()')
                 page.get_by_role('button',name='New terminal',exact=True).click()
                 terminal=page.locator('.xterm-helper-textarea:visible');terminal.wait_for(state='attached',timeout=60000)
                 # xterm maps the native model's writable flag to textarea.readOnly.
@@ -249,7 +264,7 @@ with sync_playwright() as p:
                 assert rpc('operation.get',{'operation_id':task['operation_id']})['state']=='released'
                 stopped=observe([],[task['local_pid' if args.local else 'remote_pid']])['processes'][0]
                 assert stopped.get('exists') is False or stopped.get('state')=='Z' or stopped.get('start_tick')!=physical['processes'][0]['start_tick']
-                page.locator('[data-slot="sidebar.right.pane.tab.title"]').filter(has_text=re.compile('^中文 file.txt$')).first.click()
+                page.locator('[data-slot="sidebar.right.pane.tab.title"]:visible').filter(has_text=re.compile('^中文 file.txt$')).first.click()
                 return {'operation_id':task['operation_id'],'physical':physical,'after':stopped}
             clean='worktree edited\n'+f['needle']+'\nCLEAN_REFRESH_'+str(uuid4())+'\n'
             fact=terminal_write(clean,'D03_CLEAN_DONE')
@@ -276,7 +291,8 @@ with sync_playwright() as p:
             assert not report['js_errors'] and not report['unexpected_http'] and not report['unexpected_rpc'] and not report['unexpected_console'] and not report['external_requests']
             report['result']='pass-limited-development'
     except Exception as error:
-        report['result']='fail';report['failure']=scrub(error)
+        report['result']='fail';report['failure']=scrub(f'{type(error).__name__}: {error}')
+        report['traceback']=scrub(traceback.format_exc())
         report['buttons']=page.get_by_role('button').evaluate_all('(els)=>els.map(e=>({text:e.innerText,title:e.title,label:e.getAttribute("aria-label")}))')
         report['body']=page.locator('body').inner_text()
         page.screenshot(path=str(out/'failure.png'),full_page=True)

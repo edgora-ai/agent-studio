@@ -212,6 +212,9 @@ export class LocalProvider {
       let uncertain=Boolean(task.handle);
       if(task.handle) try {await this.stop(task);uncertain=false;} catch(cleanup) {this.store.audit(principal,'local.start.cleanup',operationId,'unknown',{code:errorCode(cleanup)});}
       this.store.updateOperation(principal,operationId,{state:uncertain?'unknown':'failed',error_code:errorCode(error)});
+      // Keep the bounded underlying message: the public code alone hides whether
+      // this was a capability rejection, PTY failure or SDK contract change.
+      this.store.audit(principal,'local.start.failed',operationId,'failed',{code:errorCode(error),message:String(error?.message??'').slice(0,240)});
       if(!uncertain) this.tasks.delete(operationId);
       throw new StudioError(errorCode(error));
     }
