@@ -464,7 +464,11 @@ repair2 已把 `scripts/m1/t107_repair_guard.mjs` 的动作分类改为与安装
 
 T-201 已启动，但**尚未交付／验收**。差距分析：现有 D-01–D08 源码已具备大部分后端契约——schema v8 的项目／环境／实例／绑定版本／会话／anchor 持久化与不可变快照，`bindings.check/resolve` 统一派发守卫，按次 `provider.authorized/verify` 当前通道核验，anchor dev/ino/realpath 登记与公开 cwd 约束，以及世代变化时新建不可变绑定版本与会话；相应单测分散在 store／environment／recovery 回归中。正式 T-201 还缺：① 打包成 T-201 专用验收证据（写入→直接查存储→API 完整读回→按 ID 检索）；② 明确命名“旧缓存相等不能放行新通道”的回归；③ 把 D-01 预览证据与 T-201 验收证据区分；产品 UI 部分仍归 T-205／T-207。
 
-下一步切片：先在临时根实现离线 T-201 验收 harness（不启远端、不改 UI），再按缺失项补回归；随后才进入 T-202／T-203／T-204。
+**首个离线切片已完成（2026-11-02）**：[t201.acceptance.mjs](../../scripts/dev/t201.acceptance.mjs) 在随机 `/tmp/agent-studio-test-t201-*` 根用 Store + Bindings 与进程内 fake workspace/session persistence 跑通 6 项：项目／环境／绑定持久化与内部 anchor 登记；session 绑定 ready 版本、native cwd 跟随 anchor 且已附加 workspace；写入→直接只读 SQL→Store API 按 ID→会话列表保留完整 operation 身份；重启/回读保留不可变 binding/session/anchor/operation 身份，running 变为 unknown `preview-restarted` 且不重放；版本 CAS 新建不可变绑定版本与会话、旧版本/会话仍可读；**明确命名回归“cached ready-binding equality cannot authorize a new channel”**——缓存 binding 行必须逐次 live `provider.verify`，被 superseded 的旧版本被拒。证据见[T-201 离线切片](evidence/t201-offline-acceptance-slice-2026-11-02.json)，临时根已删除、无预览／远端／网络／模型调用。
+
+该切片不是 T-201 完成：正式任务验收、产物面 RPC／UI 包装、EnvironmentManager 世代级联的 T-201 证据打包、以及 T-202／T-203／T-204 仍属后续；产品 UI 仍归 T-205／T-207。
+
+下一步：按 T-201 验收依据打包正式证据（含世代变化端到端），随后并行推进 T-202／T-203／T-204。
 
 ### 仍未验证与下一步授权边界
 

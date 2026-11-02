@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "task": "T-201",
+  "kind": "offline-acceptance-slice",
+  "dateUTC": "2026-11-02",
+  "status": "first-offline-slice-pass; T-201 not complete",
+  "method": "New random /tmp/agent-studio-test-t201-* root: Store + Bindings with in-process fake workspace/session persistence; no preview, remote, network, model or model/CLI call. Temporary root deleted after the run.",
+  "artifact": {
+    "path": "artifacts/t201/t201-slice-2026-11-02T14-13-22-280Z.json",
+    "sha256": "f1da7bf485e1b0b90150f9dc90fb76d0509029206b459a96cf126cc4fdeec9e8",
+    "result": "pass",
+    "checks": 6
+  },
+  "checks": [
+    {
+      "name": "project/environment/binding persistence and internal anchor registration",
+      "binding_id": "binding-29e83d61-04c4-4b4c-a521-c53a8ad79a28",
+      "version": 1,
+      "anchor_path": "/tmp/agent-studio-test-t201-0oVVV0/anchors/binding-29e83d61-04c4-4b4c-a521-c53a8ad79a28-v1",
+      "anchor_dev": "2049",
+      "anchor_ino": "2897084",
+      "workspace_id": "workspace-5e880e39-4e09-4703-972b-b08ca31b74f6"
+    },
+    {
+      "name": "session binds to ready binding version, native cwd follows the anchor and is attached to the workspace",
+      "session_id": "session-fbb11091-c4e2-45b9-852c-f78a714f16f1",
+      "cwd": "/tmp/agent-studio-test-t201-0oVVV0/anchors/binding-29e83d61-04c4-4b4c-a521-c53a8ad79a28-v1"
+    },
+    {
+      "name": "write -> direct read-only SQL -> API by ID -> session list keeps the full operation identity",
+      "operation_id": "t201-operation-e4ca3e1f-2f23-4736-8070-d9c98cb44bb7",
+      "remote_pid": 4242,
+      "helper_session_id": "t201-helper",
+      "channel_id": "t201-channel"
+    },
+    {
+      "name": "restart/readback keeps immutable binding, session, anchor and operation identity; running becomes unknown preview-restarted without replay",
+      "operation_state": "unknown"
+    },
+    {
+      "name": "version CAS opens a new immutable binding version and session while the old version/session stay readable",
+      "old_version": 1,
+      "new_version": 2,
+      "old_state": "superseded",
+      "new_anchor": "/tmp/agent-studio-test-t201-0oVVV0/anchors/binding-29e83d61-04c4-4b4c-a521-c53a8ad79a28-v2"
+    },
+    {
+      "name": "cached ready-binding equality cannot authorize a new channel: every dispatch verifies the live channel and a superseded version is refused",
+      "verifications": 2,
+      "stale_code": "stale-binding"
+    }
+  ],
+  "verified": [
+    "project/environment/binding persistence with internal anchor dev/ino/workspace registration",
+    "session binds to a ready binding version, native cwd follows the anchor and is attached to the workspace",
+    "operation write -> direct read-only SQL -> Store API by ID -> session list keeps full identity",
+    "restart/readback keeps immutable binding/session/anchor/operation identity; running becomes unknown preview-restarted without replay",
+    "version CAS opens a new immutable binding version/session while old version/session stay readable",
+    "explicit stale-cache/new-channel regression: a ready cached binding row cannot authorize dispatch without live channel verification, and a superseded version is refused"
+  ],
+  "remainingT201Gaps": [
+    "formal T-201 acceptance packaging across the full task scope and product RPC surface",
+    "generation-change end-to-end through EnvironmentManager with real anchor/version/session cascade (covered separately offline but not packaged as this T-201 evidence)",
+    "T-202/T-203/T-204 channel, file and process adapters remain future work; product UI stays T-205/T-207"
+  ],
+  "limitations": [
+    "Fake in-process context; not a real dsh session or workspace registry.",
+    "No remote/Coder/SSH, no preview process, no model/CLI.",
+    "Does not claim T-201 completion, M2, or formal acceptance."
+  ]
+}
