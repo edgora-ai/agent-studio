@@ -159,6 +159,22 @@ export class EnvironmentManager {
    return this.state.update(principal,row.request_id,{state,result_json:canonical(result),error_code:error});
   } catch(error) {const latest=this.state.request(principal,row.request_id);if(this.closed || !['accepted','unknown','timed-out'].includes(latest.state)) return latest;return this.state.update(principal,row.request_id,{state:'unknown',error_code:safe(error)});}
  }
+ async resolve(principal,input) {
+  this.state.owner(principal);fields(input,['request_id'],['request_id']);const row=this.state.request(principal,input.request_id);
+  requireThat(['unknown','timed-out'].includes(row.state) && row.workspace_id && row.build_id,'environment-resolve-state');
+  requireThat(['start','stop'].includes(row.action),'environment-resolve-action');
+  const current=this.state.fresh(principal,row.workspace_id),status=current.status;
+  requireThat(status.build?.id===row.build_id,'environment-resolve-build');
+  if(row.action==='stop') requireThat(status.lifecycle==='stopped' && status.job?.status==='succeeded','environment-resolve-outcome');
+  else requireThat(status.lifecycle==='running' && status.job?.status==='succeeded' && status.agent?.status==='connected','environment-resolve-outcome');
+  const resolution={resolved_from:row.state,verified_observation_id:current.row.observation_id,verified_build_id:row.build_id,
+    verified_lifecycle:status.lifecycle,verified_agent:status.agent?.status??null,
+    verified_job:status.job?.status??null};
+  const updated=this.state.update(principal,row.request_id,{state:'succeeded',error_code:null,
+    result_json:canonical({...JSON.parse(row.result_json??'{}'),resolution})});
+  this.store.audit(principal,'environment.resolve',row.request_id,'resolved',resolution);
+  return updated;
+ }
  request(principal,input) {fields(input,['request_id'],['request_id']);return this.state.request(principal,input.request_id);}
  registerObservation(principal,observation,environmentId) {
   const status=JSON.parse(observation.status_json),specs=this.studio.catalog.filter(spec=>spec.provider==='coder-helper' && spec.workspace_id===status.workspace_id);

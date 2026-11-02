@@ -62,6 +62,7 @@ export async function apply(ctx) {
         case 'environment.confirm': value=await studio.environments.confirm(principal,input);break;
         case 'environment.request': value=studio.environments.request(principal,input);break;
         case 'environment.poll': value=await studio.environments.poll(principal,input);break;
+        case 'environment.resolve': value=await studio.environments.resolve(principal,input);break;
         case 'binding.create': value = await studio.createBinding(principal,input); break;
         case 'binding.get':
           fields(input,['binding_id','version'],['binding_id','version']);

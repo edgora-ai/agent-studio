@@ -516,6 +516,12 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 状态：策略只读字节恢复、m1-a lifecycle running、22 unknown 未变；本步无 create/rebuild/delete/凭据动作。下一步：agent 恢复后重跑 connect，更新本地 demo/fixture 到 v2 新会话，再恢复远端验收；并行实现 poll 自动重试与 unknown lifecycle 锁解决策略。
 
+### unknown lifecycle request 的安全 resolve（2026-11-02）
+
+新增产品 `environment.resolve`（RPC + manager 方法）：只允许把 **unknown／timed-out** 的 start／stop request 依据**新鲜且已验证的观测**解决为 succeeded——要求 observation 的 build id 与 request 的 build id 一致，且 stop 需 lifecycle stopped＋job succeeded、start 需 lifecycle running＋job succeeded＋agent connected；成功后写入 `resolution` 证据、`environment.resolve` 审计并释放 durable target lock。create 与任何不匹配状态一律拒绝；已 resolved 的请求再次 resolve 被拒。离线回归已加入（environment.test **17/17**）。这替代了此前手工 DB 解决测试 request 的做法，且不删除或改写历史 unknown operation 行。
+
+仍未做：poll 瞬态 unknown 的产品自动重试/退避（当前仍依赖调用方重试）；agent 恢复后的 v2 通道重连与本地 fixture 更新；远端 T-203／T-204／T-205 恢复。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

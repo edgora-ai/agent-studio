@@ -119,6 +119,20 @@ test('D07 open ignores volatile identity fields when pinning a fresh selected ob
  assert.equal(link.state,'ready');assert.equal(link.session_id,'session-open-fixture');
 })));
 
+test('D07 verified stop/start unknown requests can be explicitly resolved, mismatches refused',()=>fixture(context=>managerFixture(context,async({manager,principal,setCurrent})=>{
+ const build='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+ setCurrent(observation({lifecycle:'running',build:{id:build},job:{status:'succeeded'}}));await manager.refresh(principal,{});
+ const stop=await manager.prepare(principal,{request_id:'fixture-resolve-stop',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version});
+ manager.state.update(principal,stop.request_id,{state:'unknown',error_code:'environment-broker-failed',build_id:build,submitted_workspace_id:ids.workspace});
+ setCurrent(observation({lifecycle:'stopped',build:{id:build},job:{status:'succeeded'},agent:{id:ids.agent,status:'not-observed'}}));await manager.refresh(principal,{});
+ const resolved=await manager.resolve(principal,{request_id:'fixture-resolve-stop'});assert.equal(resolved.state,'succeeded');assert.equal(resolved.error_code,null);assert.match(resolved.result_json,/verified_build_id/);assert.ok(manager.state.db.prepare("SELECT 1 FROM audit_events WHERE action='environment.resolve' AND outcome='resolved'").get());
+ await assert.rejects(()=>manager.resolve(principal,{request_id:'fixture-resolve-stop'}),{code:'environment-resolve-state'});
+ const start=await manager.prepare(principal,{request_id:'fixture-resolve-start-bad',action:'start',workspace_id:ids.workspace,template_version_id:ids.version});
+ manager.state.update(principal,start.request_id,{state:'unknown',error_code:'environment-broker-failed',build_id:build,submitted_workspace_id:ids.workspace});
+ setCurrent(observation({lifecycle:'running',build:{id:build},job:{status:'succeeded'},agent:{id:ids.agent,status:'disconnected'}}));await manager.refresh(principal,{});
+ await assert.rejects(()=>manager.resolve(principal,{request_id:'fixture-resolve-start-bad'}),{code:'environment-resolve-outcome'});
+})));
+
 test('D07 policies have bounded fixed templates/parameters, no browser-configurable privilege escalation',()=>{
  const p=policy();assert.equal(digest(p),digest(JSON.parse(canonical(p))));
  assert.throws(()=>validateEnvironmentPolicy({...p,transport:'http://untrusted'}));
