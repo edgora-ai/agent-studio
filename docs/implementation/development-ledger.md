@@ -424,7 +424,7 @@ operation timeout 与清理预算必须分开：默认 TERM 宽限 15 秒、最�
 - **D05**：通过 7 项（证据 `artifacts/d05/ui-rc5-regression-2/browser.json`）。离线 fixture 重启后端口与合成凭据轮换，用产品 `credentials/set` 与 `model.describe/configure` 把持久路由更新到新 `baseURL`（模型配置 revision 11），harness 等待 provider 列表加载；仍是显式离线协议 fixture，不是真实 LLM。
 - **D06**：通过 7 项（证据 `artifacts/d06/ui-rc5-run2/browser.json`）。本地 ACP peer 全流程通过；远端需重启后显式 `acp-remote-demo` 重连，首次失败 `ui-rc5-run1` 保留。
 - **D02／D03 remote**：未通过，当前远端 helper 报 `helper-call-disconnect`（证据 `artifacts/d03/ui-rc5-regression-2/browser.json`），与 D07 历史 SSH255／helper EOF 同属外部不稳定边界；不以本地通过回写远端结论，未重放或伪造。
-- **D08 真实恢复**：未执行。远端通道当前不可用，无法安全获得原 helper／process 身份；不重发命令／输入／审批，不以新任务冒充恢复，13 条 unknown 不变。
+- **D08 真实恢复**：未执行。远端通道当前不可用，无法安全获得原 helper／process 身份；不重发命令／输入／审批，不以新任务冒充恢复，13 条 unknown 不变。2026-11-02T13:19 复查：broker 连接 `exit_code 255`、`helper-stdout-ended`、channel lost；两条长连接分别约 29／32 分钟后失败，与 D07 历史 SSH255 同类，未据此重试或改写历史。
 - 本轮源码适配：`browser.py`（D01）、`core.browser.py`（D04／D03）、`model.browser.py`（D05）为测试 harness；`adapters/local-provider.mjs` 新增有界失败审计消息；未改 Gateway／sidebar／native 投影语义。DB 新增 D05 远端会话与模型配置 revision 11，均为测试数据；历史 evidence 未改。
 - 以上是开发预览回归，不是 M1、D07、D08 或发布验收。
 
