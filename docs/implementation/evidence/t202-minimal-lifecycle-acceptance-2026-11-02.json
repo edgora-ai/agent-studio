@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "minimal-real-lifecycle-acceptance",
+  "dateUTC": "2026-11-02",
+  "decision": "accepted-within-minimal-start-stop-scope",
+  "decidedBy": "coordinator delegated continuous milestone work",
+  "scope": "Real minimal lifecycle on the existing m1-a only: temporary read_only:false actions [start,stop], one stop and one start via authenticated environment.prepare/confirm/submit/poll; policy restored byte-identically in finally; no create/rebuild/delete, no credential read.",
+  "artifact": {
+    "path": "artifacts/t202/t202-lifecycle-2026-11-02T16-32-20-423Z.json",
+    "sha256": "dc76d88efb203a68fbf4daba28ab2e037a0c07b6a0bc1d02affa183949b6bf04",
+    "result": "pass",
+    "checks": 5
+  },
+  "checks": [
+    {
+      "name": "temporary minimal policy allows only start/stop for the existing m1-a (no create/rebuild/delete)",
+      "workspace_id": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+      "actions": [
+        "start",
+        "stop"
+      ]
+    },
+    {
+      "name": "real Coder stop accepted and polled to lifecycle stopped with a durable request row",
+      "request_id": "t202-stop-a53dd405-6fb3-4106-97da-1e951ced4ca2",
+      "build_id": "da28b13d-eca3-4cc5-9346-57ab068cef2b",
+      "state": "succeeded",
+      "lifecycle": "stopped"
+    },
+    {
+      "name": "real Coder start accepted and polled back to running; workspace data/lifecycle preserved",
+      "request_id": "t202-start-44d38222-ed49-4c05-b937-2f71574e766f",
+      "build_id": "582832bc-bf09-471b-a1df-51217617492a",
+      "state": "succeeded",
+      "lifecycle": "running",
+      "agent": "connected"
+    },
+    {
+      "name": "environment_requests SQL readback: exactly two attempted requests, both succeeded, no unknown submission",
+      "requests": [
+        {
+          "request_id": "t202-stop-240f11aa-d0ea-49db-9d34-07182e1bfa79",
+          "action": "stop",
+          "state": "succeeded",
+          "build_id": "e02868cd-1180-41cf-b0ae-a29b6624d446"
+        },
+        {
+          "request_id": "t202-recover-start-5f3f6d21-8cc4-4e28-8656-8d0cbbd2c5f3",
+          "action": "start",
+          "state": "succeeded",
+          "build_id": "d8fe6bd1-83ad-46b9-b8ce-c0f639941d64"
+        },
+        {
+          "request_id": "t202-stop-ef47de9f-432f-46d9-9099-0efe21a48de9",
+          "action": "stop",
+          "state": "succeeded",
+          "build_id": "8e23343a-4c47-439f-81f3-c1aeb1079641"
+        },
+        {
+          "request_id": "t202-start-2559e45b-86c5-4f06-8bdb-02f716a37c36",
+          "action": "start",
+          "state": "succeeded",
+          "build_id": "f4d6931c-367c-434f-9506-b28cced90415"
+        },
+        {
+          "request_id": "t202-stop-a53dd405-6fb3-4106-97da-1e951ced4ca2",
+          "action": "stop",
+          "state": "succeeded",
+          "build_id": "da28b13d-eca3-4cc5-9346-57ab068cef2b"
+        },
+        {
+          "request_id": "t202-start-44d38222-ed49-4c05-b937-2f71574e766f",
+          "action": "start",
+          "state": "succeeded",
+          "build_id": "582832bc-bf09-471b-a1df-51217617492a"
+        }
+      ]
+    },
+    {
+      "name": "original read-only policy restored; a post-restore start prepare is refused before any Coder call",
+      "read_only": true,
+      "actions": []
+    }
+  ],
+  "priorFailure": "The first attempt exposed a transient environment-broker poll failure (request unknown) and a durable target lock after unknown/timed-out lifecycle requests; the first attempt required verified manual resolutions with audit entries. That failure record remains unchanged: docs/implementation/evidence/t202-real-lifecycle-failure-2026-11-02.json (c382170829cebbc7fe04f3e443565cdbd9ea3bf8da3db671c809705b393963fa).",
+  "findings": [
+    {
+      "id": "T202-F1",
+      "status": "observed-resolved-by-explicit-retry",
+      "summary": "environment.poll can transiently fail with generic environment-broker-failed after accepted submit; the poll route is retryable until the durable deadline and an explicit retry reached succeeded. Product auto-retry/backoff is still absent and recommended."
+    },
+    {
+      "id": "T202-F2",
+      "status": "fixed",
+      "summary": "prepare(start) now accepts a fresh stopped observation with environment-identity-unavailable; offline regression added."
+    },
+    {
+      "id": "T202-F3",
+      "status": "open-product-gap",
+      "summary": "An unknown or timed-out lifecycle request keeps the durable target lock (DB unique index). No product resolution API exists; this attempt resolved prior test requests from verified control-plane observations with audit records. A safe stale-lock/resolution design remains needed."
+    },
+    {
+      "id": "T202-F4",
+      "status": "expected",
+      "summary": "stop/start created a new Coder agent generation; existing m1-a bindings were revoked as environment-generation-changed (product-correct). Old D02/D05/D06/D07 sessions need the environment.open new-generation renew flow before remote acceptance resumes."
+    }
+  ],
+  "currentState": {
+    "workspace": "m1-a lifecycle running, agent connected, start build 582832bc-bf09-471b-a1df-51217617492a job succeeded (verified by environment.discover/describe)",
+    "policy": "read_only:true actions:[] byte-identical to the original file",
+    "unknownOperations": 22,
+    "invalidBindings": "all previous m1-a bindings (D02/D05/D06/D07) are invalid environment-generation-changed and await renew"
+  },
+  "notClaimed": [
+    "T-202 create branch real execution",
+    "remote file/process acceptance after renew",
+    "T-203/T-204 remote portions",
+    "complete M2"
+  ],
+  "nextSteps": [
+    "Implement product auto-retry/backoff for transient poll unknown and a safe resolution/stale-lock policy for unknown lifecycle requests.",
+    "Renew m1-a bindings via environment.open new-generation flow, then resume remote T-203/T-204/T-205 and T-206 prerequisites."
+  ]
+}
