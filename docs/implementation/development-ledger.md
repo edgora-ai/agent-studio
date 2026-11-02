@@ -570,6 +570,12 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 限制：仅 HTTP 服务端路由，不含浏览器 DOM／原生桌面、远端 Git/watch UI 或完整侧边栏渲染；单 binding/单通道。
 
+### 单通道逐条恢复 D07（2026-11-02）
+
+按单通道纪律执行：断开 D02（cleanup confirmed）→ 单独 renew D07 `6113005c…` v4→v5（session `session-71bc2e2a…`，连接验证通过）→ 断开 D07（cleanup confirmed）→ 重连 D02 v5（channel ready/connected）；两次 agent 检查均 connected，最终仅一条 D02 通道。期间修正 connect 脚本把 `only` 声明放在使用之后的回归。证据见[D07 单独恢复](evidence/t202-individual-d07-restore-2026-11-02.json)。
+
+状态：D02 v5 单通道为工作通道；D07 v5 ready 但不保持连接；第二个 D02（47f844e0）未恢复；策略只读、22 unknown 未变。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "individual-binding-restore-d07",
+  "dateUTC": "2026-11-02",
+  "method": "Single-channel discipline: disconnect D02 -> renew/connect D07 individually -> verify -> disconnect D07 -> reconnect D02. Product remote.disconnect/environment.open only; no lifecycle/create/delete.",
+  "d02": {
+    "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+    "version": 5,
+    "session_id": "session-441a2ef0-5d52-4537-b99e-71b59d7a4188",
+    "disconnect": "cleanup confirmed",
+    "reconnect": "connected (channel ready)"
+  },
+  "d07": {
+    "binding_id": "binding-6113005c-b396-4807-b48a-90f697c1395e",
+    "from_version": 4,
+    "to_version": 5,
+    "session_id": "session-71bc2e2a-2b84-45ac-8be8-bb5398d053c1",
+    "result": "renewed v5; connected during verification; disconnected afterwards to keep one channel"
+  },
+  "verification": {
+    "agentAfterD07": "connected",
+    "agentAfterD02Reconnect": "connected",
+    "connectedChannelsAfter": "one (D02 v5)"
+  },
+  "toolingFix": "t202.connect.bindings.mjs had a variable-order regression in the optional filter (only declared after use); fixed before the successful reconnect.",
+  "unknownOperations": 22,
+  "policy": "read_only:true actions:[]",
+  "limits": [
+    "D07 is not held connected in parallel; only D02 v5 remains the working single channel.",
+    "Second D02 binding (47f844e0) remains unrestored."
+  ],
+  "next": [
+    "Keep D02 v5 as the single channel; restore the second D02 only if needed.",
+    "Continue T-206/T-207 groundwork and final M2 evidence consolidation."
+  ]
+}
