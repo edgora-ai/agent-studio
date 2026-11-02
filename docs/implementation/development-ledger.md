@@ -520,7 +520,9 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 新增产品 `environment.resolve`（RPC + manager 方法）：只允许把 **unknown／timed-out** 的 start／stop request 依据**新鲜且已验证的观测**解决为 succeeded——要求 observation 的 build id 与 request 的 build id 一致，且 stop 需 lifecycle stopped＋job succeeded、start 需 lifecycle running＋job succeeded＋agent connected；成功后写入 `resolution` 证据、`environment.resolve` 审计并释放 durable target lock。create 与任何不匹配状态一律拒绝；已 resolved 的请求再次 resolve 被拒。离线回归已加入（environment.test **17/17**）。这替代了此前手工 DB 解决测试 request 的做法，且不删除或改写历史 unknown operation 行。
 
-仍未做：poll 瞬态 unknown 的产品自动重试/退避（当前仍依赖调用方重试）；agent 恢复后的 v2 通道重连与本地 fixture 更新；远端 T-203／T-204／T-205 恢复。
+**poll 有界重试已实现（2026-11-02）**：`environment.poll` 对只读 GET 的瞬态 transport 失败做 3 次有界退避重试（150/300ms）后才落 unknown；durable deadline 仍生效，测试用一次性 transport 失败验证最终 succeeded（environment.test **18/18**）。
+
+仍未做：agent 恢复后的 v2 通道重连与本地 fixture 更新；远端 T-203／T-204／T-205 恢复；create 分支真实覆盖。
 
 ### 仍未验证与下一步授权边界
 

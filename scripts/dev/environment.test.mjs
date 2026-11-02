@@ -133,6 +133,17 @@ test('D07 verified stop/start unknown requests can be explicitly resolved, misma
  await assert.rejects(()=>manager.resolve(principal,{request_id:'fixture-resolve-start-bad'}),{code:'environment-resolve-outcome'});
 })));
 
+test('D07 poll retries a transient transport failure before recording unknown',()=>fixture(context=>managerFixture(context,async({manager,principal,setCurrent})=>{
+ setCurrent(observation({lifecycle:'running'}));await manager.refresh(principal,{});
+ const stop=await manager.prepare(principal,{request_id:'fixture-poll-retry-01',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version});
+ await manager.confirm(principal,{request_id:stop.request_id,parameters_sha256:stop.parameters_sha256,phrase:'STOP fixture-owned'});
+ await manager.pending.get(stop.request_id);
+ const original=manager.transport.poll.bind(manager.transport);let calls=0;
+ manager.transport.poll=async requestId=>{calls++;if(calls===1)throw new StudioError('offline-transient-poll');return original(requestId);};
+ let row=null;for(let attempt=0;attempt<10;attempt++){row=await manager.poll(principal,{request_id:stop.request_id});if(row.state!=='accepted')break;await new Promise(resolve=>setTimeout(resolve,50));}
+ assert.equal(calls>=2,true);assert.equal(row.state,'succeeded');assert.equal(row.error_code,null);
+})));
+
 test('D07 policies have bounded fixed templates/parameters, no browser-configurable privilege escalation',()=>{
  const p=policy();assert.equal(digest(p),digest(JSON.parse(canonical(p))));
  assert.throws(()=>validateEnvironmentPolicy({...p,transport:'http://untrusted'}));

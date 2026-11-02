@@ -148,7 +148,16 @@ export class EnvironmentManager {
   if(!['accepted','unknown','timed-out'].includes(row.state) || !row.build_id) return row;
   if(row.deadline_ms<=this.clock()) return this.state.update(principal,row.request_id,{state:'timed-out',error_code:'environment-action-deadline'});
   try {
-   const expectedRevision=this.headRevision(row.submitted_workspace_id),result=await this.transport.poll(row.request_id);
+   const expectedRevision=this.headRevision(row.submitted_workspace_id);
+   // A transient broker/transport failure must not turn a real lifecycle
+   // outcome into unknown on the first attempt. Poll is a read-only GET, so a
+   // bounded retry is safe; the durable deadline still governs the request.
+   let result=null,lastError=null;
+   for(let attempt=0;attempt<3&&!result;attempt++){
+    try{result=await this.transport.poll(row.request_id);}
+    catch(error){lastError=error;if(attempt<2)await new Promise(resolve=>setTimeout(resolve,150*(attempt+1)));}
+   }
+   if(!result) throw lastError??new Error('environment-poll-failed');
    if(this.closed) return this.state.request(principal,row.request_id);
    const latest=this.state.request(principal,row.request_id);if(!['accepted','unknown','timed-out'].includes(latest.state)) return latest;
    requireThat(result.build.id===row.build_id && result.workspace.workspace_id===row.submitted_workspace_id,'environment-job-mismatch');
