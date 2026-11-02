@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "kind": "m2-final-state",
+  "dateUTC": "2026-11-02",
+  "runtime": {
+    "workspace": "m1-a",
+    "lifecycle": "running",
+    "agent": "connected",
+    "connectedChannels": [
+      {
+        "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+        "version": 5
+      }
+    ],
+    "policy": "read_only:true, actions:[]"
+  },
+  "bindings": [
+    {
+      "binding_id": "binding-1dfc57ad-ea10-4432-91f4-d017baf52c90",
+      "version": 5,
+      "state": "ready"
+    },
+    {
+      "binding_id": "binding-47f844e0-172f-4e60-a97c-15bd4a712290",
+      "version": 5,
+      "state": "ready"
+    },
+    {
+      "binding_id": "binding-6113005c-b396-4807-b48a-90f697c1395e",
+      "version": 5,
+      "state": "ready"
+    },
+    {
+      "binding_id": "binding-7b85475c-6da8-47e1-8c5d-80e5fd0aa9cc",
+      "version": 5,
+      "state": "ready"
+    },
+    {
+      "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+      "version": 5,
+      "state": "ready"
+    }
+  ],
+  "demos": {
+    "remote-demo.json": "D02 v5 ec5ddf7b session-441a2ef0",
+    "model-remote-demo.json": "D05 v5 1dfc57ad session-01085703",
+    "acp-remote-demo.json": "D06 v5 7b85475c session-926f5207"
+  },
+  "preserved": {
+    "unknownOperations": 22,
+    "pendingLifecycleRequests": 0,
+    "historicalEvidence": "untouched",
+    "noCreateRebuildDelete": true,
+    "noPush": true
+  },
+  "verification": {
+    "environmentTests": "19/19",
+    "mainNodeSuite": "163/163",
+    "remoteDiagnostics": "8/8",
+    "m110Repair": "28/28",
+    "python": "12/12",
+    "syntax": "89 MJS / 45 Python",
+    "docs": "20 documents, 293 local links, 39 regressions",
+    "evidenceChecksums": "all pass",
+    "diffCheck": "pass"
+  },
+  "remoteAcceptance": {
+    "T203": "3/3 single-channel (write/readback, CAS stale rejection, list/search/reference)",
+    "T204": "2/2 single-channel (command exec, PTY input/output/cancel/release)",
+    "T205": "3/3 server prerequisites (search/reference, save 409 conflict, remote opener rejection); browser DOM/native desktop/remote Git/watch UI not executed"
+  },
+  "remaining": [
+    "T-205 browser-level remote sidebar / native desktop / remote Git/watch UI.",
+    "T-206 real coding CLI acceptance inputs.",
+    "T-207 integrated UI and T-208 real-session acceptance.",
+    "Real T-202 create branch (explicit authorization required).",
+    "Other bindings are ready v5 but not held connected to respect channel capacity; D07/D05/D06/second D02 connect on demand individually.",
+    "Cross-Host/crash recovery and M3."
+  ],
+  "infrastructure": [
+    "Channel-burst/agent-disconnect correlation recorded; single channel stable.",
+    "2026-11-02 long agent outage 13:19:25Z-13:50:27Z analysed; lifecycle/build stayed running."
+  ]
+}
