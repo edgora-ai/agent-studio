@@ -70,6 +70,21 @@ test('immutable snapshots, version CAS, forbidden client paths and principals',(
   store.close();
 });
 
+test('materialized workspace names include the binding suffix to keep same-project versions distinct',async()=>{
+ const root=mkdtempSync(join(tmpdir(),'agent-studio-test-bindname-'));
+ const store=new Store(root);mkdirSync(join(root,'anchors'),{recursive:true,mode:0o700});const p=store.principal;
+ const spec={key:'name-fixture',kind:'coder',name:'Name fixture',provider:'coder-helper',policy_version:'p1',generation:'g1',workspace_id:'11111111-1111-4111-8111-111111111111',agent_id:'22222222-2222-4222-8222-222222222222',template_version:'v1',roots:['/workspace']};
+ const project=store.project(p,{name:'Same name project'}),environment=store.environment(p,spec);
+ const names=[];const ctx={workspaceRegistry:{async create(path,name){names.push({path,name});return {id:'workspace-'+names.length,path};}}};
+ const bindings=new Bindings(ctx,store,root,[spec]);
+ const a=await bindings.createBinding(p,{project_id:project.project_id,environment_id:environment.environment_id});
+ const b=await bindings.createBinding(p,{project_id:project.project_id,environment_id:environment.environment_id,binding_id:a.binding_id,expected_version:1});
+ assert.equal(names.length,2);assert.notEqual(names[0].name,names[1].name);
+ assert.match(names[0].name,new RegExp(a.binding_id.slice(-8)+'$'));assert.match(names[1].name,new RegExp(b.binding_id.slice(-8)+'$'));
+ assert.equal(names[0].name.includes(' · v1 · '),true);assert.equal(names[1].name.includes(' · v2 · '),true);
+ store.close();
+});
+
 test('operation records retain identity, reject replay and preserve unknown outcomes',() => {
   const {root,store,p,binding}=setup();
   store.db.prepare("UPDATE project_bindings SET state='ready' WHERE binding_id=?").run(binding.binding_id);

@@ -40,7 +40,10 @@ export class Bindings {
     const info = await lstat(row.anchor_path, { bigint: true });
     requireThat(info.isDirectory() && !info.isSymbolicLink() && await realpath(row.anchor_path) === row.anchor_path && (await readdir(row.anchor_path)).length === 0, 'anchor-invalid');
     const project = this.store.get('projects','project_id',row.project_id,row.principal_id);
-    const workspace = await this.ctx.workspaceRegistry.create(row.anchor_path, `${project.name} · v${row.version}`);
+    // A project may legitimately own several bindings of the same version
+    // lineage; include the binding suffix so restored workspaces are
+    // distinguishable instead of sharing one display name.
+    const workspace = await this.ctx.workspaceRegistry.create(row.anchor_path, `${project.name} · v${row.version} · ${row.binding_id.slice(-8)}`);
     this.store.transaction(() => {
       const current = this.store.binding(row.principal_id,row.binding_id,row.version);
       requireThat(current.state === 'pending', 'binding-not-pending');

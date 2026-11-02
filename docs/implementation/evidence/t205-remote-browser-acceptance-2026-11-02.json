@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "task": "T-205",
+  "kind": "remote-browser-acceptance",
+  "dateUTC": "2026-11-02",
+  "decision": "T-205 remote browser-level Files/search/editor slice accepted on the duplicate D02 v5 binding",
+  "productFix": {
+    "id": "T205-F1",
+    "fix": "materializeBinding workspace display name now appends the binding suffix (… · vN · <binding last8>) so future same-project bindings are distinguishable; offline regression added (store.test 33/33).",
+    "limit": "Existing already-materialized duplicate workspaces keep their old shared names; the browser acceptance selected the duplicate bound to 47f844e0 v5 after seeding it."
+  },
+  "browser": {
+    "workspace_label": "D02 Remote Project · v5",
+    "hits": 1,
+    "hit_wait_seconds": 6,
+    "editor_excerpt": "browser remote fixture\nT205_BROWSER_57e7cd77-2052-42b5-a219-008d70d30f4e\n\n",
+    "has_marker": true,
+    "js_errors": [],
+    "console_errors": [
+      "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    ],
+    "external_reachable": [],
+    "artifact": {
+      "json": {
+        "path": "artifacts/t205/t205-remote-browser-final.json",
+        "sha256": "c6ddb9fcf400a952b038f9374bd5cdef5ca5696887cffc56b8841228b5e1321e"
+      },
+      "screenshot": {
+        "path": "artifacts/t205/t205-remote-browser-final.png",
+        "sha256": "96375f3fe3423f3a49e4ab4ea58d903b748e792f40242a287792f7efc4ab6021"
+      }
+    }
+  },
+  "fixture": {
+    "marker": "T205_BROWSER_57e7cd77-2052-42b5-a219-008d70d30f4e",
+    "session": "session-d10ee85b-130f-4817-9522-03709de75f99",
+    "relative": "t205-browser-fixture.txt",
+    "sha256": "c17eaceb6aa50f2b4d5901ead6dfacf7ae0c9ce2763850f2755eca21b3dc9ad8"
+  },
+  "checks": [
+    "remote workspace Files panel scoped content search returned 1 hit in 6s and the original editor rendered the remote file with the seeded marker",
+    "no JS page errors, no external browser requests; one expected 409 console resource (remote feature disabled)"
+  ],
+  "remaining": [
+    "Remote Git/watch UI and native desktop still untested.",
+    "Existing duplicate workspace names remain until new materialization or a delete/rename operation outside standing constraints."
+  ],
+  "state": {
+    "agent": "connected",
+    "connectedChannels": [
+      "f78353da v5"
+    ],
+    "unknownOperations": 25,
+    "policy": "read_only:true actions:[]"
+  }
+}

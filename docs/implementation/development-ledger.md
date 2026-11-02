@@ -594,6 +594,14 @@ T-206 未开始，需要批准的真实编程 CLI（可执行文件／版本／h
 
 发现 **T205-F1**：同一项目两个绑定共享显示名，浏览器级验收需要确定性的 workspace／binding 选择（不同显示名，或删除重复绑定——删除不在现有硬约束内）。因此 T-205 浏览器级通过仍未达成，不能把本次 DOM 加载当作通过。
 
+### T-205 浏览器级远端验收（2026-11-02）
+
+在单通道纪律下完成 T-205 **浏览器级远端切片**：先断开 D02 ec5d，单独连接 D02 第二绑定 47f8 v5 并在其 v5 根通过产品 `fs.write` 写入 marker fixture；浏览器打开远端 workspace，Files 面板 content 搜索 **6 秒命中 1 条**，点击后原编辑器渲染远端文件并包含 marker；无 JS page error、无外部浏览器请求；仅一条预期 409 控制台资源（远端 Git/watch 未启用）。截图与报告见[T205 远端浏览器验收](evidence/t205-remote-browser-acceptance-2026-11-02.json)。
+
+T205-F1 已在产品侧修复：`bindings.mjs` materializeBinding 的 workspace 显示名追加 binding 后缀（`… · vN · <binding last8>`），并加 store 离线回归（store.test **33/33**）；已存在且已 materialize 的重复 workspace 仍保留旧名，本次浏览器验收在 47f8 绑定上完成，未用删除操作。验收后已断开 47f8、恢复 ec5d v5 单通道，agent connected。
+
+剩余：远端 Git/watch UI、原生桌面；T-206 真实 CLI 需外部输入；T-207/T-208；真实 create；跨 Host/M3。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

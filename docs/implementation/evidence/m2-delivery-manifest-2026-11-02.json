@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "kind": "m2-delivery-manifest",
+  "dateUTC": "2026-11-02",
+  "headBeforeManifest": "372ba3eed97940daa9ed33a3f93b6f015a9d7ea8",
+  "status": "M2 delivered as declared-scope slices; not a full M2/M3 acceptance.",
+  "acceptance": {
+    "T-201": "declared backend scope accepted (offline 6/6, matrix store+environment, product-RPC 3/3)",
+    "T-202": "minimal real start/stop accepted 5/5 (repeatedly); create accepted offline only (18/18); real create not executed",
+    "T-203": "local 10/10 and remote single-channel 3/3",
+    "T-204": "local 10/10 + offline 74/74 and remote single-channel 2/2",
+    "T-205": "local D04 11 checks + remote server prerequisites 3/3 + remote browser Files/search/editor slice (hit 6s, editor marker, store.test 33/33 naming regression)",
+    "T-206": "not started (needs approved real CLI/credential input)",
+    "T-207": "not startable (depends on T-206)"
+  },
+  "productFixes": [
+    "environment.open renew uses refreshed observation",
+    "stable-identity (generation+record) selection",
+    "environment-not-ready diagnostics",
+    "bounded poll retry",
+    "verified lifecycle resolve API",
+    "unique workspace display names (T205-F1)"
+  ],
+  "evidence": [
+    {
+      "path": "docs/implementation/evidence/m2-final-state-2026-11-02.json",
+      "sha256": "b9124d1beb229f2415eecefff9cc8ee2c0626bc3099da832eb2153062f6ab493"
+    },
+    {
+      "path": "docs/implementation/evidence/t205-remote-browser-acceptance-2026-11-02.json",
+      "sha256": "1348af1271330e343be4c7c58734d183ab6dee03e3e6a9a06113d7edb5d75e23"
+    },
+    {
+      "path": "docs/implementation/evidence/t204-remote-acceptance-2026-11-02.json",
+      "sha256": "ec7e21155806f727eaf918fca24fe62ddeb7eae10c6cd93c14816a3e1ddacd71"
+    },
+    {
+      "path": "docs/implementation/evidence/t203-remote-acceptance-2026-11-02.json",
+      "sha256": "4162af781d6e2d9859db30b8a32b9cccc3818939a6c805a49b68b9cec6996a09"
+    },
+    {
+      "path": "docs/implementation/evidence/t202-minimal-lifecycle-acceptance-2026-11-02.json",
+      "sha256": "fc73c108c6d68eb4883ccac028fd5580494194f74faa3d68b0f5a7830defddae"
+    },
+    {
+      "path": "docs/implementation/evidence/t202-create-offline-acceptance-2026-11-02.json",
+      "sha256": "cf576f16de51db3c7f5db0c0f36cd1088fcb05e182e106533d92ccc9caab0134"
+    },
+    {
+      "path": "docs/implementation/evidence/t201-acceptance-2026-11-02.json",
+      "sha256": "e7ddb6e3fa98cd9962b81cf6c8ed4d0864e8b252956eb8381ee0bcd49cf73291"
+    }
+  ],
+  "runtime": {
+    "workspace": "m1-a running, agent connected",
+    "channels": "single ec5d D02 v5 channel",
+    "bindings": "all five v5 ready",
+    "policy": "read_only:true, actions:[]",
+    "unknownOperations": 22,
+    "pendingLifecycleRequests": 0
+  },
+  "preserved": [
+    "13 historical + 9 remote-outage unknown operation rows unchanged",
+    "historical failures/review2 archive untouched",
+    "no create/rebuild/delete/credential read/push"
+  ],
+  "remaining": [
+    "T-205 remote Git/watch UI and native desktop",
+    "T-206 real CLI",
+    "T-207/T-208 integrated UI",
+    "real T-202 create branch",
+    "cross-Host/crash recovery and M3"
+  ]
+}
