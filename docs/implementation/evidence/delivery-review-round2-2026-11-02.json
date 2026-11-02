@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "kind": "delivery-review-round2",
+  "dateUTC": "2026-11-02",
+  "headBeforeReview": "70e986e",
+  "scope": "Independent review/verification/optimization round 2: adversarial remote proof, embedded artifact audit, invariant cross-checks.",
+  "remoteProof": {
+    "result": "pass",
+    "checks": "4/4",
+    "detail": "Swapped the single channel to the 47f8 v5 binding, read the browser-test fixture back through the product fs RPC, and matched the exact bytes/marker/SHA from the T-205 browser evidence; then disconnected 47f8, reconnected ec5d v5 and confirmed agent connected with exactly one channel.",
+    "artifact": {
+      "path": "artifacts/delivery/round2-remote-proof.json",
+      "sha256": "757b5b6be3ee96fe0f4381f1fae160d5cfeb4038d697ffc4a07e1319b9ce7798"
+    }
+  },
+  "artifactAudit": {
+    "result": "pass",
+    "detail": "verify_delivery now also validates artifact/screenshot paths and SHA256 values embedded inside the delivery evidence payloads, in addition to the top-level evidence hashes, addenda existence and SHA256SUMS.",
+    "checks": "7/7",
+    "artifact": {
+      "path": "artifacts/delivery/round2-verify.txt",
+      "sha256": "b5ab8f78129ec7f9e048ec054aca81e6cef4105b6a89a85e035c13068935fa08"
+    }
+  },
+  "invariantCrossCheck": {
+    "unknownAddendumRows": "3/3 match database exactly",
+    "totalUnknown": 25,
+    "pendingLifecycle": 0,
+    "policy": "read_only:true actions:[]",
+    "latestBindings": "5 ready v5",
+    "liveChannels": 1,
+    "agent": "connected"
+  },
+  "suites": {
+    "mainNode": "164/164",
+    "store": "33/33",
+    "environment": "19/19",
+    "diagnostics": "8/8",
+    "m110": "28/28",
+    "python": "12/12",
+    "syntax": "90 MJS / 45 Python",
+    "docs": "20 docs, 293 links, 39 regressions",
+    "sha256Sums": "pass",
+    "diffCheck": "pass"
+  },
+  "optimizations": [
+    "Delivery verifier extended to audit nested artifact/screenshot hashes referenced by evidence payloads.",
+    "Round-2 proof artifacts persisted under artifacts/delivery and hashed into this review record."
+  ],
+  "residual": [
+    "Existing duplicate D02 workspace names keep the old shared label; new materializations are unique.",
+    "25 unknown operation rows remain visible by design (13 historical + 9 outage + 3 T-205 attempt).",
+    "Remote Git/watch UI, native desktop, T-206 real CLI, real create, cross-Host/M3 remain out of scope."
+  ],
+  "verdict": "Delivered M2 scope remains verified; both review rounds found no integrity mismatch in the accepted evidence."
+}

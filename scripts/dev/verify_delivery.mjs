@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
-import {join} from 'node:path';
+import {join,isAbsolute} from 'node:path';
 import {authenticate,requestRpc,DEFAULT_ROOT as root,repo} from './preview.mjs';
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const args=new Set(process.argv.slice(2)),checks=[];
@@ -16,6 +16,14 @@ for(const item of manifest.evidence){const bytes=await readFile(item.path);asser
 pass('delivery manifest evidence hashes',{entries:manifest.evidence.length});
 for(const addendum of manifest.addenda??[]){await readFile(addendum);}
 pass('delivery manifest addenda exist',{count:(manifest.addenda??[]).length});
+// Evidence payloads embed artifact paths/hashes (JSON reports, screenshots);
+// verify those bytes too so a stale artifact cannot hide behind a good
+// delivery-manifest entry.
+const nested=[];const visit=value=>{if(!value||typeof value!=='object')return;if(typeof value.path==='string'&&typeof value.sha256==='string'&&(value.path.startsWith('artifacts/')||value.path.includes('/artifacts/')))nested.push({path:value.path,sha256:value.sha256});for(const child of Object.values(value))visit(child);};
+for(const item of manifest.evidence){visit(JSON.parse(await readFile(item.path,'utf8')));}
+const unique=new Map(nested.map(entry=>[entry.path,entry.sha256]));
+for(const [path,expected] of unique){const resolved=isAbsolute(path)?path:join(repo,path);assert.equal(sha(await readFile(resolved)),expected,path);}
+pass('embedded artifact hashes match current bytes',{artifacts:unique.size});
 const sumLines=(await readFile('docs/implementation/evidence/SHA256SUMS','utf8')).split('\n').filter(line=>line.trim());
 for(const line of sumLines){const [expected,path]=line.trim().split(/\s+/,2);assert.equal(sha(await readFile(path)),expected,path);}
 pass('SHA256SUMS entries match current evidence bytes',{entries:sumLines.length});
