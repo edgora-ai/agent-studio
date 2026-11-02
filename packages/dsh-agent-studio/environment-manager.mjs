@@ -11,7 +11,7 @@ const plain=row=>row?{...row}:undefined;
 export class EnvironmentManager {
  constructor(studio,{transport=new EnvironmentBroker(),policy,clock=Date.now}={}) {
   this.studio=studio;this.store=studio.store;this.db=this.store.db;this.transport=transport;this.fixedPolicy=policy;this.clock=clock;
-  this.state=new EnvironmentState(this.store,process.env.AGENT_STUDIO_RUN_ID??'offline-fixture',clock);this.pending=new Map();this.lastRefresh=0;this.closed=false;this.expiredHeads=new Set();
+  this.state=new EnvironmentState(this.store,process.env.AGENT_STUDIO_RUN_ID??'offline-fixture',clock);this.pending=new Map();this.polling=new Map();this.lastRefresh=0;this.closed=false;this.expiredHeads=new Set();
  }
  async policy() {
   if(this.fixedPolicy) return validateEnvironmentPolicy(structuredClone(this.fixedPolicy));
@@ -144,38 +144,76 @@ export class EnvironmentManager {
   }
  }
  async poll(principal,input) {
-  this.state.owner(principal);fields(input,['request_id'],['request_id']);const row=this.state.request(principal,input.request_id);
+  this.state.owner(principal);fields(input,['request_id'],['request_id']);
+  const row=this.state.request(principal,input.request_id);
+  if(this.closed || !['accepted','unknown','timed-out'].includes(row.state) || !row.build_id) return row;
+  if(this.polling.has(row.request_id)) return this.polling.get(row.request_id);
+  const work=this.pollOnce(principal,input).finally(()=>this.polling.delete(row.request_id));
+  this.polling.set(row.request_id,work);return work;
+ }
+ async pollOnce(principal,input) {
+  const row=this.state.request(principal,input.request_id);
+  const timedOut=()=>{
+   const latest=this.state.request(principal,row.request_id);
+   if(this.closed || !['accepted','unknown','timed-out'].includes(latest.state)) return latest;
+   return this.state.update(principal,row.request_id,{state:'timed-out',error_code:'environment-action-deadline'});
+  };
   if(!['accepted','unknown','timed-out'].includes(row.state) || !row.build_id) return row;
-  if(row.deadline_ms<=this.clock()) return this.state.update(principal,row.request_id,{state:'timed-out',error_code:'environment-action-deadline'});
+  if(row.deadline_ms<=this.clock()) return timedOut();
   try {
    const expectedRevision=this.headRevision(row.submitted_workspace_id);
-   // A transient broker/transport failure must not turn a real lifecycle
-   // outcome into unknown on the first attempt. Poll is a read-only GET, so a
-   // bounded retry is safe; the durable deadline still governs the request.
+   // GET retries share the durable budget; late success must not release a lock.
    let result=null,lastError=null;
    for(let attempt=0;attempt<3&&!result;attempt++){
-    try{result=await this.transport.poll(row.request_id);}
-    catch(error){lastError=error;if(attempt<2)await new Promise(resolve=>setTimeout(resolve,150*(attempt+1)));}
+    if(this.closed) return this.state.request(principal,row.request_id);
+    const timeoutMs=row.deadline_ms-this.clock();
+    if(timeoutMs<=0) return timedOut();
+    try{result=await this.transport.poll(row.request_id,{timeoutMs});}
+    catch(error){
+     lastError=error;const remaining=row.deadline_ms-this.clock();
+     if(remaining<=0) return timedOut();
+     if(attempt<2&&!this.closed) await new Promise(resolve=>setTimeout(resolve,Math.min(150*(attempt+1),remaining)));
+    }
    }
    if(!result) throw lastError??new Error('environment-poll-failed');
    if(this.closed) return this.state.request(principal,row.request_id);
    const latest=this.state.request(principal,row.request_id);if(!['accepted','unknown','timed-out'].includes(latest.state)) return latest;
+   if(row.deadline_ms<=this.clock()) return timedOut();
    requireThat(result.build.id===row.build_id && result.workspace.workspace_id===row.submitted_workspace_id,'environment-job-mismatch');
-   requireThat(this.ingest(result.workspace,'coder-build-poll',{expectedRevision}),'environment-observation-superseded');let state='accepted',error=null;
-   if(!result.current_build) {state='unknown';error='environment-build-superseded';}
+   // Losing the head CAS to discovery is benign: preserve the newer observation
+   // and keep accepted requests eligible for the next scheduled poll.
+   if(!this.ingest(result.workspace,'coder-build-poll',{expectedRevision})) return latest;
+   let state='accepted',error=null;
+   if(result.current_build!==true) {state='unknown';error='environment-build-superseded';}
    else if(['failed','canceled'].includes(result.build.job?.status)) {state='failed';error='environment-build-failed';}
    else if(row.action==='stop'?result.build.job?.status==='succeeded' && result.workspace.lifecycle==='stopped':ready(result.workspace)) state='succeeded';
    return this.state.update(principal,row.request_id,{state,result_json:canonical(result),error_code:error});
-  } catch(error) {const latest=this.state.request(principal,row.request_id);if(this.closed || !['accepted','unknown','timed-out'].includes(latest.state)) return latest;return this.state.update(principal,row.request_id,{state:'unknown',error_code:safe(error)});}
+  } catch(error) {
+   const latest=this.state.request(principal,row.request_id);
+   if(this.closed || !['accepted','unknown','timed-out'].includes(latest.state)) return latest;
+   if(row.deadline_ms<=this.clock()) return timedOut();
+   return this.state.update(principal,row.request_id,{state:'unknown',error_code:safe(error)});
+  }
  }
  async resolve(principal,input) {
-  this.state.owner(principal);fields(input,['request_id'],['request_id']);const row=this.state.request(principal,input.request_id);
+  this.state.owner(principal);fields(input,['request_id'],['request_id']);
+  const policy=await this.policy();this.currentPolicy=policy;
+  const row=this.state.request(principal,input.request_id);
   requireThat(['unknown','timed-out'].includes(row.state) && row.workspace_id && row.build_id,'environment-resolve-state');
   requireThat(['start','stop'].includes(row.action),'environment-resolve-action');
-  const current=this.state.fresh(principal,row.workspace_id),status=current.status;
-  requireThat(status.build?.id===row.build_id,'environment-resolve-build');
+  const observed=this.state.latest(principal,row.workspace_id);
+  requireThat(observed && observed.expires_at_ms>this.clock(),'environment-observation-stale');
+  const status=JSON.parse(observed.status_json),stoppedWithoutIdentity=row.action==='stop' && status.lifecycle==='stopped';
+  // Stop builds legitimately lack instance resources. This one broker code is
+  // not an observation failure for STOP; every other error still fails closed.
+  const acceptable=code=>!code || stoppedWithoutIdentity && code==='environment-identity-unavailable';
+  requireThat(acceptable(observed.error_code) && acceptable(status.error_code),'environment-observation-stale');
+  const current={row:observed,status};
+  requireThat(status.workspace_id===row.workspace_id && status.owner_id===policy.owner_id && status.organization_id===policy.organization_id &&
+   (policy.workspace_ids.includes(row.workspace_id) || this.db.prepare("SELECT 1 FROM environment_requests WHERE principal_id=? AND action='create' AND state='succeeded' AND submitted_workspace_id=?").get(principal,row.workspace_id)) && policy.templates.some(template=>template.version_id===row.template_version_id && template.version_id===status.template_version_id && template.template_id===status.template_id),'environment-resolve-target');
+  requireThat(status.build?.id===row.build_id && status.build.transition===row.action,'environment-resolve-build');
   if(row.action==='stop') requireThat(status.lifecycle==='stopped' && status.job?.status==='succeeded','environment-resolve-outcome');
-  else requireThat(status.lifecycle==='running' && status.job?.status==='succeeded' && status.agent?.status==='connected','environment-resolve-outcome');
+  else requireThat(ready(status),'environment-resolve-outcome');
   const resolution={resolved_from:row.state,verified_observation_id:current.row.observation_id,verified_build_id:row.build_id,
     verified_lifecycle:status.lifecycle,verified_agent:status.agent?.status??null,
     verified_job:status.job?.status??null};
@@ -206,7 +244,14 @@ export class EnvironmentManager {
   const previous=this.db.prepare('SELECT * FROM environment_links WHERE request_id=?').get(input.request_id),serialized=canonical(input);
   if(previous) {requireThat(previous.principal_id===principal && previous.input_json===serialized,'environment-link-conflict');return plain(previous);}
   requireThat(!this.db.prepare("SELECT 1 FROM environment_links WHERE principal_id=? AND state='opening'").get(principal),'environment-link-busy');
-  await this.refresh(principal,{});const current=this.state.fresh(principal,input.workspace_id);
+  await this.refresh(principal,{});
+  // refresh yields: recheck replay and the single-opening reservation before
+  // any materialization. No await separates these checks from the link insert.
+  requireThat(!this.closed,'environment-manager-closed');
+  const replay=this.db.prepare('SELECT * FROM environment_links WHERE request_id=?').get(input.request_id);
+  if(replay) {requireThat(replay.principal_id===principal && replay.input_json===serialized,'environment-link-conflict');return plain(replay);}
+  requireThat(!this.db.prepare("SELECT 1 FROM environment_links WHERE principal_id=? AND state='opening'").get(principal),'environment-link-busy');
+  const current=this.state.fresh(principal,input.workspace_id);
   // Both ordinary opens and renewals need a ready workspace. Without this, a
   // renewal during an agent/lifecycle outage would fabricate a new ready
   // binding/session and only fail later at provider connect, leaving an
@@ -264,5 +309,5 @@ export class EnvironmentManager {
    for(const row of this.state.requests(this.store.principal)) if(row.state==='accepted') await this.poll(this.store.principal,{request_id:row.request_id});
   } catch(error) {this.lastError=safe(error);} finally {this.ticking=false;}
  }
- async dispose() {this.closed=true;clearInterval(this.timer);await Promise.allSettled([...this.pending.values(),...(this.refreshing?[this.refreshing]:[])]);}
+ async dispose() {this.closed=true;clearInterval(this.timer);await Promise.allSettled([...this.pending.values(),...this.polling.values(),...(this.refreshing?[this.refreshing]:[])]);}
 }

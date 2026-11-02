@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "kind": "delivery-review-round3",
+  "dateUTC": "2026-11-02",
+  "status": "Offline review complete after GLOBAL STABLE; final same-source Node regression passed in Lead context; delegated-context private-store CLI failures preserved; not deployed",
+  "scope": "Offline source/test hardening and public evidence plus explicitly authorized read-only local-state audits. This is not fresh live acceptance, deployment, original remote-task recovery, or complete M2/M3 acceptance.",
+  "authorizationAtEvidenceFreeze": {
+    "credentialRead": false,
+    "liveMainOrRpc": false,
+    "runtimeMutations": false,
+    "runtimeStoreConstruction": false,
+    "isolatedOwnedFixtureStoreAndDatabaseWritesPermitted": true,
+    "installRestartDeployPush": false,
+    "commit": false,
+    "commitApproval": "Lead must review final diff and explicitly approve any later local commit; no push"
+  },
+  "processNotes": [
+    "Some tool calls mistakenly included sandbox_permissions=workspace-write in the delegated context or danger-full-access in Lead's already authorized context, despite the requested omission. No approval or additional authorization resulted. Do not describe these calls as keyless or the process as deviation-free.",
+    "Delegated workspace-write context: unchanged total Node suite failed only the actual private-store read-only diagnostic CLI (unable to open database file), and the one authorized targeted recheck reproduced it. Lead's existing authorized context passed the identical targeted suite and then the entire unchanged suite. No source edits, filtering, skipping, immutable-SQLite workaround, DB/permission changes, or wider delegated retry were used to turn those failures into a pass. Different-context outcomes are measured; a specific OS/SHM mechanism is not proven.",
+    "Existing offline tests may construct Store and write fixture databases/fake drivers in their own random /tmp roots. They must not construct Store against the real preview runtime root or mutate its DB/policy. Read-only local audits kept matching the exact cached identities and preserved full rows.",
+    "Lead reported refocus topology/work TRACE GAP with no configured OpenRig node. Product outcome and bounded scope were checked against the current README and goal; no configured topology or managed-chain result is invented.",
+    "A native Claude handoff stopped because that backend's Bash tool was unavailable in don't-ask mode, without changing any files; a separate native Codex handoff ended with a product-level runner error. Neither completed the final hash registration. These backend failures are not product-test failures or evidence of changed runtime state."
+  ],
+  "historicalClarification": {
+    "weakGatesSuperseded": "Preserved round1 6/6 and round2 7/7 checked a smaller evidence graph and weaker identities. Current recursive closure and exact stored-state gates supersede them without rewriting immutable history.",
+    "falsePassReproduction": "Archived results and historical driver are offline mocked/corrupted-copy reproductions against the then-7312b0f source and temporary fixtures, NOT evidence that original accepted artifacts were corrupted and NOT fresh live runtime results. The driver is archived as .mjs.txt for historical inspection only; it was not rerun and is not represented as a directly runnable current-source reproducer.",
+    "lifecycleBefore": {"tests": 31, "passed": 21, "failed": 10, "interpretation": "Selected pre-fix reproduction used the corrected fresh fixture. Its environment-observation-stale also reflects the old resolve behavior, not an unresolved fixture excuse."},
+    "lifecycleAfterTargeted": {"tests": 85, "passed": 85, "failed": 0, "durationMs": 3364.216838, "includedInFinalNodeSuite": true},
+    "intermediateSnapshots": "Archived contracts44 and reported T20245 were intermediate fixtures, superseded by final contracts47 and T20250 after retained-history/new-anchor source-model corrections within the same bounded parent review; no additional review round is implied.",
+    "lifecyclePreservation": "Historical T-202 start/stop evidence establishes observed lifecycle/build/request/policy outcomes only. Workspace-data integrity was not independently sentinel-tested; old evidence bytes remain unchanged.",
+    "nodeBaseline": "The earlier 200-test Node baseline already included M1-10's28; neither that subset nor targeted/independent reviews is added again to the measured final359."
+  },
+  "fixGroups": [
+    {"id": "review3-delivery", "summary": "Schema2 recursive evidence/addendum/artifact/snapshot hashes, all checksum-index entries, public realpath confinement, exact native-anchor versus Coder-workspace identities, five v5 binding/session identities and all25 unknown full-row hashes; default no private state/credentials and explicit read-only local-state mode."},
+    {"id": "review3-lifecycle", "summary": "Fresh scope/build/transition-verified STOP resolution, including valid identity-unavailable stopped evidence; strict verified START; durable poll deadlines before/after waits, remaining transport budgets, poll/open concurrency rechecks and deduplication; malformed prior payload preservation and no implicit unknown-lock release or retry."},
+    {"id": "review3-acceptance", "summary": "Actual T203/204/205 runners require explicit selected version, stale===false, identity.verified===true, exact bound identity/output/CAS/cleanup evidence. Opaque strong versions are not lexical clocks; search/reference/citation identities and hashes bind the actual result; PTY output uses a separate nonce rather than input echo, and exact provider ownership/release must be confirmed; sidebar must save successfully before a genuine provider-dispatched stale-CAS409. T202 exported actual runners verify exact channel.connected/binding/version/root/channel/helper-session identities, not just ready link/session; all-skipped, zero-target, missing-item, partial renewal and final cross-binding disconnect are aggregate FAIL. Partial success is recorded truthfully, not atomically rolled back."}
+  ],
+  "sourceModelClarification": {
+    "workspaceIdentity": "Native anchor ids.workspace_id is legitimately distinct from the Coder WORKSPACE_ID; both are checked in their own model.",
+    "selection": "Describe retains historical invalid versions. Select the unique highest positive safe-integer version across ALL statuses, then check the explicit selected/current version. Never ignore a newer invalid/pending version and downgrade to an older ready version; duplicate highest versions are ambiguous and reject.",
+    "renewal": "Renewal advances the binding version and creates a NEW native anchor UUID and target root while retaining project/environment, followed by exact session and connected-channel verification. Retained invalidv4 plus current readyv5/new-anchor is a valid positive; unchanged-anchor/single-row fixtures were corrected.",
+    "importScope": "T202 tests use actual module import-smoke and in-memory injected RPC/pause/demo-writer mocks; they do not provide a deny-filesystem/network interception sandbox. Contracts47 separately includes its actual import test with network/process creation disabled."
+  },
+  "independentReview": {
+    "reportedOnly": true,
+    "durableLogAvailable": false,
+    "reportedTests": 130,
+    "reportedPassed": 130,
+    "syntheticPublicSymlinkNegatives": 3,
+    "syntheticPublicSymlinkRejected": 3,
+    "scope": "No remaining defect was reported in that reviewed snapshot. Parent review later separately corrected native-anchor/Coder-workspace and retained-history/new-anchor source models. This is not a claim that the entire product is defect-free, and these counts are not added to final regression."
+  },
+  "regression": {
+    "nodeCommand": "node --test scripts/dev/*.test.mjs scripts/m1/t107_repair.test.mjs",
+    "nodeFinalLead": {"tests": 359, "passed": 359, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "durationMs": 6386.083702, "exitCode": 0, "log": "node-final-lead.txt"},
+    "nodeInitialDelegated": {"tests": 359, "passed": 358, "failed": 1, "cancelled": 0, "skipped": 0, "todo": 0, "durationMs": 6530.020774, "exitCode": 1, "failure": "remote-diagnostics.test.mjs:101 actual private store; spawned CLI: unable to open database file", "log": "node-final.txt"},
+    "diagnosticRecheckDelegated": {"command": "node --test scripts/dev/remote-diagnostics.test.mjs", "tests": 8, "passed": 7, "failed": 1, "cancelled": 0, "skipped": 0, "durationMs": 428.024172, "exitCode": 1, "log": "remote-diagnostics-targeted-recheck.txt"},
+    "diagnosticLead": {"tests": 8, "passed": 8, "failed": 0, "cancelled": 0, "skipped": 0, "durationMs": 902.92633, "exitCode": 0, "log": "remote-diagnostics-lead.txt"},
+    "targetedAcceptanceFinal": {"contracts": {"tests": 47, "passed": 47, "failed": 0, "skipped": 0, "durationMs": 252.631053, "exitCode": 0}, "t202": {"tests": 50, "passed": 50, "failed": 0, "cancelled": 0, "skipped": 0, "durationMs": 151.571409, "exitCode": 0}, "includedInFinalNodeSuite": true},
+    "python": [
+      {"command": "python3 -I -B scripts/dev/test_environment_broker.py -v", "tests": 5, "passed": 5, "durationSeconds": 1.443, "exitCode": 0},
+      {"command": "python3 -I -B scripts/dev/test_task_observe.py -v", "tests": 4, "passed": 4, "durationSeconds": 0.007, "exitCode": 0},
+      {"command": "python3 -I -B scripts/dev/test_recovery_command.py -v", "tests": 3, "passed": 3, "durationSeconds": 0.094, "exitCode": 0}
+    ],
+    "documentationTests": {"command": "python3 -I -B scripts/test_check_docs.py -v", "tests": 39, "passed": 39, "durationSeconds": 8.104, "exitCode": 0},
+    "documentationChecker": {"command": "python3 -I -B scripts/check_docs.py --json", "documents": 20, "localLinks": 345, "errors": 0, "exitCode": 0},
+    "syntaxOnly": {"discovery": "glob of scripts/**/*.mjs, packages/**/*.mjs, scripts/**/*.py and packages/**/*.py after GLOBAL STABLE; exact paths archived", "mjs": 94, "python": 45, "methods": "node --check each listed MJS; Python compile(bytes, relative, exec) under -I -B", "operationalImports": false, "pythonBytecodeWritten": false, "exitCode": 0},
+    "sourceLock": {"command": "node scripts/dev/source-lock.mjs --check", "assets": 98, "assetsMatched": 98, "packages": 6, "packageVersionsMatched": 6, "nativeStockPatch": "match", "exitCode": 0, "interpretation": "Repeatable rc.5 compatibility/source snapshot, not a permanent pin or deployment/compatibility/recovery acceptance."},
+    "gitDiffCheck": {"command": "git diff --check", "exitCode": 0, "postRegistrationRecheckRequired": true}
+  },
+  "cachedLocalState": {"schema": 8, "bindings": 5, "versions": [5], "exactBindingSessionNativeAnchorCoderIdentitiesMatch": true, "unknown": 25, "preservedFullCanonicalRowHashes": 25, "pending": 0, "policy": {"read_only": true, "actions": []}, "liveRpcChecked": false, "interpretation": "Exact schema2 manifest runtime identity/row declarations are unchanged. Cached SQLite records do not establish current agent or channel connectivity, remote-process termination, task recovery or cancellation."},
+  "acyclicRegistration": {
+    "flow": "archived bytes -> report -> manifest addendum -> manifest digest -> SHA256SUMS",
+    "preAddendumAudit": {"publicChecks": 2, "localChecks": 3, "roots": 13, "documents": 39, "artifacts": 272, "files": 311, "implementationChecksumEntries": 66, "researchChecksumEntries": 8, "exitCode": 0},
+    "finalVerificationCommands": ["node scripts/dev/verify_delivery.mjs", "node scripts/dev/verify_delivery.mjs --local-state", "sha256sum -c docs/implementation/evidence/SHA256SUMS", "sha256sum -c docs/research/evidence/SHA256SUMS", "git diff --check"],
+    "cycleAvoidance": "This report contains neither manifest/index digests nor a hashed final verifier stdout that contains its own hash declaration. Archived verifier/checksum logs are explicitly PRE-ADDENDUM old-count receipts. Post-registration public/local stdout and final diff/status/stat are left under /tmp and handed to Lead after verification."
+  },
+  "liveRpcChecked": false,
+  "artifacts": [
+    {"path": "artifacts/delivery/review3-2026-11-02/offline-false-pass-reproduction.json", "sha256": "546ce37cf93547408ad433cbda5505ca1dc0fb52a25d7774e1ac68b6d674077c", "role": "Historical offline copied-fixture results, not original-artifact corruption", "source": "/tmp/delivery-review-7312b0f-BxflBWWl/run-GLYfZx/results.json"},
+    {"path": "artifacts/delivery/review3-2026-11-02/offline-false-pass-driver-historical.mjs.txt", "sha256": "87a423260476bcc5b2d77253071e3b90ab8e29e85b2ee8fcf27f3bec65a1da97", "role": "Historical text only; then-7312b0f source and temporary fixture dependencies; not executed", "source": "/tmp/delivery-review-7312b0f-BxflBWWl/offline-review.mjs"},
+    {"path": "artifacts/delivery/review3-2026-11-02/lifecycle-before.txt", "sha256": "2972aea75614c1905ba86736dc6ef195eea2de9d4894f6f7d14e6184466bb702", "role": "Selected pre-fix31/21pass/10fail", "source": "/tmp/agent-studio-review-lifecycle-before.txt"},
+    {"path": "artifacts/delivery/review3-2026-11-02/lifecycle-after-targeted.txt", "sha256": "0c0054323413c3532523a1674664fda3d7ce110247aef4aea5f8fc6708eb54e3", "role": "Targeted85/85 after lifecycle fixes; subset, not final total", "source": "/tmp/agent-studio-review-lifecycle-after.txt"},
+    {"path": "artifacts/delivery/review3-2026-11-02/verifier-tests-pre-final.txt", "sha256": "684e3e8d285051a39fa314799ba089fa21c7a17049281f69a73ee5be6ac31532", "role": "Pre-final targeted verifier46/46", "source": "/tmp/agent-studio-review-verifier-tests.txt"},
+    {"path": "artifacts/delivery/review3-2026-11-02/acceptance-contracts-targeted.txt", "sha256": "f89bfc65ec552c8b9aa4205155b0c74b2e0185d4ecf28b261b34f35322809573", "role": "Historical intermediate contracts44/44; superseded by47; source subsequently updated"},
+    {"path": "artifacts/delivery/review3-2026-11-02/acceptance-contracts-final.txt", "sha256": "2d31958ef57cf0274696afe9afb284917176108b06d6f910368695335da4530c", "role": "Final contracts47/47; subset", "source": "/tmp/agent-studio-review-acceptance-tests.txt"},
+    {"path": "artifacts/delivery/review3-2026-11-02/t202-acceptance-final.txt", "sha256": "627bcd2248644101d04725efb99e19270c0f69f605673ea504c701d369938208", "role": "Final T20250/50; subset", "source": "/tmp/t202-acceptance-final-r8Civt.log"},
+    {"path": "artifacts/delivery/review3-2026-11-02/node-final.txt", "sha256": "920d4bbb564547d2d4bf11186dd06c959756595f871b081fbe84acfe00935a2c", "role": "Preserved delegated-context total359/358pass/1fail"},
+    {"path": "artifacts/delivery/review3-2026-11-02/remote-diagnostics-targeted-recheck.txt", "sha256": "ac2f74c4911f9a38bca7751787903be75a507438c45b58cdf9e2b7262735dc71", "role": "Preserved sole authorized delegated-context diagnostic recheck8/7pass/1fail"},
+    {"path": "artifacts/delivery/review3-2026-11-02/readonly-diagnostics-environment.json", "sha256": "3cc4e01d7e5a1bdd10f89e1fa54e57fee5e1c157aa5e81aa5f4f64a8fb4fc657", "role": "Metadata-only cwd, resolved DB path, UID/GID and existing DB/wal/shm stat; no credentials/environment dump"},
+    {"path": "artifacts/delivery/review3-2026-11-02/verify-local-diagnostic-compare.txt", "sha256": "e62409f54841a10a6e6ea9e79610fdaf960f45eb232db713b82f9801eb9faddd", "role": "Pre-addendum same-delegated-context readonly local-state3/3 compare; no connectivity assertion"},
+    {"path": "artifacts/delivery/review3-2026-11-02/remote-diagnostics-lead.txt", "sha256": "c775ccd98841a316a8bc6d02cda83f9f93dd27e7b65a1cdb868ffe81b8d8734b", "role": "Identical targeted suite8/8 in Lead existing authorized context", "source": "/tmp/agent-studio-review-lead-diagnostics-AnDIA9.log"},
+    {"path": "artifacts/delivery/review3-2026-11-02/node-final-lead.txt", "sha256": "21b99c2194bd350ce66d10094c0057f53ac977450ca0a359f920e6f6afd0931e", "role": "Final unchanged full359/359 in Lead existing authorized context; no skips/filtering", "source": "/tmp/agent-studio-review-lead-node-sb09F4.log"},
+    {"path": "artifacts/delivery/review3-2026-11-02/python-final.txt", "sha256": "188fd8ab2888e0fe2ee6518abb6f78df1b1181d0ca820d5bf106b74c8b6bb977", "role": "Final Python broker5/observe4/recovery3"},
+    {"path": "artifacts/delivery/review3-2026-11-02/docs-tests-final.txt", "sha256": "bada6de5fef5faebfabbec6436f32b4b3e61e6761f1761c944f8047957110919", "role": "Final documentation unit39/39"},
+    {"path": "artifacts/delivery/review3-2026-11-02/docs-check-final.json", "sha256": "5f09303ee6833e879908627ecf62be0e12ef8527a7dab30c11456c902dd65d6c", "role": "Final documentation checker, rerun after final prose"},
+    {"path": "artifacts/delivery/review3-2026-11-02/syntax-files.json", "sha256": "67dd0e691033abd1c125e1b72cd614160ef6b6feb7eeafe6e6097085fd6ce1dc", "role": "Exact post-STABLE glob-discovered syntax inventory94MJS+45Python"},
+    {"path": "artifacts/delivery/review3-2026-11-02/syntax-final.txt", "sha256": "8eb29934a6cdaa18b70864955a836bb84601db2273bcdd2611bf7b5852c9f988", "role": "All inventory sources parse; no operational imports"},
+    {"path": "artifacts/delivery/review3-2026-11-02/source-lock-final.txt", "sha256": "6eb04f7dd695bec2b7961d4422530fb3837c57be05d14a891bca5cadb0303459", "role": "Final98/98 assets,6packages and stock patch match"},
+    {"path": "artifacts/delivery/review3-2026-11-02/verify-public-pre-addendum.txt", "sha256": "6cd865bfb3bfc2bcfde9d0decdeb41bfad8237d1a96e4888f137438e542ff35b", "role": "PRE-ADDENDUM public2/2; old13roots/311files/66sums, not current registration counts"},
+    {"path": "artifacts/delivery/review3-2026-11-02/verify-local-pre-addendum.txt", "sha256": "e62409f54841a10a6e6ea9e79610fdaf960f45eb232db713b82f9801eb9faddd", "role": "PRE-ADDENDUM local3/3; exact cached rows and old graph counts"},
+    {"path": "artifacts/delivery/review3-2026-11-02/checksums-pre-addendum.txt", "sha256": "4d3ea1bbf853478343daaa037232afdef85847e116461b6025f7868d25f2c144", "role": "PRE-ADDENDUM implementation66 and research8; not current index count"},
+    {"path": "artifacts/delivery/review3-2026-11-02/diff-check-final.txt", "sha256": "d43262c4e731b485c21bf9d5a086705cf0f28e4679a2cf78e66692fc1cc9db7c", "role": "Tracked whitespace check PASS, separately rechecked after registration"}
+  ],
+  "remaining": [
+    "No current agent/channel connectivity or remote-process-stop claim follows from cached SQLite state.",
+    "No fresh real lifecycle, remote/browser acceptance, CLI/model, prepare/start/restart/deployment, cross-Host/crash recovery, real-create branch, original-task recovery or complete M2/M3 acceptance.",
+    "Source changes were not projected into or activated in the running preview.",
+    "No atomic rollback or recovery guarantee from partial successful T202 renewals; incomplete aggregates remain FAIL.",
+    "All historical failures and25 unknown rows remain preserved; workspace-data integrity has no independent sentinel test.",
+    "Execution-context-specific diagnostic access behavior remains a documented environment limitation with an unproven lower-level cause."
+  ]
+}

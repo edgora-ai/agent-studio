@@ -72,7 +72,9 @@ try {
     await sleep(500);
   }
   assert.equal(running.status.lifecycle,'running');
-  pass('real Coder start accepted and polled back to running; workspace data/lifecycle preserved',{request_id:startRequest.request_id,build_id:startRequest.build_id,state:startRequest.state,lifecycle:running.status.lifecycle,agent:running.status.agent?.status});
+  // Lifecycle readback does not measure filesystem durability; a separate
+  // authorized pre/post sentinel experiment is required to claim data preservation.
+  pass('real Coder start accepted and polled back to running (data preservation not measured)',{request_id:startRequest.request_id,build_id:startRequest.build_id,state:startRequest.state,lifecycle:running.status.lifecycle,agent:running.status.agent?.status,dataPreservationVerified:false});
 
   const rows=sql("SELECT request_id,action,state,build_id,attempted_at FROM environment_requests ORDER BY created_at,rowid");
   const byId=Object.fromEntries(rows.map(row=>[row.request_id,row]));

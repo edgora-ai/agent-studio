@@ -5,12 +5,14 @@ import {spawnBrokerChild,boundedBytes,requireBrokerClose} from './child-boundary
 // Timing overrides are server/test configuration, never browser spawn authority.
 export class EnvironmentBroker {
  constructor({timeoutMs=80000,termGraceMs=15000,killWaitMs=1000}={}) {this.timing={timeoutMs,termGraceMs,killWaitMs};}
- async call(mode,requestId) {
+ async call(mode,requestId,{timeoutMs:budget}={}) {
   const spawn=globalThis[Symbol.for('agent-studio.environment-broker')];requireThat(typeof spawn==='function','environment-broker-disabled');
   requireThat(Number.isSafeInteger(this.timing.timeoutMs)&&this.timing.timeoutMs>0&&this.timing.timeoutMs<=2147483647,'broker-deadline-invalid');
-  const boundary=spawnBrokerChild(spawn,[mode,requestId],{...this.timing,startCode:'environment-broker-start-failed',ioCode:'environment-broker-stdio-failed'}),{child}=boundary;
+  requireThat(budget===undefined || Number.isSafeInteger(budget)&&budget>0&&budget<=2147483647,'broker-deadline-invalid');
+  const timeoutMs=Math.min(this.timing.timeoutMs,budget??this.timing.timeoutMs);
+  const boundary=spawnBrokerChild(spawn,[mode,requestId],{...this.timing,timeoutMs,startCode:'environment-broker-start-failed',ioCode:'environment-broker-stdio-failed'}),{child}=boundary;
   const output=boundedBytes(1048576),errors=boundedBytes(4096,{tail:true});
-  boundary.deadline(this.timing.timeoutMs,'environment-broker-timeout');
+  boundary.deadline(timeoutMs,'environment-broker-timeout');
   boundary.listen(child.stdout,'data',data=>{if(!boundary.stopping&&!output.push(data)) boundary.stop(new StudioError('environment-broker-output-limit'));});
   boundary.listen(child.stderr,'data',data=>errors.push(data));
   try {child.stdin.end();} catch(error) {boundary.stop(new StudioError('environment-broker-stdio-failed'));}
@@ -25,5 +27,5 @@ export class EnvironmentBroker {
  }
  discover() {return this.call('environment-discover');}
  submit(requestId) {return this.call('environment-submit',requestId);}
- poll(requestId) {return this.call('environment-poll',requestId);}
+ poll(requestId,options) {return this.call('environment-poll',requestId,options);}
 }

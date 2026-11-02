@@ -614,7 +614,25 @@ T205-F1 已在产品侧修复：`bindings.mjs` materializeBinding 的 workspace 
 
 对抗性复验：把单通道切到 47f8 v5，直读 T-205 浏览器 fixture 的远端字节，marker／SHA（`c17eaceb…`）与浏览器验收证据完全一致，证明证据非伪造且远端文件持久；随后断开 47f8、恢复 ec5d v5 单通道，agent connected。`verify_delivery.mjs` 增强为同时校验证据内嵌的 artifact／截图路径与 SHA，**7/7 通过**；unknown 追加说明 3 条与数据库逐字段一致（总计 25、pending 0）；全套测试 164/164、diagnostics 8/8、M1-10 28/28、Python 12/12、语法 90 MJS／45 Py、文档与校验和、diff 全部通过。证据见[交付后审查第 2 轮](evidence/delivery-review-round2-2026-11-02.json)。两轮审查未发现已接受证据的完整性不一致；残余项（既有重名 workspace、25 条 unknown 可见、远端 Git/watch／T-206／真实 create／跨 Host）保持不变。
 
+### 交付后审查与优化第 3 轮（2026-11-02，仅离线与无凭据只读复核）
+
+本轮收口分三组，均是本地源码／fixture 复验，**不是重跑真实验收或部署**：
+
+1. **交付门禁**：[交付验证器](../../scripts/dev/verify_delivery.mjs)按 schema v2 清单递归核对 evidence／带 SHA 的 addenda、JSON 内 `{path,sha256}` 引用和历史 snapshot，再核对当前完整校验索引；逻辑路径与 realpath 均限公开目录，仓库内私有别名和仓库外软链拒绝。历史源码索引的指纹只对应其存档，不可覆盖今天的可变索引。默认仅公开证据；显式 `--local-state` 使用 SQLite 只读事务，严格比对 5 组 v5 binding／session／native anchor／Coder workspace 身份、25 条 unknown 完整逐行内容哈希、pending=0、只读空 actions 策略。native anchor 与 Coder workspace 是不同模型，不可强行相等；缓存状态不证明 agent／通道在线或远端 unknown 进程停止。
+2. **生命周期边界**：STOP resolve 要求新鲜且 owner／organization／template／workspace／build／transition 相符的成功 stopped 观测，允许该状态对应的 identity-unavailable；START 仍要求 verified ready 身份。poll 在等待前后遵守 durable deadline／剩余预算，晚到成功不能释放锁；并发 poll／open 合并及复检，malformed 既有 payload 保留而非清空。修复前已选用修正 freshness 的 fixture 复现：**31 tests／21 pass／10 fail**；旧 `environment-observation-stale` 也是当时 resolve 行为的一部分，不能归咎于仍未修 fixture。先前修复后定向记录为 **85/85**，不是最终总套件数字。
+3. **实际验收 runner**：T-203／T-204／T-205 入口显式 `--expected-version`，必须观测 `stale===false` 与 `identity.verified===true`（字段缺失也拒绝），不把 opaque strong version 作字典序时钟；describe 可保留旧 invalid 世代，必须从同 binding 的全部状态行选唯一最高 safe-integer version 后再核对显式选择，不得忽略新 invalid／pending 世代而退回旧 ready。search／reference／citation 必须对应真实 binding／session／root 与字节 SHA。T-204 必须输出独立 PTY challenge（完整 nonce 不在输入中）、stdout／zero exit 与确切 provider process／channel 身份，且确认 cancel／release，不接受 echo、running、nonzero 或 unknown cleanup。T-205 先用实际观察的 baseline 成功保存，再以同一旧 baseline 触发 provider-dispatched CAS stale 409，核对新字节／版本未丢失；任意 409 或 `version-baseline-unavailable` 不算通过。T-202 restore／connect 的断连、全 skip、link-ready 但 channel-not-connected 与部分成功但总体失败由其实际导出 runner 的离线测试收口：positive fixture 保留旧 invalid v4 与当前 ready v5，renew 必须版本增加、得到新 native anchor／root 并保留 project／environment，随后核对真实返回的 session／channel；零目标、缺项、partial renewal 或最终跨 binding 掉线不能 aggregate PASS。最终定向 T-202 **50/50**、T-203／T-204／T-205 contracts **47/47**（各 0 fail／skip）；先前 44／45 等是中间 fixture 快照，不新增计作审查轮次。T-202 只有实际 import smoke，不能冒称 deny-network／filesystem guard；后者仅对应另行记录的 contracts 导入用例。
+
+旧 **6/6／7/7** 是较弱门禁的历史结果，现由递归完整性和精确身份门禁明确取代，不改写原报告。归档的 FALSE-PASS 重现来自离线 mock／损坏副本／错误身份回包，**不是原始历史产物损坏证明，也不是 fresh live RPC 结果**。独立审查者对其当时快照报告 **130/130＋3/3 synthetic public-symlink 拒绝**，无该快照内遗留缺陷；这是 reviewer-reported-only、无已知持久日志，与本轮可复现总回归分列。之后 parent review 单独发现并修复 native anchor／Coder workspace 源模型不一致，不把旧审查范围夸大为整个产品零缺陷。
+
+**T-202 声明收窄**：历史报告“workspace data/lifecycle preserved”仅能说明记录到的 stop/start lifecycle／build／request／policy 状态，未独立 sentinel 测试工作区数据完整性；旧 JSON 与产物保持原字节。SDK rc.5 的来源锁是可持续更新的兼容快照，非永久 pin；来源匹配也不代表部署或完整产品验收。
+
+冻结源码的最终总 Node 命令在协调者当前已授权上下文 **359/359 pass，0 fail／cancel／skip，6386.083702ms**；委派上下文首次 **359 tests／358 pass／1 fail，6530.020774ms**，唯一失败为真实私有 SQLite 只读诊断 CLI 开库；同源定向复查 **7/8 fail1**，协调者上下文原样 **8/8 pass**，源码／测试未变、无筛选或跳过，两上下文日志均保留，不把 OS／SHM 原因猜测写成已证实。其他实测：Python broker **5/5**、observe **4/4**、safe recovery **3/3**；文档单测 **39/39**；文档检查 **20 docs／345 local links**；syntax-only **94 MJS／45 Python**；来源锁 **98/98 资产、6 包、stock patch** 相符。定向 47／50／85 等均是子集或历史中间快照，不与总数相加。若干调用误带既有 workspace-write／danger-full-access mode 参数，属程序性偏差，不宣称完全省略参数；没有审批／新增权限，未由此执行真实运行态操作。
+
+精确最终命令、计数、带哈希归档与无凭据复核边界见[第 3 轮报告](evidence/delivery-review-round3-2026-11-02.json)。本轮无真实凭据读取、live main／RPC、真实生命周期／运行策略／运行 DB 修改；不对真实预览 runtime 根构造 Store，不 prepare／start／restart／安装／部署／push。经协调者明确澄清，既有离线单测可在自有随机 `/tmp` fixture 根构造 Store、写 fixture DB／伪 driver，这不等于真实运行态 DB 写入。此前 Node 基线 200 已含 M1-10 的 28，不重复相加。无 commit，须协调者明确批准后才可提交。历史 unknown、失败与旧归档均不重写，未验收切片与后续真实实验授权边界不变。
+
 ### 仍未验证与下一步授权边界
+
+> 下列保留段落记录早期审查／暂停边界；其中“正式 M1 仍未最终放行”不覆盖上文及当前交付清单已记录的 2026-11-02 协调者限定技术范围放行。review2 独立归档仍不完整，未验收切片、真实实验与完整 M2／M3／发布门槛不因此消失。
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
 

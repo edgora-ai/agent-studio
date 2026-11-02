@@ -124,13 +124,118 @@ test('D07 verified stop/start unknown requests can be explicitly resolved, misma
  setCurrent(observation({lifecycle:'running',build:{id:build},job:{status:'succeeded'}}));await manager.refresh(principal,{});
  const stop=await manager.prepare(principal,{request_id:'fixture-resolve-stop',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version});
  manager.state.update(principal,stop.request_id,{state:'unknown',error_code:'environment-broker-failed',build_id:build,submitted_workspace_id:ids.workspace});
- setCurrent(observation({lifecycle:'stopped',build:{id:build},job:{status:'succeeded'},agent:{id:ids.agent,status:'not-observed'}}));await manager.refresh(principal,{});
+ setCurrent(observation({lifecycle:'stopped',build:{id:build,transition:'stop'},job:{status:'succeeded'},agent:{id:ids.agent,status:'not-observed'}}));await manager.refresh(principal,{});
  const resolved=await manager.resolve(principal,{request_id:'fixture-resolve-stop'});assert.equal(resolved.state,'succeeded');assert.equal(resolved.error_code,null);assert.match(resolved.result_json,/verified_build_id/);assert.ok(manager.state.db.prepare("SELECT 1 FROM audit_events WHERE action='environment.resolve' AND outcome='resolved'").get());
  await assert.rejects(()=>manager.resolve(principal,{request_id:'fixture-resolve-stop'}),{code:'environment-resolve-state'});
  const start=await manager.prepare(principal,{request_id:'fixture-resolve-start-bad',action:'start',workspace_id:ids.workspace,template_version_id:ids.version});
  manager.state.update(principal,start.request_id,{state:'unknown',error_code:'environment-broker-failed',build_id:build,submitted_workspace_id:ids.workspace});
- setCurrent(observation({lifecycle:'running',build:{id:build},job:{status:'succeeded'},agent:{id:ids.agent,status:'disconnected'}}));await manager.refresh(principal,{});
+ setCurrent(observation({lifecycle:'running',build:{id:build,transition:'start'},job:{status:'succeeded'},agent:{id:ids.agent,status:'disconnected'}}));await manager.refresh(principal,{});
  await assert.rejects(()=>manager.resolve(principal,{request_id:'fixture-resolve-start-bad'}),{code:'environment-resolve-outcome'});
+})));
+
+test('D07 resolve STOP accepts only fresh identity-unavailable stopped evidence and preserves malformed prior payloads',()=>fixture(context=>managerFixture(context,async({manager,principal,setCurrent,advance})=>{
+ await manager.refresh(principal,{});
+ const stop=await confirmed(manager,principal,{request_id:'fixture-resolve-real-stop',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version});
+ manager.state.update(principal,stop.request_id,{state:'unknown',error_code:'offline-response-lost',result_json:'{malformed'});
+ const stopped=observation({lifecycle:'stopped',build:{id:stop.build_id,transition:'stop'},job:{status:'succeeded'},agent:{id:null,status:'not-observed'},identity:{verified:false,generation:null},error_code:'environment-identity-unavailable'});
+ setCurrent(stopped);await manager.refresh(principal,{});advance(30001);
+ await assert.rejects(()=>manager.resolve(principal,{request_id:stop.request_id}),{code:'environment-observation-stale'});
+ assert.equal(manager.state.request(principal,stop.request_id).state,'unknown');
+ await manager.refresh(principal,{});
+ const resolved=await manager.resolve(principal,{request_id:stop.request_id});
+ assert.equal(resolved.state,'succeeded');assert.equal(resolved.error_code,null);
+ assert.deepEqual(Object.keys(JSON.parse(resolved.result_json)),['resolution']);
+ assert.equal(JSON.parse(resolved.result_json).resolution.verified_build_id,stop.build_id);
+ assert.ok(manager.db.prepare("SELECT 1 FROM audit_events WHERE action='environment.resolve' AND outcome='resolved'").get());
+ assert.equal((await manager.prepare(principal,{request_id:'fixture-resolve-start-unlocked',action:'start',workspace_id:ids.workspace,template_version_id:ids.version})).state,'prepared');
+})));
+
+for(const [name,changes,code] of [
+ ['owner',{owner_id:ids.agent},'environment-resolve-target'],
+ ['organization',{organization_id:ids.agent},'environment-resolve-target'],
+ ['template',{template_version_id:ids.agent},'environment-resolve-target'],
+ ['transition',{build:{id:ids.org,transition:'start'}},'environment-resolve-build'],
+ ['build',{build:{id:ids.owner,transition:'stop'}},'environment-resolve-build'],
+ ['policy-error',{error_code:'environment-template-denied'},'environment-observation-stale'],
+]) test('D07 resolve STOP refuses mismatched '+name+' without releasing its lock',()=>fixture(context=>managerFixture(context,async({manager,principal})=>{
+ await manager.refresh(principal,{});
+ const stop=await confirmed(manager,principal,{request_id:'fixture-resolve-stop-deny',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version});
+ manager.state.update(principal,stop.request_id,{state:'unknown',error_code:'offline-response-lost'});
+ const status=observation({lifecycle:'stopped',build:{id:stop.build_id,transition:'stop'},job:{status:'succeeded'},...changes});
+ manager.state.observe(principal,status,'OFFLINE-in-process',status.error_code??null);
+ await assert.rejects(()=>manager.resolve(principal,{request_id:stop.request_id}),{code});
+ assert.equal(manager.state.request(principal,stop.request_id).state,'unknown');
+ assert.throws(()=>manager.state.prepare(principal,{request_id:'fixture-still-locked',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version},policy()));
+})));
+
+test('D07 resolve START refuses unverified identity even when lifecycle and agent look ready',()=>fixture(context=>managerFixture(context,async({manager,principal,setCurrent})=>{
+ setCurrent(observation({lifecycle:'stopped'}));await manager.refresh(principal,{});
+ const start=await confirmed(manager,principal,{request_id:'fixture-resolve-start-identity',action:'start',workspace_id:ids.workspace,template_version_id:ids.version});
+ manager.state.update(principal,start.request_id,{state:'timed-out',error_code:'environment-action-deadline'});
+ manager.state.observe(principal,observation({build:{id:start.build_id,transition:'start'},identity:{verified:false,generation:null}}),'OFFLINE-in-process');
+ await assert.rejects(()=>manager.resolve(principal,{request_id:start.request_id}),{code:'environment-resolve-outcome'});
+ assert.equal(manager.state.request(principal,start.request_id).state,'timed-out');
+})));
+
+test('D07 poll stops retries when the durable deadline passes and sends the remaining broker budget',()=>fixture(context=>managerFixture(context,async({manager,principal,advance})=>{
+ await manager.refresh(principal,{});
+ const stop=await confirmed(manager,principal,{request_id:'fixture-poll-budget',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version});
+ advance(179990);let calls=0,budget;
+ manager.transport.poll=async(requestId,options)=>{calls++;budget=options?.timeoutMs;advance(11);throw new StudioError('offline-transient-poll');};
+ const result=await manager.poll(principal,{request_id:stop.request_id});
+ assert.equal(result.state,'timed-out');assert.equal(result.error_code,'environment-action-deadline');assert.equal(calls,1);assert.equal(budget,10);
+})));
+
+test('D07 a successful poll arriving after its deadline cannot release the target lock',()=>fixture(context=>managerFixture(context,async({manager,principal,advance})=>{
+ await manager.refresh(principal,{});
+ const stop=await confirmed(manager,principal,{request_id:'fixture-poll-late-success',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version});
+ const before=manager.state.latest(principal,ids.workspace).observation_id,original=manager.transport.poll;
+ manager.transport.poll=async requestId=>{const response=await original(requestId);advance(180001);return response;};
+ const result=await manager.poll(principal,{request_id:stop.request_id});
+ assert.equal(result.state,'timed-out');assert.equal(result.error_code,'environment-action-deadline');
+ assert.equal(manager.state.latest(principal,ids.workspace).observation_id,before,'late responses are not ingested as fresh observations');
+ assert.throws(()=>manager.state.prepare(principal,{request_id:'fixture-poll-lock-retained',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version},policy()));
+})));
+
+test('D07 concurrent polls share one transport GET and do not downgrade an accepted result',()=>fixture(context=>managerFixture(context,async({manager,principal,setBehavior})=>{
+ await manager.refresh(principal,{});
+ const stop=await confirmed(manager,principal,{request_id:'fixture-poll-single-flight',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version});
+ setBehavior('pending');const gate=Promise.withResolvers(),original=manager.transport.poll;let calls=0;
+ manager.transport.poll=async requestId=>{calls++;await gate.promise;return original(requestId);};
+ const first=manager.poll(principal,{request_id:stop.request_id}),second=manager.poll(principal,{request_id:stop.request_id});gate.resolve();
+ const results=await Promise.all([first,second]);
+ assert.equal(calls,1);assert.equal(results[0].state,'accepted');assert.deepEqual(results[0],results[1]);
+})));
+
+test('D07 concurrent discovery preserves its newer head without stranding an accepted poll',()=>fixture(context=>managerFixture(context,async({manager,principal,setCurrent})=>{
+ await manager.refresh(principal,{});
+ const stop=await confirmed(manager,principal,{request_id:'fixture-poll-discovery-race',action:'stop',workspace_id:ids.workspace,template_version_id:ids.version});
+ const gate=Promise.withResolvers(),entered=Promise.withResolvers(),original=manager.transport.poll;
+ manager.transport.poll=async requestId=>{entered.resolve();await gate.promise;return original(requestId);};
+ const pending=manager.poll(principal,{request_id:stop.request_id});await entered.promise;
+ setCurrent(observation({lifecycle:'stopped',build:{id:stop.build_id,transition:'stop'}}));await manager.refresh(principal,{});
+ const newer=manager.state.latest(principal,ids.workspace).observation_id;gate.resolve();
+ assert.equal((await pending).state,'accepted');assert.equal(manager.state.latest(principal,ids.workspace).observation_id,newer);
+ assert.equal((await manager.poll(principal,{request_id:stop.request_id})).state,'succeeded');
+})));
+
+test('D07 concurrent opens recheck idempotency and opening ownership after refresh',()=>fixture(context=>managerFixture(context,async({manager,studio,principal,store,setCurrent})=>{
+ const marker={root:'/workspace',imageId:'sha256:'+'a'.repeat(64),uid:1000,policyVersion:'fixture-policy'};
+ setCurrent(observation({identity:{verified:true,generation:'fixture-generation-a',record:{marker}}}));
+ const spec={key:'fixture-open-race',kind:'coder',name:'OFFLINE open race',provider:'coder-helper',roots:['/workspace'],workspace_id:ids.workspace,agent_id:ids.agent,generation:'fixture-generation-a',policy_version:'fixture-policy',template_version:'fixture-v1',expected:{templateVersionId:ids.version,marker}};
+ studio.catalog.push(spec);const env=store.environment(principal,spec),project=store.project(principal,{name:'Open race fixture'});
+ const binding=store.newBinding(principal,{project_id:project.project_id,environment_id:env.environment_id},'/fixture-race-anchor');store.db.prepare("UPDATE project_bindings SET state='ready' WHERE binding_id=?").run(binding.binding_id);
+ const gate=Promise.withResolvers();let sessions=0;
+ studio.createSession=async()=>{sessions++;await gate.promise;return {session_id:'session-open-race',binding_id:binding.binding_id,version:1,state:'ready'};};studio.provider.connect=async()=>{};
+ await manager.refresh(principal,{});
+ const input={request_id:'fixture-open-concurrent',workspace_id:ids.workspace,observation_id:manager.state.latest(principal,ids.workspace).observation_id,environment_id:env.environment_id,binding_id:binding.binding_id,expected_version:1};
+ const results=await Promise.allSettled([manager.open(principal,input),manager.open(principal,input),manager.open(principal,{...input,request_id:'fixture-open-competing'})].map(async work=>{
+  // Unblock materialization after every concurrent call has crossed refresh.
+  queueMicrotask(()=>gate.resolve());return work;
+ }));
+ assert.equal(results[0].status,'fulfilled');assert.equal(results[1].status,'fulfilled');
+ assert.equal(results[2].status,'rejected');assert.equal(results[2].reason.code,'environment-link-busy');
+ assert.equal(sessions,1);assert.equal(store.db.prepare('SELECT count(*) n FROM environment_links').get().n,1);
 })));
 
 test('D07 poll retries a transient transport failure before recording unknown',()=>fixture(context=>managerFixture(context,async({manager,principal,setCurrent})=>{

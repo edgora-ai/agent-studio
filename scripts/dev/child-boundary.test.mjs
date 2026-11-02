@@ -202,6 +202,20 @@ test('EnvironmentBroker timeout has confirmed local TERM error but never a submi
  await clock.tick(10);await rejected;assert.deepEqual(child.signals,['SIGTERM']);await clean(child,clock);
 });
 
+for(const [configured,budget,deadline] of [[80,7,7],[5,40,5]]) test(`EnvironmentBroker poll budget ${budget} is capped at ${deadline}, with no new spawn authority`,async t=>{
+ const clock=timers(t),child=new FakeChild(),calls=[];child.onSignal=signal=>child.close(null,signal);
+ capability(t,'agent-studio.environment-broker',(...args)=>{calls.push(args);return child;});
+ const rejected=assert.rejects(new EnvironmentBroker({timeoutMs:configured,...fast}).poll('fixture-poll-budget',{timeoutMs:budget}),{code:'environment-broker-timeout'});
+ await clock.tick(deadline-1);assert.deepEqual(child.signals,[]);await clock.tick(1);await rejected;
+ assert.deepEqual(calls,[['environment-poll','fixture-poll-budget']]);assert.deepEqual(child.signals,['SIGTERM']);await clean(child,clock);
+});
+
+test('EnvironmentBroker rejects malformed remaining budgets before spawning',async t=>{
+ let calls=0;capability(t,'agent-studio.environment-broker',()=>{calls++;throw new Error('must not spawn');});
+ const broker=new EnvironmentBroker();for(const timeoutMs of [0,-1,NaN,Infinity,1.5,'10',2147483648]) await assert.rejects(broker.poll('fixture-denied',{timeoutMs}),{code:'broker-deadline-invalid'});
+ assert.equal(calls,0);
+});
+
 test('EnvironmentBroker response loss/never-close settles uncertain without submit replay',async t=>{
  const clock=timers(t),child=new FakeChild();let calls=0;capability(t,'agent-studio.environment-broker',()=>{calls++;return child;});
  const rejected=assert.rejects(new EnvironmentBroker({timeoutMs:10,...fast}).submit('fixture-once'),error=>error.code==='environment-broker-close-unconfirmed'&&error.uncertain&&error.cause.code==='environment-broker-timeout');

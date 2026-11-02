@@ -4,13 +4,38 @@
 
 **当前状态：已按授权完成 SDK／Gateway `0.2.1-rc.5` 来源基线迁移与可重复升级入口，并把开发预览重启到 rc.5；D01／D04／D05／D06 原 UI 通过，D02／D03 远端原 UI 在通道恢复后通过；D08 单任务同 Host 真实恢复执行一次并通过（合成程序、单次 detach/recover、无重放）。仍为 WIP，非验收／发布。D07 最终两次综合实跑失败、历史根因未全定位（2026-11-02 中断已定位为远端 Coder agent 连接断开，不回溯改写历史）；跨 Host／崩溃／restart 窗口恢复未验证。13 条历史 unknown（及其后 12 条远端不稳新增记录：9 条 2026-11-02 中断 + 3 条 T-205 重复 workspace 尝试时 helper-stdout-ended）不改写；M1-10 归一化旁路已由独立复验在声明技术范围关闭，但 M1 已于 2026-11-02 在声明技术范围由协调者放行，T-201、T-203／T-204（本地＋远端单通道切片）与 T-205（本地＋远端服务端＋浏览器 Files/搜索/编辑器切片）已验收；T-202 start/stop 最小真实验收通过（create 仅离线；poll 重试与验证 resolve 已实现；T205-F1 显示名歧义已修（新 materialize 唯一名；既有重复 workspace 保留旧名））；远端 Git/watch／原生桌面、T-206/T-207 与完整 M2 未验；review2 归档仍不完整。**
 
-2026-10-30 开发例外：按可运行优先完成限定实现验证，**不是完整 T-201、M2 或发布的正式验收通过：M1 已在声明技术范围放行，T-201、T-203／T-204（本地＋远端单通道切片）与 T-205 本地范围已验收；T-202 start/stop 最小真实验收通过（create 仅离线）；T-205 远端浏览器 Files/搜索/编辑器切片、T-206/T-207 集成 UI 与完整 M2 未验；review2 归档不完整，不等于完整独立 review3**。当前能力与延期项见[开发账本](docs/implementation/development-ledger.md)，下文既有 M1 进度和测试数字保留为历史记录。
+**2026-10-30 开发例外（历史）**：当时只完成可运行优先的限定实现验证，不是完整 M2 或发布验收；“T-205 远端浏览器未验”等早期表述不覆盖上方较新的 2026-11-02 切片进展。当前声明范围与延期项见[开发账本](docs/implementation/development-ledger.md)和[交付清单](docs/implementation/evidence/m2-delivery-manifest-2026-11-02.json)，下文既有 M1 进度和测试数字保留为历史记录；review2 归档不完整，不等于完整独立 review3。
 
 上一轮处理三项本地收口：broker／transport 的超时、输出与最终清理边界；当前验证脚本的 schema 版本漂移；D08 合成命令的单行安全传输及实际原生 Terminal tab 接线。实现与离线结果见[开发账本第 15 节](docs/implementation/development-ledger.md#15-继续推进后的本地收口未部署未重跑真实恢复)。该轮未运行会重启预览或派发远端任务的 integration／browser 脚本，未提交／推送改动。
 
 **rc.5 运行态与 UI 回归**：本轮先把 WIP 快照本地提交（未推送），在随机临时根验证 launcher `prepare` 的 rc.5 全链路投影（幂等、临时根已删），随后重启现有开发预览到 rc.5。运行预览必须在不限制 `/dev/ptmx` 的环境中启动；在受限文件沙箱内启动会使原生终端 `forkpty` 失败，这是启动环境限制，不是产品缺陷。原 UI 回归：**D01 通过；D04 local 11 项通过；D05 7 项通过（显式离线协议 fixture，非真实 LLM）；D06 7 项通过**；最初 D02／D03 远端因 `helper-call-disconnect` 未通过、D08 未执行，失败记录保留；随后远端恢复，D02／D03 远端原 UI 与 D08 单任务同 Host 恢复均执行并通过，详见[账本同节](docs/implementation/development-ledger.md#rc5-运行时原-ui-回归2026-11-02未验收)。
 
 **SDK 持续升级基线**：按后续授权，已将 SDK／Gateway 的[来源锁](profiles/agent-studio-preview/sources.lock.json)迁移到当前安装的 `0.2.1-rc.5`，并复核更新 3 份 package manifest 摘要；**98/98 个受控资产、6 个包版本及原生 Terminal stock patch 均匹配，上一轮 rc.4／rc.5 的来源一致性阻断已解除**。锁记录的是可持续更新的兼容快照，不要求 DSH 永久停留在历史版本；其他包独立记录版本，不强行与根 SDK 同号。来源一致不等于完整兼容、部署或恢复验收；本轮没有安装依赖、执行 prepare／start 或重启预览。
+
+## 交付审计与本轮复核边界
+
+[交付验证器](scripts/dev/verify_delivery.mjs)默认只读取公开证据：schema v2 [清单](docs/implementation/evidence/m2-delivery-manifest-2026-11-02.json)中的证据与带哈希追加说明，递归核对 `{path, sha256}` JSON 报告／产物引用及历史 `snapshot` 字节，再核对[校验索引](docs/implementation/evidence/SHA256SUMS)全部条目。历史索引指纹不是今天的索引摘要；原始记录不重写。逻辑路径及真实路径均限公开目录，拒绝指向仓库内私有目录或仓库外的软链。默认不读取本地运行数据库、策略或凭据，也不做网络请求。
+
+```bash
+node scripts/dev/verify_delivery.mjs
+node scripts/dev/verify_delivery.mjs --local-state
+node --test scripts/dev/*.test.mjs
+```
+
+`--local-state` 仅增加 SQLite 只读事务和策略复核：目标环境准确的 5 个 v5 binding／session／anchor 身份，以及 25 条 unknown 的逐行完整内容哈希、pending=0、`read_only:true, actions:[]`。**缓存状态不能证明 agent 当前连接、内存通道存活或 unknown 的远端进程已停止**；结果明确标记 `liveRpcChecked:false`。本轮不读取凭据，不调用真实验收入口／RPC，不改运行策略，不重启／部署预览；源码修复尚未投影到正在运行的预览。认证在线模式必须显式同时提供 `--runtime --allow-credential-read`，本轮没有运行。
+
+较早审查记录的 **6/6、7/7 是当时较弱门禁的历史结果**，不能替代当前递归完整性与精确身份门禁。离线损坏副本、错身份和失败回包已用于防止假 PASS；这不证明原始历史产物曾损坏，也不撤销声明切片的历史验收。原始产物仍按路径／SHA 引用、仅保留在开发机，不随仓库发布；副本缺失时验证必须失败，不跳过。第 3 轮收口把递归完整性、生命周期 deadline／并发／verified resolve、实际验收 runner 的身份／输出／CAS／cleanup 负例分开复验，具体结果与边界见[第 3 轮报告](docs/implementation/evidence/delivery-review-round3-2026-11-02.json)和[开发账本](docs/implementation/development-ledger.md)。历史 T-202“workspace data/lifecycle preserved”只对应已观测的 stop/start 状态，未做独立 sentinel 文件／数据完整性验收；旧证据保留原字节。
+
+本轮冻结源码的最终总 Node 回归在协调者当前已授权执行上下文为 **359/359、0 fail／skip**；委派受限上下文同源首次 **358/359** 与定向 **7/8** 的私有 SQLite 只读 CLI 开库失败亦完整保留，不宣称已确证 OS／SHM 根因。Python broker／observe／safe-recovery **5＋4＋3**、文档单测 **39**、语法仅解析 **94 MJS＋45 Python**、来源锁 **98 资产／6 包** 均通过；不重复叠加定向子集或已包含于旧基线的 M1-10 单测。过程误带既有 mode 参数的偏差见报告；无新增授权或真实运行态修改。
+
+下列远端验收入口会进行认证和产品操作，**仅供未来取得单独在线授权、核对新鲜 agent／单通道及批准的身份文件后使用，本轮没有执行**。版本必须显式钉扎到当次批准的 binding 世代，不能沿用脚本内置 v4 或将 native anchor workspace ID 当作 Coder workspace ID：
+
+```bash
+# 未来经单独批准后才运行；/approved/binding-ids.json 为当次批准的身份文件。
+node scripts/dev/t203.remote.acceptance.mjs --ids /approved/binding-ids.json --expected-version 5
+node scripts/dev/t204.remote.acceptance.mjs --ids /approved/binding-ids.json --expected-version 5
+node scripts/dev/t205.remote.prereq.mjs --ids /approved/binding-ids.json --expected-version 5
+```
 
 ## 截至 2026-10-31 暂停快照（历史，以下不是本轮执行指令）
 

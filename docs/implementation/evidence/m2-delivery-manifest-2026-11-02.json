@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "kind": "m2-delivery-manifest",
   "dateUTC": "2026-11-02",
   "headBeforeManifest": "372ba3eed97940daa9ed33a3f93b6f015a9d7ea8",
@@ -49,19 +49,200 @@
     {
       "path": "docs/implementation/evidence/t201-acceptance-2026-11-02.json",
       "sha256": "e7ddb6e3fa98cd9962b81cf6c8ed4d0864e8b252956eb8381ee0bcd49cf73291"
+    },
+    {
+      "path": "docs/implementation/evidence/t203-t204-local-acceptance-2026-11-02.json",
+      "sha256": "2589e9b0c8f7cd004c463b5c7362e4be5deb88031a77ab8c58ae460bf7522cfb"
+    },
+    {
+      "path": "docs/implementation/evidence/t205-local-acceptance-2026-11-02.json",
+      "sha256": "74fa2c072f1e3032d95ac34923a02a7144f40c22a1ed7e0586f9b2e5e6b4bcf1"
+    },
+    {
+      "path": "docs/implementation/evidence/t205-remote-prerequisites-2026-11-02.json",
+      "sha256": "e2b297b9f4416f8edd57c161bd8eb4806df7d8d8004ad0dcb348f3982d0f96cb"
     }
   ],
   "runtime": {
-    "workspace": "m1-a running, agent connected",
-    "channels": "single ec5d D02 v5 channel",
+    "workspace": "historical running/agent-connected observation; current live state is not revalidated by the no-credential review",
+    "channels": "historical single ec5d D02 v5 channel; not inferred from SQLite",
     "bindings": "all five v5 ready",
     "policy": "read_only:true, actions:[]",
     "unknownOperations": 25,
     "pendingLifecycleRequests": 0,
-    "unknownBreakdown": "13 historical + 9 from the 2026-11-02 remote outage + 3 new on 47f8 v5 during the duplicate-workspace browser attempt (helper-stdout-ended); none rewritten."
+    "unknownBreakdown": "13 historical + 9 from the 2026-11-02 remote outage + 3 new on 47f8 v5 during the duplicate-workspace browser attempt (helper-stdout-ended); none rewritten.",
+    "schemaVersion": 8,
+    "workspace_id": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+    "expectedBindings": [
+      {
+        "binding_id": "binding-1dfc57ad-ea10-4432-91f4-d017baf52c90",
+        "version": 5,
+        "state": "ready",
+        "environment_id": "environment-03e0450c-298b-4f12-9ee7-cb3758dfe1ff",
+        "workspace_id": "0147abc3-5064-47d2-ae52-589b75aea7ee",
+        "target_root": "/workspace/agent-studio-binding-1dfc57ad-ea10-4432-91f4-d017baf52c90-v5",
+        "coder_workspace_id": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+        "session_id": "session-01085703-cf30-49fe-a999-2fe3e62b1b91",
+        "session_state": "ready"
+      },
+      {
+        "binding_id": "binding-47f844e0-172f-4e60-a97c-15bd4a712290",
+        "version": 5,
+        "state": "ready",
+        "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+        "workspace_id": "6d29fc1c-9d4a-41b4-a06f-59a0c54d59dd",
+        "target_root": "/workspace/agent-studio-binding-47f844e0-172f-4e60-a97c-15bd4a712290-v5",
+        "coder_workspace_id": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+        "session_id": "session-d10ee85b-130f-4817-9522-03709de75f99",
+        "session_state": "ready"
+      },
+      {
+        "binding_id": "binding-6113005c-b396-4807-b48a-90f697c1395e",
+        "version": 5,
+        "state": "ready",
+        "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+        "workspace_id": "4e04ae6c-e2ec-4838-b489-6d6b465160eb",
+        "target_root": "/workspace/agent-studio-binding-6113005c-b396-4807-b48a-90f697c1395e-v5",
+        "coder_workspace_id": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+        "session_id": "session-71bc2e2a-2b84-45ac-8be8-bb5398d053c1",
+        "session_state": "ready"
+      },
+      {
+        "binding_id": "binding-7b85475c-6da8-47e1-8c5d-80e5fd0aa9cc",
+        "version": 5,
+        "state": "ready",
+        "environment_id": "environment-14488784-a71c-4408-ae09-d17528b89b73",
+        "workspace_id": "7d830cfa-d232-4430-bc57-2fd8017df3f8",
+        "target_root": "/workspace/agent-studio-binding-7b85475c-6da8-47e1-8c5d-80e5fd0aa9cc-v5",
+        "coder_workspace_id": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+        "session_id": "session-926f5207-3248-4a57-821d-44f108653385",
+        "session_state": "ready"
+      },
+      {
+        "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+        "version": 5,
+        "state": "ready",
+        "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+        "workspace_id": "5fbdae47-c0da-43d4-84c7-5bb20045e3c8",
+        "target_root": "/workspace/agent-studio-binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da-v5",
+        "coder_workspace_id": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+        "session_id": "session-441a2ef0-5d52-4537-b99e-71b59d7a4188",
+        "session_state": "ready"
+      }
+    ],
+    "preservedUnknownOperations": [
+      {
+        "operation_id": "03af9bb5-32dc-46e6-91fe-e8f87f45ab35",
+        "sha256": "dd3366ee54fce0772af63b0f19879a53005d8a221e434c81f77c7e831dcd14c4"
+      },
+      {
+        "operation_id": "0e03595b-f27b-4462-a224-1df34d58269b",
+        "sha256": "c81974f8fe7ce1689912791c31c835cbb155f66d978cb3cc9f3a320247a2b12b"
+      },
+      {
+        "operation_id": "13ad6808-54d1-471d-9848-94b180db03f6",
+        "sha256": "e3021c2f752c6b8891225a745e89f9a1e965e4697ba74bc3e526c6c3dafdfa60"
+      },
+      {
+        "operation_id": "17e4b4af-a7ef-441b-a4e5-61e145a724a2",
+        "sha256": "dffa304cca3f1e6fa0f501598c882b5dfa8d7c1e53e44473f1bf35c1908eb81d"
+      },
+      {
+        "operation_id": "232e2d93-02d2-423d-9a43-2f74f764fef0",
+        "sha256": "698182433259c800f8b82eb3c5dc27159e510c269f41eb44f6b84af867193c3e"
+      },
+      {
+        "operation_id": "2e672312-ba2a-429e-92de-f6e9388834e2",
+        "sha256": "a3a2c8dbc322e29c1a5050b1722d015666d9652a2132a51895fe4cb0b23484c0"
+      },
+      {
+        "operation_id": "370a4ad9-3c1c-4f3f-bd79-6330ec704f3f",
+        "sha256": "c13c79014f9cfb9779d408699cf5a7f7d6934d35109b6f6a2e0d6635ce373b44"
+      },
+      {
+        "operation_id": "3d841b04-7b49-40e0-86e8-6819236ff969",
+        "sha256": "8f566c32579315d1346d95e688b0e9adaca181921922fdddea89186879a2fb76"
+      },
+      {
+        "operation_id": "408cf66d-9600-4792-a4c0-0409a6a2f457",
+        "sha256": "d54cde722cfc529e9da021fa6a5df827d33744b58761e29189f07a3bd4ffea8f"
+      },
+      {
+        "operation_id": "467f11ba-6869-409e-8323-002ae9fe36fe",
+        "sha256": "c19efe0cab459644ff952b575461840fd123156d84f3c70410ded2ff30bad796"
+      },
+      {
+        "operation_id": "4f2c4694-341c-49b9-9acc-1e8339d2a6cb",
+        "sha256": "771bc95047d070e49991a39e6169b7e97595ba6a441ceec57aab8c0bab042894"
+      },
+      {
+        "operation_id": "6c0a15f7-343a-4401-a632-757d5b8517fa",
+        "sha256": "64e1f0908cfb835e0b1c23db57077607a416eb85f86b71ea6350dca82aa7c351"
+      },
+      {
+        "operation_id": "736b5829-82d8-460d-931f-43023e68664f",
+        "sha256": "9bb50d5d5447375173277842ec3623c3b92282cc60fe8dc67aada8509ec46faf"
+      },
+      {
+        "operation_id": "75e89cff-54b8-4ec9-ba1f-baa1cc4434b8",
+        "sha256": "4e2b42b5bf73b9f5d0fcd5cf60bb851fd4458f8ef67d8e4a27b1470ad3d655e1"
+      },
+      {
+        "operation_id": "8fc906a1-1d0c-4268-8d55-4d77ef9e1fa8",
+        "sha256": "fb4678ebf30d535ae63fc5fbc4455c42e9d839ea83c49a04b52d1a671f3bdd5e"
+      },
+      {
+        "operation_id": "90a931c8-55fe-4e7a-8982-638ea7aa3feb",
+        "sha256": "58be01be9692a40c744745f398617983858f046609f0fe53d40c1de865b347d7"
+      },
+      {
+        "operation_id": "910ff4f7-0749-47bc-9750-95922b474aae",
+        "sha256": "1ecc8175f02ff7e21ef39f97260c25db8f1a2c1aba8ee7c5c9ee3d9e3c5ce07a"
+      },
+      {
+        "operation_id": "9489f7ea-743b-4337-a393-ff2a84d1c451",
+        "sha256": "8dfe82878fa5095b14d5da64cb3616dcf9ad23f3c8b8f7cedeb67bc9e8d97938"
+      },
+      {
+        "operation_id": "966626f2-738a-4c34-a38d-2b90f8c12072",
+        "sha256": "9b1fee7d547754cff9615e25bcf48f2aa9f9e5638895e648649d2ae0db7915f6"
+      },
+      {
+        "operation_id": "a2d2adc8-17f4-419d-9be8-85646e7a3bdd",
+        "sha256": "ea4a4fe6224c8d3295f1ca9870fabfa76f2de743ae65ddc47d05a808c36b12b8"
+      },
+      {
+        "operation_id": "afdf0875-c92b-4320-aa86-ad020bc08d1a",
+        "sha256": "8080712a74b28de4a18c6f591a2df5995d06b4ee1ef7fc778c18b9d177cc3b1f"
+      },
+      {
+        "operation_id": "b251f9bc-871b-40ca-a851-3bf53aaf764c",
+        "sha256": "686edaf8013847c9c53c2c020bd066a27a52a43b655555ace7d4fed6e1bf6cae"
+      },
+      {
+        "operation_id": "b7a19995-9395-4208-9e4a-41ce6379896b",
+        "sha256": "89230c0b10ca5ea837e309ec275701f35b03b9e022f46acaabe5d8d144372109"
+      },
+      {
+        "operation_id": "d68d0f87-eff4-447a-a978-8831712da0e6",
+        "sha256": "6a75fbf3d5990a1dc0cd3616025b7a37d9a3aebb8aa0f1c79fed1dccd057d037"
+      },
+      {
+        "operation_id": "fed8eee8-2600-45d4-9aa6-5b1df0e15c37",
+        "sha256": "1d3207393dcc7eecf5c38bcd64999ef5fa250bb431dd43f25de2aac0de687c9e"
+      }
+    ],
+    "connectedChannels": [
+      {
+        "workspace_id": "ff136352-6a92-41d4-9c2c-6cc783cb989b",
+        "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+        "version": 5
+      }
+    ],
+    "baselineScope": "No-credential SQLite read transaction: exact latest binding/session identities and complete canonical SHA256 per unknown row; preserves 25 historical outcomes, not a live connectivity or remote-process-stop proof."
   },
   "preserved": [
-    "13 historical + 9 remote-outage unknown operation rows unchanged",
+    "All 25 unknown operation rows preserved (13 historical + 9 outage + 3 duplicate-workspace browser attempt), with individual canonical row hashes.",
     "historical failures/review2 archive untouched",
     "no create/rebuild/delete/credential read/push"
   ],
@@ -73,9 +254,28 @@
     "cross-Host/crash recovery and M3"
   ],
   "addenda": [
-    "docs/implementation/evidence/m2-unknown-operations-addendum-2026-11-02.json",
-    "docs/implementation/evidence/delivery-review-round1-2026-11-02.json",
-    "docs/implementation/evidence/delivery-review-round2-2026-11-02.json"
+    {
+      "path": "docs/implementation/evidence/m2-unknown-operations-addendum-2026-11-02.json",
+      "sha256": "c3a58acd58c106ee3c2d7b654bcbf6a997d73ebc56f8c9720409ccc8702aa49c"
+    },
+    {
+      "path": "docs/implementation/evidence/delivery-review-round1-2026-11-02.json",
+      "sha256": "eb63928609b845fcfdfbb9ba4c0619c8bbec3c4bbcb6a1a75480badd555bb5f8"
+    },
+    {
+      "path": "docs/implementation/evidence/delivery-review-round2-2026-11-02.json",
+      "sha256": "3a87145a8acf00b35d0723b1accc744c516ab227dff31d6c2369a956bd0c01f7"
+    },
+    {
+      "path": "docs/implementation/evidence/delivery-review-round3-2026-11-02.json",
+      "sha256": "30986b535789ae66d8be9605410ef71f3d423898994a115dc4380518b8f63a6d"
+    }
   ],
-  "verification": "node scripts/dev/verify_delivery.mjs --runtime (7/7 checks incl. embedded artifact hashes)"
+  "verification": {
+    "default": "node scripts/dev/verify_delivery.mjs (public accepted evidence + addenda hash closure, and all SHA256SUMS entries; no private files, credentials, SQLite or RPC)",
+    "local": "node scripts/dev/verify_delivery.mjs --local-state (add exact cached binding/session set, read-only policy and all 25 unknown-row hashes; no live connectivity assertion)",
+    "authenticated": "node scripts/dev/verify_delivery.mjs --runtime --allow-credential-read (explicit credential opt-in; not run during this review)",
+    "supersedes": "Historical 6/6 and 7/7 gates in the preserved round1/round2 reports verified a smaller graph and weaker identity checks. Offline corrupt-copy negatives proved false-PASS paths, not corruption of the original accepted artifacts or invalidity of their scoped historical results."
+  },
+  "archiveRepositoryRoot": "/home/ubuntu/workspace/agent-studio"
 }
