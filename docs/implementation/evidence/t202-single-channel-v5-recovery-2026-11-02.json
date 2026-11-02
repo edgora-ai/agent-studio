@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "single-channel-recovery-v5",
+  "dateUTC": "2026-11-02",
+  "steps": {
+    "lifecycle": "stop/start 5/5 pass; policy restored byte-identical",
+    "renew": "D02 v4->v5 session-441a2ef0-5d52-4537-b99e-71b59d7a4188",
+    "connect": "ready/connected on the single channel",
+    "seed": "fs.write+fs.read readback pass",
+    "agentFinal": "connected"
+  },
+  "scope": "Only the D02 binding was renewed/connected (one channel), following the channel-capacity discipline; all other bindings were left invalid after the generation change. No create/delete/credential action.",
+  "state": {
+    "policy": "read_only:true actions:[]",
+    "workspace": "m1-a running/agent connected",
+    "unknownOperations": 22
+  },
+  "next": [
+    "Use the single D02 v5 channel for remote T-205 prerequisites; avoid adding channels.",
+    "Restore other bindings only individually when needed, then disconnect."
+  ]
+}
