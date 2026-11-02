@@ -56,8 +56,9 @@
     "channels": "single ec5d D02 v5 channel",
     "bindings": "all five v5 ready",
     "policy": "read_only:true, actions:[]",
-    "unknownOperations": 22,
-    "pendingLifecycleRequests": 0
+    "unknownOperations": 25,
+    "pendingLifecycleRequests": 0,
+    "unknownBreakdown": "13 historical + 9 from the 2026-11-02 remote outage + 3 new on 47f8 v5 during the duplicate-workspace browser attempt (helper-stdout-ended); none rewritten."
   },
   "preserved": [
     "13 historical + 9 remote-outage unknown operation rows unchanged",
@@ -70,5 +71,8 @@
     "T-207/T-208 integrated UI",
     "real T-202 create branch",
     "cross-Host/crash recovery and M3"
+  ],
+  "addenda": [
+    "docs/implementation/evidence/m2-unknown-operations-addendum-2026-11-02.json"
   ]
 }

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "kind": "unknown-operations-addendum",
+  "dateUTC": "2026-11-02",
+  "finding": "Total unknown operation rows are now 25, not 22: three new command.exec operations on the 47f8 D02 v5 binding became unknown at 17:21:42-43Z when the remote helper ended during the duplicate-workspace browser attempt. They are new records, not rewrites of the historical 22.",
+  "breakdown": {
+    "historical13": "untouched",
+    "remoteOutage2026_11_02_9": "untouched",
+    "newDuringT205_3": [
+      {
+        "operation_id": "afdf0875-c92b-4320-aa86-ad020bc08d1a",
+        "binding_id": "binding-47f844e0-172f-4e60-a97c-15bd4a712290",
+        "version": 5,
+        "kind": "command.exec",
+        "error_code": "helper-stdout-ended",
+        "created_at": "2026-11-02T17:21:42.563Z"
+      },
+      {
+        "operation_id": "3d841b04-7b49-40e0-86e8-6819236ff969",
+        "binding_id": "binding-47f844e0-172f-4e60-a97c-15bd4a712290",
+        "version": 5,
+        "kind": "command.exec",
+        "error_code": "helper-stdout-ended",
+        "created_at": "2026-11-02T17:21:42.581Z"
+      },
+      {
+        "operation_id": "13ad6808-54d1-471d-9848-94b180db03f6",
+        "binding_id": "binding-47f844e0-172f-4e60-a97c-15bd4a712290",
+        "version": 5,
+        "kind": "command.exec",
+        "error_code": "helper-stdout-ended",
+        "created_at": "2026-11-02T17:21:43.094Z"
+      }
+    ]
+  },
+  "impact": [
+    "They do not alter the accepted T-203/T-204/T-205 evidence slices or the single ec5d channel state.",
+    "They are visible residual unknown operations and must be carried in status reporting until a safe operation-level resolution/cleanup design exists."
+  ],
+  "preservation": [
+    "No unknown row was deleted, updated or resolved; historical evidence files and checksums remain.",
+    "No lifecycle/create/delete/credential action."
+  ],
+  "state": {
+    "policy": "read_only:true, actions:[]",
+    "agent": "connected",
+    "channel": "single ec5d D02 v5 channel",
+    "pendingLifecycleRequests": 0
+  }
+}
