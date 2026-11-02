@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "renew-connect-fixes-and-remote-blocker",
+  "dateUTC": "2026-11-02",
+  "fixes": [
+    "environment.open renew uses the freshly refreshed observation instead of a stale caller selection (normal opens keep pinning).",
+    "environment.open selection pinning compares stable identity (generation+record), not volatile connection timestamps.",
+    "Offline regressions added; environment.test 16/16 passes."
+  ],
+  "renewal": {
+    "v2Ready": [
+      "binding-1dfc57ad-ea10-4432-91f4-d017baf52c90 v2",
+      "binding-47f844e0-172f-4e60-a97c-15bd4a712290 v2",
+      "binding-6113005c-b396-4807-b48a-90f697c1395e v2",
+      "binding-7b85475c-6da8-47e1-8c5d-80e5fd0aa9cc v2",
+      "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da v2"
+    ],
+    "linksReady": [
+      "47f844e0 v2",
+      "6113005c v2"
+    ],
+    "linksFailed": [
+      "7b85475c v2 helper-stdout-ended",
+      "ec5ddf7b v2 environment-suspended during first connect"
+    ]
+  },
+  "blocker": {
+    "observed_at": "2026-11-02T16:50:29Z",
+    "detail": "Coder agent status is disconnected; environment.open requires ready observation (running + succeeded + agent connected), so channel reconnect for 7b85475c/ec5ddf7b remains blocked until the remote agent reconnects.",
+    "attempts": "t202.connect.bindings.mjs retried with fresh observations; stable identity matches, but ready() fails on agent disconnected."
+  },
+  "state": {
+    "policy": "read_only:true actions:[] byte-identical restored",
+    "workspace": "m1-a lifecycle running, agent disconnected at last observation",
+    "unknownOperations": 22,
+    "lifecycle": "no create/rebuild/delete/credential action in this step"
+  },
+  "next": [
+    "Retry t202.connect.bindings.mjs when the agent reconnects; then update local demo/fixture ids to v2 and resume remote T-203/T-204/T-205 prerequisites.",
+    "Then implement poll auto-retry and unknown/timed-out lifecycle lock resolution policy."
+  ]
+}

@@ -179,9 +179,20 @@ export class EnvironmentManager {
   const previous=this.db.prepare('SELECT * FROM environment_links WHERE request_id=?').get(input.request_id),serialized=canonical(input);
   if(previous) {requireThat(previous.principal_id===principal && previous.input_json===serialized,'environment-link-conflict');return plain(previous);}
   requireThat(!this.db.prepare("SELECT 1 FROM environment_links WHERE principal_id=? AND state='opening'").get(principal),'environment-link-busy');
-  await this.refresh(principal,{});const selected=this.state.observation(principal,input.observation_id),current=this.state.fresh(principal,input.workspace_id);
-  requireThat(selected.workspace_id===input.workspace_id && !selected.error_code && selected.expires_at_ms>this.clock(),'environment-selection-expired');
-  const selectedStatus=JSON.parse(selected.status_json);requireThat(ready(current.status) && ready(selectedStatus) && digest(selectedStatus.identity)===digest(current.status.identity),'environment-selection-changed');
+  await this.refresh(principal,{});const current=this.state.fresh(principal,input.workspace_id);
+  // Renewal binds the CURRENT generation, so a caller-selected observation that
+  // was captured before refresh must not pin a stale identity. Normal opens keep
+  // the strict selection/identity pinning.
+  let selected=current.row;
+  if(input.renew!==true){
+   selected=this.state.observation(principal,input.observation_id);
+   requireThat(selected.workspace_id===input.workspace_id && !selected.error_code && selected.expires_at_ms>this.clock(),'environment-selection-expired');
+   const selectedStatus=JSON.parse(selected.status_json);
+   // Connection timestamps make the whole identity bloom change on every
+   // refresh; selection pinning must compare the stable generation/record.
+   const stableIdentity=status=>status.identity?{generation:status.identity.generation??null,record:status.identity.record??null}:null;
+   requireThat(ready(current.status) && ready(selectedStatus) && digest(stableIdentity(selectedStatus))===digest(stableIdentity(current.status)),'environment-selection-changed');
+  }
   const stamp=now();this.db.prepare('INSERT INTO environment_links VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)').run(input.request_id,principal,serialized,current.row.observation_id,'opening',null,null,null,null,null,null,stamp,stamp);
   const update=changes=>{const entries=Object.entries(changes);this.db.prepare('UPDATE environment_links SET '+entries.map(([key])=>key+'=?').join(',')+',updated_at=? WHERE request_id=?').run(...entries.map(([,value])=>value),now(),input.request_id);};
   try {

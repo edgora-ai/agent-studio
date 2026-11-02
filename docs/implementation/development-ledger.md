@@ -510,6 +510,12 @@ T-202 需要远端 Coder 生命周期动作，而当前私有环境策略仍是 
 
 T-202 stop/start 改变 agent generation 后，用产品 `environment.open` renew 旧绑定：**4 个绑定 v2 ready**（`binding-1dfc57ad…`、`47f844e0…`、`6113005c…`、`7b85475c…`），各自新 native session ready；其中 D06 对应绑定的 environment link 在 `helper-stdout-ended` 后失敗，远端通道未确认。**D02 `binding-ec5ddf7b…` 仍为 v1 invalid**：renew 即使每轮重新 discover 仍稳定返回 `environment-selection-changed`（4 次），未创建 v2。旧 demo／fixture 仍引用 v1 标识，远端验收前必须使用新 id 或更新夹具。证据见[绑定 renew 部分结果](evidence/t202-binding-renew-partial-2026-11-02.json)。m1-a 仍 running，政策只读，22 条 unknown 未变；本步无生命周期/create/delete 动作。
 
+### renew/connect 修复与远端 agent 阻塞（2026-11-02）
+
+已修复 `environment.open` 两处竞态并加离线回归（environment.test **16/16**）：renew 路径改用 refresh 后的当前观测（普通 open 仍保持选择钉扎）；选择比较只用稳定身份 generation+record，不再受连接时间戳等易变字段影响。产品 renew 得到 **5 个 v2 ready binding**（1dfc／47f8／6113／7b85／ec5d），其中 47f8／6113 的 link ready；7b85 因 `helper-stdout-ended`、ec5d 首次因 `environment-suspended` 未建立通道。随后 Coder agent 再次 **disconnected**，而 environment.open 要求 ready 观测（running＋job succeeded＋agent connected），因此剩余 channel 重连被远端状态阻塞；`t202.connect.bindings.mjs` 以新鲜观测重试仍被校验拒绝，属远端不稳定而非身份比较缺陷。证据见[renew/connect 记录](evidence/t202-renew-connect-blocker-2026-11-02.json)。
+
+状态：策略只读字节恢复、m1-a lifecycle running、22 unknown 未变；本步无 create/rebuild/delete/凭据动作。下一步：agent 恢复后重跑 connect，更新本地 demo/fixture 到 v2 新会话，再恢复远端验收；并行实现 poll 自动重试与 unknown lifecycle 锁解决策略。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
