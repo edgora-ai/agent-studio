@@ -534,6 +534,10 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 真实 create **未执行**，需要单独显式授权与固定目标／资源确认；不影响已通过的 start/stop 最小真实验收。远端 agent 自 16:50Z 起 disconnected，v2 connect／seed 与远端 T-203／T-204／T-205 仍阻塞。
 
+### environment.open 失败原因细分（2026-11-02）
+
+把 open 的笼统 `environment-selection-changed` 拆成可行动原因：当前/选择观测不 ready 时返回 `environment-not-ready`（带 lifecycle/job/agent 状态提示），只有稳定身份 generation+record 真正变化才返回 `environment-selection-changed`。离线回归加入（environment.test **19/19**），已部署到预览；当前 agent disconnected 时 connect 现在会得到 `agent-studio/environment-not-ready`，便于区分远端未就绪与选择竞态。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

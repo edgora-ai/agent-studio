@@ -144,6 +144,18 @@ test('D07 poll retries a transient transport failure before recording unknown',(
  assert.equal(calls>=2,true);assert.equal(row.state,'succeeded');assert.equal(row.error_code,null);
 })));
 
+test('D07 open reports not-ready instead of selection-changed when the agent is disconnected',()=>fixture(context=>managerFixture(context,async({manager,studio,principal,store,setCurrent})=>{
+ const marker={root:'/workspace',imageId:'sha256:'+'a'.repeat(64),uid:1000,policyVersion:'fixture-policy'};
+ const live=observation({identity:{verified:true,generation:'fixture-generation-b',record:{marker}}});setCurrent(live);
+ const spec={key:'fixture-notready',kind:'coder',name:'OFFLINE notready fixture',provider:'coder-helper',roots:['/workspace'],workspace_id:ids.workspace,agent_id:ids.agent,generation:'fixture-generation-b',policy_version:'fixture-policy',template_version:'fixture-v1',expected:{templateVersionId:ids.version,marker}};
+ studio.catalog.push(spec);const env=store.environment(principal,spec),project=store.project(principal,{name:'Notready fixture project'});
+ const binding=store.newBinding(principal,{project_id:project.project_id,environment_id:env.environment_id},'/fixture-notready-anchor');store.db.prepare("UPDATE project_bindings SET state='ready' WHERE binding_id=?").run(binding.binding_id);
+ studio.createSession=async()=>({session_id:'session-notready',binding_id:binding.binding_id,version:1,state:'ready'});studio.provider.connect=async()=>{};
+ await manager.refresh(principal,{});const described=await manager.describe(principal,{});const selected=described.workspaces.find(row=>row.workspace_id===ids.workspace).observation_id;
+ setCurrent(observation({identity:{verified:true,generation:'fixture-generation-b',record:{marker}},agent:{id:ids.agent,status:'disconnected'}}));
+ await assert.rejects(()=>manager.open(principal,{request_id:'open-notready-01',workspace_id:ids.workspace,observation_id:selected,environment_id:env.environment_id,binding_id:binding.binding_id,expected_version:1}),{code:'environment-not-ready'});
+})));
+
 test('D07 policies have bounded fixed templates/parameters, no browser-configurable privilege escalation',()=>{
  const p=policy();assert.equal(digest(p),digest(JSON.parse(canonical(p))));
  assert.throws(()=>validateEnvironmentPolicy({...p,transport:'http://untrusted'}));

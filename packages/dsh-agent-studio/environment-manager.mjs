@@ -213,10 +213,15 @@ export class EnvironmentManager {
    selected=this.state.observation(principal,input.observation_id);
    requireThat(selected.workspace_id===input.workspace_id && !selected.error_code && selected.expires_at_ms>this.clock(),'environment-selection-expired');
    const selectedStatus=JSON.parse(selected.status_json);
+   // Distinguish an external not-ready workspace (agent/lifecycle) from a real
+   // selection identity change so reconnects report an actionable reason.
+   const readiness=status=>'lifecycle='+(status.lifecycle??'unknown')+',job='+(status.job?.status??'unknown')+',agent='+(status.agent?.status??'unknown');
+   requireThat(ready(current.status),'environment-not-ready',readiness(current.status));
+   requireThat(ready(selectedStatus),'environment-not-ready',readiness(selectedStatus));
    // Connection timestamps make the whole identity bloom change on every
    // refresh; selection pinning must compare the stable generation/record.
    const stableIdentity=status=>status.identity?{generation:status.identity.generation??null,record:status.identity.record??null}:null;
-   requireThat(ready(current.status) && ready(selectedStatus) && digest(stableIdentity(selectedStatus))===digest(stableIdentity(current.status)),'environment-selection-changed');
+   requireThat(digest(stableIdentity(selectedStatus))===digest(stableIdentity(current.status)),'environment-selection-changed');
   }
   const stamp=now();this.db.prepare('INSERT INTO environment_links VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)').run(input.request_id,principal,serialized,current.row.observation_id,'opening',null,null,null,null,null,null,stamp,stamp);
   const update=changes=>{const entries=Object.entries(changes);this.db.prepare('UPDATE environment_links SET '+entries.map(([key])=>key+'=?').join(',')+',updated_at=? WHERE request_id=?').run(...entries.map(([,value])=>value),now(),input.request_id);};
