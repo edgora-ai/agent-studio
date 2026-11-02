@@ -546,6 +546,12 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 状态：D02 v4 可用；D05/D06/D07 与第二个 D02 绑定仍是最新世代下的 invalid v3，需逐条 renew/connect。策略只读、22 unknown 未变、无 create/delete、未推送。下一轮在 D02 通道上恢复远端 T-203/T-204/T-205 验收，并逐条恢复其余绑定。
 
+### T-203 远端验收切片（2026-11-02）
+
+在**单通道** D02 v4（`binding-ec5ddf7b…@4`／`session-e15a3d67…`）上用产品 RPC 完成 T-203 远端切片 **3/3**：binding 根内 `fs.write` → 完整字节/hash 读回；`fs.write` 携带旧 `expected_version` 被 strong CAS 拒绝（`E_STALE_VERSION`），当前字节保持；`fs.list`／`fs.search(content:)`／`reference.create` 全部返回 remote 身份并看到绑定字节。证据见[T-203 远端验收](evidence/t203-remote-acceptance-2026-11-02.json)。
+
+限制：单一 remote binding／路径；不含外部直接写入者竞争、多连接并发、Git／watch 远端 UI、上传或真实 CLI。单通道是当前必要手段（burst 会触发 agent 断连，见 T202-F5）。下一轮：同一通道上做 T-204 远端命令/PTY/cancel/release，再逐条恢复其余绑定。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

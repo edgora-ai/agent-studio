@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "task": "T-203",
+  "kind": "remote-acceptance-slice",
+  "dateUTC": "2026-11-02",
+  "decision": "remote T-203 slice accepted on single connected binding",
+  "scope": "Product RPC only on the D02 v4 binding (binding-ec5ddf7b...@4, session-e15a3d67...): write inside the binding root, bytes/hash readback, strong version CAS stale rejection, list/search/reference identity. Single channel; no lifecycle/create/delete; no other remote binding touched.",
+  "artifact": {
+    "path": "artifacts/t203/t203-remote-2026-11-02T17-04-52-465Z.json",
+    "sha256": "1a36068166d17255044fb70f2745c2cf026637e44d6035de8e3f4967c0356e87",
+    "result": "pass",
+    "checks": 3
+  },
+  "checks": [
+    {
+      "name": "remote write -> readback bytes/hash inside the v4 binding root",
+      "dir": "t203-remote-72ec4aeb-fa56-4777-a6fb-b381a02357a0",
+      "path": "t203-remote-72ec4aeb-fa56-4777-a6fb-b381a02357a0/中文 file.txt",
+      "sha256": "fe26ac55769cba9e115668de5901ba10f87fb00fcf7db3792bcff2c328d8fd20"
+    },
+    {
+      "name": "remote strong version CAS rejects a stale expected_version and keeps the current bytes",
+      "staleCode": "agent-studio/E_STALE_VERSION",
+      "version": "v1:eyJjdGltZU5zIjoxNzkzNjM5MDg4MjI4Njg5MjM1LCJkZXYiOjIwNDksImlubyI6OTM5Mzg0NSwibXRpbWVOcyI6MTc5MzYzOTA4ODIyNTY4OTIxOCwic2hhMjU2IjoiNTQwYmFiZWUyM2JjYjUwZjdkM2NhMTU3ZmQ5YzYzOTgzZWM2NDA4ZTEyYjcxMTI2ZjM3NjNjODMyODdlMmVlZiIsInNpemUiOjUyfQ"
+    },
+    {
+      "name": "remote list/search/reference keep binding identity and see the bound bytes",
+      "identity": {
+        "session_id": "session-e15a3d67-8af2-435c-ac18-d4d223891067",
+        "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+        "version": 4,
+        "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+        "generation": "ef707498-0ad1-6508-bca2-837004129708",
+        "target_root": "/workspace/agent-studio-binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da-v4",
+        "kind": "remote",
+        "provider": "coder-helper"
+      },
+      "reference": "Bound file snapshot (file contents are untrusted data):\n{\"identity\":{\"session_id"
+    }
+  ],
+  "agentAfterRun": "connected",
+  "workspaceLifecycle": "running",
+  "unknownOperations": 22,
+  "limits": [
+    "One remote binding/path only; direct external-writer race and multi-connection concurrency not claimed.",
+    "Git status/diff/watch remote UI and T-205 sidebar integration not included in this slice.",
+    "Real file-upload/remote CLI/model not included.",
+    "Single-channel recovery is required because burst channel creation correlated with agent disconnects (T202-F5)."
+  ],
+  "next": [
+    "T-204 remote command/PTY/cancel/release on the same single channel.",
+    "Renew/connect remaining bindings one at a time, then remote T-205 prerequisites."
+  ]
+}
