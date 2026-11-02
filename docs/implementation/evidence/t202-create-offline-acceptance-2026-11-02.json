@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "create-branch-offline-acceptance",
+  "dateUTC": "2026-11-02",
+  "decision": "create branch accepted in offline declared scope only; real create not executed",
+  "commands": [
+    {
+      "args": [
+        "node",
+        "--test",
+        "scripts/dev/environment.test.mjs"
+      ],
+      "exitCode": 0,
+      "tests": 18,
+      "pass": 18,
+      "fail": 0
+    }
+  ],
+  "coveredByTests": [
+    "D07 read-only/owner/template/target/extra fields rejected without any lifecycle record",
+    "D07 confirmation identity/deadline/one consumption, same/different id and target concurrency",
+    "D07 restart does not resubmit accepted/unknown jobs and invalidates pending confirmations",
+    "D07 durable submit attempt is consumed once, survives restart, and cannot pass deadline",
+    "D07 policies have bounded fixed templates/parameters, no browser-configurable privilege escalation",
+    "D07 OFFLINE manager create/start/stop uses durable attempt -> accepted -> build/agent ready, direct SQL/read/list",
+    "D07 OFFLINE response loss never resubmits, same target locks persist after restart and unknown is not ready",
+    "D07 OFFLINE build failure, deadline, and state race are distinct; accepted is never reported ready"
+  ],
+  "coverage": [
+    "create policy gate (read_only, allowed actions, create_names)",
+    "confirmation phrase/one-shot/deadline",
+    "durable attempt/single POST/restart no-resubmit",
+    "accepted never ready; build failed/deadline/superseded states",
+    "bounded template parameters and no browser privilege escalation",
+    "SQL/API/list readback of lifecycle requests"
+  ],
+  "realCreate": "NOT EXECUTED: the standing hard constraint forbids workspace create/rebuild/delete; a real create branch needs separate explicit authorization and a fixed target name/resource confirmation.",
+  "externalBlocker": {
+    "observed": "2026-11-02T16:55:42Z",
+    "detail": "Coder agent disconnected; environment.open ready() rejects, so v2 channel connect/seed and remote acceptance remain blocked. Online retried in three consecutive goal rounds."
+  },
+  "state": {
+    "policy": "read_only:true actions:[]",
+    "workspace": "m1-a lifecycle running; agent disconnected",
+    "unknownOperations": 22,
+    "coverage": "start/stop real minimal acceptance passed; create offline only; no full T-202 claim"
+  },
+  "next": [
+    "When agent reconnects: run t202.connect.bindings.mjs then t202.seed.remote.mjs, update/verify remote fixtures and resume remote T-203/T-204/T-205.",
+    "Real create branch needs explicit authorization; not attempted here."
+  ]
+}
