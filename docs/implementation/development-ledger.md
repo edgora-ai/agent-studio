@@ -506,6 +506,10 @@ T-202 需要远端 Coder 生命周期动作，而当前私有环境策略仍是 
 
 遗留：① transient poll unknown 需显式 retry，产品自动重试/退避仍缺；② unknown／timed-out lifecycle request 的 durable target lock 没有产品解决 API，本轮两次对测试 request 依已验证控制面观测手工解决并留 audit；③ stop/start 产生新 agent generation，旧 m1-a 绑定全部 revoked（产品正确的级联），D02/D05/D06/D07 远端会话需 `environment.open` 新世代 renew 后才能继续远端验收；④ T-202 create 分支仍只有离线覆盖，未真实验证。
 
+### m1-a 绑定新世代 renew（2026-11-02，部分完成）
+
+T-202 stop/start 改变 agent generation 后，用产品 `environment.open` renew 旧绑定：**4 个绑定 v2 ready**（`binding-1dfc57ad…`、`47f844e0…`、`6113005c…`、`7b85475c…`），各自新 native session ready；其中 D06 对应绑定的 environment link 在 `helper-stdout-ended` 后失敗，远端通道未确认。**D02 `binding-ec5ddf7b…` 仍为 v1 invalid**：renew 即使每轮重新 discover 仍稳定返回 `environment-selection-changed`（4 次），未创建 v2。旧 demo／fixture 仍引用 v1 标识，远端验收前必须使用新 id 或更新夹具。证据见[绑定 renew 部分结果](evidence/t202-binding-renew-partial-2026-11-02.json)。m1-a 仍 running，政策只读，22 条 unknown 未变；本步无生命周期/create/delete 动作。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

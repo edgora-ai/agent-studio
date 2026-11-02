@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "task": "T-202",
+  "kind": "binding-renew-partial",
+  "dateUTC": "2026-11-02",
+  "method": "environment.open new-generation renew via authenticated product RPC after T-202 stop/start changed the Coder agent generation; no lifecycle/create/delete action",
+  "renewed": [
+    {
+      "binding_id": "binding-1dfc57ad-ea10-4432-91f4-d017baf52c90",
+      "old_version": 1,
+      "new_version": 2,
+      "environment_id": "environment-03e0450c-298b-4f12-9ee7-cb3758dfe1ff",
+      "target_root": "/workspace/agent-studio-binding-1dfc57ad-ea10-4432-91f4-d017baf52c90-v1",
+      "session_id": "session-14a72d5a-45b1-4394-ab63-d7dc6f32ff57",
+      "project_id": "project-225f6c8a-f762-4fcb-884c-3cb7909725ca"
+    },
+    {
+      "binding_id": "binding-47f844e0-172f-4e60-a97c-15bd4a712290",
+      "old_version": 1,
+      "new_version": 2,
+      "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+      "target_root": "/workspace/agent-studio-binding-47f844e0-172f-4e60-a97c-15bd4a712290-v1",
+      "session_id": "session-56c1568a-7d32-47c9-85a6-c573fd29b440",
+      "project_id": "project-9de2a7d5-dafd-4830-97d3-d03d0fabe946"
+    },
+    {
+      "binding_id": "binding-6113005c-b396-4807-b48a-90f697c1395e",
+      "old_version": 1,
+      "new_version": 2,
+      "environment_id": "environment-3c2b16cd-db64-4424-b98b-2eefe4a03652",
+      "target_root": "/workspace/agent-studio-binding-6113005c-b396-4807-b48a-90f697c1395e-v1",
+      "session_id": "session-77b6a4de-2d13-40da-95ee-f7b98b95f99b",
+      "project_id": "project-13c95874-8a7b-40d7-82a3-2510430e05fd"
+    }
+  ],
+  "failed": [
+    {
+      "binding_id": "binding-7b85475c-6da8-47e1-8c5d-80e5fd0aa9cc",
+      "version": 2,
+      "state": "ready",
+      "session_ready": true,
+      "observation": "binding and session reached ready but the environment link failed helper-stdout-ended; remote channel not confirmed"
+    },
+    {
+      "binding_id": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da",
+      "version": 1,
+      "observation": "renew blocked by repeated environment-selection-changed during environment.open despite fresh discover retries (4 attempts); no v2 binding created"
+    }
+  ],
+  "current": {
+    "bindings_v2_ready": [
+      "binding-1dfc57ad-ea10-4432-91f4-d017baf52c90",
+      "binding-47f844e0-172f-4e60-a97c-15bd4a712290",
+      "binding-6113005c-b396-4807-b48a-90f697c1395e",
+      "binding-7b85475c-6da8-47e1-8c5d-80e5fd0aa9cc"
+    ],
+    "d02_binding": "binding-ec5ddf7b-faf9-4dd9-929e-0adcf78353da remains v1 invalid",
+    "workspace": "m1-a running/agent connected",
+    "unknownOperations": 22
+  },
+  "findings": [
+    "Remote helper instability (helper-stdout-ended) interrupted one renewal after binding/session creation; link state failed and the channel is not confirmed.",
+    "environment.open renew for the D02 binding kept failing environment-selection-changed even with a fresh observation each retry; the selection race needs product investigation.",
+    "Renewed sessions are new native sessions on v2 bindings; old scripts/demo files still reference v1 identifiers and must be updated or use the new ids before remote acceptance."
+  ],
+  "nextSteps": [
+    "Investigate environment-selection-changed race in environment.open (observation identity vs refresh ingest).",
+    "Retry D02 renewal and D06 channel connect after remote stability; then update local demo/fixture identifiers and resume remote T-203/T-204/T-205/T-206 prerequisites."
+  ],
+  "scopeLimits": [
+    "No workspace lifecycle action in this renewal step",
+    "T-202 acceptance remains minimal start/stop only; create branch offline-only",
+    "No complete M2 claim"
+  ]
+}
