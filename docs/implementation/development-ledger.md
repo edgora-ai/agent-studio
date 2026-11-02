@@ -524,6 +524,10 @@ T-202 stop/start 改变 agent generation 后，用产品 `environment.open` rene
 
 仍未做：agent 恢复后的 v2 通道重连与本地 fixture 更新；远端 T-203／T-204／T-205 恢复；create 分支真实覆盖。
 
+### v2 绑定运行态切换与远端夹具播种准备（2026-11-02）
+
+生成换代后，私有运行态的 `remote-demo.json`／`model-remote-demo.json`／`acp-remote-demo.json` 已切换到 v2 binding／session／target_root（D02 `ec5ddf7b…-v2` + `session-93cbbebe…`；D05 `1dfc57ad…-v2` + `session-14a72d5a…`；D06 `7b85475c…-v2` + `session-b41aee10…`）。注意 v2 target root 是**新目录**，v1 远端夹具文件不会迁移，远端文件/搜索验收前需重新播种。新增 [t202.seed.remote.mjs](../../scripts/dev/t202.seed.remote.mjs)：通过产品 `fs.write`／`fs.read` 在各 v2 会话根写一个合成 fixture 并读回，不启生命周期。当前 agent 仍 disconnected，脚本尚未执行。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。
