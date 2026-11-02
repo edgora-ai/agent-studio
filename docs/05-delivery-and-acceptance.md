@@ -10,7 +10,7 @@
 |---|---|---|
 | M0 | 需求、场景、架构边界、候选集成与验收标准 | v0.4 草案已修订；文档验证记录见 README；待用户审阅，产品运行功能未验收 |
 | M1 | 版本门、模板契约、固定版本组合、隔离 profile、Coder + SSH + helper 最小实验 | 进行中；T-101／T-102 只读范围、T-103 修正后 profile、T-104 本机 Coder／模板／两实例范围已验证；原生未经包装入口仍禁用；T-105 专用实验连接／身份门禁／helper 已独立验证，T-106 限定实验范围已独立验证（IA-01／IA-02 已复验；同一新 run 的 11 项完整默认检查通过，controller／Node exit 0；首轮 repair-required 及两次 exit 1 保留），T-107 已交付[逐门槛调查](implementation/t107-m1-investigation.md)，[review2](implementation/evidence/t107-independent-review2.json) 中 M1-05 限定技术范围通过、M1-10 归一化旁路已由 repair2 修复并经[独立复验](implementation/evidence/t107-repair2-independent-validation.json)在声明技术范围关闭（28 项单测、实际入口 51 负例／10 本地正例、8 个 recorder 全回收、0 旁路）；M1 已于 2026-11-02 在声明技术范围放行、T-201 已启动，离线切片／验收矩阵／产品 RPC 面切片通过但正式任务未交付／未验收；见[隔离实验](implementation/t103-isolated-load.md)与[Coder 实验](implementation/t104-coder-lab.md) |
-| M2 | 单远程环境的绑定、文件、执行、PTY 和现有侧边栏适配 | 已有分层隔离预览实现及限定验证；真实 CLI、完整闭环和正式 M2 未验收 |
+| M2 | 单远程环境的绑定、文件、执行、PTY 和现有侧边栏适配 | T-201 后端契约已在声明范围验收（离线切片／矩阵／产品 RPC 面，见账本）；T-202／T-203／T-204 进行中；真实 CLI、完整闭环和正式 M2 未验收 |
 | M3 | 两个远程目标、隔离、生命周期、并发、故障、持久化和移动端闭环 | 仅有环境管理／恢复的部分预览实现；真实多机、故障、手机闭环及正式 M3 未验收 |
 | M4 | 第一阶段可用版本、回归、升级／回滚说明 | 未实施 |
 | M5 | 中央单份 code-server 远程研发可行性与集成 | 第二阶段，未实施 |

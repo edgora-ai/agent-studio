@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 1,
+  "task": "T-201",
+  "kind": "declared-backend-scope-acceptance",
+  "dateUTC": "2026-11-02",
+  "decision": "accepted-within-declared-backend-scope",
+  "decidedBy": "coordinator delegated continuous milestone work; T-201 backend evidence reviewed against its stated acceptance basis",
+  "acceptanceBasis": [
+    "SC-01 project/environment/session relation and identity",
+    "SC-03 file/target resolution and version lineages (binding/version/session)",
+    "SC-13 generation and invalid-target handling"
+  ],
+  "evidence": {
+    "offlineSlice": {
+      "path": "docs/implementation/evidence/t201-offline-acceptance-slice-2026-11-02.json",
+      "sha256": "f5857beba9851f5b6c4a911753ae8abe931550762094fc4d68527b5903198eeb",
+      "data": {
+        "schemaVersion": 1,
+        "task": "T-201",
+        "kind": "offline-acceptance-slice",
+        "dateUTC": "2026-11-02",
+        "status": "first-offline-slice-pass; T-201 not complete",
+        "method": "New random /tmp/agent-studio-test-t201-* root: Store + Bindings with in-process fake workspace/session persistence; no preview, remote, network, model or model/CLI call. Temporary root deleted after the run.",
+        "artifact": {
+          "path": "artifacts/t201/t201-slice-2026-11-02T14-13-22-280Z.json",
+          "sha256": "f1da7bf485e1b0b90150f9dc90fb76d0509029206b459a96cf126cc4fdeec9e8",
+          "result": "pass",
+          "checks": 6
+        },
+        "checks": [
+          {
+            "name": "project/environment/binding persistence and internal anchor registration",
+            "binding_id": "binding-29e83d61-04c4-4b4c-a521-c53a8ad79a28",
+            "version": 1,
+            "anchor_path": "/tmp/agent-studio-test-t201-0oVVV0/anchors/binding-29e83d61-04c4-4b4c-a521-c53a8ad79a28-v1",
+            "anchor_dev": "2049",
+            "anchor_ino": "2897084",
+            "workspace_id": "workspace-5e880e39-4e09-4703-972b-b08ca31b74f6"
+          },
+          {
+            "name": "session binds to ready binding version, native cwd follows the anchor and is attached to the workspace",
+            "session_id": "session-fbb11091-c4e2-45b9-852c-f78a714f16f1",
+            "cwd": "/tmp/agent-studio-test-t201-0oVVV0/anchors/binding-29e83d61-04c4-4b4c-a521-c53a8ad79a28-v1"
+          },
+          {
+            "name": "write -> direct read-only SQL -> API by ID -> session list keeps the full operation identity",
+            "operation_id": "t201-operation-e4ca3e1f-2f23-4736-8070-d9c98cb44bb7",
+            "remote_pid": 4242,
+            "helper_session_id": "t201-helper",
+            "channel_id": "t201-channel"
+          },
+          {
+            "name": "restart/readback keeps immutable binding, session, anchor and operation identity; running becomes unknown preview-restarted without replay",
+            "operation_state": "unknown"
+          },
+          {
+            "name": "version CAS opens a new immutable binding version and session while the old version/session stay readable",
+            "old_version": 1,
+            "new_version": 2,
+            "old_state": "superseded",
+            "new_anchor": "/tmp/agent-studio-test-t201-0oVVV0/anchors/binding-29e83d61-04c4-4b4c-a521-c53a8ad79a28-v2"
+          },
+          {
+            "name": "cached ready-binding equality cannot authorize a new channel: every dispatch verifies the live channel and a superseded version is refused",
+            "verifications": 2,
+            "stale_code": "stale-binding"
+          }
+        ],
+        "verified": [
+          "project/environment/binding persistence with internal anchor dev/ino/workspace registration",
+          "session binds to a ready binding version, native cwd follows the anchor and is attached to the workspace",
+          "operation write -> direct read-only SQL -> Store API by ID -> session list keeps full identity",
+          "restart/readback keeps immutable binding/session/anchor/operation identity; running becomes unknown preview-restarted without replay",
+          "version CAS opens a new immutable binding version/session while old version/session stay readable",
+          "explicit stale-cache/new-channel regression: a ready cached binding row cannot authorize dispatch without live channel verification, and a superseded version is refused"
+        ],
+        "remainingT201Gaps": [
+          "formal T-201 acceptance packaging across the full task scope and product RPC surface",
+          "generation-change end-to-end through EnvironmentManager with real anchor/version/session cascade (covered separately offline but not packaged as this T-201 evidence)",
+          "T-202/T-203/T-204 channel, file and process adapters remain future work; product UI stays T-205/T-207"
+        ],
+        "limitations": [
+          "Fake in-process context; not a real dsh session or workspace registry.",
+          "No remote/Coder/SSH, no preview process, no model/CLI.",
+          "Does not claim T-201 completion, M2, or formal acceptance."
+        ]
+      }
+    },
+    "matrix": {
+      "path": "docs/implementation/evidence/t201-acceptance-matrix-2026-11-02.json",
+      "sha256": "9333d88f1a0bc51dcd338229189e8f3cc45272fb955b55da491c7206abe7927c",
+      "data": {
+        "schemaVersion": 1,
+        "task": "T-201",
+        "kind": "offline-acceptance-matrix",
+        "dateUTC": "2026-11-02",
+        "status": "offline backend acceptance matrix assembled; T-201 not complete/accepted",
+        "commands": [
+          {
+            "args": [
+              "node",
+              "--test",
+              "scripts/dev/store.test.mjs"
+            ],
+            "exitCode": 0,
+            "tests": 32,
+            "pass": 32,
+            "fail": 0
+          },
+          {
+            "args": [
+              "node",
+              "--test",
+              "scripts/dev/environment.test.mjs"
+            ],
+            "exitCode": 0,
+            "tests": 13,
+            "pass": 13,
+            "fail": 0
+          },
+          {
+            "args": [
+              "node",
+              "scripts/dev/t201.acceptance.mjs"
+            ],
+            "exitCode": 0,
+            "checks": 6,
+            "artifact": {
+              "path": "artifacts/t201/t201-slice-2026-11-02T14-13-22-280Z.json",
+              "sha256": "f1da7bf485e1b0b90150f9dc90fb76d0509029206b459a96cf126cc4fdeec9e8",
+              "result": "pass",
+              "checks": 6
+            }
+          }
+        ],
+        "matrix": [
+          {
+            "criterion": "project/environment/binding/session relations and persistence",
+            "evidence": [
+              "store.test: migration, transaction, full readonly SQL readback, ownership, list and restart",
+              "t201 slice1: persistence + anchor registration"
+            ]
+          },
+          {
+            "criterion": "unified dispatch guard and current channel identity verification",
+            "evidence": [
+              "store.test: only authoritative local kind/provider dispatches local; remote failures and stale/unknown cannot fallback",
+              "t201 slice1: cached ready-binding equality cannot authorize a new channel (live provider.verify on every dispatch)"
+            ]
+          },
+          {
+            "criterion": "internal anchor registration and public cwd containment",
+            "evidence": [
+              "t201 slice1: anchor dev/ino/workspace registration; native cwd follows anchor",
+              "store.test: Host scope forwards binding assertions; lexical traversal fails before repo joining"
+            ]
+          },
+          {
+            "criterion": "new generation opens a new immutable binding version and session",
+            "evidence": [
+              "environment.test: D07 OFFLINE directory loss and same/new generation cascade across model, ACP and tasks without erasing identity (13/13 env tests pass)",
+              "store.test: immutable snapshots, version CAS"
+            ]
+          },
+          {
+            "criterion": "write -> direct store -> API readback -> lookup by ID",
+            "evidence": [
+              "t201 slice1: write -> direct read-only SQL -> Store API by ID -> session list"
+            ]
+          },
+          {
+            "criterion": "old cached equality / old channel cannot authorize a new channel",
+            "evidence": [
+              "t201 slice1 named check: cached ready-binding equality cannot authorize a new channel; superseded version refused as stale-binding"
+            ]
+          }
+        ],
+        "gaps": [
+          "formal T-201 acceptance packaging over the product RPC surface (the RPC switch in index.mjs) is not exercised by this offline matrix; t201.acceptance.mjs covers Store/Bindings API, while the thin RPC wrapper is exercised indirectly by D-01-D08 preview evidence",
+          "generation cascade is cited from environment.test offline manager fixture; it is not duplicated in t201.acceptance.mjs",
+          "T-202/T-203/T-204 adapters and T-205/T-207 product UI are not started"
+        ],
+        "limits": [
+          "Offline only: no preview, remote, network, model or CLI.",
+          "Does not claim T-201 completion, M2, or formal acceptance.",
+          "Historical failures and unknown rows untouched."
+        ]
+      }
+    },
+    "rpcSlice": {
+      "path": "docs/implementation/evidence/t201-rpc-acceptance-2026-11-02.json",
+      "sha256": "09163ef98dca16d62397004ef4c22a0ecbfa24e6091fc6dfd3dd9fdf53321270",
+      "data": {
+        "schemaVersion": 1,
+        "task": "T-201",
+        "kind": "product-rpc-acceptance-slice",
+        "dateUTC": "2026-11-02",
+        "status": "product RPC surface exercised for T-201 chain; T-201 not complete",
+        "method": "Authenticated /agent-studio-rpc requests against the already-running local rc.5 preview (loopback only). No restart, remote channel, Coder action, model/CLI or network outside loopback.",
+        "artifact": {
+          "path": "artifacts/t201/t201-rpc-slice-2026-11-02T14-18-54-517Z.json",
+          "sha256": "0b8659be5c9a914fff060529d45a579290a813a522556999d5653724641b22cd",
+          "run": "72ba8094-0a4e-4604-9c69-babc999a22c6",
+          "result": "pass",
+          "checks": 3
+        },
+        "checks": [
+          {
+            "name": "product RPC project.create/environment.register/binding.create/session.create reach a ready versioned binding and session",
+            "project_id": "project-cf713e5d-9ce5-403e-a0b7-aa0036d017fd",
+            "environment_id": "environment-582a4fe5-e961-4599-a20e-5d0293cb17b8",
+            "binding_id": "binding-b856330c-2b35-4136-adf6-2f3543837c8d",
+            "version": 1,
+            "session_id": "session-2fcbba1c-e1fe-4366-a467-0b98a9735643",
+            "anchor_path": "/home/ubuntu/workspace/agent-studio/.preview/agent-studio/anchors/binding-b856330c-2b35-4136-adf6-2f3543837c8d-v1"
+          },
+          {
+            "name": "write through RPC -> direct read-only SQL -> product RPC by ID/list return the same immutable rows",
+            "project_id": "project-cf713e5d-9ce5-403e-a0b7-aa0036d017fd",
+            "binding_id": "binding-b856330c-2b35-4136-adf6-2f3543837c8d",
+            "session_id": "session-2fcbba1c-e1fe-4366-a467-0b98a9735643"
+          },
+          {
+            "name": "product RPC dispatch guard rejects version mismatch and a stale/unknown binding version, while metadata.read stays non-executing",
+            "eligible": true,
+            "executed": false
+          }
+        ],
+        "createdTestRecords": "New project/environment/binding/session rows were created through the product RPC in the private preview DB as acceptance fixtures (immutable audit; no delete API). They are test data, not historical rows, and were not used to rewrite any prior evidence.",
+        "closedGap": "The earlier offline matrix cited that the product RPC switch in index.mjs was not directly exercised; this slice closes that gap by creating and reading the T-201 relation through the authenticated RPC surface.",
+        "remainingGaps": [
+          "generation-change end-to-end through the product RPC (the offline EnvironmentManager cascade is cited from environment.test, not driven through RPC)",
+          "formal T-201 acceptance packaging and sign-off",
+          "T-202/T-203/T-204 adapters and T-205/T-207 UI"
+        ],
+        "limitations": [
+          "Local preview only: no remote/Coder/SSH/model/CLI.",
+          "Uses the existing persistent preview DB and creates test fixtures; no historical/unknown rows were modified.",
+          "Does not claim T-201 completion, M2, or formal release."
+        ]
+      }
+    }
+  },
+  "results": {
+    "offlineSlice": "6/6 checks pass (temp root; persistence, anchor, session, operation identity, restart/readback, version CAS, stale-cache-new-channel regression)",
+    "matrix": "store.test 32/32; environment.test 13/13 including same/new generation cascade; t201 offline slice 6/6",
+    "rpcSlice": "3/3 checks pass through authenticated /agent-studio-rpc on the running local preview (create -> ID/list readback -> direct SQL equality -> dispatch guard negatives)"
+  },
+  "criteriaMapping": [
+    {
+      "criterion": "project/environment/binding version/session persistence",
+      "evidence": [
+        "offlineSlice check 1-3",
+        "matrix store.test",
+        "rpcSlice check 1-2"
+      ]
+    },
+    {
+      "criterion": "unified dispatch guard and current channel identity verification",
+      "evidence": [
+        "offlineSlice check 6 (named stale-cache/new-channel regression)",
+        "rpcSlice check 3",
+        "store.test only authoritative local kind/provider dispatches local"
+      ]
+    },
+    {
+      "criterion": "internal anchor registration and public cwd containment",
+      "evidence": [
+        "offlineSlice check 1-2",
+        "rpcSlice native inspection cwd"
+      ]
+    },
+    {
+      "criterion": "new generation opens new immutable binding version and session",
+      "evidence": [
+        "environment.test same/new generation cascade (offline fixture, 13/13)",
+        "store.test immutable snapshots/version CAS"
+      ]
+    },
+    {
+      "criterion": "write -> direct store -> API readback -> lookup by ID",
+      "evidence": [
+        "offlineSlice check 3",
+        "rpcSlice check 2"
+      ]
+    }
+  ],
+  "scopeLimits": [
+    "Generation cascade is evidenced by the offline EnvironmentManager fixture; it is not driven through the product RPC because the real Coder generation cannot be changed without environment/lifecycle authorization.",
+    "T-201 acceptance covers backend contracts only; product UI/T-205 and T-207 remain separate.",
+    "T-202 (Coder create/start/stop), T-203/T-204 adapters and real remote/CLI acceptance are not part of this acceptance.",
+    "The RPC slice created immutable test fixtures in the private preview DB; no historical or unknown rows were modified."
+  ],
+  "nextMilestones": [
+    "T-203 local file/search/watch/version-CAS acceptance matrix",
+    "T-204 local command/PTY/cancel/release acceptance matrix",
+    "T-202 requires explicit remote Coder resource authorization"
+  ],
+  "notClaimed": [
+    "T-201 product UI integration",
+    "complete M2",
+    "remote lifecycle actions",
+    "real CLI/model acceptance",
+    "M3"
+  ]
+}
