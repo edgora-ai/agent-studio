@@ -488,6 +488,14 @@ T-201 已启动，但**尚未交付／验收**。差距分析：现有 D-01–D0
 
 下一里程碑：T-202 需要显式远端 Coder 资源/生命周期授权；收到授权前不推进。
 
+### T-205 本地声明范围验收（2026-11-02）
+
+复用既有本地证据打包 T-205（现侧边栏文件/搜索/保存/引用/Git/watch 与本机打开器/scheme/快捷键拦截）的本地声明范围验收：[D04 本地原 UI 回归](../../artifacts/d04/ui-rc5-regression-9/browser.json) 11 项（本地部分：搜索→原编辑器、保存物理字节/hash→完整 API、引用快照、Git status 与双 diff 保持绑定、终端外部修改 polling/CAS 冲突）、[local.integration](../../scripts/dev/local.integration.mjs) 10/10（文件/搜索/Git/快照/watch/CAS/PTY）、[M1-10 独立复验](evidence/t107-repair2-independent-validation.json)（本机打开器/Host API/scheme/快捷键：本地正例与 remote/absent/forged 拒绝、非法拼写零副作用）。D04 UI 无 JS 错误、无未预期 RPC/HTTP、无外部请求。综合记录见[T-205 本地验收](evidence/t205-local-acceptance-2026-11-02.json)。结论：**T-205 本地声明范围验收通过**；本里程碑仅复用已记录运行，未新增远端生命周期、未产生新 unknown。
+
+限制：不含同一 D04 跑批中的跨绑定/远端检查；M1-10 打开器证据来自隔离自有 fixture，不是用户桌面或完整产品 UI；远端侧边栏/打开器、T-202、T-206、T-207 与完整 M2 未验。
+
+下一里程碑：T-202 需显式远端 Coder 资源/生命周期授权；远端 T-203/T-204/T-205、T-206 与 T-207 依赖相应授权与外部输入。
+
 ### 仍未验证与下一步授权边界
 
 本地边界修复不是 D07 SSH255／helper EOF／timeout 的已证实根因；2026-11-02 的中断已定位为远端 Coder agent 连接断开（只读证据见上），但历史两次综合失败仍无对应控制面历史，不能回溯定性或改写；不撤销最终两次综合失败，也不宣称 13 条 unknown 已停止或已取消。D08 历史 UI 输入失败仍是有效失败记录；本轮已用修复后的单行输入与原生 Terminal 接线上线一次真实同 Host 单任务恢复并通过（见上节），但它只覆盖这一声明范围，不是跨 Host／崩溃恢复或正式验收。后续真实实验仍须单独授权，并核对原 helper／session／process／PID／startTick、输出接续及缺口、单次副作用、取消与 release；不得重发命令／输入／审批或以新任务冒充恢复。

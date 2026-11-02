@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "task": "T-205",
+  "kind": "local-declared-scope-acceptance",
+  "dateUTC": "2026-11-02",
+  "decision": "accepted-within-local-declared-scope",
+  "decidedBy": "coordinator delegated continuous milestone work; reused existing local UI and local-integration evidence",
+  "evidence": {
+    "d04Ui": {
+      "path": "artifacts/d04/ui-rc5-regression-9/browser.json",
+      "sha256": "f3f1f56534ec2114f2176f45004d0b1fdbd7af9981837d2d2342fa46d1b6adaf",
+      "result": "pass-limited-development",
+      "checks": 11
+    },
+    "localIntegration": {
+      "path": "artifacts/d04/integration-a736b713-c19f-47b3-8951-6312a781caa8.json",
+      "sha256": "6ddd15ee2a2a039156b690355e1808561c7ae2d60bc8afe7c3e4d33345eeed67",
+      "result": "pass-limited-development",
+      "checks": 10
+    },
+    "m110Independent": {
+      "path": "docs/implementation/evidence/t107-repair2-independent-validation.json",
+      "sha256": "f460cceb2492e66e88c967c37131c9611fa29c47ddd8a28f3f6fc736d75565fd"
+    }
+  },
+  "criteriaMapping": {
+    "SC-01/SC-03/SC-05 sidebar files, search, save, references, Git and watch see the same bound target": [
+      "original content search -> line-bearing result -> original file editor",
+      "original local Files Save -> physical UTF8/hash -> full API",
+      "native composer chip carries exact bound/versioned local snapshot, no model call",
+      "original Changes -> staged/worktree Diff and Git/Diff context keeps binding",
+      "local.integration: search/Git/snapshot/watch + strong CAS conflict rejection"
+    ],
+    "SC-16 local openers/scheme/shortcut interception": [
+      "M1-10 independent validation: local positive effects allowed; remote/absent/forged contexts and noncanonical URL spellings rejected before delegation with zero effects"
+    ]
+  },
+  "uiSafety": {
+    "js_errors": 0,
+    "unexpected_rpc": [],
+    "unexpected_http": [],
+    "external_requests": 0
+  },
+  "localUiChecks": [
+    "original content search -> line-bearing result -> original file editor",
+    "original local Files Save -> physical UTF8/hash -> full API",
+    "native composer chip carries exact bound/versioned local snapshot, no model call",
+    "local to remote same filename has different editor bytes; old local PTY never changes owner and closes by exact identity",
+    "remote to local restores the original local file tab without remote bytes",
+    "original Changes -> staged Diff",
+    "original Changes -> worktree Diff",
+    "original Git/Diff context -> original file editor keeps binding",
+    "native terminal external edit -> clean editor automatically refreshes on local polling",
+    "native terminal external edit -> dirty draft retained, conflict banner and strong-CAS rejection"
+  ],
+  "preservation": {
+    "unknownBefore": 22,
+    "unknownAfter": 22,
+    "historicalUnknown": 13,
+    "note": "This acceptance reuses already-recorded runs; no new runtime action, remote lifecycle or unknown row was produced."
+  },
+  "scopeLimits": [
+    "Local D04 scope only. The cross-binding/remote checks in the same D04 UI artifact are not part of this local acceptance and are not claimed.",
+    "M1-10 opener evidence uses isolated owned fixture recorders, not the user desktop or full product UI.",
+    "Remote sidebar/opener behavior (T-205 remote portion), T-202 lifecycle, T-206 real CLI, T-207 integrated UI and complete M2 are not claimed."
+  ],
+  "nextMilestones": [
+    "T-202 needs explicit remote Coder resource/lifecycle authorization",
+    "remote T-205/T-203/T-204 depend on T-202 and remote adapter acceptance",
+    "T-206 needs a real coding CLI credential/config authorization",
+    "T-207 depends on T-202/T-206"
+  ],
+  "notClaimed": [
+    "complete M2",
+    "remote sidebar/openers",
+    "T-202",
+    "T-206",
+    "T-207"
+  ]
+}
