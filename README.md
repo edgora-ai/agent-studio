@@ -8,25 +8,37 @@
 
 上一轮处理三项本地收口：broker／transport 的超时、输出与最终清理边界；当前验证脚本的 schema 版本漂移；D08 合成命令的单行安全传输及实际原生 Terminal tab 接线。实现与离线结果见[开发账本第 15 节](docs/implementation/development-ledger.md#15-继续推进后的本地收口未部署未重跑真实恢复)。该轮未运行会重启预览或派发远端任务的 integration／browser 脚本，未提交／推送改动。
 
-**rc.5 运行态与 UI 回归**：本轮先把 WIP 快照本地提交（未推送），在随机临时根验证 launcher `prepare` 的 rc.5 全链路投影（幂等、临时根已删），随后重启现有开发预览到 rc.5。运行预览必须在不限制 `/dev/ptmx` 的环境中启动；在受限文件沙箱内启动会使原生终端 `forkpty` 失败，这是启动环境限制，不是产品缺陷。原 UI 回归：**D01 通过；D04 local 11 项通过；D05 7 项通过（显式离线协议 fixture，非真实 LLM）；D06 7 项通过**；最初 D02／D03 远端因 `helper-call-disconnect` 未通过、D08 未执行，失败记录保留；随后远端恢复，D02／D03 远端原 UI 与 D08 单任务同 Host 恢复均执行并通过，详见[账本同节](docs/implementation/development-ledger.md#rc5-运行时原-ui-回归2026-11-02未验收)。
+**rc.5 运行态与 UI 回归（此前历史轮次，非本次文档收口）**：当时先把 WIP 快照本地提交（未推送），在随机临时根验证 launcher `prepare` 的 rc.5 全链路投影（幂等、临时根已删），随后重启现有开发预览到 rc.5。运行预览必须在不限制 `/dev/ptmx` 的环境中启动；在受限文件沙箱内启动会使原生终端 `forkpty` 失败，这是启动环境限制，不是产品缺陷。原 UI 回归：**D01 通过；D04 local 11 项通过；D05 7 项通过（显式离线协议 fixture，非真实 LLM）；D06 7 项通过**；最初 D02／D03 远端因 `helper-call-disconnect` 未通过、D08 未执行，失败记录保留；随后远端恢复，D02／D03 远端原 UI 与 D08 单任务同 Host 恢复均执行并通过，详见[账本同节](docs/implementation/development-ledger.md#rc5-运行时原-ui-回归2026-11-02未验收)。
 
 **SDK 持续升级基线**：按后续授权，已将 SDK／Gateway 的[来源锁](profiles/agent-studio-preview/sources.lock.json)迁移到当前安装的 `0.2.1-rc.5`，并复核更新 3 份 package manifest 摘要；**98/98 个受控资产、6 个包版本及原生 Terminal stock patch 均匹配，上一轮 rc.4／rc.5 的来源一致性阻断已解除**。锁记录的是可持续更新的兼容快照，不要求 DSH 永久停留在历史版本；其他包独立记录版本，不强行与根 SDK 同号。来源一致不等于完整兼容、部署或恢复验收；本轮没有安装依赖、执行 prepare／start 或重启预览。
 
-## 交付审计与本轮复核边界
+## 交付审计与既有复核边界
 
 [交付验证器](scripts/dev/verify_delivery.mjs)默认只读取公开证据：schema v2 [清单](docs/implementation/evidence/m2-delivery-manifest-2026-11-02.json)中的证据与带哈希追加说明，递归核对 `{path, sha256}` JSON 报告／产物引用及历史 `snapshot` 字节，再核对[校验索引](docs/implementation/evidence/SHA256SUMS)全部条目。历史索引指纹不是今天的索引摘要；原始记录不重写。逻辑路径及真实路径均限公开目录，拒绝指向仓库内私有目录或仓库外的软链。默认不读取本地运行数据库、策略或凭据，也不做网络请求。
 
 ```bash
 node scripts/dev/verify_delivery.mjs
-node scripts/dev/verify_delivery.mjs --local-state
-node --test scripts/dev/*.test.mjs
+# 公开离线范围：13 个 dev 文件 + 1 个 M1 文件（共 14 个），串行；精确排除真实 HTTP 用例
+node --test --test-concurrency=1 --test-reporter=tap '--test-skip-pattern=^D05 network capability: real exact POST only, no redirect, unrelated connection or async escape$' scripts/dev/{environment,store,schema-version,child-boundary,tree-watch-ui,acp-ui,git-read-ui,recovery-ui,recovery,acceptance-contracts,verify_delivery,t202-acceptance,source-lock}.test.mjs scripts/m1/t107_repair.test.mjs
 ```
 
-`--local-state` 仅增加 SQLite 只读事务和策略复核：目标环境准确的 5 个 v5 binding／session／anchor 身份，以及 25 条 unknown 的逐行完整内容哈希、pending=0、`read_only:true, actions:[]`。**缓存状态不能证明 agent 当前连接、内存通道存活或 unknown 的远端进程已停止**；结果明确标记 `liveRpcChecked:false`。本轮不读取凭据，不调用真实验收入口／RPC，不改运行策略，不重启／部署预览；源码修复尚未投影到正在运行的预览。认证在线模式必须显式同时提供 `--runtime --allow-credential-read`，本轮没有运行。
+**私有状态可选复核，须另行批准；非本次公开离线命令**：`node scripts/dev/verify_delivery.mjs --local-state` 才增加 SQLite 只读事务和策略复核：目标环境准确的 5 个 v5 binding／session／anchor 身份，以及 25 条 unknown 的逐行完整内容哈希、pending=0、`read_only:true, actions:[]`。**缓存状态不能证明 agent 当前连接、内存通道存活或 unknown 的远端进程已停止**；结果明确标记 `liveRpcChecked:false`。本次不读取私有 DB／凭据，不调用真实验收入口／RPC，不改运行策略，不重启／部署预览；源码修复尚未投影到正在运行的预览。认证在线模式必须显式同时提供 `--runtime --allow-credential-read`，本次没有运行。
 
 较早审查记录的 **6/6、7/7 是当时较弱门禁的历史结果**，不能替代当前递归完整性与精确身份门禁。离线损坏副本、错身份和失败回包已用于防止假 PASS；这不证明原始历史产物曾损坏，也不撤销声明切片的历史验收。原始产物仍按路径／SHA 引用、仅保留在开发机，不随仓库发布；副本缺失时验证必须失败，不跳过。第 3 轮收口把递归完整性、生命周期 deadline／并发／verified resolve、实际验收 runner 的身份／输出／CAS／cleanup 负例分开复验，具体结果与边界见[第 3 轮报告](docs/implementation/evidence/delivery-review-round3-2026-11-02.json)和[开发账本](docs/implementation/development-ledger.md)。历史 T-202“workspace data/lifecycle preserved”只对应已观测的 stop/start 状态，未做独立 sentinel 文件／数据完整性验收；旧证据保留原字节。
 
-本轮冻结源码的最终总 Node 回归在协调者当前已授权执行上下文为 **359/359、0 fail／skip**；委派受限上下文同源首次 **358/359** 与定向 **7/8** 的私有 SQLite 只读 CLI 开库失败亦完整保留，不宣称已确证 OS／SHM 根因。Python broker／observe／safe-recovery **5＋4＋3**、文档单测 **39**、语法仅解析 **94 MJS＋45 Python**、来源锁 **98 资产／6 包** 均通过；不重复叠加定向子集或已包含于旧基线的 M1-10 单测。过程误带既有 mode 参数的偏差见报告；无新增授权或真实运行态修改。
+此前审计轮次冻结源码的 Node 回归在协调者当时已授权执行上下文为 **359/359、0 fail／skip**；委派受限上下文同源首次 **358/359** 与定向 **7/8** 的私有 SQLite 只读 CLI 开库失败亦完整保留，不宣称已确证 OS／SHM 根因。当时 Python broker／observe／safe-recovery **5＋4＋3**、文档单测 **39**、语法仅解析 **94 MJS＋45 Python**、来源锁 **98 资产／6 包** 均通过；这些数字不与上一轮 ACP／tree 公开范围的 379 项回归或本轮 391 项相加。过程误带既有 mode 参数的偏差见报告；无新增授权或真实运行态修改。
+
+## ACP／目录 watch 当前产品收口（未部署）
+
+原会话 ACP tasks 可读取任务详情、原 prompt／结果、CLI／任务／运行身份和按序协议记录；文本记录最多 500 块／100000 字符，超限明确标记截断，不伪称原生模型／工具历史。历史与审批／提问决策是只读展示；readiness 缺失禁用新任务启动，但不隐藏既有历史。Cancel 只针对当前活跃任务及其身份，不自动 resume、重发 prompt 或重放控制。busy 世代及所选任务身份隔离迟到请求／事件；取消同一选中任务后仍可重新接续轮询。
+
+目录树复用现有 DOM 与原生 notice：非递归轮询 2500ms，每目录最多 1000 项、最多 32 目录／16 clients。ACK 只确认订阅，不能证明列表已刷新；初始／重连 ACK 会强制实际原生 list，pending 折叠为一次后续刷新，重订阅 ACK 只刷新新订阅路径，且须校验自身确认的路径。ACK 后本状态仍标明列表新鲜度未知；实际列表／错误由原生列表独立呈现，不把发起 reload 当作完成；watch 的 sticky cause 与原生异步 `loadError` 分开呈现，列表失败保留旧 cache 并给 native warning。源码与合成离线回归已收口，尚未投影／部署或执行真实远端 watch／CLI 验收。后续所需身份、授权与观察链见[CLI／watch 输入型验收计划](docs/implementation/cli-watch-acceptance-plan.md)；测量、失败过程与残余项见[开发账本第 16 节](docs/implementation/development-ledger.md#16-acp-与目录-watch-源码收口文档结案未部署)。
+
+## Git 读取呈现当前收口（未部署）
+
+两个受来源哈希约束的原生 Git 客户端在 status／branch 读取失败时保留缓存行和失败状态，只展示经长度及字符校验的错误码而非原始 message／stack；此校验不是语义上的 namespace／code 白名单，不保证未来任意合语法错误码都不含敏感信息。错误期间，以及保留上次 status 但本次槽位为空时，不宣称新鲜的 clean／notRepo，并明确提示回退内容的新鲜度未确认。分支读取区分成功空列表、尚未确认和读取失败；现有原生 scope 世代、已选目标及新增的最新 branch 请求序号共同防止迟到的成功或失败覆盖当前结果，而非完整 React／session-rebind／请求 token／cache 重设计。同一有效 scope 的 status／branch 错误在 pending／失败重试期间保留，权威读取成功（含 sameStatus）后才清除；scope 变化会有意重置派生状态。Retry 仅调用现有原生 `status.refresh` 与 lens `refresh(false)`。`sameStatus` 相等判定保持原样，不能据此声称已消费 unborn／head／repo_id 等额外身份元数据。这一保证不扩及 worktree inventory 的原生错误呈现或 GitGraph，也不新增 unborn／noHEAD UI。
+
+公开后端只允许 Git `status`／`diff`／`worktrees`／`diff-head` 只读路由；`git.branch` 有意保持禁用，返回 `agent-studio/provider-unavailable`，不能把分支空态当成已有可用的分支读取。本轮 14 文件串行公开离线回归 **391/391、0 fail／cancelled／skip／todo**，其中两个客户端各 6 项、共 12 项 Git 合成测试已包含在 391 中；真实 HTTP 用例按精确名称过滤，未出现在 TAP，也未计入测试数或 skip，另有整个 remote-diagnostics 文件及两个 M1 t106 文件不在范围内，不能称为未过滤的全套 0 skip。[合成源码测试](scripts/dev/git-read-ui.test.mjs)覆盖实际投影表达式与共享的原生 scope／Retry 调用链，React 状态／effect 调度及浏览器 DOM 不在执行范围；独立审查仅审冻结源码。不是现场 Git／CLI／provider／浏览器验收；上述源码改动尚未投影到正在运行的预览，未暂存、未提交或部署。最终复核、过程失败与限制见[开发账本第 17 节](docs/implementation/development-ledger.md#17-git-读取-ui-源码收口与文档结案未部署)。
 
 下列远端验收入口会进行认证和产品操作，**仅供未来取得单独在线授权、核对新鲜 agent／单通道及批准的身份文件后使用，本轮没有执行**。版本必须显式钉扎到当次批准的 binding 世代，不能沿用脚本内置 v4 或将 native anchor workspace ID 当作 Coder workspace ID：
 

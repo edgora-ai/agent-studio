@@ -1,6 +1,8 @@
 import {AcpPanel} from '../../packages/dsh-agent-studio/acp-sidebar.mjs';
 import {EnvironmentPanel,EnvironmentEntry} from '../../packages/dsh-agent-studio/environment-sidebar.mjs';
 import {RecoveryPanel,terminalRecoveryIdentity,terminalRecoveryWritable} from '../../packages/dsh-agent-studio/recovery-sidebar.mjs';
+import {studioDirectoryWatch} from '../../packages/dsh-agent-studio/tree-watch-sidebar.mjs';
+import {studioGitErrorCode} from '../../packages/dsh-agent-studio/git-read-sidebar.mjs';
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 const sourceLock=JSON.parse(readFileSync(new URL('../../profiles/agent-studio-preview/sources.lock.json',import.meta.url)));
@@ -24,7 +26,50 @@ function section(source,start,end,replacement) {
 export function projectSidebar(file,bytes) {
   let source=verified(file,bytes,sourceLock.sidebar);
   if(['lib/client.js','lib/client-registry.js'].includes(file)) {
+    source=once(source,'function slotOf$1(scope, worktree) {',`const studioGitErrorCode = ${studioGitErrorCode.toString()};\nfunction slotOf$1(scope, worktree) {`);
+    source=once(source,'error: false,\n\t\t\t\tversion: 0,','error: false,\n                errorCode: null,\n\t\t\t\tversion: 0,');
+    source=once(source,'if (slot.error) {\n\t\t\t\t\t\tslot.error = false;\n\t\t\t\t\t\tchanged = true;','if (slot.error || slot.errorCode !== null) {\n                        slot.error = false;\n                        slot.errorCode = null;\n\t\t\t\t\t\tchanged = true;');
+    source=once(source,'slot.snapshot = snapshot;\n\t\t\t\tslot.error = false;','slot.snapshot = snapshot;\n\t\t\t\tslot.error = false;\n                slot.errorCode = null;');
+    source=once(source,'}).catch(() => {\n\t\t\t\tif (generation !== slot.generation) return;\n\t\t\t\tif (!slot.error) {\n\t\t\t\t\tslot.error = true;','}).catch((reason) => {\n\t\t\t\tif (generation !== slot.generation) return;\n                const code = studioGitErrorCode(reason);\n\t\t\t\tif (!slot.error || slot.errorCode !== code) {\n\t\t\t\t\tslot.error = true;\n                    slot.errorCode = code;');
+    source=once(source,'error: slot.error,\n\t\t\t\trefresh,','error: slot.error,\n                errorCode: slot.errorCode,\n\t\t\t\trefresh,');
+    source=once(source,'const [branchNames, setBranchNames] = (0, react.useState)([]);','const [branchNames, setBranchNames] = (0, react.useState)([]);\n            const [branchError, setBranchError] = (0, react.useState)(null);\n            const [branchLoaded, setBranchLoaded] = (0, react.useState)(false);\n            const branchRequest = (0, react.useRef)(0);');
+    source=once(source,'setBranchNames([]);\n\t\t\t\tsetGraphRefresh','branchRequest.current += 1;\n                setBranchNames([]);\n                setBranchError(null);\n                setBranchLoaded(false);\n\t\t\t\tsetGraphRefresh');
+    source=once(source,'const branchResult = await api.gitBranch(gitScope, target).catch(() => ({\n\t\t\t\t\tcurrent: "",\n\t\t\t\t\tnames: []\n\t\t\t\t}));\n\t\t\t\tif (generation !== scopeGen.current || target !== chosenPathRef.current) return;\n\t\t\t\tsetBranchNames(branchResult.names);',`const request = ++branchRequest.current;
+                try {
+                    const branchResult = await api.gitBranch(gitScope, target);
+                    if (generation !== scopeGen.current || request !== branchRequest.current || target !== chosenPathRef.current) return;
+                    setBranchNames(branchResult.names);
+                    setBranchLoaded(true);
+                    setBranchError(null);
+                } catch (reason) {
+                    if (generation !== scopeGen.current || request !== branchRequest.current || target !== chosenPathRef.current) return;
+                    setBranchError(studioGitErrorCode(reason));
+                }`);
+    source=once(source,'const snapshot = status.snapshot ?? lastStatus.current.value;','const snapshot = status.snapshot ?? lastStatus.current.value;\n            const statusUnconfirmed = status.error || status.snapshot === null && snapshot !== null;');
+    source=once(source,'const clean = isRepo && entries.length === 0;','const clean = isRepo && !statusUnconfirmed && entries.length === 0;');
+    source=once(source,'snapshot === null && !status.loading && status.error && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Notice, {\n\t\t\t\t\t\t\t\tkind: "error",\n\t\t\t\t\t\t\t\ttone: "page",\n\t\t\t\t\t\t\t\tchildren: t("error")\n\t\t\t\t\t\t\t}),',`status.error && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Notice, {
+                                 kind: "error", role: "alert",
+                                children: "Git status read failed (" + (status.errorCode ?? "read-failed") + "); " + (snapshot === null ? "no confirmed status" : "cached rows may be stale")
+                            }),
+                            branchError !== null && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Notice, {
+                                 kind: "warn", role: "alert",
+                                children: "Branch list unavailable (" + branchError + "); retry Git reads"
+                            }),
+                            (status.error || branchError !== null) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
+                                type: "button", "data-studio-git-retry": true, onClick: () => { status.refresh(); refresh(false); }, children: "Retry Git reads"
+                            }),`);
+    source=once(source,'snapshot !== null && !isRepo && /* @__PURE__ */','snapshot !== null && !statusUnconfirmed && !isRepo && /* @__PURE__ */');
+    source=once(source,'snapshot?.truncated === true && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Notice, {','status.snapshot === null && snapshot !== null && !status.error && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Notice, {kind: "warn", role: "status", children: "Cached Git status; freshness unconfirmed"}),\n                            snapshot?.truncated === true && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Notice, {');
+    source=once(source,'items: branchNames.length === 0 ? [{\n\t\t\t\t\t\t\t\t\tid: "none",\n\t\t\t\t\t\t\t\t\tlabel: t("gitBranchesUnavailable"),','items: branchError !== null || !branchLoaded || branchNames.length === 0 ? [{\n\t\t\t\t\t\t\t\tid: "none",\n                                    label: branchError !== null ? "Branch list unavailable (" + branchError + ")" : branchLoaded ? t("gitBranchesUnavailable") : "Branch list not yet confirmed",');
     source=once(source,'function builtinTabs(ctx) {',`const StudioRecoveryPanel = ${RecoveryPanel.toString()};\nconst StudioAcpPanel = ${AcpPanel.toString()};\nconst StudioEnvironmentPanel = ${EnvironmentPanel.toString()};\nconst StudioEnvironmentEntry = ${EnvironmentEntry.toString()};\nfunction builtinTabs(ctx) {`);
+    source=section(source,'function useDirectoryWatch(options) {','\n\t\t//#endregion',`function useDirectoryWatch(options) {
+      return (${studioDirectoryWatch.toString()})(options, react, hostWebSocketUrl, WebSocket, window);
+    }`);
+     source=once(source,'useDirectoryWatch({\n\t\t\t\tsessionId,', 'const studioTreeWatch = useDirectoryWatch({\n\t\t\t\tsessionId,');
+     source=once(source,'visible: visible !== false,\n\t\t\t\tonStale: retryDirs','visible: visible !== false && hidden !== true,\n\t\t\t\tonStale: retryDirs');
+     source=once(source,'root === void 0 ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {\n\t\t\t\t\t\tclassName: sidebar_module_css_default.explorerEmpty,',`(0, react_jsx_runtime.jsx)("span", {"data-studio-tree-watch": true, children: (0, react_jsx_runtime.jsx)(Notice, {kind: "warn", tone: "inline", role: "status", children: studioTreeWatch})}),
+                    root === void 0 ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+                        className: sidebar_module_css_default.explorerEmpty,`);
     source=once(source,'function Sidebar(props) {',`function Sidebar(props) {
       return (0,react.createElement)(react.Fragment,null,(0,react.createElement)(StudioOriginalSidebar,props),(0,react.createElement)(StudioEnvironmentEntry,{ctx:props.ctx,React:react,routeUrl:path=>hostRouteUrl(path).href,Panel:StudioEnvironmentPanel}));
     }
