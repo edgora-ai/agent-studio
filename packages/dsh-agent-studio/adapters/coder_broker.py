@@ -1,7 +1,9 @@
 """D02 central-only Coder broker. Credentials never enter stdout or the preview.
 
-Only the existing m1-a instance is eligible. All remote payloads are fixed helper
-install/connect code, never client commands; project execution uses helper RPC.
+Legacy roots retain the frozen m1-a contract. An explicitly owned root may opt
+into its sibling fresh manifest; no discovery or target fallback is permitted.
+All remote payloads are fixed helper install/connect code, never client commands;
+project execution uses helper RPC.
 """
 import base64
 import hashlib
@@ -12,12 +14,14 @@ from pathlib import Path
 import re
 import shlex
 import signal
+import stat
 import sqlite3
 import subprocess
 import sys
 import tempfile
 import threading
 import time
+import types
 import uuid
 
 REPO = Path(__file__).resolve().parents[3]
